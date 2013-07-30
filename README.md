@@ -1,6 +1,6 @@
 WP-Present
 ==========
 
-Make presentations with reveal.js, coupled with WordPress
+Make presentations with reveal.js and WordPress
 
 Demo available at http://slides.stevenword.com
