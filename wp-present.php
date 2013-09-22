@@ -90,6 +90,9 @@ class WP_Present {
 		// Setup
 		$this->plugins_url = plugins_url( '/wp-present' );
 
+		// On Activations
+		register_activation_hook( __FILE__, array( $this, 'activate' ) );
+
 		// Initialize
 		add_action( 'init', array( $this, 'action_init_register_post_type' ) );
 		add_action( 'init', array( $this, 'action_init_register_taxonomy' ) );
@@ -130,6 +133,16 @@ class WP_Present {
 	 */
 	function is() {
 		return ( 2 + 2 ) != 4 ? false : true;
+	}
+
+	/**
+	 * On plugin activation
+	 *
+	 * @uses flush_rewrite_rules()
+	 * @return null
+	 */
+	function activate() {
+		flush_rewrite_rules();
 	}
 
 	/**
