@@ -1,0 +1,34 @@
+/* =Reveal.js
+-------------------------------------------------------------- */
+.reveal h1{ font-size: 2em; padding-bottom: .5em; line-height: 1em; }
+.reveal h2{ line-height: 1.5em; }
+.reveal ul li {
+	padding: 2px;
+	line-height: 1.5em;
+}
+.reveal section img {
+	background: transparent;
+	border: none;
+}
+
+/* =Misc
+-------------------------------------------------------------- */
+.alignleft {
+	display: inline !important;
+	float: left !important;
+	margin-right: 1.5em !important;
+}
+.alignright {
+	display: inline !important;
+	float: right !important;
+	margin-left: 1.5em !important;
+}
+.aligncenter {
+	clear: both !important;
+	display: block !important;
+	margin: 0 auto !important;
+}
+
+body.admin-bar .reveal{
+	top: -28px;
+}
