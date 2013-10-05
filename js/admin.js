@@ -11,6 +11,8 @@ jQuery('.column-description').hide();
 
 jQuery(document).ready(function($){
 
+	//$('.column-inner' ).css('border', '1px solid red' );
+
 	function backfillSlides() {
 		var numSlides = WPP_NumSlides;
 		var numExisting = $('#container > .column').size();
@@ -141,4 +143,14 @@ jQuery(document).ready(function($){
 	});
 	updateColumns();
 	}
+
+	// Make an inner column for each column that doesn't contain any slides.
+	jQuery('.column' ).not(":has(div.column-inner)").css('border', '1px solid red' );
+	jQuery('.column' ).not(":has(div.column-inner)").append('<div class="column-inner ui-sortable"></div>');
+	$( ".column-inner" ).sortable({
+		connectWith: ".column-inner",
+		stop: function( event, ui ) {
+			updateColumns();
+		}
+	});
 });
