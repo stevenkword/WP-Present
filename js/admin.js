@@ -144,8 +144,7 @@ jQuery(document).ready(function($){
 	updateColumns();
 	}
 
-	// Make an inner column for each column that doesn't contain any slides.
-	jQuery('.column' ).not(":has(div.column-inner)").css('border', '1px solid red' );
+	// Append an inner column to each column that doesn't contain any slides.
 	jQuery('.column' ).not(":has(div.column-inner)").append('<div class="column-inner ui-sortable"></div>');
 	$( ".column-inner" ).sortable({
 		connectWith: ".column-inner",
