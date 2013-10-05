@@ -4,14 +4,14 @@
  */
 
 // Hide the description fields as fast as possible
+/*
 jQuery('label[for="description"]').parent().parent().hide();
 jQuery('#tag-description').closest('.form-field').hide();
 jQuery('#description').closest('.form-field').hide();
 jQuery('.column-description').hide();
+*/
 
 jQuery(document).ready(function($){
-
-	//$('.column-inner' ).css('border', '1px solid red' );
 
 	function backfillSlides() {
 		var numSlides = WPP_NumSlides;
@@ -152,4 +152,20 @@ jQuery(document).ready(function($){
 			updateColumns();
 		}
 	});
+
+
+	// Prevent the post from being published or updated if no primary category is selected
+	$(document).on('.button', '#publishing-action', function() {
+		//if( $('#ione_primary_category_select_id' ).val() < 0 ) {
+			alert( 'You must first select a Primary Category.' );
+			return false;
+		//}
+		//else{
+//			// Ensure the category checkbox corresponding to the selected primary category is checked
+//			var checkbox_id = 'in-category-' + $('#ione_primary_category_select_id' ).val();
+//			$('#'+checkbox_id).attr('checked', true);
+		//}
+	} );
+	return false;
+
 });

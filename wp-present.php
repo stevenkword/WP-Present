@@ -39,6 +39,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * 7. Add settings page to the Slides menu
  * 8. AJAXify the add/edit/remove
  * 9. Make the placeholders for the columns larger than the widget placeholders
+ * 0. Fix column saving
+ * 1. Trigger on Update button that forces presentation.(y/n)?
  */
 class WP_Present {
 
@@ -109,8 +111,13 @@ class WP_Present {
 		add_action( 'admin_menu', array( $this, 'action_admin_menu' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'action_admin_enqueue_scripts' ) );
 		add_action( 'admin_head', array( $this, 'action_admin_head' ), 20 );
+		add_action( 'save_post', array( $this, 'action_save_post' ) );
 
+		//Hide screen options
 		add_filter('screen_options_show_screen', '__return_false'); // a test
+
+		// Die on save post without a presentation
+
 
 		// Taxonomy
 		//add_action( $this->taxonomy_slug . '_edit_form_fields', array( $this, 'taxonomy_edit_form_fields' ), 9, 2 );
@@ -435,6 +442,28 @@ class WP_Present {
 
 	}
 
+	/*
+	 * Save chosen primary category as post meta
+	 * @param int $post_id
+	 * @uses wp_verify_nonce, current_user_can, update_post_meta, delete_post_meta, wp_die
+	 * @action save_post
+	 * @return null
+	 */
+	public function action_save_post( $post_id, $post ) {
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+			return;
+
+		// Broken
+		//if ( ! isset( $_POST[ $this->nonce_field ] ) || ! wp_verify_nonce( $_POST[ $this->nonce_field ], $this->nonce_field ) )
+			//return;
+
+		if ( 'page' == get_post_type( $post_id ) && ! current_user_can( 'edit_page', $post_id ) )
+				return;
+		elseif ( ! current_user_can( 'edit_post', $post_id ) )
+				return;
+
+		wp_die( 'You must choose a presentation', 'ERROR', array( 'back_link' => true ) );
+	}
 
 	/* Find which slides are already found in the DB before auto-populating the backfill
 	 *
