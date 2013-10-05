@@ -604,7 +604,7 @@ class WP_Present {
 						'editor_class' 	=> 'slide-modal', //(string) (optional) Any extra CSS Classes to append to the Editor textarea
 						'teeny' 		=> false, //(boolean) (optional) Whether to output the minimal editor configuration used in PressThis
 						'dfw' 			=> false, //(boolean) (optional) Whether to replace the default fullscreen editor with DFW (needs specific DOM elements and css)
-						'tinymce' 		=> array( 'mode' => 'none' ), //(array) (optional) Load TinyMCE, can be used to pass settings directly to TinyMCE using an array()
+						'tinymce' 		=> array( 'mode' => 'none' ), //(array['mode'] = 'none' or true) (optional) Load TinyMCE, can be used to pass settings directly to TinyMCE using an array()
 						'quicktags' 	=> true //(array) (optional) Load Quicktags, can be used to pass settings directly to Quicktags using an array(). Set to false to remove your editor's Visual and Text tabs.
 					) );
 

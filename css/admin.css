@@ -28,6 +28,8 @@
 #container .column > .widget-top{ margin: 0 1em 0.5em 0; }
 #container .column > .widget-top > .widget-title{ cursor: move; border: 1px solid #aaa; background: #ddd;}
 
+/* Allows for empty columns to accept new slides */
+#container .column-inner.ui-sortable { min-height: 20px; }
 
 .action-buttons a { text-decoration: none; }
 
