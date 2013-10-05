@@ -3,6 +3,12 @@
  *
  */
 
+// Hide the description fields as fast as possible
+jQuery('label[for="description"]').parent().parent().remove();
+jQuery('#tag-description').closest('.form-field').remove();
+jQuery('#description').closest('.form-field').remove();
+jQuery('.column-description').remove();
+
 jQuery(document).ready(function($){
 
 	function backfillSlides() {

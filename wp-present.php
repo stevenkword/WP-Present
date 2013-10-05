@@ -110,6 +110,8 @@ class WP_Present {
 		add_action( 'admin_enqueue_scripts', array( $this, 'action_admin_enqueue_scripts' ) );
 		add_action( 'admin_head', array( $this, 'action_admin_head' ), 20 );
 
+		add_filter('screen_options_show_screen', '__return_false'); // a test
+
 		// Taxonomy
 		//add_action( $this->taxonomy_slug . '_edit_form_fields', array( $this, 'taxonomy_edit_form_fields' ), 9, 2 );
 		//add_action( $this->taxonomy_slug . '_pre_edit_form', array( $this, 'taxonomy_pre_edit_form' ), 9, 2 );
