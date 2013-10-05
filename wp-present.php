@@ -42,6 +42,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * 0. Fix column saving
  * 1. Trigger on Update button that forces presentation.(y/n)?
  */
+
 class WP_Present {
 
 	/* Post Type */
@@ -66,7 +67,7 @@ class WP_Present {
 	public $scripts_version = 1.1;
 	//public $max_num_slides = 250; //not currently used, proposed variable
 
-	static $plugins_url = '';
+	public $plugins_url = '';
 
 	/* Define and register singleton */
 	private static $instance = false;
@@ -112,6 +113,7 @@ class WP_Present {
 		add_action( 'admin_enqueue_scripts', array( $this, 'action_admin_enqueue_scripts' ) );
 		add_action( 'admin_head', array( $this, 'action_admin_head' ), 20 );
 		add_action( 'save_post', array( $this, 'action_save_post' ) );
+		add_action( 'admin_footer', array( $this, 'action_admin_footer' ), 20 );
 
 		//Hide screen options
 		add_filter('screen_options_show_screen', '__return_false'); // a test
@@ -132,6 +134,9 @@ class WP_Present {
 
 		//Update the post links for slides
 		add_filter( 'post_type_link', array( $this, 'append_query_string' ), 10, 2 );
+
+		// Admin Thickbox
+		add_action( 'wp_ajax_modal_editor', array( $this, 'modal_editor' ) );
 	}
 
 	/**
@@ -380,7 +385,7 @@ class WP_Present {
 		//add_menu_page( $this->taxonomy_name, $this->taxonomy_name, $this->capability, 'edit-tags.php?taxonomy=' . $this->taxonomy_slug . '&post_type='.$this->post_type_slug, '', '', 21 );
 
 		//The options page
-		add_submenu_page(  'edit.php?post_type=slide', $this->option_title, 'Options', $this->capability_order, $this->option_name, array( $this, 'options_page' ) );
+		add_submenu_page(  'edit.php?post_type=slide', $this->option_title, 'Options', $this->capability, $this->option_name, array( $this, 'options_page' ) );
 
 		//add_submenu_page( 'users.php', $label . ' Order', $label . ' Order', $this->capability_order, $option_name, array( $this, 'screen_order' ) );
 		//add_menu_page( 'Breaking News', 'Breaking News Banner', $this->capability, $this->option_name, array( $this, 'options_page' ) );
@@ -417,6 +422,8 @@ class WP_Present {
 
 		// Admin Styles
 		wp_enqueue_style( 'wp-present-admin', $this->plugins_url . '/css/admin.css', '', $this->scripts_version );
+		wp_enqueue_style( 'jquery-ui-demo', $this->plugins_url . '/css/jquery-ui-demo.css', '', $this->scripts_version );	// via helen
+		wp_enqueue_style( 'jquery-ui-fresh', $this->plugins_url . '/css/jquery-ui-fresh.css', '', $this->scripts_version );	// via helen
 
 		// Admin Scripts
 		wp_enqueue_script( 'jquery-ui-sortable' );
@@ -463,6 +470,23 @@ class WP_Present {
 				return;
 
 		wp_die( 'You must choose a presentation', 'ERROR', array( 'back_link' => true ) );
+	}
+
+	/**
+	 * Output for the admin <footer>
+	 *
+	 * @return null
+	 */
+	function action_admin_footer() {
+		// Only run on the edit taxonomy page
+		global $pagenow;
+		if( 'edit-tags.php' != $pagenow || ! isset( $_GET['taxonomy'] ) || $this->taxonomy_slug != $_GET['taxonomy'] )
+			return;
+
+        echo '<!--';
+        wp_editor( '', 'invisible_editor_for_initialization' );
+        echo '-->';
+
 	}
 
 	/* Find which slides are already found in the DB before auto-populating the backfill
@@ -618,34 +642,17 @@ class WP_Present {
 		?>
 		<tr class="form-field hide-if-no-js">
 			<th scope="row" valign="top">
-
-				<?php //add_thickbox(); ?>
-				<div id="<?php echo $this->post_type_slug;?>-modal" style="display:none; background-color: white; border: 1px solid #666; min-height: 30%; min-width: 30%;">
-					<?php
-
-					wp_editor( $content = 'this is existing content', $editor_id = 'editor_' . $this->post_type_slug, $settings = array(
-						'wpautop' 		=> true, //(boolean) (optional) Whether to use wpautop for adding in paragraphs
-						'media_buttons' => true, //(boolean) (optional) Whether to display media insert/upload buttons
-						'textarea_name' => $editor_id, //(string) (optional) The name assigned to the generated textarea and passed parameter when the form is submitted. (may include [] to pass data as array)
-						'textarea_rows' => get_option('default_post_edit_rows', 10), //(integer) (optional) The number of rows to display for the textarea
-						'tabindex' 		=> '', //(integer) (optional) The tabindex value used for the form field
-						'editor_css' 	=> '', //(string) (optional) Additional CSS styling applied for both visual and HTML editors buttons, needs to include <style> tags, can use "scoped"
-						'editor_class' 	=> 'slide-modal', //(string) (optional) Any extra CSS Classes to append to the Editor textarea
-						'teeny' 		=> false, //(boolean) (optional) Whether to output the minimal editor configuration used in PressThis
-						'dfw' 			=> false, //(boolean) (optional) Whether to replace the default fullscreen editor with DFW (needs specific DOM elements and css)
-						'tinymce' 		=> array( 'mode' => 'none' ), //(array['mode'] = 'none' or true) (optional) Load TinyMCE, can be used to pass settings directly to TinyMCE using an array()
-						'quicktags' 	=> true //(array) (optional) Load Quicktags, can be used to pass settings directly to Quicktags using an array(). Set to false to remove your editor's Visual and Text tabs.
-					) );
-
-					?>
-				</div>
-
 				<p class="action-buttons">
 					<?php submit_button( __('Update'), 'primary', 'submit', $wrap = false ); ?>
-					<button id="add-button"><a href="javascript:void(0);" class="ethickbox">Add new slide</a></button>
+					<button id="add-button"><a href="javascript:void(0);" class="thickbox2" title="Add New <?php  echo $this->post_type_singular_name; ?>">Add New <?php  echo $this->post_type_singular_name; ?></a></button>
 					<button id="tidy-button"><a target="_blank" href="javascript: void(0);">Tidy</a></button>
 					<button><a target="_blank" href="<?php echo get_term_link( $term, $taxonomy );?>">Preview</a></button>
 				</p>
+
+				<div id="dialog" title="Edit <?php echo $this->post_type_singular_name; ?>" style="display: none;">
+					<?php $this->modal_editor(); ?>
+					<!--<iframe src="<?php echo admin_url( 'admin-ajax.php' ); ?>?action=modal_editor" width="300" height="350"></iframe>-->
+				</div>
 
 			</th>
 			<td>
@@ -828,6 +835,20 @@ class WP_Present {
 		}
 		return $url;
 	}
+
+	/**
+	 * Render the TinyMCE editor
+	 *
+	 * @return null
+	 */
+    function modal_editor() {
+        wp_editor( $content = '', $editor_id = 'editor_' . $this->post_type_slug, array(
+            'media_buttons' => false,
+            'teeny' => false,
+            'textarea_rows' => '7',
+            'tinymce' => array( 'plugins' => 'inlinepopups, fullscreen, wordpress, wplink, wpdialogs' )
+        ) );
+    }
 
 } // Class
 WP_Present::instance();

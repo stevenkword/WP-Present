@@ -11,6 +11,44 @@ jQuery('#description').closest('.form-field').hide();
 jQuery('.column-description').hide();
 */
 
+// jQuery Modal Things
+jQuery(document).ready(function($) {
+	$('#add-button').on('click', function(e) {
+		//e.preventDefault;
+		$( "#dialog" ).dialog({
+		  autoOpen: true,
+		  height: 500,
+		  width: 550,
+		  modal: false,
+		  buttons: {
+			"Edit Slide": function() {
+				var editorContents = tinymce.get('editor_slide').getContent();
+				$('#description').val( editorContents );
+				closeModal();
+			},
+			Cancel: function() {
+				closeModal();
+			}
+		  },
+		  close: function() {
+				closeModal();
+		  }
+		});
+	});
+
+	function closeModal() {
+		tinymce.execCommand('mceRemoveControl',true,'editor_slide');
+		$( '#dialog' ).dialog( "close" );
+	}
+
+
+	$('.widget-title-action').on('click', function(e) {
+		$( this ).parents('.widget').children('.widget-inside').toggle();
+	});
+
+
+});
+
 jQuery(document).ready(function($){
 
 	function backfillSlides() {
@@ -55,37 +93,6 @@ jQuery(document).ready(function($){
 	$('#tidy-button').click(function(e) {
 		e.preventDefault();
 		consolidateColumns();
-	});
-
-	$('#add-button').click(function(e) {
-		e.preventDefault();
-
-		$('#slide-modal').dialog({
-			autoOpen: true,
-			modal: true,
-			title: "Email Dialog",
-			open: addTinyMCE,
-			close: function() {
-				removeTinyMCE();
-				$(this).dialog('destroy');
-			},
-			buttons:  {
-				'Send': function() {},
-				'Cancel': function() {
-					removeTinyMCE();
-					$(this).dialog('destroy');
-				}
-			}
-		});
-
-		return;
-		var text = 'test';
-		var $li = $("<div class='ui-state-default'/>").text(text);
-		var test = '<div id="slide-1689" class=" portlet widget"><div class="widget-top"><div class="widget-title-action"><a class="widget-action hide-if-no-js" href="#available-widgets"></a><a class="widget-control-edit hide-if-js" href=""><span class="edit">Edit</span><span class="add">Add</span><span class="screen-reader-text">Why PHP Developers Should Leverage WordPress</span></a></div><div class="widget-title"><h4>Why PHP Developers Should Leverage WordPress<span class="in-widget-title"></span></h4></div></div><div class="widget-description">Render an ad from an ad shortcode.</div></div>';
-
-	// Pay attention here
-		$("#col-3").append(test);
-		$(".column-inner").sortable('refresh');
 	});
 
 	function updateColumns(){
