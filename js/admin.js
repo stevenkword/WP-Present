@@ -13,12 +13,18 @@ jQuery('.column-description').hide();
 
 // jQuery Modal Things
 jQuery(document).ready(function($) {
+
+	if( 'undefined' == typeof(tinymce) ) {
+//		tinymce.execCommand('mceRemoveControl',true,'editor_slide');
+//		tinymce.execCommand('mceAddControl',true,'editor_slide');
+	}
+
 	$('#add-button').on('click', function(e) {
-		//e.preventDefault;
+		e.preventDefault;
 		$( "#dialog" ).dialog({
 		  autoOpen: true,
-		  height: 500,
-		  width: 550,
+		  height: 400,
+		  width: 450,
 		  modal: false,
 		  buttons: {
 			"Edit Slide": function() {

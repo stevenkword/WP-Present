@@ -421,9 +421,9 @@ class WP_Present {
 			return;
 
 		// Admin Styles
+		//wp_enqueue_style( 'jquery-ui-demo', $this->plugins_url . '/css/wp-admin-jquery-ui/jquery-ui-demo.css', '', $this->scripts_version );	// via helen
+		wp_enqueue_style( 'jquery-ui-fresh', $this->plugins_url . '/css/wp-admin-jquery-ui/jquery-ui-fresh.css', '', $this->scripts_version );	// via helen
 		wp_enqueue_style( 'wp-present-admin', $this->plugins_url . '/css/admin.css', '', $this->scripts_version );
-		wp_enqueue_style( 'jquery-ui-demo', $this->plugins_url . '/css/jquery-ui-demo.css', '', $this->scripts_version );	// via helen
-		wp_enqueue_style( 'jquery-ui-fresh', $this->plugins_url . '/css/jquery-ui-fresh.css', '', $this->scripts_version );	// via helen
 
 		// Admin Scripts
 		wp_enqueue_script( 'jquery-ui-sortable' );
