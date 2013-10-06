@@ -14,12 +14,6 @@ jQuery('.column-description').hide();
 // jQuery Modal Things
 jQuery(document).ready(function($) {
 
-	if( 'undefined' == typeof(tinymce) ) {
-//		alert( 'tinymce init' );
-//		tinymce.execCommand('mceRemoveControl',true,'editor_slide');
-//		tinymce.execCommand('mceAddControl',true,'editor_slide');
-	}
-
 	$('#add-button, .widget-control-edit').on('click', function(e) {
 		e.preventDefault();
 
@@ -50,6 +44,10 @@ jQuery(document).ready(function($) {
 			Cancel: function() {
 				closeModal();
 			}
+		  },
+		  open: function() {
+			tinymce.execCommand('mceRemoveControl',true,'editor_slide');
+			tinymce.execCommand('mceAddControl',true,'editor_slide');
 		  },
 		  close: function() {
 				closeModal();
