@@ -21,7 +21,7 @@ jQuery(document).ready(function($) {
 
 	$('#add-button').on('click', function(e) {
 		e.preventDefault;
-		$('#editor_slide-tmce').click();
+		$('#editor_slide-tmce').click(); //Necessary on subsequent loads of the editor
 		$( "#dialog" ).dialog({
 		  autoOpen: true,
 		  width: 600,
