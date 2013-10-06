@@ -30,7 +30,7 @@ jQuery(document).ready(function($) {
 		  buttons: {
 			"Edit Slide": function() {
 				var editorContents = tinymce.get('editor_slide').getContent();
-				$('#description').val( editorContents );
+				$('#slide-5 p').html( editorContents );
 				closeModal();
 			},
 			Cancel: function() {
@@ -102,7 +102,8 @@ jQuery(document).ready(function($){
 		consolidateColumns();
 	});
 
-	function updateColumns(){
+	function updateColumns() {
+
 		var columns = { }; // Creates a new object
 		var i = 1;
 		$( '.column-inner' ).each(function( index ) {
@@ -111,52 +112,62 @@ jQuery(document).ready(function($){
 			columns['col-'+i] = $order;
 			i++;
 
-			//console.log( index );
-			//console.log( $order );
+			console.log( 'index ' + index );
+			console.log( 'order ' + $order );
+			console.log(columns);
 		});
+
+
+
 		//console.log(columns);
 		var encoded = JSON.stringify( columns );
-
 		$('#description').val(encoded);
 	}
 
-	function consolidateColumns(){
+	function consolidateColumns(){ // AKA "Tidy Button"
 
-		$( '.column-inner' ).each(function ( index ) {
+		var numCols = $('.column').length;
+		console.log(numCols);
 
-		var i = index + 1;
-		var html = $(this).html().trim();
+		$('.column').each(function(outerIndex){
 
-		console.log( 'index: ' + i );
-		//console.log( 'html: "' + html + '"' );
+			// Don't have a col 0
+			var outerIndex = outerIndex + 1;
 
-		if( typeof(html) === 'string' && '' != html ) {
-			console.log( html.substr(0,100) );
-		} else {
+			// Fixes the condition where we are looking at the last item
+			if( outerIndex >= numCols )
+				return;
 
-			var meh = '#col-' + ( i + 1 );
+			var $outerCol = $(this);
+			var $innerCol = $outerCol.children('.column-inner');
 
-			console.log( 'i: ' + meh );
+			var innerHTML = $innerCol.html().trim();
+			var outerHTML = $outerCol.html().trim();
 
-			var $nextCol = $(meh);
-			//console.log( 'test' + $nextCol.html() );
-			$(this).html( $nextCol.html() ) ;
-			$nextCol.html('');
-		}
-	});
+			if( typeof(innerHTML) !== 'string' || '' == innerHTML ) {
+				var $nextOuterCol = $('#col-'+(outerIndex+1));
+				var $nextInnerCol = $nextOuterCol.children('.column-inner');
 
-	//Finally refresh description array
-	$( ".column-inner" ).sortable({
-		connectWith: ".column-inner",
-		stop: (function( event, ui ) {
-			updateColumns();
-		}),
-		create: (function( event, ui ) {
-			updateColumns();
-		})
-	});
-	updateColumns();
-	}
+				var nextInnerHTML = $nextInnerCol.html().trim();
+				var nextOuterHTML = $nextOuterCol.html().trim();
+
+				$outerCol.html(nextOuterHTML);
+				$nextOuterCol.html(outerHTML);
+			}
+		} );
+
+		//Finally refresh description array
+		$( ".column-inner" ).sortable({
+			connectWith: ".column-inner",
+			stop: (function( event, ui ) {
+				updateColumns();
+			}),
+			create: (function( event, ui ) {
+				updateColumns();
+			})
+		});
+		updateColumns();
+	} // end consolidate
 
 	// Append an inner column to each column that doesn't contain any slides.
 	jQuery('.column' ).not(":has(div.column-inner)").append('<div class="column-inner ui-sortable"></div>');
