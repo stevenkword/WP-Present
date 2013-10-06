@@ -3,6 +3,9 @@
  *
  */
 
+/* overwrite helens css */
+.ui-button-icon-only .ui-icon { left: 0; top: 0; }
+
 .column { width: /*285*/200px; float: left; padding-bottom: 10px; margin: 5px; }
 .column-handle {
 	margin: 0 1em 0.5em 0;
