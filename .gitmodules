@@ -1,6 +1,6 @@
 [submodule "js/reveal.js"]
 	path = js/reveal.js
-	url = https://github.com/stevenkword/reveal.js.git
+	url = https://github.com/hakimel/reveal.js.git
 [submodule "css/wp-admin-jquery-ui"]
 	path = css/wp-admin-jquery-ui
 	url = https://github.com/helenhousandi/wp-admin-jquery-ui.git
