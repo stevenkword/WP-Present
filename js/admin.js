@@ -21,10 +21,11 @@ jQuery(document).ready(function($) {
 
 	$('#add-button').on('click', function(e) {
 		e.preventDefault;
+		$('#editor_slide-tmce').click();
 		$( "#dialog" ).dialog({
 		  autoOpen: true,
-		  height: 400,
-		  width: 450,
+		  width: 600,
+		  height: 450,
 		  modal: false,
 		  buttons: {
 			"Edit Slide": function() {

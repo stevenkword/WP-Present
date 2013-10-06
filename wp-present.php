@@ -844,7 +844,7 @@ class WP_Present {
     function modal_editor() {
         wp_editor( $content = '', $editor_id = 'editor_' . $this->post_type_slug, array(
             'media_buttons' => false,
-            'teeny' => false,
+            'teeny' => true,
             'textarea_rows' => '7',
             'tinymce' => array( 'plugins' => 'inlinepopups, fullscreen, wordpress, wplink, wpdialogs' )
         ) );
