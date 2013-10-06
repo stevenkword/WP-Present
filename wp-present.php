@@ -482,11 +482,6 @@ class WP_Present {
 		global $pagenow;
 		if( 'edit-tags.php' != $pagenow || ! isset( $_GET['taxonomy'] ) || $this->taxonomy_slug != $_GET['taxonomy'] )
 			return;
-
-        echo '<!--';
-        wp_editor( '', 'invisible_editor_for_initialization' );
-        echo '-->';
-
 	}
 
 	/* Find which slides are already found in the DB before auto-populating the backfill
@@ -581,7 +576,7 @@ class WP_Present {
 								</div>
 							</div>
 							<div class="widget-inside" style="display: none;">
-								<?php the_excerpt(); ?>
+								<div class='widget-preview'><?php the_excerpt(); ?></div>
 								<div class="widget-control-actions">
 									<div class="alignleft">
 									<a class="widget-control-remove" href="#remove">Delete</a> |
@@ -598,7 +593,7 @@ class WP_Present {
 										<a class="widget-control-remove" href="#remove">Delete</a> |
 										<a class="widget-control-close" href="#close">Close</a>
 										-->
-										<a class="widget-control-edit2" href="<?php echo get_edit_post_link( get_the_ID() ); ?>" target="_blank">Edit</a>
+										<a class="widget-control-edit" href="<?php echo get_edit_post_link( get_the_ID() ); ?>" target="_blank">Edit</a>
 										<a class="widget-control-view" href="<?php echo get_permalink( get_the_ID() ); ?>" target="_blank">View</a>
 									</div>
 									<!--
@@ -646,7 +641,7 @@ class WP_Present {
 					<?php submit_button( __('Update'), 'primary', 'submit', $wrap = false ); ?>
 					<button id="add-button"><a href="javascript:void(0);" class="thickbox2" title="Add New <?php  echo $this->post_type_singular_name; ?>">Add New <?php  echo $this->post_type_singular_name; ?></a></button>
 					<button id="tidy-button"><a target="_blank" href="javascript: void(0);">Tidy</a></button>
-					<button><a target="_blank" href="<?php echo get_term_link( $term, $taxonomy );?>">Preview</a></button>
+					<button id="view-button"><a target="_blank" href="<?php echo get_term_link( $term, $taxonomy );?>">View <?php echo $this->taxonomy_singular_name; ?></a></button>
 				</p>
 
 				<div id="dialog" title="Edit <?php echo $this->post_type_singular_name; ?>" style="display: none;">
@@ -841,8 +836,8 @@ class WP_Present {
 	 *
 	 * @return null
 	 */
-    function modal_editor() {
-        wp_editor( $content = '', $editor_id = 'editor_' . $this->post_type_slug, array(
+    function modal_editor( $content = '' ) {
+        wp_editor( $content, $editor_id = 'editor_' . $this->post_type_slug, array(
             'media_buttons' => false,
             'teeny' => true,
             'textarea_rows' => '7',

@@ -15,12 +15,23 @@ jQuery('.column-description').hide();
 jQuery(document).ready(function($) {
 
 	if( 'undefined' == typeof(tinymce) ) {
+//		alert( 'tinymce init' );
 //		tinymce.execCommand('mceRemoveControl',true,'editor_slide');
 //		tinymce.execCommand('mceAddControl',true,'editor_slide');
 	}
 
-	$('#add-button').on('click', function(e) {
-		e.preventDefault;
+	$('#add-button, .widget-control-edit').on('click', function(e) {
+		e.preventDefault();
+
+		$button = $(this);
+
+		var $parentWidget = $button.parents('.widget');
+		var $widgetPreview = $parentWidget.find('.widget-preview');
+
+		// Send the contents from the widget to the editor
+		var contentEditor  = $widgetPreview.html();
+		$('#editor_slide').val( contentEditor );
+
 		$('#editor_slide-tmce').click(); //Necessary on subsequent loads of the editor
 		$( "#dialog" ).dialog({
 		  autoOpen: true,
@@ -30,7 +41,10 @@ jQuery(document).ready(function($) {
 		  buttons: {
 			"Edit Slide": function() {
 				var editorContents = tinymce.get('editor_slide').getContent();
-				$('#slide-5 p').html( editorContents );
+
+				// Return the value from the editor
+				$widgetPreview.html( editorContents );
+
 				closeModal();
 			},
 			Cancel: function() {
@@ -46,9 +60,11 @@ jQuery(document).ready(function($) {
 	function closeModal() {
 		tinymce.execCommand('mceRemoveControl',true,'editor_slide');
 		$( '#dialog' ).dialog( "close" );
+		console.log('tinymce shutdown');
 	}
 
 
+	// Expand slide details
 	$('.widget-title-action').on('click', function(e) {
 		$( this ).parents('.widget').children('.widget-inside').toggle();
 	});
