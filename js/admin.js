@@ -81,7 +81,7 @@ jQuery(document).ready(function($) {
 
 				// Hack for getting the reveal class added to tinymce editor body
 				var $editorIframe = $('#editor_slide_ifr').contents();
-				$editorIframe.find('body').addClass('reveal').css('zoom','0.6');
+				$editorIframe.find('body').addClass('reveal');
 
 
 

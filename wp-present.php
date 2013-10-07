@@ -233,7 +233,7 @@ class WP_Present {
 		add_editor_style( plugins_url( '/wp-present/css/reset.css' ) );
 		add_editor_style( plugins_url( '/wp-present/js/reveal.js/css/theme/moon.css' ) );
 		add_editor_style( plugins_url( '/wp-present/js/reveal.js/lib/css/zenburn.css' ) );
-		add_editor_style( plugins_url( '/wp-present/css/custom.css' ) );
+		add_editor_style( plugins_url( '/wp-present/css/custom.css?v=6' ) );
 	}
 
 
