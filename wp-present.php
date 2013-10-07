@@ -64,7 +64,7 @@ class WP_Present {
 	/* Misc */
 	public $capability = 'edit_others_posts';
 	public $nonce_field = 'presentation-nonce';
-	public $scripts_version = 1.1;
+	public $scripts_version = 200131007;
 	//public $max_num_slides = 250; //not currently used, proposed variable
 
 	public $plugins_url = '';
@@ -137,8 +137,8 @@ class WP_Present {
 		add_filter( 'post_type_link', array( $this, 'append_query_string' ), 10, 2 );
 
 		// AJAX
-		add_action( 'wp_ajax_get_content', array( $this, 'action_wp_ajax_get_content' ) );
-		add_action( 'wp_ajax_set_content', array( $this, 'action_wp_ajax_set_content' ) );
+		add_action( 'wp_ajax_get_slide', array( $this, 'action_wp_ajax_get_slide' ) );
+		add_action( 'wp_ajax_update_slide', array( $this, 'action_wp_ajax_update_slide' ) );
 	}
 
 	/**
@@ -405,6 +405,9 @@ class WP_Present {
 				<div class="wrap">
 					<h2><?php echo $this->option_title; ?></h2>
 					<p>Configure all the things</p>
+
+					<h4>Select a Theme: Moon</h4>
+
 				</div>
 				<div class="clear"></div>
 			</div><!-- wpbody-content -->
@@ -862,7 +865,7 @@ class WP_Present {
 /* AJAX
 * * *
 */
-	function action_wp_ajax_set_content() {
+	function action_wp_ajax_update_slide() {
 
 		//if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], $this->nonce_field ) ) {
 			//wp_die("No naughty business please");
@@ -880,7 +883,7 @@ class WP_Present {
 		die();
 	}
 
-	function action_wp_ajax_get_content() {
+	function action_wp_ajax_get_slide() {
 
 		//if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], $this->nonce_field ) ) {
 			//wp_die("No naughty business please");

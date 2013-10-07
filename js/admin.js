@@ -45,7 +45,7 @@ jQuery(document).ready(function($) {
 				var params = { content:editorContents, height:1050 };
 				// Send the contents of the existing post
 				$.ajax({
-					url: ajaxurl + '?action=set_content&id=' + widgetID,
+					url: ajaxurl + '?action=update_slide&id=' + widgetID,
 					type: 'POST',
 				  	data: jQuery.param(params),
 				  	success: function(contentEditor) {
@@ -73,7 +73,7 @@ jQuery(document).ready(function($) {
 
 				// Load the contents of the existing post
 				$.ajax({
-				  url: ajaxurl + '?action=get_content&id=' + widgetID,
+				  url: ajaxurl + '?action=get_slide&id=' + widgetID,
 				  success: function(contentEditor) {
 				  	tinymce.get('editor_slide').setContent(contentEditor);
 				  }
