@@ -136,8 +136,9 @@ class WP_Present {
 		//Update the post links for slides
 		add_filter( 'post_type_link', array( $this, 'append_query_string' ), 10, 2 );
 
-		// Admin Thickbox
-		add_action( 'wp_ajax_get_excerpt', array( $this, 'action_wp_ajax_get_excerpt' ) );
+		// AJAX
+		add_action( 'wp_ajax_get_content', array( $this, 'action_wp_ajax_get_content' ) );
+		add_action( 'wp_ajax_set_content', array( $this, 'action_wp_ajax_set_content' ) );
 	}
 
 	/**
@@ -580,11 +581,9 @@ class WP_Present {
 								</div>
 							</div>
 							<div class="widget-inside" style="display: none;">
+																	<input class="slide-id" id="input-<?php echo $slide_id; ?>" type="text" value="<?php echo $slide_id; ?>"></input>
 								<div class='widget-preview'>
 									<?php the_excerpt(); ?>
-									<form id="form-slide-<?php echo $slide_id; ?>">
-										<textarea><?php echo $slide_id; ?></textarea>
-									</form>
 								</div>
 								<div class="widget-control-actions">
 									<div class="alignleft">
@@ -860,16 +859,41 @@ class WP_Present {
         ) );
     }
 
-	function action_wp_ajax_get_excerpt() {
+/* AJAX
+* * *
+*/
+	function action_wp_ajax_set_content() {
 
-		if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], $this->nonce_field ) ) {
-			wp_die("No naughty business please");
-		}
+		//if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], $this->nonce_field ) ) {
+			//wp_die("No naughty business please");
+		//}
 
-		$post_id = $_REQUEST[ 'post_id' ];
-		die( $post_id );
+		$post_id = $_REQUEST[ 'id' ];
+		$safe_content = sanitize_text_field( $_POST[ 'content' ] );
 
+		$post = array(
+			'ID' => $post_id,
+			'post_content' => $safe_content,
+		);
+		wp_update_post( $post );
+
+		die();
 	}
+
+	function action_wp_ajax_get_content() {
+
+		//if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], $this->nonce_field ) ) {
+			//wp_die("No naughty business please");
+		//}
+
+		$post_id = $_REQUEST[ 'id' ];
+		$post = get_post( $post_id );
+		echo $post->post_content;
+		die();
+	}
+
+
+
 } // Class
 WP_Present::instance();
 

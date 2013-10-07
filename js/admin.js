@@ -21,6 +21,7 @@ jQuery(document).ready(function($) {
 	}
 
 	$('#add-button, .widget-control-edit').on('click', function(e) {
+
 		e.preventDefault();
 
 		$button = $(this);
@@ -30,6 +31,7 @@ jQuery(document).ready(function($) {
 
 		// Send the contents from the widget to the editor
 		var contentEditor  = $widgetPreview.html();
+		var widgetID = $parentWidget.find('.slide-id').val();
 
 		$('#editor_slide-tmce').click(); //Necessary on subsequent loads of the editor
 		$( "#dialog" ).dialog({
@@ -40,10 +42,17 @@ jQuery(document).ready(function($) {
 		  buttons: {
 			"Save": function() {
 				var editorContents = tinymce.get('editor_slide').getContent();
-
-				// Return the value from the editor
-				$widgetPreview.html( editorContents );
-
+				var params = { content:editorContents, height:1050 };
+				// Send the contents of the existing post
+				$.ajax({
+					url: ajaxurl + '?action=set_content&id=' + widgetID,
+					type: 'POST',
+				  	data: jQuery.param(params),
+				  	success: function(contentEditor) {
+						// Return the value from the editor
+						$widgetPreview.html( editorContents );
+				  }
+				});
 				closeModal();
 			},
 			Cancel: function() {
@@ -61,8 +70,16 @@ jQuery(document).ready(function($) {
 
 		  },
 		  open: function() {
-				tinymce.get('editor_slide').setContent(contentEditor);
 
+				// Load the contents of the existing post
+				$.ajax({
+				  url: ajaxurl + '?action=get_content&id=' + widgetID,
+				  success: function(contentEditor) {
+				  	tinymce.get('editor_slide').setContent(contentEditor);
+				  }
+				});
+
+				// Hack for getting the reveal class added to tinymce editor body
 				var $editorIframe = $('#editor_slide_ifr').contents();
 				$editorIframe.find('body').addClass('reveal');
 
@@ -77,7 +94,7 @@ jQuery(document).ready(function($) {
 	function closeModal() {
 		tinymce.execCommand('mceRemoveControl',true,'editor_slide');
 		$( '#dialog' ).dialog( "close" );
-		console.log('tinymce shutdown');
+//		console.log('tinymce shutdown');
 	}
 
 
@@ -145,9 +162,9 @@ jQuery(document).ready(function($){
 			columns['col-'+i] = $order;
 			i++;
 
-			console.log( 'index ' + index );
-			console.log( 'order ' + $order );
-			console.log(columns);
+//			console.log( 'index ' + index );
+//			console.log( 'order ' + $order );
+//			console.log(columns);
 		});
 
 
@@ -160,7 +177,7 @@ jQuery(document).ready(function($){
 	function consolidateColumns(){ // AKA "Tidy Button"
 
 		var numCols = $('.column').length;
-		console.log(numCols);
+//		console.log(numCols);
 
 		$('.column').each(function(outerIndex){
 
