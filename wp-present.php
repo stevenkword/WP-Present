@@ -227,7 +227,7 @@ class WP_Present {
 	 * @uses add_action()
 	 * @return null
 	 */
-	function action_init_editor_styles() {
+	function action_init_editor_styles() { // also should peep at mce_css
 		remove_editor_styles();
 		add_editor_style( plugins_url( '/wp-present/css/reset.css' ) );
 		add_editor_style( plugins_url( '/wp-present/js/reveal.js/css/theme/moon.css' ) );
@@ -889,3 +889,16 @@ function my_add_tinymce_button( $plugin_array )
 //     var_dump( $plugin_array );
      return $plugin_array;
 }
+
+/* Add the TinyMCE VisualBlocks Plugin */
+function my_custom_plugins () {
+     $plugins = array('visualblocks'); //Add any more plugins you want to load here
+     $plugins_array = array();
+
+     //Build the response - the key is the plugin name, value is the URL to the plugin JS
+     foreach ($plugins as $plugin ) {
+          $plugins_array[ $plugin ] = plugins_url('tinymce/', __FILE__) . $plugin . '/editor_plugin.js';
+     }
+     return $plugins_array;
+}
+//add_filter('mce_external_plugins', 'my_custom_plugins');

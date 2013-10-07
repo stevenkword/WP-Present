@@ -62,6 +62,11 @@ jQuery(document).ready(function($) {
 		  },
 		  open: function() {
 				tinymce.get('editor_slide').setContent(contentEditor);
+
+				var $editorIframe = $('#editor_slide_ifr').contents();
+				$editorIframe.find('body').addClass('reveal');
+
+
 		  },
 		  close: function() {
 				closeModal();
