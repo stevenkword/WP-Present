@@ -38,7 +38,7 @@ jQuery(document).ready(function($) {
 		  height: 450,
 		  modal: false,
 		  buttons: {
-			"Edit Slide": function() {
+			"Save": function() {
 				var editorContents = tinymce.get('editor_slide').getContent();
 
 				// Return the value from the editor
@@ -53,6 +53,12 @@ jQuery(document).ready(function($) {
 		  create: function() {
 				tinymce.execCommand('mceRemoveControl',true,'editor_slide');
 				tinymce.execCommand('mceAddControl',true,'editor_slide');
+
+//				tinymce.ScriptLoader.load('customizer.js');
+
+				// Load a script from a specific URL using the global script loader
+		        //tinymce.ScriptLoader.load('http://localhost/sandbox/wp-includes/js/admin-bar.min.js');
+
 		  },
 		  open: function() {
 				tinymce.get('editor_slide').setContent(contentEditor);

@@ -99,6 +99,7 @@ class WP_Present {
 		// Initialize
 		add_action( 'init', array( $this, 'action_init_register_post_type' ) );
 		add_action( 'init', array( $this, 'action_init_register_taxonomy' ) );
+		add_action( 'init', array( $this, 'action_init_editor_styles' ) );
 
 		// Front End
 		add_action( 'wp_head', array( $this, 'action_wp_head' ), 99 );
@@ -136,7 +137,7 @@ class WP_Present {
 		add_filter( 'post_type_link', array( $this, 'append_query_string' ), 10, 2 );
 
 		// Admin Thickbox
-		add_action( 'wp_ajax_modal_editor', array( $this, 'modal_editor' ) );
+		add_action( 'wp_ajax_get_excerpt', array( $this, 'action_wp_ajax_get_excerpt' ) );
 	}
 
 	/**
@@ -218,6 +219,22 @@ class WP_Present {
 			'rewrite'             	=> array( 'slug' => $this->taxonomy_slug )
 		) );
 	}
+
+
+	/**
+	 * Register editor styles
+	 *
+	 * @uses add_action()
+	 * @return null
+	 */
+	function action_init_editor_styles() {
+		remove_editor_styles();
+		add_editor_style( plugins_url( '/wp-present/css/reset.css' ) );
+		add_editor_style( plugins_url( '/wp-present/js/reveal.js/css/theme/moon.css' ) );
+		add_editor_style( plugins_url( '/wp-present/js/reveal.js/lib/css/zenburn.css' ) );
+		add_editor_style( plugins_url( '/wp-present/css/custom.css' ) );
+	}
+
 
 	// This happens at the top of the taxonomy edit screen
 	function taxonomy_pre_edit_form( $tag, $taxonomy ){
@@ -331,8 +348,8 @@ class WP_Present {
 	 * @return null
 	 */
 	function action_wp_footer() {
-		if( ! is_tax( $this->taxonomy_slug ) )
-			return false;
+		//if( ! is_tax( $this->taxonomy_slug ) )
+		//	return false;
 		?>
 		<script>
 		/* Custom jQuery Reveal Code */
@@ -341,8 +358,8 @@ class WP_Present {
 			// Full list of configuration options available here:
 			// https://github.com/hakimel/reveal.js#configuration
 			Reveal.initialize({
-				width: 1020,
-				height: 540,
+				width: 960,
+				height: 720,
 				controls: true,
 				progress: false,
 				history: true,
@@ -352,21 +369,8 @@ class WP_Present {
 				mouseWheel: false,
 				rollingLinks: false,
 				transition: 'default', // default/cube/page/concave/zoom/linear/fade/none
-
 				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
 				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
-			});
-
-			Reveal.addEventListener( 'slidechanged', function( event ) {
-				// event.previousSlide, event.currentSlide, event.indexh, event.indexv
-				console.log("x=" + event.indexh + " y=" + event.indexv);
-
-				//$('input[id][name$="man"]')
-				//jQuery('a[data-indexh$='+event.indexh+']').css('color','red');
-
-				$(".home .main-navigation a").parent().removeClass("current-menu-item");
-				$('a[data-indexh$='+event.indexh+']').parent().addClass("current-menu-item");
-
 			});
 		});
 		</script>
@@ -469,7 +473,7 @@ class WP_Present {
 		elseif ( ! current_user_can( 'edit_post', $post_id ) )
 				return;
 
-		wp_die( 'You must choose a presentation', 'ERROR', array( 'back_link' => true ) );
+//		wp_die( 'You must choose a presentation', 'ERROR', array( 'back_link' => true ) );
 	}
 
 	/**
@@ -646,7 +650,6 @@ class WP_Present {
 
 				<div id="dialog" title="Edit <?php echo $this->post_type_singular_name; ?>" style="display: none;">
 					<?php $this->modal_editor(); ?>
-					<!--<iframe src="<?php echo admin_url( 'admin-ajax.php' ); ?>?action=modal_editor" width="300" height="350"></iframe>-->
 				</div>
 
 			</th>
@@ -836,14 +839,53 @@ class WP_Present {
 	 *
 	 * @return null
 	 */
-    function modal_editor( $content = '' ) {
-        wp_editor( $content, $editor_id = 'editor_' . $this->post_type_slug, array(
+    function modal_editor( $post_id = '' ) {
+
+		//$post = get_post( $post_id );
+		//$link = admin_url('admin-ajax.php?action=my_user_vote&post_id=' . $post->ID . '&nonce=' . wp_create_nonce( $this->nonce_field) );
+
+        wp_editor( $content = '', $editor_id = 'editor_' . $this->post_type_slug, array(
+			'wpautop' => false,
             'media_buttons' => true,
             'teeny' => true,
             'textarea_rows' => '7',
-            'tinymce' => array( 'plugins' => 'inlinepopups, fullscreen, wordpress, wplink, wpdialogs' )
+            'tinymce' => array(
+            	'plugins' => 'inlinepopups, fullscreen, wordpress, wplink, wpdialogs',
+             )
         ) );
     }
 
+	function action_wp_ajax_get_excerpt() {
+
+		if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], $this->nonce_field ) ) {
+			wp_die("No naughty business please");
+		}
+
+		$post_id = $_REQUEST[ 'post_id' ];
+		die( $post_id );
+
+	}
 } // Class
 WP_Present::instance();
+
+function my_tiny_mce_before_init( $init_array ) {
+   	$init_array['body_class'] = 'reveal';
+    return $init_array;
+}
+add_filter('tiny_mce_before_init', 'my_tiny_mce_before_init');
+
+/* Plugin Name: My TinyMCE Buttons */
+function my_tinymce_button() {
+     if ( current_user_can( 'edit_posts' ) && current_user_can( 'edit_pages' ) ) {
+          add_filter( 'mce_external_plugins', 'my_add_tinymce_button' );
+     }
+}
+add_action( 'admin_init', 'my_tinymce_button' );
+
+function my_add_tinymce_button( $plugin_array )
+{
+//    $plugin_array['reveal'] = plugins_url( 'wp-present/js/reveal.js/js/reveal.js' ) ;
+//    $plugin_array['editor'] = plugins_url( 'wp-present/js/editor.js' ) ;
+//     var_dump( $plugin_array );
+     return $plugin_array;
+}

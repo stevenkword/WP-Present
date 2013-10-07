@@ -32,3 +32,8 @@
 body.admin-bar .reveal{
 	top: -28px;
 }
+
+body.reveal{ text-align: center; }
+body.mceContentBody.reveal { margin: 20px; }
+
+//.reveal section{ border: 2px solid red; }

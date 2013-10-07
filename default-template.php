@@ -55,12 +55,13 @@
 										setup_postdata( $post );
 										?>
 										<section id="<?php echo esc_attr( $post->post_name); ?>" data-transition="linear">
+											<!--
 											<?php if ( 1 == $i && 1 == $i ) { ?>
 												<h1><?php the_title(); ?></h1>
 											<?php } else { ?>
 												<h2><?php the_title(); ?></h2>
 											<?php } ?>
-
+											-->
 											<?php the_content(); ?>
 											<p>
 												<small><?php wp_link_pages( array( 'before' => '<div class="page-links">' . __( 'Pages:', '_s' ), 'after' => '</div>' ) ); ?></small>
@@ -93,13 +94,18 @@
 
 				<script type="text/javascript">
 
-					console.log('loaded');
 
 					// Full list of configuration options available here:
 					// https://github.com/hakimel/reveal.js#configuration
 					Reveal.initialize({
-						width: 1020,
+						// The "normal" size of the presentation, aspect ratio will be preserved
+						// when the presentation is scaled to fit different resolutions. Can be
+						// specified using percentage units.
+						width: 960,
 						height: 720,
+						margin: 0.1, // Factor of the display size that should remain empty around the content
+						minScale: 0.2, // Bounds for smallest/largest possible scale to apply to content
+						maxScale: 1.0, // Bounds for smallest/largest possible scale to apply to content
 						controls: true,
 						progress: false,
 						history: true,
