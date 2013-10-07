@@ -581,7 +581,7 @@ class WP_Present {
 								</div>
 							</div>
 							<div class="widget-inside" style="display: none;">
-																	<input class="slide-id" id="input-<?php echo $slide_id; ?>" type="text" value="<?php echo $slide_id; ?>"></input>
+								<input class="slide-id" id="input-<?php echo $slide_id; ?>" type="hidden" value="<?php echo $slide_id; ?>"></input>
 								<div class='widget-preview'>
 									<?php the_excerpt(); ?>
 								</div>
