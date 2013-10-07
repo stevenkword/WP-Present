@@ -580,7 +580,12 @@ class WP_Present {
 								</div>
 							</div>
 							<div class="widget-inside" style="display: none;">
-								<div class='widget-preview'><?php the_excerpt(); ?></div>
+								<div class='widget-preview'>
+									<?php the_excerpt(); ?>
+									<form id="form-slide-<?php echo $slide_id; ?>">
+										<textarea><?php echo $slide_id; ?></textarea>
+									</form>
+								</div>
 								<div class="widget-control-actions">
 									<div class="alignleft">
 									<a class="widget-control-remove" href="#remove">Delete</a> |
