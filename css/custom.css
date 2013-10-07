@@ -34,6 +34,8 @@ body.admin-bar .reveal{
 }
 
 body.reveal{ text-align: center; }
-body.mceContentBody.reveal { margin: 20px; }
-
-//.reveal section{ border: 2px solid red; }
+body.mceContentBody.reveal {
+	margin: 50px auto;
+	width: 960px;
+	zoom: 0.6;
+}

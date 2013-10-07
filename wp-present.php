@@ -869,7 +869,7 @@ class WP_Present {
 		//}
 
 		$post_id = $_REQUEST[ 'id' ];
-		$safe_content = sanitize_text_field( $_POST[ 'content' ] );
+		$safe_content = wp_kses_post( $_POST[ 'content' ] );
 
 		$post = array(
 			'ID' => $post_id,
