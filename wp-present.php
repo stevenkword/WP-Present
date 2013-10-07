@@ -847,7 +847,7 @@ class WP_Present {
         wp_editor( $content = '', $editor_id = 'editor_' . $this->post_type_slug, array(
 			'wpautop' => false,
             'media_buttons' => true,
-            'teeny' => true,
+            'teeny' => false,
             'textarea_rows' => '7',
             'tinymce' => array(
             	'plugins' => 'inlinepopups, fullscreen, wordpress, wplink, wpdialogs',
