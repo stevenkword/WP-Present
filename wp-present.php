@@ -93,8 +93,12 @@ class WP_Present {
 		// Setup
 		$this->plugins_url = plugins_url( '/wp-present' );
 
-		// On Activations
+		// On Activation
 		register_activation_hook( __FILE__, array( $this, 'activate' ) );
+
+		// On Dactivations
+		register_deactivation_hook( __FILE__, array( $this, 'deactivate' ) );
+
 
 		// Initialize
 		add_action( 'init', array( $this, 'action_init_register_post_type' ) );
@@ -158,6 +162,18 @@ class WP_Present {
 	 * @return null
 	 */
 	function activate() {
+		$this->action_init_register_post_type();
+		$this->action_init_register_taxonomy();
+		flush_rewrite_rules();
+	}
+
+	/**
+	 * On plugin deactivation
+	 *
+	 * @uses flush_rewrite_rules()
+	 * @return null
+	 */
+	function deactivate() {
 		flush_rewrite_rules();
 	}
 
@@ -464,7 +480,7 @@ class WP_Present {
 	 * @action save_post
 	 * @return null
 	 */
-	public function action_save_post( $post_id, $post ) {
+	public function action_save_post( $post_id ) {
 		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
 			return;
 
