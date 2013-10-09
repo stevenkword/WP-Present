@@ -464,7 +464,7 @@ class WP_Present {
 	 * @action save_post
 	 * @return null
 	 */
-	public function action_save_post( $post_id, $post ) {
+	public function action_save_post( $post_id ) {
 		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
 			return;
 
@@ -870,15 +870,21 @@ class WP_Present {
 		//if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], $this->nonce_field ) ) {
 			//wp_die("No naughty business please");
 		//}
+		global $post;
 
 		$post_id = $_REQUEST[ 'id' ];
-		$safe_content = wp_kses_post( $_POST[ 'content' ] );
+		$safe_content = wp_kses_post( $_REQUEST[ 'content' ] );
 
-		$post = array(
+		$updated_post = array(
 			'ID' => $post_id,
 			'post_content' => $safe_content,
 		);
-		wp_update_post( $post );
+		wp_update_post( $updated_post );
+
+		$post = get_post( $post_id );
+		setup_postdata( $post );
+		the_excerpt();
+		wp_reset_postdata();
 
 		die();
 	}

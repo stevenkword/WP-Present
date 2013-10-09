@@ -37,7 +37,7 @@ jQuery(document).ready(function($) {
 		$( "#dialog" ).dialog({
 		  autoOpen: true,
 		  width: 600,
-		  height: 450,
+		  height: 600,
 		  modal: false,
 		  buttons: {
 			"Save": function() {
@@ -48,9 +48,9 @@ jQuery(document).ready(function($) {
 					url: ajaxurl + '?action=update_slide&id=' + widgetID,
 					type: 'POST',
 				  	data: jQuery.param(params),
-				  	success: function(contentEditor) {
-						// Return the value from the editor
-						$widgetPreview.html( editorContents );
+				  	success: function(result) {
+						// Return the excerpt from the editor
+						$widgetPreview.html( result );
 				  }
 				});
 				closeModal();
