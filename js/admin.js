@@ -20,6 +20,23 @@ jQuery(document).ready(function($) {
 //		tinymce.execCommand('mceAddControl',true,'editor_slide');
 	}
 
+
+	/* Column click columns */
+	function activate_column( $col ) {
+		$('.widget-title').css('background', '');
+		$('.widget-title').removeClass('active');
+		//if there are no active columns.
+		$col.css('background', 'cyan');
+		$col.addClass('active');
+	}
+	activate_column( $('#col-1').children('.widget-top').children('.widget-title') );
+
+	$('.column').children('.widget-top').children('.widget-title').on('click', function() {
+		$col = $(this);
+		activate_column($col);
+	});
+
+
 	$('#add-button, .widget-control-edit').on('click', function(e) {
 
 		e.preventDefault();
