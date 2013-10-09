@@ -22,24 +22,22 @@ jQuery(document).ready(function($) {
 
 
 	/* Column click columns */
-	function activate_column( $col ) {
+	function activateColumn( $col ) {
 		$('.widget-title').css('background', '');
 		$('.widget-title').removeClass('active');
 		//if there are no active columns.
 		$col.css('background', 'cyan');
 		$col.addClass('active');
 	}
-	activate_column( $('#col-1').children('.widget-top').children('.widget-title') );
+	activateColumn( $('#col-1').children('.widget-top').children('.widget-title') );
 
 	$('.column').children('.widget-top').children('.widget-title').on('click', function() {
 		$col = $(this);
-		activate_column($col);
+		activateColumn($col);
 	});
 
 
-	$('#add-button, .widget-control-edit').on('click', function(e) {
-
-		e.preventDefault();
+	$('.widget-control-edit').on('click', function(e) {
 
 		$button = $(this);
 
@@ -109,6 +107,100 @@ jQuery(document).ready(function($) {
 		});
 	});
 
+	$('#add-button').on('click', function(e) {
+
+		e.preventDefault();
+
+		$activeColumn = $('.widget-title.active').parent('.widget-top').parent('.column');
+		$activeColumn.css('background', 'lime');
+		console.log($activeColumn);
+
+
+		$button = $(this);
+
+		var $parentWidget = $button.parents('.widget');
+		var $widgetPreview = $parentWidget.find('.widget-preview');
+
+		// Send the contents from the widget to the editor
+		var contentEditor  = $widgetPreview.html();
+		var widgetID = $parentWidget.find('.slide-id').val();
+
+		$('#editor_slide-tmce').click(); //Necessary on subsequent loads of the editor
+		$( "#dialog" ).dialog({
+		  autoOpen: true,
+		  width: 600,
+		  height: 600,
+		  modal: false,
+		  buttons: {
+			"Save": function() {
+				var editorContents = tinymce.get('editor_slide').getContent();
+				var params = { content:editorContents };
+				// Send the contents of the existing post
+				$.ajax({
+					url: ajaxurl + '?action=new_slide&presentation=' + presentation,
+					type: 'POST',
+				  	data: jQuery.param(params),
+				  	success: function(result) {
+						alert('you have to refresh');
+						// Return the excerpt from the editor
+						$widgetPreview.html( result );
+				  }
+				});
+				updateColumns();
+				updatePresentation();
+				closeModal();
+			},
+			Cancel: function() {
+				closeModal();
+			}
+		  },
+		  create: function() {
+				tinymce.execCommand('mceRemoveControl',true,'editor_slide');
+				tinymce.execCommand('mceAddControl',true,'editor_slide');
+
+//				tinymce.ScriptLoader.load('customizer.js');
+
+				// Load a script from a specific URL using the global script loader
+		        //tinymce.ScriptLoader.load('http://localhost/sandbox/wp-includes/js/admin-bar.min.js');
+
+		  },
+		  open: function() {
+
+				// Load the contents of the existing post
+				$.ajax({
+				  url: ajaxurl + '?action=get_slide&id=' + widgetID,
+				  success: function(contentEditor) {
+				  	tinymce.get('editor_slide').setContent(contentEditor);
+				  }
+				});
+
+				// Hack for getting the reveal class added to tinymce editor body
+				var $editorIframe = $('#editor_slide_ifr').contents();
+				$editorIframe.find('body').addClass('reveal');
+
+
+
+		  },
+		  close: function() {
+				closeModal();
+		  }
+		});
+	});
+
+	function updatePresentation( $description ) {
+		var params = { content:$('#description').val() };
+		$.ajax({
+			url: ajaxurl + '?action=update_presentation&id=' + presentation,
+			type: 'POST',
+			data: jQuery.param(params),
+			success: function(result) {
+				// Return the excerpt from the editor
+				//$widgetPreview.html( result );
+				console.log('presentation updated');
+			}
+		});
+	};
+
 	function closeModal() {
 		tinymce.execCommand('mceRemoveControl',true,'editor_slide');
 		$( '#dialog' ).dialog( "close" );
@@ -122,9 +214,6 @@ jQuery(document).ready(function($) {
 	});
 
 
-});
-
-jQuery(document).ready(function($){
 
 	function backfillSlides() {
 		var numSlides = WPP_NumSlides;
@@ -175,19 +264,10 @@ jQuery(document).ready(function($){
 		var columns = { }; // Creates a new object
 		var i = 1;
 		$( '.column-inner' ).each(function( index ) {
-
 			var $order = $(this).sortable( "toArray" );
 			columns['col-'+i] = $order;
 			i++;
-
-//			console.log( 'index ' + index );
-//			console.log( 'order ' + $order );
-//			console.log(columns);
 		});
-
-
-
-		//console.log(columns);
 		var encoded = JSON.stringify( columns );
 		$('#description').val(encoded);
 	}
@@ -195,7 +275,7 @@ jQuery(document).ready(function($){
 	function consolidateColumns(){ // AKA "Tidy Button"
 
 		var numCols = $('.column').length;
-//		console.log(numCols);
+		// console.log(numCols);
 
 		$('.column').each(function(outerIndex){
 

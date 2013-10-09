@@ -143,6 +143,8 @@ class WP_Present {
 		// AJAX
 		add_action( 'wp_ajax_get_slide', array( $this, 'action_wp_ajax_get_slide' ) );
 		add_action( 'wp_ajax_update_slide', array( $this, 'action_wp_ajax_update_slide' ) );
+		add_action( 'wp_ajax_new_slide', array( $this, 'action_wp_ajax_new_slide' ) );
+		add_action( 'wp_ajax_update_presentation', array( $this, 'action_wp_ajax_update_presentation' ) );
 	}
 
 	/**
@@ -455,6 +457,7 @@ class WP_Present {
 		wp_enqueue_script( 'jquery-ui-dialog' );
 
 		wp_enqueue_script( 'wp-present-admin', $this->plugins_url . '/js/admin.js', array( 'jquery' ), $this->scripts_version, true );
+		wp_localize_script( 'wp-present-admin', 'presentation', $_REQUEST['tag_ID'] );
 	}
 
 	/**
@@ -650,7 +653,7 @@ class WP_Present {
 			<th scope="row" valign="top">
 				<p class="action-buttons">
 					<?php submit_button( __('Update'), 'primary', 'submit', $wrap = false ); ?>
-					<button id="add-button"><a href="javascript:void(0);" class="thickbox2" title="Add New <?php  echo $this->post_type_singular_name; ?>">Add New <?php  echo $this->post_type_singular_name; ?></a></button>
+					<button id="add-button"><a href="javascript:void(0);" class="" title="Add New <?php  echo $this->post_type_singular_name; ?>">Add New <?php  echo $this->post_type_singular_name; ?></a></button>
 					<button id="tidy-button"><a target="_blank" href="javascript: void(0);">Tidy</a></button>
 					<button id="view-button"><a target="_blank" href="<?php echo get_term_link( $term, $taxonomy );?>">View <?php echo $this->taxonomy_singular_name; ?></a></button>
 				</p>
@@ -896,6 +899,34 @@ class WP_Present {
 		die();
 	}
 
+	function action_wp_ajax_new_slide() {
+
+		//if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], $this->nonce_field ) ) {
+			//wp_die("No naughty business please");
+		//}
+		global $post;
+		$safe_content = wp_kses_post( $_REQUEST[ 'content' ] );
+
+		$presentation = get_term_by( 'id', $_REQUEST['presentation'], $this->taxonomy_slug );
+
+		$new_post = array(
+			'post_title' => sanitize_title($safe_content),
+			'post_content' => $safe_content,
+			'post_status' => 'publish',
+			'post_type' => $this->post_type_slug
+		);
+
+		$post_id = wp_insert_post( $new_post );
+		wp_set_object_terms( $post_id , $presentation->name, $this->taxonomy_slug );
+
+		$post = get_post( $post_id );
+		setup_postdata( $post );
+		the_excerpt();
+		wp_reset_postdata();
+
+		die();
+	}
+
 	function action_wp_ajax_get_slide() {
 
 		//if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], $this->nonce_field ) ) {
@@ -905,6 +936,24 @@ class WP_Present {
 		$post_id = $_REQUEST[ 'id' ];
 		$post = get_post( $post_id );
 		echo $post->post_content;
+		die();
+	}
+
+	function action_wp_ajax_update_presentation() {
+
+		//if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], $this->nonce_field ) ) {
+			//wp_die("No naughty business please");
+		//}
+
+		$presentation_id = $_REQUEST[ 'id' ];
+		$safe_content = wp_kses_post( $_REQUEST[ 'content' ] );
+
+		$updated_presentation = array(
+			'description' => $safe_content
+		);
+
+		wp_update_term( $presentation_id, $this->taxonomy_slug, $updated_presentation );
+
 		die();
 	}
 
