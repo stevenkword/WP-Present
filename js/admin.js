@@ -42,7 +42,7 @@ jQuery(document).ready(function($) {
 		  buttons: {
 			"Save": function() {
 				var editorContents = tinymce.get('editor_slide').getContent();
-				var params = { content:editorContents, height:1050 };
+				var params = { content:editorContents };
 				// Send the contents of the existing post
 				$.ajax({
 					url: ajaxurl + '?action=update_slide&id=' + widgetID,

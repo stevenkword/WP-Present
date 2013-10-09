@@ -880,14 +880,9 @@ class WP_Present {
 			'dfw' => false, // replace the default fullscreen with DFW (needs specific DOM elements and css)
             'tinymce' => array(
             	'plugins' => 'inlinepopups, fullscreen, wordpress, wplink, wpdialogs',
-             )
+             ),
 			'quicktags' => true // load Quicktags, can be used to pass settings directly to Quicktags using an array()
 		) );
-
-
-
-
-        ) );
     }
 
 /* AJAX
