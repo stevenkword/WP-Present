@@ -606,28 +606,12 @@ class WP_Present {
 								</div>
 								<div class="widget-control-actions">
 									<div class="alignleft">
-									<a class="widget-control-remove" href="#remove">Delete</a> |
-									<a class="widget-control-close" href="#close">Close</a>
+										<a class="widget-control-edit" href="<?php echo get_edit_post_link( get_the_ID() ); ?>" target="_blank">Edit</a> |
+										<a class="widget-control-remove" href="#remove">Delete</a>
 									</div>
-									<div class="alignright">
-										<input type="submit" name="savewidget" id="widget-recent-posts-2-savewidget" class="button button-primary widget-control-save right" value="View"><span class="spinner"></span>
-									</div>
-									<br class="clear">
-								</div>
-								<div class="widget-control-actions">
-									<div class="alignleft">
-										<!--
-										<a class="widget-control-remove" href="#remove">Delete</a> |
-										<a class="widget-control-close" href="#close">Close</a>
-										-->
-										<a class="widget-control-edit" href="<?php echo get_edit_post_link( get_the_ID() ); ?>" target="_blank">Edit</a>
+									<div class="widget-control-actions alignright">
 										<a class="widget-control-view" href="<?php echo get_permalink( get_the_ID() ); ?>" target="_blank">View</a>
 									</div>
-									<!--
-									<div class="alignright">
-										<input type="submit" name="savewidget" id="widget-recent-posts-2-savewidget" class="button button-primary widget-control-save right" value="Save">			<span class="spinner"></span>
-									</div>
-									-->
 									<br class="clear">
 								</div>
 							</div>
