@@ -868,13 +868,25 @@ class WP_Present {
 		//$link = admin_url('admin-ajax.php?action=my_user_vote&post_id=' . $post->ID . '&nonce=' . wp_create_nonce( $this->nonce_field) );
 
         wp_editor( $content = '', $editor_id = 'editor_' . $this->post_type_slug, array(
-			'wpautop' => false,
-            'media_buttons' => true,
-            'teeny' => false,
-            'textarea_rows' => '7',
+			'wpautop' => false, // use wpautop?
+			'media_buttons' => true, // show insert/upload button(s)
+			'textarea_name' => $editor_id, // set the textarea name to something different, square brackets [] can be used here
+			'textarea_rows' => 20,
+			'tabindex' => '',
+			'tabfocus_elements' => ':prev,:next', // the previous and next element ID to move the focus to when pressing the Tab key in TinyMCE
+			'editor_css' => '', // intended for extra styles for both visual and Text editors buttons, needs to include the <style> tags, can use "scoped".
+			'editor_class' => '', // add extra class(es) to the editor textarea
+			'teeny' => false, // output the minimal editor config used in Press This
+			'dfw' => false, // replace the default fullscreen with DFW (needs specific DOM elements and css)
             'tinymce' => array(
             	'plugins' => 'inlinepopups, fullscreen, wordpress, wplink, wpdialogs',
              )
+			'quicktags' => true // load Quicktags, can be used to pass settings directly to Quicktags using an array()
+		) );
+
+
+
+
         ) );
     }
 
