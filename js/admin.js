@@ -52,7 +52,7 @@ var SlideManager
 			$('.widget-title').removeClass('active');
 
 			// Select the given column
-			$col.css('background', '#2ea2cc');
+			$col.css('background-color', '#2ea2cc').css('color','#ffffff');
 			$col.addClass('active');
 		},
 
@@ -107,10 +107,10 @@ var slideManager = new SlideManager();
 jQuery(document).ready(function($) {
 
 	function activateColumn( $col ) {
-		$('.widget-title').css('background', '');
+		$('.widget-title').css('background-color', '').css('color', 'inherit');
 		$('.widget-title').removeClass('active');
 		//if there are no active columns.
-		$col.css('background', '#2ea2cc');
+		$col.css('background-color', '#2ea2cc').css('color','#ffffff');
 		$col.addClass('active');
 	}
 
