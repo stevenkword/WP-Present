@@ -131,8 +131,10 @@ jQuery(document).ready(function($) {
 					type: 'POST',
 				  	data: jQuery.param(params),
 				  	success: function(result) {
-						alert('you have to refresh');
+						//alert('you have to refresh');
 						$activeColumn.css('background','lime');
+						$activeColumn.append(result);
+						updateColumns();
 				  }
 				});
 				updateColumns();

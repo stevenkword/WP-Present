@@ -557,6 +557,46 @@ class WP_Present {
 		return $term_description =  ! empty( $obj->description ) ? json_decode( $obj->description, $asArray = true ) : '';
 	}
 
+
+
+	function admin_render_slide( $post ) {
+		setup_postdata( $post );
+		?>
+		<div id="slide-<?php the_ID(); ?>" class=" portlet widget">
+			<div class="widget-top">
+				<div class="widget-title-action">
+					<a class="widget-action hide-if-no-js" href="#available-widgets"></a>
+					<a class="widget-control-edit hide-if-js" href="">
+						<span class="edit">Edit</span>
+						<span class="add">Add</span>
+						<span class="screen-reader-text"><?php the_title(); ?></span>
+					</a>
+			</div>
+				<div class="widget-title">
+					<h4><?php the_title(); ?><span class="in-widget-title"></span></h4>
+				</div>
+			</div>
+			<div class="widget-inside" style="display: none;">
+				<input class="slide-id" id="input-<?php echo $slide_id; ?>" type="hidden" value="<?php echo $slide_id; ?>"></input>
+				<div class='widget-preview'>
+					<?php the_excerpt(); ?>
+				</div>
+				<div class="widget-control-actions">
+					<div class="alignleft">
+						<a class="widget-control-edit" href="<?php echo get_edit_post_link( get_the_ID() ); ?>" target="_blank">Edit</a> |
+						<a class="widget-control-remove" href="#remove">Delete</a>
+					</div>
+					<div class="widget-control-actions alignright">
+						<a class="widget-control-view" href="<?php echo get_permalink( get_the_ID() ); ?>" target="_blank">View</a>
+					</div>
+					<br class="clear">
+				</div>
+			</div>
+		</div>
+		<?php
+		wp_reset_postdata();
+	}
+
 	/* Output the columns in the admin edit taxonomy page
 	 *
 	 * @return
@@ -587,42 +627,8 @@ class WP_Present {
 					foreach( $slides as $key => $slide ) {
 						list( $rubbish, $slide_id ) =  explode( '-', $slide );
 						$post = get_post( $slide_id );
-						setup_postdata( $post );
-						?>
-						<div id="slide-<?php the_ID(); ?>" class=" portlet widget">
-							<div class="widget-top">
-								<div class="widget-title-action">
-									<a class="widget-action hide-if-no-js" href="#available-widgets"></a>
-									<a class="widget-control-edit hide-if-js" href="">
-										<span class="edit">Edit</span>
-										<span class="add">Add</span>
-										<span class="screen-reader-text"><?php the_title(); ?></span>
-									</a>
-							</div>
-								<div class="widget-title">
-									<h4><?php the_title(); ?><span class="in-widget-title"></span></h4>
-								</div>
-							</div>
-							<div class="widget-inside" style="display: none;">
-								<input class="slide-id" id="input-<?php echo $slide_id; ?>" type="hidden" value="<?php echo $slide_id; ?>"></input>
-								<div class='widget-preview'>
-									<?php the_excerpt(); ?>
-								</div>
-								<div class="widget-control-actions">
-									<div class="alignleft">
-										<a class="widget-control-edit" href="<?php echo get_edit_post_link( get_the_ID() ); ?>" target="_blank">Edit</a> |
-										<a class="widget-control-remove" href="#remove">Delete</a>
-									</div>
-									<div class="widget-control-actions alignright">
-										<a class="widget-control-view" href="<?php echo get_permalink( get_the_ID() ); ?>" target="_blank">View</a>
-									</div>
-									<br class="clear">
-								</div>
-							</div>
-						</div>
-						<?php
+						$this->admin_render_slide( $post );
 					}
-					wp_reset_postdata();
 					?>
 					</div><!--/.column-inner-->
 
@@ -935,9 +941,7 @@ class WP_Present {
 		wp_set_object_terms( $post_id , $presentation->name, $this->taxonomy_slug );
 
 		$post = get_post( $post_id );
-		setup_postdata( $post );
-		the_excerpt();
-		wp_reset_postdata();
+		$this->admin_render_slide( $post );
 
 		die();
 	}
