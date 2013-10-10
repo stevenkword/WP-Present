@@ -910,7 +910,7 @@ class WP_Present {
 		$presentation = get_term_by( 'id', $_REQUEST['presentation'], $this->taxonomy_slug );
 
 		$new_post = array(
-			'post_title' => sanitize_title($safe_content),
+			'post_title' => strip_tags($safe_content),
 			'post_content' => $safe_content,
 			'post_status' => 'publish',
 			'post_type' => $this->post_type_slug

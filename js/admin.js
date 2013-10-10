@@ -39,6 +39,8 @@ jQuery(document).ready(function($) {
 
 	$('.widget-control-edit').on('click', function(e) {
 
+		e.preventDefault();
+
 		$button = $(this);
 
 		var $parentWidget = $button.parents('.widget');
@@ -55,7 +57,7 @@ jQuery(document).ready(function($) {
 		  height: 600,
 		  modal: false,
 		  buttons: {
-			"Save": function() {
+			"Update": function() {
 				var editorContents = tinymce.get('editor_slide').getContent();
 				var params = { content:editorContents };
 				// Send the contents of the existing post
@@ -132,7 +134,7 @@ jQuery(document).ready(function($) {
 		  height: 600,
 		  modal: false,
 		  buttons: {
-			"Save": function() {
+			"Publish": function() {
 				var editorContents = tinymce.get('editor_slide').getContent();
 				var params = { content:editorContents };
 				// Send the contents of the existing post
