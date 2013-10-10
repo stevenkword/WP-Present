@@ -388,13 +388,13 @@ jQuery(document).ready(function($) {
 	// Sortables and such
 	function uiSetup() {
 		var self = this;
-		
+
 		// Make the outer container resizeable
 		$( "#outer-container" ).resizable();
 
 		// Resize the container assuming only 1 slide per columnx
 		// 25px is to allow for the padding between cells
-		$('#container').width( ( $( ".portlet" ).length ) * ($( ".column" ).width()+25) );
+		//$('#container').width( ( $( ".portlet" ).length ) * ($( ".column" ).width()+25) );
 
 		backfillSlides();
 
