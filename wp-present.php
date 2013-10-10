@@ -248,6 +248,8 @@ class WP_Present {
 	 * @return null
 	 */
 	function action_init_editor_styles() { // also should peep at mce_css
+
+		//If not page now tax or slide : return;
 		remove_editor_styles();
 		add_editor_style( plugins_url( '/wp-present/css/reset.css' ) );
 		add_editor_style( plugins_url( '/wp-present/js/reveal.js/css/theme/moon.css' ) );

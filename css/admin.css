@@ -4,10 +4,10 @@
  */
 
 /* Hide the things on the taxonomy screen */
-/*
-.form-table tr { display: none; }
+
+.form-field { display: none; }
 .form-field.form-required { display: block; }
-*/
+
 
 
 .widget-inside { text-align: center; }
