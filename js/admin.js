@@ -114,7 +114,7 @@ jQuery(document).ready(function($) {
 		e.preventDefault();
 
 		$activeColumn = $('.widget-title.active').parent('.widget-top').parent('.column');
-		$activeColumn.css('background', 'lime');
+//		$activeColumn.css('background', 'lime');
 		console.log($activeColumn);
 
 
