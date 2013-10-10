@@ -168,7 +168,7 @@ jQuery(document).ready(function($) {
 	}
 
 	// AKA "Tidy Button"
-	function consolidateColumns(){ 
+	function consolidateColumns(){
 
 		var numCols = $('.column').length;
 		// console.log(numCols);
@@ -217,7 +217,7 @@ jQuery(document).ready(function($) {
 		$('.column').children('.widget-top').children('.widget-title').on('click', function() {
 			$col = $(this);
 			activateColumn($col);
-		});		
+		});
 	}
 
 	// Bind Edit button
@@ -250,10 +250,6 @@ jQuery(document).ready(function($) {
 							type: 'POST',
 						  	data: jQuery.param(params),
 						  	success: function(result) {
-								// Return the excerpt from the editor
-								$widgetPreview.html( result );
-						  },
-						  always: function(result) {
 								// Return the excerpt from the editor
 								$widgetPreview.html( result );
 						  }
@@ -295,22 +291,22 @@ jQuery(document).ready(function($) {
 	// Bind Delete button
 	function widgetButtonDelete() {
 		$('.widget-control-remove').on('click', function(e) {
-		e.preventDefault();
+			e.preventDefault();
 
-		var $button = $(this);
-		var $parentWidget = $button.parents('.widget');
-		var widgetID = $parentWidget.find('.slide-id').val();
-		var params = null;
+			var $button = $(this);
+			var $parentWidget = $button.parents('.widget');
+			var widgetID = $parentWidget.find('.slide-id').val();
+			var params = null;
 
-		$.ajax({
-			url: ajaxurl + '?action=delete_slide&id=' + widgetID,
-			type: 'POST',
-			//data: jQuery.param(params),
-			success: function(result) {
-				$parentWidget.remove();
-				updateColumns();
-		  }
-		});
+			$.ajax({
+				url: ajaxurl + '?action=delete_slide&id=' + widgetID,
+				type: 'POST',
+				//data: jQuery.param(params),
+				success: function(result) {
+					$parentWidget.remove();
+					updateColumns();
+				}
+			});
 		});
 	}
 
@@ -355,6 +351,8 @@ jQuery(document).ready(function($) {
 				tinymce.execCommand('mceAddControl',true,'editor_slide');
 		  },
 		  open: function() {
+				// Clear the editor
+				tinymce.get('editor_slide').setContent('');
 				// Hack for getting the reveal class added to tinymce editor body
 				var $editorIframe = $('#editor_slide_ifr').contents();
 				$editorIframe.find('body').addClass('reveal');
@@ -365,7 +363,7 @@ jQuery(document).ready(function($) {
 		});
 		});
 	}
-	
+
 	// Bind Tidy button
 	function widgetButtonTidy() {
 		$('#tidy-button').click(function(e) {
@@ -417,7 +415,7 @@ jQuery(document).ready(function($) {
 
 		// Append an inner column to each column that doesn't contain any slides.
 		jQuery('.column' ).not(":has(div.column-inner)").append('<div class="column-inner ui-sortable"></div>');
-		
+
 		$( ".column-inner" ).sortable({
 			connectWith: ".column-inner",
 			stop: function( event, ui ) {
@@ -425,10 +423,10 @@ jQuery(document).ready(function($) {
 			}
 		});
 	}
-	
+
 	widgetButtonEdit();
 	widgetButtonDelete();
-	widgetButtonAdd();	
+	widgetButtonAdd();
 	widgetButtonTidy();
 	widgetButtonExpand();
 	uiSetup();
