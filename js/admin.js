@@ -112,18 +112,8 @@ jQuery(document).ready(function($) {
 
 		e.preventDefault();
 
-		$activeColumn = $('.widget-title.active').parent('.widget-top').parent('.column');
-//		$activeColumn.css('background', 'lime');
-		console.log($activeColumn);
-
-
 		var $button = $(this);
-		var $parentWidget = $button.parents('.widget');
-		var $widgetPreview = $parentWidget.find('.widget-preview');
-
-		// Send the contents from the widget to the editor
-		var contentEditor  = $widgetPreview.html();
-		var widgetID = $parentWidget.find('.slide-id').val();
+		var $activeColumn = $('.widget-title.active').parent('.widget-top').parent('.column').children('.column-inner');
 
 		$('#editor_slide-tmce').click(); //Necessary on subsequent loads of the editor
 		$( "#dialog" ).dialog({
@@ -142,12 +132,11 @@ jQuery(document).ready(function($) {
 				  	data: jQuery.param(params),
 				  	success: function(result) {
 						alert('you have to refresh');
-						// Return the excerpt from the editor
-						$widgetPreview.html( result );
+						$activeColumn.css('background','lime');
 				  }
 				});
 				updateColumns();
-				updatePresentation();
+				//updatePresentation();
 				closeModal();
 			},
 			Cancel: function() {
@@ -157,29 +146,11 @@ jQuery(document).ready(function($) {
 		  create: function() {
 				tinymce.execCommand('mceRemoveControl',true,'editor_slide');
 				tinymce.execCommand('mceAddControl',true,'editor_slide');
-
-//				tinymce.ScriptLoader.load('customizer.js');
-
-				// Load a script from a specific URL using the global script loader
-		        //tinymce.ScriptLoader.load('http://localhost/sandbox/wp-includes/js/admin-bar.min.js');
-
 		  },
 		  open: function() {
-
-				// Load the contents of the existing post
-				$.ajax({
-				  url: ajaxurl + '?action=get_slide&id=' + widgetID,
-				  success: function(contentEditor) {
-				  	tinymce.get('editor_slide').setContent(contentEditor);
-				  }
-				});
-
 				// Hack for getting the reveal class added to tinymce editor body
 				var $editorIframe = $('#editor_slide_ifr').contents();
 				$editorIframe.find('body').addClass('reveal');
-
-
-
 		  },
 		  close: function() {
 				closeModal();

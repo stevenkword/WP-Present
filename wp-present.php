@@ -960,10 +960,10 @@ class WP_Present {
 		//}
 
 		$presentation_id = $_REQUEST[ 'id' ];
-		$safe_content = wp_kses_post( $_REQUEST[ 'content' ] );
+		$safe_description = sanitize_text_field( $_REQUEST[ 'content' ] );
 
 		$updated_presentation = array(
-			'description' => $safe_content
+			'description' => $safe_description
 		);
 
 		wp_update_term( $presentation_id, $this->taxonomy_slug, $updated_presentation );
