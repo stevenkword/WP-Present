@@ -11,17 +11,57 @@ jQuery('#description').closest('.form-field').hide();
 jQuery('.column-description').hide();
 */
 
+var SlideManager
+(function($) {
+
+	SlideManager = function() {
+		this.init();
+		return this;
+	}
+
+	SlideManager.prototype = {
+		init: function() {
+
+			// Select the first column on load
+			this.activateColumn( $('#col-1').children('.widget-top').children('.widget-title') );
+		},
+
+		/**
+		 * Make the column the target for adding new columns
+		 */
+		activateColumn: function ( $col ) {
+			// Remove the active class from all columns
+			$('.widget-title').css('background', '');
+			$('.widget-title').removeClass('active');
+			// Select the given column
+			$col.css('background', 'cyan');
+			$col.addClass('active');
+		},
+
+		/**
+		 * Whatever
+		 */
+		whatever: function (pushstate) {
+
+		}
+
+	};
+
+})(jQuery);
+var slideManager = new SlideManager();
+
 // jQuery Modal Things
 jQuery(document).ready(function($) {
 
-	if( 'undefined' == typeof(tinymce) ) {
-//		alert( 'tinymce init' );
-//		tinymce.execCommand('mceRemoveControl',true,'editor_slide');
-//		tinymce.execCommand('mceAddControl',true,'editor_slide');
-	}
+	var MyPlugin = function(element) {
+    	var elem = $(element);
+       	var obj = this;
 
-
-	/* Column click columns */
+       	// Public method
+       	this.publicMethod = function() {
+        	console.log('publicMethod() called!');
+       	};
+   };
 	function activateColumn( $col ) {
 		$('.widget-title').css('background', '');
 		$('.widget-title').removeClass('active');
@@ -29,7 +69,6 @@ jQuery(document).ready(function($) {
 		$col.css('background', 'cyan');
 		$col.addClass('active');
 	}
-	activateColumn( $('#col-1').children('.widget-top').children('.widget-title') );
 
 	$('.column').children('.widget-top').children('.widget-title').on('click', function() {
 		$col = $(this);
@@ -82,12 +121,6 @@ jQuery(document).ready(function($) {
 		  create: function() {
 				tinymce.execCommand('mceRemoveControl',true,'editor_slide');
 				tinymce.execCommand('mceAddControl',true,'editor_slide');
-
-//				tinymce.ScriptLoader.load('customizer.js');
-
-				// Load a script from a specific URL using the global script loader
-		        //tinymce.ScriptLoader.load('http://localhost/sandbox/wp-includes/js/admin-bar.min.js');
-
 		  },
 		  open: function() {
 
@@ -195,20 +228,25 @@ jQuery(document).ready(function($) {
 		});
 	};
 
+	/**
+	 * Close Modal
+	 */
 	function closeModal() {
 		tinymce.execCommand('mceRemoveControl',true,'editor_slide');
 		$( '#dialog' ).dialog( "close" );
-//		console.log('tinymce shutdown');
 	}
 
-
-	// Expand slide details
+	/**
+	 * Expand slide details
+	 */
 	$('.widget-title-action').on('click', function(e) {
 		$( this ).parents('.widget').children('.widget-inside').toggle();
 	});
 
 
-
+	/**
+	 * Backfill Slides
+	 */
 	function backfillSlides() {
 		var numSlides = WPP_NumSlides;
 		var numExisting = $('#container > .column').size();
@@ -224,7 +262,7 @@ jQuery(document).ready(function($) {
 	// Make the outer container resizeable
 	$( "#outer-container" ).resizable();
 
-	// Resize the container assuming only 1 slide per column
+	// Resize the container assuming only 1 slide per columnx
 	// 25px is to allow for the padding between cells
 	$('#container').width( ( $( ".portlet" ).length ) * ($( ".column" ).width()+25) );
 
