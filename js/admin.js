@@ -167,7 +167,8 @@ jQuery(document).ready(function($) {
 		updatePresentation();
 	}
 
-	function consolidateColumns(){ // AKA "Tidy Button"
+	// AKA "Tidy Button"
+	function consolidateColumns(){ 
 
 		var numCols = $('.column').length;
 		// console.log(numCols);
@@ -210,14 +211,16 @@ jQuery(document).ready(function($) {
 			})
 		});
 		updateColumns();
-	} // end consolidate
+	}
 
-	$('.column').children('.widget-top').children('.widget-title').on('click', function() {
-		$col = $(this);
-		activateColumn($col);
-	});
+	function columnHandle(){
+		$('.column').children('.widget-top').children('.widget-title').on('click', function() {
+			$col = $(this);
+			activateColumn($col);
+		});		
+	}
 
-	// Edit slide
+	// Bind Edit button
 	function widgetButtonEdit() {
 		$('.widget-control-edit').on('click', function(e) {
 
@@ -288,10 +291,32 @@ jQuery(document).ready(function($) {
 				});
 		});
 	}
-	widgetButtonEdit();
 
-	// Add Slide
-	$('#add-button').on('click', function(e) {
+	// Bind Delete button
+	function widgetButtonDelete() {
+		$('.widget-control-remove').on('click', function(e) {
+		e.preventDefault();
+
+		var $button = $(this);
+		var $parentWidget = $button.parents('.widget');
+		var widgetID = $parentWidget.find('.slide-id').val();
+		var params = null;
+
+		$.ajax({
+			url: ajaxurl + '?action=delete_slide&id=' + widgetID,
+			type: 'POST',
+			//data: jQuery.param(params),
+			success: function(result) {
+				$parentWidget.remove();
+				updateColumns();
+		  }
+		});
+		});
+	}
+
+	// Bind Add button
+	function widgetButtonAdd() {
+		$('#add-button').on('click', function(e) {
 
 		e.preventDefault();
 
@@ -338,76 +363,74 @@ jQuery(document).ready(function($) {
 				closeModal();
 		  }
 		});
-	});
-
-	// Delete Slide
-	$('.widget-control-remove').on('click', function(e) {
-		e.preventDefault();
-
-		var $button = $(this);
-		var $parentWidget = $button.parents('.widget');
-		var widgetID = $parentWidget.find('.slide-id').val();
-		var params = null;
-
-		$.ajax({
-			url: ajaxurl + '?action=delete_slide&id=' + widgetID,
-			type: 'POST',
-			//data: jQuery.param(params),
-			success: function(result) {
-				$parentWidget.remove();
-				updateColumns();
-		  }
 		});
-	});
+	}
+	
+	// Bind Tidy button
+	function widgetButtonTidy() {
+		$('#tidy-button').click(function(e) {
+			e.preventDefault();
+			consolidateColumns();
+			// Why does this break?
+			//updatePresentation();
+		});
+	}
 
 	/**
 	 * Expand slide details
 	 */
-	$('.widget-title-action').on('click', function(e) {
-		$( this ).parents('.widget').children('.widget-inside').toggle();
-	});
+	function widgetButtonExpand() {
+		$('.widget-title-action').on('click', function(e) {
+			$( this ).parents('.widget').children('.widget-inside').toggle();
+		});
+	}
 
-	// Make the outer container resizeable
-	$( "#outer-container" ).resizable();
+	// Sortables and such
+	function uiSetup() {
+		var self = this;
+		
+		// Make the outer container resizeable
+		$( "#outer-container" ).resizable();
 
-	// Resize the container assuming only 1 slide per columnx
-	// 25px is to allow for the padding between cells
-	$('#container').width( ( $( ".portlet" ).length ) * ($( ".column" ).width()+25) );
+		// Resize the container assuming only 1 slide per columnx
+		// 25px is to allow for the padding between cells
+		$('#container').width( ( $( ".portlet" ).length ) * ($( ".column" ).width()+25) );
 
-	backfillSlides();
+		backfillSlides();
 
-	$( ".column-inner" ).sortable({
-		connectWith: ".column-inner",
-		stop: function( event, ui ) {
-			updateColumns();
-		}
-	});
+		$( ".column-inner" ).sortable({
+			connectWith: ".column-inner",
+			stop: function( event, ui ) {
+				updateColumns();
+			}
+		});
 
-	$( "#container" ).sortable({
-		stop: function( event, ui ) {
-			updateColumns();
-		}
-	});
+		$( "#container" ).sortable({
+			stop: function( event, ui ) {
+				updateColumns();
+			}
+		});
 
-	updateColumns();
+		updateColumns();
 
-	$( ".column-inner" ).disableSelection();
+		$( ".column-inner" ).disableSelection();
 
-	// Bind tidy button
-	$('#tidy-button').click(function(e) {
-		e.preventDefault();
-		consolidateColumns();
-		// Why does this break?
-		//updatePresentation();
-	});
-
-	// Append an inner column to each column that doesn't contain any slides.
-	jQuery('.column' ).not(":has(div.column-inner)").append('<div class="column-inner ui-sortable"></div>');
-	$( ".column-inner" ).sortable({
-		connectWith: ".column-inner",
-		stop: function( event, ui ) {
-			updateColumns();
-		}
-	});
-
+		// Append an inner column to each column that doesn't contain any slides.
+		jQuery('.column' ).not(":has(div.column-inner)").append('<div class="column-inner ui-sortable"></div>');
+		
+		$( ".column-inner" ).sortable({
+			connectWith: ".column-inner",
+			stop: function( event, ui ) {
+				updateColumns();
+			}
+		});
+	}
+	
+	widgetButtonEdit();
+	widgetButtonDelete();
+	widgetButtonAdd();	
+	widgetButtonTidy();
+	widgetButtonExpand();
+	uiSetup();
+	columnHandle();
 });
