@@ -577,7 +577,7 @@ class WP_Present {
 				</div>
 			</div>
 			<div class="widget-inside" style="display: none;">
-				<input class="slide-id" id="input-<?php echo $slide_id; ?>" type="hidden" value="<?php echo $slide_id; ?>"></input>
+				<input class="slide-id" id="input-<?php the_ID(); ?>" type="hidden" value="<?php the_ID(); ?>"></input>
 				<div class='widget-preview'>
 					<?php the_excerpt(); ?>
 				</div>
@@ -879,9 +879,9 @@ class WP_Present {
 		) );
     }
 
-/* AJAX
-* * *
-*/
+	/* AJAX
+	* * *
+	*/
 
 
 	function action_wp_ajax_get_slide() {
@@ -920,6 +920,7 @@ class WP_Present {
 		die();
 	}
 
+	// Add slide
 	function action_wp_ajax_new_slide() {
 
 		//if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], $this->nonce_field ) ) {
@@ -946,6 +947,7 @@ class WP_Present {
 		die();
 	}
 
+	// Delete a slide
 	function action_wp_ajax_delete_slide() {
 
 		//if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], $this->nonce_field ) ) {

@@ -36,7 +36,7 @@ jQuery(document).ready(function($) {
 		activateColumn($col);
 	});
 
-
+	// Edit slide
 	$('.widget-control-edit').on('click', function(e) {
 
 		e.preventDefault();
@@ -67,6 +67,10 @@ jQuery(document).ready(function($) {
 				  	success: function(result) {
 						// Return the excerpt from the editor
 						$widgetPreview.html( result );
+				  },
+				  always: function(result) {
+						// Return the excerpt from the editor
+						$widgetPreview.html( result );
 				  }
 				});
 				closeModal();
@@ -91,7 +95,7 @@ jQuery(document).ready(function($) {
 				$.ajax({
 				  url: ajaxurl + '?action=get_slide&id=' + widgetID,
 				  success: function(contentEditor) {
-				  	tinymce.get('editor_slide').setContent(contentEditor);
+				  		tinymce.get('editor_slide').setContent(contentEditor);
 				  }
 				});
 
@@ -247,6 +251,8 @@ jQuery(document).ready(function($) {
 	$('#tidy-button').click(function(e) {
 		e.preventDefault();
 		consolidateColumns();
+		// Why does this break?
+		//updatePresentation();
 	});
 
 	function updateColumns() {
