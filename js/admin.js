@@ -131,14 +131,11 @@ jQuery(document).ready(function($) {
 					type: 'POST',
 				  	data: jQuery.param(params),
 				  	success: function(result) {
-						//alert('you have to refresh');
-						$activeColumn.css('background','lime');
 						$activeColumn.append(result);
 						updateColumns();
 				  }
 				});
 				updateColumns();
-				//updatePresentation();
 				closeModal();
 			},
 			Cancel: function() {
@@ -181,15 +178,14 @@ jQuery(document).ready(function($) {
 		});
 	});
 
-	function updatePresentation( $description ) {
-		var params = { content:$('#description').val() };
+	function updatePresentation() {
+		var params = { content: $('#description').val() };
 		$.ajax({
 			url: ajaxurl + '?action=update_presentation&id=' + presentation,
 			type: 'POST',
 			data: jQuery.param(params),
 			success: function(result) {
 				// Return the excerpt from the editor
-				//$widgetPreview.html( result );
 				console.log('presentation updated');
 			}
 		});
@@ -264,6 +260,9 @@ jQuery(document).ready(function($) {
 		});
 		var encoded = JSON.stringify( columns );
 		$('#description').val(encoded);
+
+		// Send this change off to ajax land
+		updatePresentation();
 	}
 
 	function consolidateColumns(){ // AKA "Tidy Button"
