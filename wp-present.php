@@ -659,8 +659,7 @@ class WP_Present {
 		<tr class="form-field hide-if-no-js">
 			<th scope="row" valign="top">
 				<p class="action-buttons">
-					<?php submit_button( __('Update'), 'primary', 'submit', $wrap = false ); ?>
-					<button id="add-button"><a href="javascript:void(0);" class="" title="Add New <?php  echo $this->post_type_singular_name; ?>">Add New <?php  echo $this->post_type_singular_name; ?></a></button>
+					<?php submit_button( __('Add New'), 'primary', 'add-button', $wrap = false ); ?>
 					<button id="tidy-button"><a target="_blank" href="javascript: void(0);">Tidy</a></button>
 					<button id="view-button"><a target="_blank" href="<?php echo get_term_link( $term, $taxonomy );?>">View <?php echo $this->taxonomy_singular_name; ?></a></button>
 				</p>

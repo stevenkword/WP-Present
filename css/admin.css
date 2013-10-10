@@ -3,6 +3,13 @@
  *
  */
 
+/* Hide the things on the taxonomy screen */
+/*
+.form-table tr { display: none; }
+.form-field.form-required { display: block; }
+*/
+
+
 .widget-inside { text-align: center; }
 
 .column { width: /*285*/200px; float: left; padding-bottom: 10px; margin: 5px; }
