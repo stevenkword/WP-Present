@@ -144,6 +144,7 @@ class WP_Present {
 		add_action( 'wp_ajax_get_slide', array( $this, 'action_wp_ajax_get_slide' ) );
 		add_action( 'wp_ajax_update_slide', array( $this, 'action_wp_ajax_update_slide' ) );
 		add_action( 'wp_ajax_new_slide', array( $this, 'action_wp_ajax_new_slide' ) );
+		add_action( 'wp_ajax_delete_slide', array( $this, 'action_wp_ajax_delete_slide' ) );
 		add_action( 'wp_ajax_update_presentation', array( $this, 'action_wp_ajax_update_presentation' ) );
 	}
 
@@ -875,6 +876,20 @@ class WP_Present {
 /* AJAX
 * * *
 */
+
+
+	function action_wp_ajax_get_slide() {
+
+		//if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], $this->nonce_field ) ) {
+			//wp_die("No naughty business please");
+		//}
+
+		$post_id = $_REQUEST[ 'id' ];
+		$post = get_post( $post_id );
+		echo $post->post_content;
+		die();
+	}
+
 	function action_wp_ajax_update_slide() {
 
 		//if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], $this->nonce_field ) ) {
@@ -927,15 +942,14 @@ class WP_Present {
 		die();
 	}
 
-	function action_wp_ajax_get_slide() {
+	function action_wp_ajax_delete_slide() {
 
 		//if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], $this->nonce_field ) ) {
 			//wp_die("No naughty business please");
 		//}
-
+		global $post;
 		$post_id = $_REQUEST[ 'id' ];
-		$post = get_post( $post_id );
-		echo $post->post_content;
+		wp_delete_post( $_REQUEST[ 'id' ], false );
 		die();
 	}
 

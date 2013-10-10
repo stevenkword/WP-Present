@@ -41,8 +41,7 @@ jQuery(document).ready(function($) {
 
 		e.preventDefault();
 
-		$button = $(this);
-
+		var $button = $(this);
 		var $parentWidget = $button.parents('.widget');
 		var $widgetPreview = $parentWidget.find('.widget-preview');
 
@@ -118,8 +117,7 @@ jQuery(document).ready(function($) {
 		console.log($activeColumn);
 
 
-		$button = $(this);
-
+		var $button = $(this);
 		var $parentWidget = $button.parents('.widget');
 		var $widgetPreview = $parentWidget.find('.widget-preview');
 
@@ -185,6 +183,27 @@ jQuery(document).ready(function($) {
 		  },
 		  close: function() {
 				closeModal();
+		  }
+		});
+	});
+
+
+	// Delete Slide
+	$('.widget-control-remove').on('click', function(e) {
+		e.preventDefault();
+
+		var $button = $(this);
+		var $parentWidget = $button.parents('.widget');
+		var widgetID = $parentWidget.find('.slide-id').val();
+		var params = null;
+
+		$.ajax({
+			url: ajaxurl + '?action=delete_slide&id=' + widgetID,
+			type: 'POST',
+			//data: jQuery.param(params),
+			success: function(result) {
+				$parentWidget.remove();
+				updateColumns();
 		  }
 		});
 	});
