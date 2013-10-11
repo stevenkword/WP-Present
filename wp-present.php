@@ -43,6 +43,12 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * 1. Trigger on Update button that forces presentation.(y/n)?
  */
 
+function make_mce_awesome( $init ) {
+    $init['height'] = "450";
+    return $init;
+}
+add_filter('tiny_mce_before_init', 'make_mce_awesome');
+
 class WP_Present {
 
 	/* Post Type */
@@ -884,7 +890,7 @@ class WP_Present {
 			'tabindex' => '',
 			'tabfocus_elements' => ':prev,:next', // the previous and next element ID to move the focus to when pressing the Tab key in TinyMCE
 			'editor_css' => '', // intended for extra styles for both visual and Text editors buttons, needs to include the <style> tags, can use "scoped".
-			'editor_class' => '', // add extra class(es) to the editor textarea
+			'editor_class' => 'reveal-steven', // add extra class(es) to the editor textarea
 			'teeny' => false, // output the minimal editor config used in Press This
 			'dfw' => false, // replace the default fullscreen with DFW (needs specific DOM elements and css)
             'tinymce' => array(

@@ -32,7 +32,7 @@
 .ui-sortable-placeholder * { visibility: hidden; }
 
 #outer-container{ width: auto; min-height: 100px; overflow: scroll; border: 1px dashed #ccc; background: none; }
-#container{ /*width: 1800px;*/ width:auto; padding: 1em; background: #fff; min-height: 400px }
+#container{ width: 1800px; /*width:auto;*/ padding: 1em; background: #fff; min-height: 400px }
 
 #container .column > .widget-top{ margin: 0 1em 0.5em 0; }
 #container .column > .widget-top > .widget-title{ cursor: move; border: 1px solid #aaa; background: #ddd;}

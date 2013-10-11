@@ -267,10 +267,10 @@ jQuery(document).ready(function($) {
 						});
 
 						// Hack for getting the reveal class added to tinymce editor body
+						// @todo: look at wp_editor in wp/inc/class-wp-editor.php
 						var $editorIframe = $('#editor_slide_ifr').contents();
 						$editorIframe.find('body').addClass('reveal');
-
-
+						$editorIframe.css('height','500px');
 
 				  },
 				  close: function() {
