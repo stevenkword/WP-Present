@@ -3,14 +3,6 @@
  *
  */
 
-// Hide the description fields as fast as possible
-/*
-jQuery('label[for="description"]').parent().parent().hide();
-jQuery('#tag-description').closest('.form-field').hide();
-jQuery('#description').closest('.form-field').hide();
-jQuery('.column-description').hide();
-*/
-
 var SlideManager
 (function($) {
 

@@ -146,6 +146,19 @@ class WP_Present {
 		add_action( 'wp_ajax_new_slide', array( $this, 'action_wp_ajax_new_slide' ) );
 		add_action( 'wp_ajax_delete_slide', array( $this, 'action_wp_ajax_delete_slide' ) );
 		add_action( 'wp_ajax_update_presentation', array( $this, 'action_wp_ajax_update_presentation' ) );
+
+		// Hide stuff
+		add_filter( 'manage_edit-' . $this->taxonomy_slug . '_columns', array( $this, 'filter_manage_edit_columns' ) );
+	}
+
+	/**
+	 * Remove the description column from the taxonomy overview page
+	 *
+	 * @return array
+	 */
+	function filter_manage_edit_columns( $theme_columns ) {
+		unset( $theme_columns['description'] );
+		return $theme_columns;
 	}
 
 	/**
