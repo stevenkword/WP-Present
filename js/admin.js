@@ -75,6 +75,8 @@ var SlideManager
 			self.updatePresentation();
 		},
 
+//Dude this is not okay. Fix the post data ajax call
+
 		/**
 		 * AJAX request to update the current presentation taxonomy
 		 */

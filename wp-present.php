@@ -682,8 +682,9 @@ class WP_Present {
 				<p class="action-buttons">
 					<?php submit_button( __('Update'), 'primary', 'submit', $wrap = false ); ?>
 					<?php submit_button( __('Add New'), '', 'add-button', $wrap = false ); ?>
-					<button id="tidy-button" class="button"><a target="_blank" href="javascript: void(0);">Tidy</a></button>
-					<button id="view-button" class="button"><a target="_blank" href="<?php echo get_term_link( $term, $taxonomy );?>">View <?php echo $this->taxonomy_singular_name; ?></a></button>
+					<button id="add-button" class="button">Add2</button>
+					<button id="tidy-button" class="button">Tidy</button>
+					<button id="view-button" class="button">View <?php echo $this->taxonomy_singular_name; ?></button>
 				</p>
 
 				<div id="dialog" title="Edit <?php echo $this->post_type_singular_name; ?>" style="display: none;">
