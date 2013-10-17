@@ -86,6 +86,12 @@ var SlideManager
 				url: ajaxurl + '?action=update_presentation&id=' + presentation,
 				type: 'POST',
 				data: jQuery.param(params),
+				beforeSend: function( xhr ) {
+					$('.spinner').show();
+				},
+				complete: function( xhr ) {
+					$('.spinner').hide();
+				},
 				success: function(result) {
 					// Return the excerpt from the editor
 					console.log('presentation updated');
@@ -115,6 +121,12 @@ jQuery(document).ready(function($) {
 			url: ajaxurl + '?action=update_presentation&id=' + presentation,
 			type: 'POST',
 			data: jQuery.param(params),
+			beforeSend: function( xhr ) {
+				$('.spinner').show();
+  			},
+  			complete: function( xhr ) {
+				$('.spinner').hide();
+  			},
 			success: function(result) {
 				// Return the excerpt from the editor
 				console.log('presentation updated');
@@ -243,6 +255,12 @@ jQuery(document).ready(function($) {
 							url: ajaxurl + '?action=update_slide&id=' + widgetID,
 							type: 'POST',
 						  	data: jQuery.param(params),
+							beforeSend: function( xhr ) {
+								$('.spinner').show();
+							},
+							complete: function( xhr ) {
+								$('.spinner').hide();
+							},
 						  	success: function(result) {
 								// Return the excerpt from the editor
 								$widgetPreview.html( result );
@@ -262,10 +280,16 @@ jQuery(document).ready(function($) {
 
 						// Load the contents of the existing post
 						$.ajax({
-						  url: ajaxurl + '?action=get_slide&id=' + widgetID,
-						  success: function(contentEditor) {
+							url: ajaxurl + '?action=get_slide&id=' + widgetID,
+							beforeSend: function( xhr ) {
+								$('.spinner').show();
+							},
+							complete: function( xhr ) {
+								$('.spinner').hide();
+							},
+							success: function(contentEditor) {
 						  		tinymce.get('editor_slide').setContent(contentEditor);
-						  }
+						  	}
 						});
 
 						// Hack for getting the reveal class added to tinymce editor body
@@ -296,6 +320,12 @@ jQuery(document).ready(function($) {
 				url: ajaxurl + '?action=delete_slide&id=' + widgetID,
 				type: 'POST',
 				//data: jQuery.param(params),
+				beforeSend: function( xhr ) {
+					$('.spinner').show();
+				},
+				complete: function( xhr ) {
+					$('.spinner').hide();
+				},
 				success: function(result) {
 					$parentWidget.remove();
 					updateColumns();

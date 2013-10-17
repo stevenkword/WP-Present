@@ -41,6 +41,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * 9. Make the placeholders for the columns larger than the widget placeholders
  * 0. Fix column saving
  * 1. Trigger on Update button that forces presentation.(y/n)?
+ * 2. Figure out how to add style classes to the presentation admin menu
  */
 
 function make_mce_awesome( $init ) {
@@ -431,15 +432,13 @@ class WP_Present {
 		$post_type_url = 'edit.php?post_type='.$this->post_type_slug;
 
 		$menu_slug = 'menu-' . $this->taxonomy_slug;
-
 		//$menu[53]=array( "Meat", 'meat', $taxonomy_url, '', 'wp-has-current-submenu open-if-no-js menu-top menu-icon-post', 'menu-meat', 'none' );
 
 		// This adds the "Presentations" top level menu item
 		add_object_page(  $this->taxonomy_name, $this->taxonomy_name, $this->capability, $taxonomy_url, '', '' );
-		$submenu[$taxonomy_url][15] = array( 'Presentations', $this->capability, 'edit-tags.php?taxonomy=category' );
+		$submenu[$taxonomy_url][5] = array( 'Presentations', $this->capability, $taxonomy_url );
 		$submenu[$taxonomy_url][10] = array( 'Slides', $this->capability, $post_type_url );
 		$submenu[$taxonomy_url][15] = array( 'Options', $this->capability, 'options.php' );
-
 
 		add_submenu_page($taxonomy_url, 'User Roles', 'User Roles', $this->capability, $taxonomy_url );
 /*
@@ -447,15 +446,6 @@ class WP_Present {
 		var_dump($submenu);
 		echo '</pre>';
 */
-
-        add_menu_page('My Plugin Menu','My Plugin Menu', 'manage_options', 'admin.php?action=my_plugins_action');
-        add_submenu_page('admin.php?action=my_plugins_action', 'Pitch Statuses', 'Pitch Statuses', 'manage_options', 'edit-tags.php?taxonomy=pitch_status');
-        add_submenu_page('admin.php?action=my_plugins_action', 'User Types', 'User Types', 'manage_options', 'edit-tags.php?taxonomy=user_type');
-        add_submenu_page('admin.php?action=my_plugins_action', 'User Roles', 'User Roles', 'manage_options', 'edit-tags.php?taxonomy=user_role');
-
-
-
-
 	}
 
 	function options_page(){
@@ -704,6 +694,7 @@ class WP_Present {
 					<button id="add-button" class="button">Add2</button>
 					<button id="tidy-button" class="button">Tidy</button>
 					<button id="view-button" class="button">View <?php echo $this->taxonomy_singular_name; ?></button>
+					<span class="spinner"></span>
 				</p>
 
 				<div id="dialog" title="Edit <?php echo $this->post_type_singular_name; ?>" style="display: none;">
