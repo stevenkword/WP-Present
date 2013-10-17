@@ -424,19 +424,20 @@ class WP_Present {
 	 * @return
 	 */
 	function action_admin_menu(){
+
 		// Taxonomy Menu
+		$taxonomy_url = 'edit-tags.php?taxonomy=' . $this->taxonomy_slug . '&post_type='.$this->post_type_slug;
+		$post_type_url = 'edit.php?post_type='.$this->post_type_slug;
 
 		// This adds the "Presentations" top level menu item
-		//add_menu_page( $this->taxonomy_name, $this->taxonomy_name, $this->capability, 'edit-tags.php?taxonomy=' . $this->taxonomy_slug . '&post_type=' . $this->post_type_slug, '', '', 21 );
-		//add_submenu_page( 'edit-tags.php?taxonomy=' . $this->taxonomy_name . '&post_type='.$this->post_type_slug, $this->post_type_slug, 'Options', $this->capability, $this->option_name, array( $this, 'options_page' ) );
-		add_object_page(  $this->taxonomy_name, $this->taxonomy_name, $this->capability, 'edit.php?post_type=slide'/*, $function, $icon_url*/ );
+		add_object_page(  $this->taxonomy_name, $this->taxonomy_name, $this->capability, $taxonomy_url, '', '' );
+
 		//The options page
-		//add_submenu_page(  'edit.php?post_type=slide', $this->option_title, 'Options', $this->capability, $this->option_name, array( $this, 'options_page' ) );
+		add_submenu_page(  $taxonomy_url, $this->option_title, 'Options', $this->capability, $this->option_name, array( $this, 'options_page' ) );
 
 		//add_submenu_page( 'users.php', $label . ' Order', $label . ' Order', $this->capability_order, $option_name, array( $this, 'screen_order' ) );
 		//add_menu_page( 'Breaking News', 'Breaking News Banner', $this->capability, $this->option_name, array( $this, 'options_page' ) );
 		//add_pages_page('My Plugin Pages', 'My Plugin', 'read', 'my-unique-identifier', $this->options_page);
-
 	}
 
 	function options_page(){
