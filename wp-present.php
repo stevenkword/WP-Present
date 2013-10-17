@@ -84,7 +84,7 @@ class WP_Present {
 	}
 
 	/**
-	 * Gene manipulation sequences go here
+	 * Gene manipulation algorithms go here
 	 */
 	private function __clone() { }
 
@@ -154,7 +154,7 @@ class WP_Present {
 		add_action( 'wp_ajax_update_presentation', array( $this, 'action_wp_ajax_update_presentation' ) );
 
 		// Hide stuff
-		add_filter( 'manage_edit-' . $this->taxonomy_slug . '_columns', array( $this, 'filter_manage_edit_columns' ) );
+		//add_filter( 'manage_edit-' . $this->taxonomy_slug . '_columns', array( $this, 'filter_manage_edit_columns' ) );
 	}
 
 	/**
@@ -222,7 +222,7 @@ class WP_Present {
 			'capability_type' => $this->post_type_capability_type,
 			'has_archive' => true,
 			'show_ui' => true,
-			'show_in_menu' => true,
+			'show_in_menu' => false,
 			//'menu_position' => 5,
 			'hierarchical' => true, //@todo within the same category?
 			'supports' => array( 'title', 'editor', 'page-attributes' ),
@@ -427,10 +427,11 @@ class WP_Present {
 		// Taxonomy Menu
 
 		// This adds the "Presentations" top level menu item
-		//add_menu_page( $this->taxonomy_name, $this->taxonomy_name, $this->capability, 'edit-tags.php?taxonomy=' . $this->taxonomy_slug . '&post_type='.$this->post_type_slug, '', '', 21 );
-
+		//add_menu_page( $this->taxonomy_name, $this->taxonomy_name, $this->capability, 'edit-tags.php?taxonomy=' . $this->taxonomy_slug . '&post_type=' . $this->post_type_slug, '', '', 21 );
+		//add_submenu_page( 'edit-tags.php?taxonomy=' . $this->taxonomy_name . '&post_type='.$this->post_type_slug, $this->post_type_slug, 'Options', $this->capability, $this->option_name, array( $this, 'options_page' ) );
+		add_object_page(  $this->taxonomy_name, $this->taxonomy_name, $this->capability, 'edit.php?post_type=slide'/*, $function, $icon_url*/ );
 		//The options page
-		add_submenu_page(  'edit.php?post_type=slide', $this->option_title, 'Options', $this->capability, $this->option_name, array( $this, 'options_page' ) );
+		//add_submenu_page(  'edit.php?post_type=slide', $this->option_title, 'Options', $this->capability, $this->option_name, array( $this, 'options_page' ) );
 
 		//add_submenu_page( 'users.php', $label . ' Order', $label . ' Order', $this->capability_order, $option_name, array( $this, 'screen_order' ) );
 		//add_menu_page( 'Breaking News', 'Breaking News Banner', $this->capability, $this->option_name, array( $this, 'options_page' ) );
@@ -539,7 +540,6 @@ class WP_Present {
 	 */
 	function get_associated_slide_ids( $term, $taxonomy ) {
 		$term_description =  $this->get_term_description( $term, $taxonomy );
-
 		if( ! is_array( $term_description ) )
 			return false;
 

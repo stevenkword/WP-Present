@@ -21,8 +21,8 @@
 	color: #333;
 	cursor: move;
 }
-.portlet { margin: 0 1em 0.5em 0; overflow: hidden; min-height: 20px; }
 
+.portlet { margin: 0 1em 0.5em 0; overflow: hidden; min-height: 20px; }
 .portlet-header { margin: 0.3em; padding-bottom: 4px; padding-left: 0.2em; overflow:hidden;}
 .portlet-header .ui-icon { float: right; }
 .portlet-content, .portlet-edit { padding: 0.4em; overflow: hidden; }
@@ -33,7 +33,6 @@
 
 #outer-container{ width: auto; min-height: 100px; overflow: scroll; border: 1px dashed #ccc; background: none; }
 #container{ width: 5800px; /*width:auto;*/ padding: 1em; background: #fff; min-height: 400px }
-
 #container .column > .widget-top{ margin: 0 1em 0.5em 0; }
 #container .column > .widget-top > .widget-title{ cursor: move; border: 1px solid #aaa; background: #ddd;}
 
