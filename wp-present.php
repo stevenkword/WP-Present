@@ -424,6 +424,7 @@ class WP_Present {
 	 * @return
 	 */
 	function action_admin_menu(){
+		global $menu, $submenu;
 
 		// Taxonomy Menu
 		$taxonomy_url = 'edit-tags.php?taxonomy=' . $this->taxonomy_slug . '&post_type='.$this->post_type_slug;
@@ -431,13 +432,10 @@ class WP_Present {
 
 		// This adds the "Presentations" top level menu item
 		add_object_page(  $this->taxonomy_name, $this->taxonomy_name, $this->capability, $taxonomy_url, '', '' );
+		$submenu[$taxonomy_url][10] = array( 'Presentations', $this->capability, $taxonomy_url );
+		$submenu[$taxonomy_url][20] = array( 'Options', $this->capability, 'options.php' );
+		$submenu[$taxonomy_url][30] = array( 'Slides', $this->capability, $post_type_url );
 
-		//The options page
-		add_submenu_page(  $taxonomy_url, $this->option_title, 'Options', $this->capability, $this->option_name, array( $this, 'options_page' ) );
-
-		//add_submenu_page( 'users.php', $label . ' Order', $label . ' Order', $this->capability_order, $option_name, array( $this, 'screen_order' ) );
-		//add_menu_page( 'Breaking News', 'Breaking News Banner', $this->capability, $this->option_name, array( $this, 'options_page' ) );
-		//add_pages_page('My Plugin Pages', 'My Plugin', 'read', 'my-unique-identifier', $this->options_page);
 	}
 
 	function options_page(){
