@@ -430,12 +430,19 @@ class WP_Present {
 		$taxonomy_url = 'edit-tags.php?taxonomy=' . $this->taxonomy_slug . '&post_type='.$this->post_type_slug;
 		$post_type_url = 'edit.php?post_type='.$this->post_type_slug;
 
+		//$menu[53]=array( "Meat", 'meat', $taxonomy_url, '', 'wp-has-current-submenu open-if-no-js menu-top menu-icon-post', 'menu-meat', 'none' );
+
 		// This adds the "Presentations" top level menu item
 		add_object_page(  $this->taxonomy_name, $this->taxonomy_name, $this->capability, $taxonomy_url, '', '' );
-		$submenu[$taxonomy_url][10] = array( 'Presentations', $this->capability, $taxonomy_url );
-		$submenu[$taxonomy_url][20] = array( 'Options', $this->capability, 'options.php' );
-		$submenu[$taxonomy_url][30] = array( 'Slides', $this->capability, $post_type_url );
+		//$submenu[$taxonomy_url][5] = array( 'Presentations', $this->capability, $taxonomy_url );
+		$submenu[$taxonomy_url][10] = array( 'Options', $this->capability, 'options.php' );
+		$submenu[$taxonomy_url][15] = array( 'Slides', $this->capability, $post_type_url );
 
+		/*
+		echo '<pre>';
+		var_dump($submenu);
+		echo '</pre>';
+		*/
 	}
 
 	function options_page(){
