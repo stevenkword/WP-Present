@@ -430,19 +430,32 @@ class WP_Present {
 		$taxonomy_url = 'edit-tags.php?taxonomy=' . $this->taxonomy_slug . '&post_type='.$this->post_type_slug;
 		$post_type_url = 'edit.php?post_type='.$this->post_type_slug;
 
+		$menu_slug = 'menu-' . $this->taxonomy_slug;
+
 		//$menu[53]=array( "Meat", 'meat', $taxonomy_url, '', 'wp-has-current-submenu open-if-no-js menu-top menu-icon-post', 'menu-meat', 'none' );
 
 		// This adds the "Presentations" top level menu item
 		add_object_page(  $this->taxonomy_name, $this->taxonomy_name, $this->capability, $taxonomy_url, '', '' );
-		//$submenu[$taxonomy_url][5] = array( 'Presentations', $this->capability, $taxonomy_url );
-		$submenu[$taxonomy_url][10] = array( 'Options', $this->capability, 'options.php' );
-		$submenu[$taxonomy_url][15] = array( 'Slides', $this->capability, $post_type_url );
+		$submenu[$taxonomy_url][15] = array( 'Presentations', $this->capability, 'edit-tags.php?taxonomy=category' );
+		$submenu[$taxonomy_url][10] = array( 'Slides', $this->capability, $post_type_url );
+		$submenu[$taxonomy_url][15] = array( 'Options', $this->capability, 'options.php' );
 
-		/*
+
+		add_submenu_page($taxonomy_url, 'User Roles', 'User Roles', $this->capability, $taxonomy_url );
+/*
 		echo '<pre>';
 		var_dump($submenu);
 		echo '</pre>';
-		*/
+*/
+
+        add_menu_page('My Plugin Menu','My Plugin Menu', 'manage_options', 'admin.php?action=my_plugins_action');
+        add_submenu_page('admin.php?action=my_plugins_action', 'Pitch Statuses', 'Pitch Statuses', 'manage_options', 'edit-tags.php?taxonomy=pitch_status');
+        add_submenu_page('admin.php?action=my_plugins_action', 'User Types', 'User Types', 'manage_options', 'edit-tags.php?taxonomy=user_type');
+        add_submenu_page('admin.php?action=my_plugins_action', 'User Roles', 'User Roles', 'manage_options', 'edit-tags.php?taxonomy=user_role');
+
+
+
+
 	}
 
 	function options_page(){
