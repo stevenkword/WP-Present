@@ -43,13 +43,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * 1. Trigger on Update button that forces presentation.(y/n)?
  * 2. Figure out how to add style classes to the presentation admin menu
  */
-
-function make_mce_awesome( $init ) {
-    $init['height'] = "450";
-    return $init;
-}
-add_filter('tiny_mce_before_init', 'make_mce_awesome');
-
 class WP_Present {
 
 	/* Post Type */
@@ -223,11 +216,11 @@ class WP_Present {
 			'capability_type' => $this->post_type_capability_type,
 			'has_archive' => true,
 			'show_ui' => true,
-			'show_in_menu' => false,
+			'show_in_menu' => true,
 			//'menu_position' => 5,
 			'hierarchical' => true, //@todo within the same category?
 			'supports' => array( 'title', 'editor', 'page-attributes' ),
-			'taxonomies' => array( 'post_tag' )
+			'taxonomies' => array( $this->taxonomy_slug )
 		) );
 	}
 
@@ -429,23 +422,28 @@ class WP_Present {
 
 		// Taxonomy Menu
 		$taxonomy_url = 'edit-tags.php?taxonomy=' . $this->taxonomy_slug . '&post_type='.$this->post_type_slug;
-		$post_type_url = 'edit.php?post_type='.$this->post_type_slug;
+		$post_type_url = 'edit.php?post_type=' . $this->post_type_slug;
 
-		$menu_slug = 'menu-' . $this->taxonomy_slug;
-		//$menu[53]=array( "Meat", 'meat', $taxonomy_url, '', 'wp-has-current-submenu open-if-no-js menu-top menu-icon-post', 'menu-meat', 'none' );
+		// Rename the menu item
+		foreach( $menu as $menu_key => $menu_item ) {
+			if( $this->post_type_name == $menu_item[0] ) {
+				$menu[ $menu_key ][0] = $this->taxonomy_name;
+			}
+		}
 
-		// This adds the "Presentations" top level menu item
-		add_object_page(  $this->taxonomy_name, $this->taxonomy_name, $this->capability, $taxonomy_url, '', '' );
-		$submenu[$taxonomy_url][5] = array( 'Presentations', $this->capability, $taxonomy_url );
-		$submenu[$taxonomy_url][10] = array( 'Slides', $this->capability, $post_type_url );
-		$submenu[$taxonomy_url][15] = array( 'Options', $this->capability, 'options.php' );
+		// Move the taxonomy menu to the top
+		foreach( $submenu as $submenu_key => $submenu_item ) {
+			if( $this->taxonomy_name == $submenu_item[15][0] ) {
+				//$submenu[$submenu_key][15][0] = 'toast';
 
-		add_submenu_page($taxonomy_url, 'User Roles', 'User Roles', $this->capability, $taxonomy_url );
-/*
-		echo '<pre>';
-		var_dump($submenu);
-		echo '</pre>';
-*/
+				// This is a bit of hackery.  I should search for these keys
+				$submenu[$submenu_key][2] = $submenu[$submenu_key][15];
+				unset( $submenu[$submenu_key][15] );
+
+				ksort( $submenu[$post_type_url] );
+			}
+		}
+
 	}
 
 	function options_page(){
@@ -1048,3 +1046,9 @@ function my_custom_plugins () {
      return $plugins_array;
 }
 //add_filter('mce_external_plugins', 'my_custom_plugins');
+function make_mce_awesome( $init ) {
+    $init['height'] = "450";
+    return $init;
+}
+add_filter('tiny_mce_before_init', 'make_mce_awesome');
+
