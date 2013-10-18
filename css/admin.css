@@ -8,7 +8,7 @@
 .form-field { display: none; }
 .form-field.form-required { display: block; }
 
-
+.spinner{ display: inline-block; float: none; };
 
 .widget-inside { text-align: center; }
 

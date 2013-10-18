@@ -508,10 +508,10 @@ class WP_Present {
 		wp_localize_script( 'wp-present-admin', 'WPP_NumSlides', array( intval( $num_slides ) ) );
 
 
-		// Make the admin outer-container div big enough to preven wrapping
+		// Make the admin outer-container div big enough to prevent wrapping
 		$container_size = ( $num_slides + 1 ) * 210;
 		?>
-		<style>
+		<style type="text/css">
 			#container{ width: <?php echo $container_size; ?>px;}
 		</style>
 		<?php
