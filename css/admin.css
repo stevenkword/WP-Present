@@ -5,7 +5,7 @@
 
 /* Hide the things on the taxonomy screen */
 
-/*.form-field { display: none; }*/
+.form-field { display: none; }
 .form-field.form-required { display: block; }
 
 

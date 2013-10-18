@@ -155,7 +155,7 @@ jQuery(document).ready(function($) {
 			$('#container').append( '<div class="column ui-sortable" id="col-'+col+'"><div class="widget-top"><div class="widget-title"><h4 class="hndle">'+col+'<span class="in-widget-title"></span></h4></div></div></div>' );
 		}
 		$('#container').append( '<div style="clear: both;"></div>' );
-		activateColumn( $('#col-1 .widget-title'));
+		activateColumn($('#col-1 > .widget-top > .widget-title'));
 	}
 
 	function updateColumns() {
