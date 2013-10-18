@@ -507,6 +507,14 @@ class WP_Present {
 		$num_slides = ( isset( $_GET["tag_ID"] ) ) ? count( $this->get_associated_slide_ids( $_GET["tag_ID"], $_GET["taxonomy"] ) ) : "";
 		wp_localize_script( 'wp-present-admin', 'WPP_NumSlides', array( intval( $num_slides ) ) );
 
+
+		// Make the admin outer-container div big enough to preven wrapping
+		$container_size = ( $num_slides + 1 ) * 200;
+		?>
+		<style>
+			#container{ width: <?php echo $container_size; ?>px;}
+		</style>
+		<?php
 	}
 
 	/*
@@ -691,8 +699,8 @@ class WP_Present {
 			<th scope="row" valign="top">
 				<p class="action-buttons">
 					<?php submit_button( __('Update'), 'primary', 'submit', $wrap = false ); ?>
-					<?php submit_button( __('Add New'), '', 'add-button', $wrap = false ); ?>
-					<button id="add-button" class="button">Add2</button>
+					<?php //submit_button( __('Add New'), '', 'add-button', $wrap = false ); ?>
+					<button id="add-button" class="button">New <?php echo $this->post_type_singular_name; ?></button>
 					<button id="tidy-button" class="button">Tidy</button>
 					<button id="view-button" class="button">View <?php echo $this->taxonomy_singular_name; ?></button>
 					<span class="spinner"></span>
