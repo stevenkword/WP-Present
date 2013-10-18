@@ -5,7 +5,7 @@
 
 /* Hide the things on the taxonomy screen */
 
-.form-field { display: none; }
+.form-field { display: none; }x
 .form-field.form-required { display: block; }
 
 
@@ -31,8 +31,8 @@
 .ui-sortable-placeholder { border: 1px dotted black; visibility: visible !important; height: 24px; }
 .ui-sortable-placeholder * { visibility: hidden; }
 
-#outer-container{ width: auto; min-height: 100px; overflow: scroll; border: 1px dashed #ccc; background: none; }
-#container{ min-width: 1200px; /*width:auto;*/ padding: 1em; background: #fff; min-height: 400px }
+#outer-container{ width: auto; min-height: 100px; overflow: scroll; border: 1px dashed #ccc; background: #fff; }
+#container{ min-width: 1200px; /*width:auto;*/ padding: 1em; background: inherit; min-height: 400px }
 #container .column > .widget-top{ margin: 0 1em 0.5em 0; }
 #container .column > .widget-top > .widget-title{ cursor: move; border: 1px solid #aaa; background: #ddd;}
 
