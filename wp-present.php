@@ -509,7 +509,7 @@ class WP_Present {
 
 
 		// Make the admin outer-container div big enough to preven wrapping
-		$container_size = ( $num_slides + 1 ) * 200;
+		$container_size = ( $num_slides + 1 ) * 210;
 		?>
 		<style>
 			#container{ width: <?php echo $container_size; ?>px;}
@@ -781,7 +781,16 @@ class WP_Present {
 							}
 							unset( $col );
 						} elseif( 0 == count( $associated_slides ) ){
-							echo '<p>Sorry, No ' . $this->post_type_name . ' found!</p>';
+							//echo '<p>Sorry, No ' . $this->post_type_name . ' found!</p>';
+							?>
+							<div class="column backfill" id="col-1">
+								<div class="widget-top">
+									<div class="widget-title">
+										<h4 class="hndle"><?php echo '1'; ?><span class="in-widget-title"></span></h4>
+									</div>
+								</div>
+							</div>
+							<?php
 						}
 
 						?>
