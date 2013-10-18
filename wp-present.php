@@ -147,8 +147,8 @@ class WP_Present {
 		add_action( 'wp_ajax_delete_slide', array( $this, 'action_wp_ajax_delete_slide' ) );
 		add_action( 'wp_ajax_update_presentation', array( $this, 'action_wp_ajax_update_presentation' ) );
 
-		// Hide stuff
-		//add_filter( 'manage_edit-' . $this->taxonomy_slug . '_columns', array( $this, 'filter_manage_edit_columns' ) );
+		// Hide taxonomy description column
+		add_filter( 'manage_edit-' . $this->taxonomy_slug . '_columns', array( $this, 'filter_manage_edit_columns' ) );
 	}
 
 	/**
@@ -439,6 +439,9 @@ class WP_Present {
 				// This is a bit of hackery.  I should search for these keys
 				$submenu[$submenu_key][2] = $submenu[$submenu_key][15];
 				unset( $submenu[$submenu_key][15] );
+
+				//Not a fan of the add new bit
+				unset( $submenu[$submenu_key][10] );
 
 				ksort( $submenu[$post_type_url] );
 			}
