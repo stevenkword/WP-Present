@@ -502,8 +502,12 @@ class WP_Present {
 		if( 'edit-tags.php' != $pagenow || ! isset( $_GET['taxonomy'] ) || $this->taxonomy_slug != $_GET['taxonomy'] )
 			return;
 
-		$num_slides = ( isset( $_GET["tag_ID"] ) ) ? count( $this->get_associated_slide_ids( $_GET["tag_ID"], $_GET["taxonomy"] ) ) : "";
+
+
+
+		$num_slides = ( isset( $_GET[ 'tag_ID' ] ) ) ? count( $this->get_associated_slide_ids( $_GET[ 'tag_ID' ], $_GET[ 'taxonomy' ] ) ) : '';
 		wp_localize_script( 'wp-present-admin', 'WPPNumSlides', array( intval( $num_slides ) ) );
+		wp_localize_script( 'wp-present-admin', 'WPPTaxonomyURL', array( get_term_link( (int) $_GET[ 'tag_ID' ], $this->taxonomy_slug ) ) );
 
 
 		// Make the admin outer-container div big enough to prevent wrapping
@@ -701,6 +705,7 @@ class WP_Present {
 					<?php submit_button( __('Update'), 'primary', 'submit', $wrap = false ); ?>
 					<?php //submit_button( __('Add New'), '', 'add-button', $wrap = false ); ?>
 					<button id="add-button" class="button">New <?php echo $this->post_type_singular_name; ?></button>
+					<button id="add-column" class="button">New Column</button>
 					<!--<button id="tidy-button" class="button">Tidy</button>-->
 					<button id="view-button" class="button">View <?php echo $this->taxonomy_singular_name; ?></button>
 					<span class="spinner"></span>

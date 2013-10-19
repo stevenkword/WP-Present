@@ -20,8 +20,9 @@ var WPPresentAdmin;
 			self.widgetButtonDelete();
 			self.widgetButtonAdd();
 			self.widgetButtonTidy();
+			self.bindButtonAddColumn();
+			self.bindButtonViewPresentation();
 			self.uiSetup();
-			self.columnHandle();
 
 			// Select the first column on load
 			self.activateColumn( $('#col-1').children('.widget-top').children('.widget-title') );
@@ -63,6 +64,8 @@ var WPPresentAdmin;
 					self.updateColumns();
 				}
 			});
+
+			self.columnHandle();
 		},
 
 		/**
@@ -77,13 +80,14 @@ var WPPresentAdmin;
 		 * Backfill Slides
 		 */
 		backfillSlides: function () {
+			var self = this;
 			var numSlides = WPPNumSlides;
 			var numExisting = $('#container > .column').size();
 
 			for (var col=numExisting+1;col<=numSlides;col++){
-				$('#container').append( '<div class="column ui-sortable" id="col-'+col+'"><div class="widget-top"><div class="widget-title"><h4 class="hndle">'+col+'<span class="in-widget-title"></span></h4></div></div></div>' );
+				self.addColumn();
 			}
-			$('#container').append( '<div style="clear: both;"></div>' );
+			//$('#container').append( '<div style="clear: both;"></div>' );
 		},
 
 		/**
@@ -143,7 +147,6 @@ var WPPresentAdmin;
 				}
 			});
 		},
-
 
 		/**
 		 * Bind Tidy button
@@ -309,7 +312,7 @@ var WPPresentAdmin;
 			$('.column').on('click', '.widget-control-remove', function(e) {
 				e.preventDefault();
 
-				var confirmDelete = confirm("You are about to permanently delete the selected items. 'Cancel' to stop, 'OK' to delete.");
+				var confirmDelete = confirm("You are about to permanently delete the selected slide. 'Cancel' to stop, 'OK' to delete.");
 				if( false == confirmDelete )
 					return;
 
@@ -363,6 +366,7 @@ var WPPresentAdmin;
 							data: jQuery.param(params),
 							success: function(result) {
 								$activeColumn.append(result);
+								self.addColumn();
 								self.updateColumns();
 						  }
 						});
@@ -388,6 +392,41 @@ var WPPresentAdmin;
 						self.closeModal();
 				  }
 				});
+			});
+		},
+
+		// Adds a column to the presentation
+		addColumn: function () {
+			var self = this;
+			var col = $('#container > .column').size() + 1;
+
+			$('#container').append( '<div class="column ui-sortable" id="col-'+col+'"><div class="widget-top"><div class="widget-title"><h4 class="hndle">'+col+'<span class="in-widget-title"></span></h4></div></div></div>' );
+			$('#container').width( $('#container').width() + 210 );
+
+			// Make sure all is good in the world
+			self.uiSetup();
+
+			// Send this change off to ajax land
+			self.updatePresentation();
+
+			WPPNumSlides++;
+		},
+
+		//Bind Add Column button to addColumn()
+		bindButtonAddColumn: function () {
+			var self = this;
+			$('.action-buttons').on('click', '#add-column', function(e) {
+				e.preventDefault();
+				self.addColumn();
+			});
+		},
+
+		//Bind View Presentation button
+		bindButtonViewPresentation: function () {
+			var self = this;
+			$('.action-buttons').on('click', '#view-button', function(e) {
+				e.preventDefault();
+				window.open(WPPTaxonomyURL,'_blank');
 			});
 		}
 
