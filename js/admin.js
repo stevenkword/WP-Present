@@ -125,9 +125,10 @@ var WPPresentAdmin;
 		 * AJAX request to update the current presentation taxonomy
 		 */
 		updatePresentation: function () {
+			var nonce = $('#wp-present-nonce').val();
 			var params = { content: $('#description').val() };
 			$.ajax({
-				url: ajaxurl + '?action=update_presentation&id=' + presentation,
+				url: ajaxurl + '?action=update_presentation&id=' + presentation + '&nonce=' + nonce,
 				type: 'POST',
 				data: jQuery.param(params),
 				beforeSend: function( xhr ) {
@@ -234,7 +235,8 @@ var WPPresentAdmin;
 				// Send the contents from the widget to the editor
 				var contentEditor  = $widgetPreview.html();
 				var widgetID = $parentWidget.find('.slide-id').val();
-
+				var nonce = $('#wp-present-nonce').val();
+//Dude this is not okay. Fix the post data ajax call
 				$('#editor_slide-tmce').click(); //Necessary on subsequent loads of the editor
 				$( "#dialog" ).dialog({
 				  autoOpen: true,
@@ -247,7 +249,7 @@ var WPPresentAdmin;
 						var params = { content:editorContents };
 						// Send the contents of the existing post
 						$.ajax({
-							url: ajaxurl + '?action=update_slide&id=' + widgetID,
+							url: ajaxurl + '?action=update_slide&id=' + widgetID + '&nonce=' + nonce,
 							type: 'POST',
 							data: jQuery.param(params),
 							beforeSend: function( xhr ) {
@@ -273,8 +275,9 @@ var WPPresentAdmin;
 				  },
 				  open: function() {
 						// Load the contents of the existing post
+						var nonce = $('#wp-present-nonce').val();
 						$.ajax({
-							url: ajaxurl + '?action=get_slide&id=' + widgetID,
+							url: ajaxurl + '?action=get_slide&id=' + widgetID + '&nonce=' + nonce,
 							beforeSend: function( xhr ) {
 								$('.spinner').show();
 							},
@@ -313,10 +316,11 @@ var WPPresentAdmin;
 				var $button = $(this);
 				var $parentWidget = $button.parents('.widget');
 				var widgetID = $parentWidget.find('.slide-id').val();
+				var nonce = $('#wp-present-nonce').val();
 				var params = null;
 
 				$.ajax({
-					url: ajaxurl + '?action=delete_slide&id=' + widgetID,
+					url: ajaxurl + '?action=delete_slide&id=' + widgetID + '&nonce=' + nonce,
 					type: 'POST',
 					//data: jQuery.param(params),
 					beforeSend: function( xhr ) {
@@ -350,10 +354,11 @@ var WPPresentAdmin;
 				  buttons: {
 					"Publish": function() {
 						var editorContents = tinymce.get('editor_slide').getContent();
+						var nonce = $('#wp-present-nonce').val();
 						var params = { content:editorContents };
 						// Send the contents of the existing post
 						$.ajax({
-							url: ajaxurl + '?action=new_slide&presentation=' + presentation,
+							url: ajaxurl + '?action=new_slide&presentation=' + presentation + '&nonce=' + nonce,
 							type: 'POST',
 							data: jQuery.param(params),
 							success: function(result) {

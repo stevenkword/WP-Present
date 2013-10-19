@@ -63,7 +63,8 @@ class WP_Present {
 
 	/* Misc */
 	public $capability = 'edit_others_posts';
-	public $nonce_field = 'presentation-nonce';
+	public $nonce_field = 'wp-present-nonce';
+	public $nonce_fail_message = "fail!";
 	public $scripts_version = 200131007;
 	//public $max_num_slides = 250; //not currently used, proposed variable
 
@@ -99,7 +100,6 @@ class WP_Present {
 		// On Dactivations
 		register_deactivation_hook( __FILE__, array( $this, 'deactivate' ) );
 
-
 		// Initialize
 		add_action( 'init', array( $this, 'action_init_register_post_type' ) );
 		add_action( 'init', array( $this, 'action_init_register_taxonomy' ) );
@@ -125,10 +125,7 @@ class WP_Present {
 
 		// Die on save post without a presentation
 
-
 		// Taxonomy
-		//add_action( $this->taxonomy_slug . '_edit_form_fields', array( $this, 'taxonomy_edit_form_fields' ), 9, 2 );
-		//add_action( $this->taxonomy_slug . '_pre_edit_form', array( $this, 'taxonomy_pre_edit_form' ), 9, 2 );
 		add_action( $this->taxonomy_slug . '_edit_form', array( $this, 'taxonomy_edit_form' ), 9, 2 );
 
 		add_action( 'restrict_manage_posts', array( $this, 'action_restrict_manage_posts' ) );
@@ -268,12 +265,6 @@ class WP_Present {
 		add_editor_style( plugins_url( '/wp-present/js/reveal.js/css/theme/moon.css' ) );
 		add_editor_style( plugins_url( '/wp-present/js/reveal.js/lib/css/zenburn.css' ) );
 		add_editor_style( plugins_url( '/wp-present/css/custom.css?v=6' ) );
-	}
-
-
-	// This happens at the top of the taxonomy edit screen
-	function taxonomy_pre_edit_form( $tag, $taxonomy ){
-		echo '<h1>Hook "taxonomy_pre_edit_form"</h1>';
 	}
 
 	/**
@@ -701,6 +692,8 @@ class WP_Present {
 
 		$associated_slides = $this->get_associated_slide_ids( $term, $taxonomy );
 		//var_dump( $associated_slides );
+
+		wp_nonce_field( $this->nonce_field, $this->nonce_field, false );
 		?>
 		<tr class="form-field hide-if-no-js">
 			<th scope="row" valign="top">
@@ -716,7 +709,6 @@ class WP_Present {
 				<div id="dialog" title="Edit <?php echo $this->post_type_singular_name; ?>" style="display: none;">
 					<?php $this->modal_editor(); ?>
 				</div>
-
 			</th>
 			<td>
 				<div id="outer-container"  class="ui-widget-content">
@@ -943,9 +935,9 @@ class WP_Present {
 
 	function action_wp_ajax_get_slide() {
 
-		//if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], $this->nonce_field ) ) {
-			//wp_die("No naughty business please");
-		//}
+		if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], $this->nonce_field ) ) {
+			wp_die( $this->nonce_fail_message );
+		}
 
 		$post_id = $_REQUEST[ 'id' ];
 		$post = get_post( $post_id );
@@ -955,9 +947,10 @@ class WP_Present {
 
 	function action_wp_ajax_update_slide() {
 
-		//if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], $this->nonce_field ) ) {
-			//wp_die("No naughty business please");
-		//}
+		if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], $this->nonce_field ) ) {
+			wp_die( $this->nonce_fail_message );
+		}
+
 		global $post;
 
 		$post_id = $_REQUEST[ 'id' ];
@@ -980,9 +973,10 @@ class WP_Present {
 	// Add slide
 	function action_wp_ajax_new_slide() {
 
-		//if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], $this->nonce_field ) ) {
-			//wp_die("No naughty business please");
-		//}
+		if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], $this->nonce_field ) ) {
+			wp_die( $this->nonce_fail_message );
+		}
+
 		global $post;
 		$safe_content = wp_kses_post( $_REQUEST[ 'content' ] );
 
@@ -1007,9 +1001,10 @@ class WP_Present {
 	// Delete a slide
 	function action_wp_ajax_delete_slide() {
 
-		//if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], $this->nonce_field ) ) {
-			//wp_die("No naughty business please");
-		//}
+		if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], $this->nonce_field ) ) {
+			wp_die( $this->nonce_fail_message );
+		}
+
 		global $post;
 		$post_id = $_REQUEST[ 'id' ];
 		wp_delete_post( $_REQUEST[ 'id' ], false );
@@ -1019,7 +1014,7 @@ class WP_Present {
 	function action_wp_ajax_update_presentation() {
 
 		//if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], $this->nonce_field ) ) {
-			//wp_die("No naughty business please");
+			//wp_die( $this->nonce_fail_message );
 		//}
 
 		$presentation_id = $_REQUEST[ 'id' ];
@@ -1061,18 +1056,6 @@ function my_add_tinymce_button( $plugin_array )
      return $plugin_array;
 }
 
-/* Add the TinyMCE VisualBlocks Plugin */
-function my_custom_plugins () {
-     $plugins = array('visualblocks'); //Add any more plugins you want to load here
-     $plugins_array = array();
-
-     //Build the response - the key is the plugin name, value is the URL to the plugin JS
-     foreach ($plugins as $plugin ) {
-          $plugins_array[ $plugin ] = plugins_url('tinymce/', __FILE__) . $plugin . '/editor_plugin.js';
-     }
-     return $plugins_array;
-}
-//add_filter('mce_external_plugins', 'my_custom_plugins');
 function make_mce_awesome( $init ) {
     $init['height'] = "450";
     return $init;
