@@ -424,12 +424,19 @@ class WP_Present {
 		$taxonomy_url = 'edit-tags.php?taxonomy=' . $this->taxonomy_slug . '&post_type='.$this->post_type_slug;
 		$post_type_url = 'edit.php?post_type=' . $this->post_type_slug;
 
+
+		// Add the options page
+		add_submenu_page( $post_type_url, $this->option_title, 'Options', $this->capability, $this->option_name, array( $this, 'options_page' ) );
+
 		// Rename the menu item
 		foreach( $menu as $menu_key => $menu_item ) {
 			if( $this->post_type_name == $menu_item[0] ) {
 				$menu[ $menu_key ][0] = $this->taxonomy_name;
 			}
 		}
+
+
+		//It owuld be better to search for the keys based on url
 
 		// Move the taxonomy menu to the top
 		foreach( $submenu as $submenu_key => $submenu_item ) {
