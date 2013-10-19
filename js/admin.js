@@ -226,7 +226,8 @@ jQuery(document).ready(function($) {
 	}
 
 	function columnHandle(){
-		$('.column').children('.widget-top').children('.widget-title').on('click', function() {
+		//$('.column').children('.widget-top').children('.widget-title').on('click', function() {
+		$('.column').children('.widget-top').on('click', '.widget-title', function(e) {
 			$col = $(this);
 			activateColumn($col);
 		});
@@ -234,10 +235,8 @@ jQuery(document).ready(function($) {
 
 	// Bind Edit button
 	function widgetButtonEdit() {
-		$('.widget-control-edit').on('click', function(e) {
-
+		$('.column').on('click', '.widget-control-edit', function(e) {
 				e.preventDefault();
-
 				var $button = $(this);
 				var $parentWidget = $button.parents('.widget');
 				var $widgetPreview = $parentWidget.find('.widget-preview');
@@ -314,7 +313,7 @@ jQuery(document).ready(function($) {
 
 	// Bind Delete button
 	function widgetButtonDelete() {
-		$('.widget-control-remove').on('click', function(e) {
+		$('.column').on('click', '.widget-control-remove', function(e) {
 			e.preventDefault();
 
 			var confirmDelete = confirm("You are about to permanently delete the selected items. 'Cancel' to stop, 'OK' to delete.?");
@@ -346,61 +345,60 @@ jQuery(document).ready(function($) {
 
 	// Bind Add button
 	function widgetButtonAdd() {
-		$('#add-button').on('click', function(e) {
+		$('.action-buttons').on('click', '#add-button', function(e) {
+			e.preventDefault();
 
-		e.preventDefault();
+			var $button = $(this);
+			var $activeColumn = $('.widget-title.active').parent('.widget-top').parent('.column').children('.column-inner');
 
-		var $button = $(this);
-		var $activeColumn = $('.widget-title.active').parent('.widget-top').parent('.column').children('.column-inner');
-
-		$('#editor_slide-tmce').click(); //Necessary on subsequent loads of the editor
-		$( "#dialog" ).dialog({
-		  autoOpen: true,
-		  width: 600,
-		  height: 600,
-		  modal: false,
-		  buttons: {
-			"Publish": function() {
-				var editorContents = tinymce.get('editor_slide').getContent();
-				var params = { content:editorContents };
-				// Send the contents of the existing post
-				$.ajax({
-					url: ajaxurl + '?action=new_slide&presentation=' + presentation,
-					type: 'POST',
-				  	data: jQuery.param(params),
-				  	success: function(result) {
-						$activeColumn.append(result);
-						updateColumns();
-				  }
-				});
-				updateColumns();
-				closeModal();
-			},
-			Cancel: function() {
-				closeModal();
-			}
-		  },
-		  create: function() {
-				tinymce.execCommand('mceRemoveControl',true,'editor_slide');
-				tinymce.execCommand('mceAddControl',true,'editor_slide');
-		  },
-		  open: function() {
-				// Clear the editor
-				tinymce.get('editor_slide').setContent('');
-				// Hack for getting the reveal class added to tinymce editor body
-				var $editorIframe = $('#editor_slide_ifr').contents();
-				$editorIframe.find('body').addClass('reveal');
-		  },
-		  close: function() {
-				closeModal();
-		  }
-		});
+			$('#editor_slide-tmce').click(); //Necessary on subsequent loads of the editor
+			$( "#dialog" ).dialog({
+			  autoOpen: true,
+			  width: 600,
+			  height: 600,
+			  modal: false,
+			  buttons: {
+				"Publish": function() {
+					var editorContents = tinymce.get('editor_slide').getContent();
+					var params = { content:editorContents };
+					// Send the contents of the existing post
+					$.ajax({
+						url: ajaxurl + '?action=new_slide&presentation=' + presentation,
+						type: 'POST',
+						data: jQuery.param(params),
+						success: function(result) {
+							$activeColumn.append(result);
+							updateColumns();
+					  }
+					});
+					updateColumns();
+					closeModal();
+				},
+				Cancel: function() {
+					closeModal();
+				}
+			  },
+			  create: function() {
+					tinymce.execCommand('mceRemoveControl',true,'editor_slide');
+					tinymce.execCommand('mceAddControl',true,'editor_slide');
+			  },
+			  open: function() {
+					// Clear the editor
+					tinymce.get('editor_slide').setContent('');
+					// Hack for getting the reveal class added to tinymce editor body
+					var $editorIframe = $('#editor_slide_ifr').contents();
+					$editorIframe.find('body').addClass('reveal');
+			  },
+			  close: function() {
+					closeModal();
+			  }
+			});
 		});
 	}
 
 	// Bind Tidy button
 	function widgetButtonTidy() {
-		$('#tidy-button').click(function(e) {
+		$('.action-buttons').on('click', '#tidy-button', function(e) {
 			e.preventDefault();
 			consolidateColumns();
 			// Why does this break?
@@ -412,7 +410,7 @@ jQuery(document).ready(function($) {
 	 * Expand slide details
 	 */
 	function widgetButtonExpand() {
-		$('.widget-title-action').on('click', function(e) {
+		$('.column').on('click', '.widget-title-action', function(e) {
 			$( this ).parents('.widget').children('.widget-inside').toggle();
 		});
 	}
