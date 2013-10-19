@@ -4,7 +4,7 @@ Plugin Name: WP Present
 Plugin URI: http://stevenword.com/plugins/wp-present/
 Description: Easily create slide presentations and display them with reveal.js
 Author: stevenkword
-Version: 0.1
+Version: 0.99
 Author URI: http://stevenword.com
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -505,7 +505,7 @@ class WP_Present {
 			return;
 
 		$num_slides = ( isset( $_GET["tag_ID"] ) ) ? count( $this->get_associated_slide_ids( $_GET["tag_ID"], $_GET["taxonomy"] ) ) : "";
-		wp_localize_script( 'wp-present-admin', 'WPP_NumSlides', array( intval( $num_slides ) ) );
+		wp_localize_script( 'wp-present-admin', 'WPPNumSlides', array( intval( $num_slides ) ) );
 
 
 		// Make the admin outer-container div big enough to prevent wrapping
@@ -701,7 +701,7 @@ class WP_Present {
 					<?php submit_button( __('Update'), 'primary', 'submit', $wrap = false ); ?>
 					<?php //submit_button( __('Add New'), '', 'add-button', $wrap = false ); ?>
 					<button id="add-button" class="button">New <?php echo $this->post_type_singular_name; ?></button>
-					<button id="tidy-button" class="button">Tidy</button>
+					<!--<button id="tidy-button" class="button">Tidy</button>-->
 					<button id="view-button" class="button">View <?php echo $this->taxonomy_singular_name; ?></button>
 					<span class="spinner"></span>
 				</p>
