@@ -316,7 +316,7 @@ jQuery(document).ready(function($) {
 		$('.column').on('click', '.widget-control-remove', function(e) {
 			e.preventDefault();
 
-			var confirmDelete = confirm("You are about to permanently delete the selected items. 'Cancel' to stop, 'OK' to delete.?");
+			var confirmDelete = confirm("You are about to permanently delete the selected items. 'Cancel' to stop, 'OK' to delete.");
 			if( false == confirmDelete )
 				return;
 
