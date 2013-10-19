@@ -3,15 +3,15 @@
  *
  */
 
-var WPPAdmin;
+var WPPresentAdmin;
 (function($) {
 
-	WPPAdmin = function() {
+	WPPresentAdmin = function() {
 		this.init();
 		return this;
 	}
 
-	WPPAdmin.prototype = {
+	WPPresentAdmin.prototype = {
 		init: function() {
 			var self = this;
 
@@ -389,4 +389,4 @@ var WPPAdmin;
 	};
 
 })(jQuery);
-var slideManager = new WPPAdmin();
+var slideManager = new WPPresentAdmin();
