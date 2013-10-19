@@ -44,7 +44,7 @@ var SlideManager
 			$('.widget-title').removeClass('active');
 
 			// Select the given column
-			$col.css('background-color', '#2ea2cc').css('color','#ffffff');
+			$col.css('background-color', '#e14d43').css('color','#ffffff');
 			$col.addClass('active');
 		},
 
@@ -110,7 +110,7 @@ jQuery(document).ready(function($) {
 		$('.widget-title').css('background-color', '').css('color', 'inherit');
 		$('.widget-title').removeClass('active');
 		//if there are no active columns.
-		$col.css('background-color', '#2ea2cc').css('color','#ffffff');
+		$col.css('background-color', '#e14d43').css('color','#ffffff');
 		$col.addClass('active');
 	}
 
@@ -172,6 +172,11 @@ jQuery(document).ready(function($) {
 
 		// Send this change off to ajax land
 		updatePresentation();
+
+		// refresh some of the .ons
+//		widgetButtonExpand();
+//		widgetButtonEdit();
+//		widgetButtonDelete();
 	}
 
 	// AKA "Tidy Button"
@@ -312,6 +317,10 @@ jQuery(document).ready(function($) {
 		$('.widget-control-remove').on('click', function(e) {
 			e.preventDefault();
 
+			var confirmDelete = confirm("You are about to permanently delete the selected items. 'Cancel' to stop, 'OK' to delete.?");
+			if( false == confirmDelete )
+				return;
+
 			var $button = $(this);
 			var $parentWidget = $button.parents('.widget');
 			var widgetID = $parentWidget.find('.slide-id').val();
@@ -449,11 +458,11 @@ jQuery(document).ready(function($) {
 		});
 	}
 
+	widgetButtonExpand();
 	widgetButtonEdit();
 	widgetButtonDelete();
 	widgetButtonAdd();
 	widgetButtonTidy();
-	widgetButtonExpand();
 	uiSetup();
 	columnHandle();
 });
