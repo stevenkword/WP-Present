@@ -125,6 +125,9 @@ class WP_Present {
 		add_action( 'wp_ajax_delete_slide', array( $this, 'action_wp_ajax_delete_slide' ) );
 		add_action( 'wp_ajax_update_presentation', array( $this, 'action_wp_ajax_update_presentation' ) );
 
+		// TinyMCE
+		add_filter( 'tiny_mce_before_init', array( $this, 'filter_tiny_mce_before_init' ) );
+
 		// Hide taxonomy description column
 		add_filter( 'manage_edit-' . $this->taxonomy_slug . '_columns', array( $this, 'filter_manage_edit_columns' ) );
 	}
@@ -920,11 +923,22 @@ class WP_Present {
 		) );
     }
 
-	/* AJAX
-	* * *
-	*/
+	/**
+	 * Modify the TinyMCE editor
+	 *
+	 * @return array
+	 */
+	function filter_tiny_mce_before_init( $args ) {
+   		$args['body_class'] = 'reveal';
+   		$args['height'] = "450";
+    	return $args;
+	}
 
-
+	/**
+	 * AJAX Get Slide
+	 *
+	 * @return array
+	 */
 	function action_wp_ajax_get_slide() {
 
 		if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], $this->nonce_field ) ) {
@@ -937,6 +951,11 @@ class WP_Present {
 		die();
 	}
 
+	/**
+	 * AJAX Update Slide
+	 *
+	 * @return array
+	 */
 	function action_wp_ajax_update_slide() {
 
 		if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], $this->nonce_field ) ) {
@@ -962,7 +981,11 @@ class WP_Present {
 		die();
 	}
 
-	// Add slide
+	/**
+	 * AJAX Add Slide
+	 *
+	 * @return array
+	 */
 	function action_wp_ajax_new_slide() {
 
 		if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], $this->nonce_field ) ) {
@@ -990,9 +1013,13 @@ class WP_Present {
 		die();
 	}
 
-	// Delete a slide
+	/**
+	 * AJAX Delete Slide
+	 *
+	 * @return array
+	 */
 	function action_wp_ajax_delete_slide() {
-
+		// Nonce check
 		if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], $this->nonce_field ) ) {
 			wp_die( $this->nonce_fail_message );
 		}
@@ -1003,11 +1030,16 @@ class WP_Present {
 		die();
 	}
 
+	/**
+	 * AJAX Save Presentation
+	 *
+	 * @return array
+	 */
 	function action_wp_ajax_update_presentation() {
-
-		//if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], $this->nonce_field ) ) {
-			//wp_die( $this->nonce_fail_message );
-		//}
+		// Nonce check
+		if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], $this->nonce_field ) ) {
+			wp_die( $this->nonce_fail_message );
+		}
 
 		$presentation_id = $_REQUEST[ 'id' ];
 		$safe_description = sanitize_text_field( $_REQUEST[ 'content' ] );
@@ -1017,38 +1049,9 @@ class WP_Present {
 		);
 
 		wp_update_term( $presentation_id, $this->taxonomy_slug, $updated_presentation );
-
 		die();
 	}
 
 } // Class
 WP_Present::instance();
-
-function my_tiny_mce_before_init( $init_array ) {
-   	$init_array['body_class'] = 'reveal';
-    return $init_array;
-}
-add_filter('tiny_mce_before_init', 'my_tiny_mce_before_init');
-
-/* Plugin Name: My TinyMCE Buttons */
-function my_tinymce_button() {
-     if ( current_user_can( 'edit_posts' ) && current_user_can( 'edit_pages' ) ) {
-          add_filter( 'mce_external_plugins', 'my_add_tinymce_button' );
-     }
-}
-add_action( 'admin_init', 'my_tinymce_button' );
-
-function my_add_tinymce_button( $plugin_array )
-{
-//    $plugin_array['reveal'] = plugins_url( 'wp-present/js/reveal.js/js/reveal.js' ) ;
-//    $plugin_array['editor'] = plugins_url( 'wp-present/js/editor.js' ) ;
-//     var_dump( $plugin_array );
-     return $plugin_array;
-}
-
-function make_mce_awesome( $init ) {
-    $init['height'] = "450";
-    return $init;
-}
-add_filter('tiny_mce_before_init', 'make_mce_awesome');
 
