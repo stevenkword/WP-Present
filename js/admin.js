@@ -100,7 +100,7 @@ var WPPresentAdmin;
 			$('.widget-title').removeClass('active');
 
 			// Select the given column
-			$col.css('background-color', '#e14d43').css('color','#ffffff');
+			$col.css('background-color', '#2ea2cc').css('color','#ffffff');
 			$col.addClass('active');
 		},
 

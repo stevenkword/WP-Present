@@ -37,8 +37,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * 5. Peek at how MP6 does fonts / icons (OPEN SANS!)
  * 6. REVEAL theme selector option for the theme customizer
  * 9. Make the placeholders for the columns larger than the widget placeholders
- * 0. Fix column saving
- * 1. Trigger on Update button that forces presentation.(y/n)?
+ * 0. Fix column saving ??
  * 2. Figure out how to add style classes to the presentation admin menu
  */
 class WP_Present {
