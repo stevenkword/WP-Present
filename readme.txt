@@ -4,7 +4,7 @@ Tags: presentation, slideshow, reveal.js, wp-present
 Donate link: http://example.com/
 Requires at least: 3.5
 Tested up to: 3.6
-Stable tag: 0.999
+Stable tag: 0.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,9 +53,9 @@ Answer to foo bar dilemma.
 3. The screenshot description corresponds to screenshot-3.(png|jpg|jpeg|gif).
 
 == Changelog ==
-= 0.999 =
+= 0.9 =
 * Initial release.
 
 == Upgrade Notice ==
-= 0.999 =
+= 0.9 =
 * Initial release.
