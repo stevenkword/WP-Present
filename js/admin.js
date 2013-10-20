@@ -373,9 +373,9 @@ var WPPresentAdmin;
 								WPPNumSlides[0]++;
 								self.addColumn();
 								self.refreshUI();
+								self.updateTaxonomyDescription();
 						  }
 						});
-						self.updateTaxonomyDescription();
 						self.closeModal();
 					},
 					Cancel: function() {
