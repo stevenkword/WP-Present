@@ -20,14 +20,14 @@ var WPPresentAdmin;
 
 			$( "#container" ).sortable({
 				stop: function( event, ui ) {
-					self.updateColumns();
+					self.updateTaxonomyDescription();
 				}
 			});
 
 			$( ".column-inner" ).sortable({
 				connectWith: ".column-inner",
 				stop: function( event, ui ) {
-					self.updateColumns();
+					self.updateTaxonomyDescription();
 				}
 			});
 
@@ -38,7 +38,8 @@ var WPPresentAdmin;
 			self.widgetButtonTidy();
 			self.bindButtonAddColumn();
 			self.bindButtonViewPresentation();
-			self.backfillSlides();
+			self.backfillColumns();
+			self.refreshUI();
 
 			// Select the first column on load
 			self.activateColumn( $('#col-1').children('.widget-top').children('.widget-title') );
@@ -57,19 +58,12 @@ var WPPresentAdmin;
 			// Append an inner column to each column that doesn't contain any slides.
 			$('.column' ).not(":has(div.column-inner)").append('<div class="column-inner ui-sortable"></div>');
 
-			/*
-			$( "#container" ).sortable({
-				stop: function( event, ui ) {
-					self.updateColumns();
-				}
-			});
-			*/
 			$( "#container" ).sortable("refresh");
 
 			$( ".column-inner" ).sortable({
 				connectWith: ".column-inner",
 				stop: function( event, ui ) {
-					self.updateColumns();
+					self.updateTaxonomyDescription();
 				}
 			});
 
@@ -78,17 +72,9 @@ var WPPresentAdmin;
 		},
 
 		/**
-		 * Close Modal
+		 * Backfill Columns
 		 */
-		closeModal: function() {
-			tinymce.execCommand('mceRemoveControl',true,'editor_slide');
-			$( '#dialog' ).dialog( "close" );
-		},
-
-		/**
-		 * Backfill Slides
-		 */
-		backfillSlides: function () {
+		backfillColumns: function () {
 			var self = this;
 			var numSlides = WPPNumSlides[0];
 			var numExisting = $('#container > .column').size();
@@ -97,7 +83,6 @@ var WPPresentAdmin;
 				self.addColumn();
 			}
 			//$('#container').append( '<div style="clear: both;"></div>' );
-			self.refreshUI();
 		},
 
 		/**
@@ -115,9 +100,9 @@ var WPPresentAdmin;
 		},
 
 		/**
-		 * update columns
+		 * Encode,update, and save the columns data into the hidden taxonomy description field
 		 */
-		updateColumns: function () {
+		updateTaxonomyDescription: function () {
 			var self = this;
 			var columns = { }; // Creates a new object
 			var i = 1;
@@ -129,6 +114,7 @@ var WPPresentAdmin;
 			var encoded = JSON.stringify( columns );
 			$('#description').val(encoded);
 
+			// This was a convient time to do this UI clean-up
 			self.renumberColumns();
 
 			// Send this change off to ajax land
@@ -220,13 +206,13 @@ var WPPresentAdmin;
 			$( ".column-inner" ).sortable({
 				connectWith: ".column-inner",
 				stop: (function( event, ui ) {
-					self.updateColumns();
+					self.updateTaxonomyDescription();
 				}),
 				create: (function( event, ui ) {
-					self.updateColumns();
+					self.updateTaxonomyDescription();
 				})
 			});
-			self.updateColumns();
+			self.updateTaxonomyDescription();
 		},
 
 		/**
@@ -352,7 +338,7 @@ var WPPresentAdmin;
 					success: function(result) {
 						$('.spinner').hide();
 						$parentWidget.remove();
-						self.updateColumns();
+						self.updateTaxonomyDescription();
 					}
 				});
 			});
@@ -389,7 +375,7 @@ var WPPresentAdmin;
 								self.refreshUI();
 						  }
 						});
-						self.updateColumns();
+						self.updateTaxonomyDescription();
 						self.closeModal();
 					},
 					Cancel: function() {
@@ -450,6 +436,14 @@ var WPPresentAdmin;
 				 $self.find('> .widget-top > .widget-title > h4').html( i );
 				i++;
 			});
+		},
+
+		/**
+		 * Close Modal
+		 */
+		closeModal: function() {
+			tinymce.execCommand('mceRemoveControl',true,'editor_slide');
+			$( '#dialog' ).dialog( "close" );
 		}
 
 	};
