@@ -446,7 +446,7 @@ class WP_Present {
 				<div class="wrap">
 					<h2><?php echo $this->option_title; ?></h2>
 					<h4>Current Theme: <?php echo $this->default_theme; ?></h4>
-					<h3>Todo</h3>
+					<h3>Coming soon</h3>
 					<ul>
 						<li>Add metaboxes for reveal.js speaker notes (asides)</li>
 						<li>Add metaboxes for appearance/motion overrides</li>
@@ -455,8 +455,7 @@ class WP_Present {
 						<li>Peek at how MP6 does fonts / icons (OPEN SANS!)</li>
 						<li>REVEAL theme selector option for the theme customizer</li>
 						<li>Make the placeholders for the columns larger than the widget placeholders</li>
-						<li>Fix column saving ??</li>
-						<li> Figure out how to add style classes to the presentation admin menu</li>
+						<li>Fix column backfilling when empty columns are present</li>
 					</ul>
 				</div>
 				<div class="clear"></div>
