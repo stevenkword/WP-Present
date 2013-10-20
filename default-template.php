@@ -21,6 +21,9 @@
 	</head>
 	<body <?php body_class(); ?>>
 		<?php if ( have_posts() ) : ?>
+				<div id="branding" style="color: lime; position: fixed; left: 0; bottom: 0; padding: 1em;">
+					<img src="http://localhost/sandbox/wp-content/uploads/2013/10/Oomph_Box_RGB_solid_Red_152x152.png" />
+				</div>
 				<div class="reveal">
 					<section id="primary" class="content-area">
 					<!-- Any section element inside of this container is displayed as a slide -->

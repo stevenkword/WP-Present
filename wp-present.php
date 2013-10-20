@@ -149,6 +149,29 @@ class WP_Present {
 	}
 
 	/**
+	 * Gets the current global post type if one is set
+	 *
+	 * @return string
+	 */
+	function get_current_post_type() {
+		global $post, $typenow, $current_screen;
+
+		if( $post && $post->post_type )
+			$post_type = $post->post_type;
+		elseif( $typenow )
+			$post_type = $typenow;
+		elseif( $current_screen && $current_screen->post_type )
+			$post_type = $current_screen->post_type;
+		elseif( isset( $_REQUEST['post_type'] ) )
+			$post_type = sanitize_key( $_REQUEST['post_type'] );
+		else
+			$post_type = null;
+
+		return $post_type;
+	}
+
+
+	/**
 	 * Remove the description column from the taxonomy overview page
 	 *
 	 * @return array
@@ -259,12 +282,21 @@ class WP_Present {
 	 */
 	function action_init_editor_styles() { // also should peep at mce_css
 
+		global $pagenow, $post;
+
+		// Only on the edit taxonomy and edit post type admin pages
+		$is_tax = ( 'edit-tags.php' == $pagenow || ( isset( $_GET['taxonomy'] ) && $this->taxonomy_slug == $_GET['taxonomy'] ) ) ? true : false;
+		$is_cpt = ( 'post.php' == $pagenow && isset( $_GET[ 'post' ] ) && $this->post_type_slug == get_post_type( $_GET[ 'post' ] ) ) ? true : false;
+
+		if( ! $is_tax && ! $is_cpt )
+			return;
+
 		//If not page now tax or slide : return;
 		remove_editor_styles();
 		add_editor_style( plugins_url( '/wp-present/css/reset.css' ) );
 		add_editor_style( plugins_url( '/wp-present/js/reveal.js/css/theme/moon.css' ) );
 		add_editor_style( plugins_url( '/wp-present/js/reveal.js/lib/css/zenburn.css' ) );
-		add_editor_style( plugins_url( '/wp-present/css/custom.css?v=6' ) );
+		add_editor_style( plugins_url( '/wp-present/css/custom.css?v=' . $this->scripts_version ) );
 	}
 
 	/**
@@ -502,13 +534,9 @@ class WP_Present {
 		if( 'edit-tags.php' != $pagenow || ! isset( $_GET['taxonomy'] ) || $this->taxonomy_slug != $_GET['taxonomy'] )
 			return;
 
-
-
-
 		$num_slides = ( isset( $_GET[ 'tag_ID' ] ) ) ? count( $this->get_associated_slide_ids( $_GET[ 'tag_ID' ], $_GET[ 'taxonomy' ] ) ) : '';
 		wp_localize_script( 'wp-present-admin', 'WPPNumSlides', array( intval( $num_slides ) ) );
 		wp_localize_script( 'wp-present-admin', 'WPPTaxonomyURL', array( get_term_link( (int) $_GET[ 'tag_ID' ], $this->taxonomy_slug ) ) );
-
 
 		// Make the admin outer-container div big enough to prevent wrapping
 		$container_size = ( $num_slides + 1 ) * 210;
@@ -599,7 +627,10 @@ class WP_Present {
 	}
 
 
-
+	/* Render a slide for reveal.js
+	 *
+	 * @return null
+	 */
 	function admin_render_slide( $post ) {
 		setup_postdata( $post );
 		?>
@@ -612,7 +643,7 @@ class WP_Present {
 						<span class="add">Add</span>
 						<span class="screen-reader-text"><?php the_title(); ?></span>
 					</a>
-			</div>
+				</div>
 				<div class="widget-title">
 					<h4><?php the_title(); ?><span class="in-widget-title"></span></h4>
 				</div>
