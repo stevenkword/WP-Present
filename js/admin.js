@@ -55,10 +55,10 @@ var WPPresentAdmin;
 		refreshUI: function () {
 			var self = this;
 
+			$( "#container" ).sortable("refresh");
+
 			// Append an inner column to each column that doesn't contain any slides.
 			$('.column' ).not(":has(div.column-inner)").append('<div class="column-inner ui-sortable"></div>');
-
-			$( "#container" ).sortable("refresh");
 
 			$( ".column-inner" ).sortable({
 				connectWith: ".column-inner",
@@ -67,7 +67,7 @@ var WPPresentAdmin;
 				}
 			});
 
-			self.columnHandle();
+			self.enableColumns();
 
 		},
 
@@ -216,9 +216,9 @@ var WPPresentAdmin;
 		},
 
 		/**
-		 *
+		 * Setup the column to allow for activation
 		 */
-		columnHandle: function () {
+		enableColumns: function () {
 			var self = this;
 			$('.column').children('.widget-top').on('click', '.widget-title', function(e) {
 				$col = $(this);
