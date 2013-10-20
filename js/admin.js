@@ -18,14 +18,14 @@ var WPPresentAdmin;
 			// Make the outer container resizeable
 			$( "#outer-container" ).resizable();
 
-			$( ".column-inner" ).sortable({
-				connectWith: ".column-inner",
+			$( "#container" ).sortable({
 				stop: function( event, ui ) {
 					self.updateColumns();
 				}
 			});
 
-			$( "#container" ).sortable({
+			$( ".column-inner" ).sortable({
+				connectWith: ".column-inner",
 				stop: function( event, ui ) {
 					self.updateColumns();
 				}
@@ -57,14 +57,17 @@ var WPPresentAdmin;
 			// Append an inner column to each column that doesn't contain any slides.
 			$('.column' ).not(":has(div.column-inner)").append('<div class="column-inner ui-sortable"></div>');
 
-			$( ".column-inner" ).sortable({
-				connectWith: ".column-inner",
+			/*
+			$( "#container" ).sortable({
 				stop: function( event, ui ) {
 					self.updateColumns();
 				}
 			});
+			*/
+			$( "#container" ).sortable("refresh");
 
-			$( "#container" ).sortable({
+			$( ".column-inner" ).sortable({
+				connectWith: ".column-inner",
 				stop: function( event, ui ) {
 					self.updateColumns();
 				}
