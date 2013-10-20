@@ -2,9 +2,9 @@
 /*
 Plugin Name: WP Present
 Plugin URI: http://stevenword.com/plugins/wp-present/
-Description: Easily create slide presentations and display them with reveal.js
+Description: Easily create slide presentations and with the power of WordPress and the elegance of reveal.js
 Author: stevenkword
-Version: 0.99
+Version: 0.999
 Author URI: http://stevenword.com
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -28,18 +28,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-/**
- * @todo
- * 1. Add metaboxes for reveal.js speaker notes (asides)
- * 2. Add metaboxes for appearance/motion overrides
- * 3. Append a bodyclass to the <body> tag for more specific style targetting
- * 4. Ability to suppress titles
- * 5. Peek at how MP6 does fonts / icons (OPEN SANS!)
- * 6. REVEAL theme selector option for the theme customizer
- * 9. Make the placeholders for the columns larger than the widget placeholders
- * 0. Fix column saving ??
- * 2. Figure out how to add style classes to the presentation admin menu
- */
 class WP_Present {
 
 	/* Post Type */
@@ -462,6 +450,18 @@ class WP_Present {
 				<div class="wrap">
 					<h2><?php echo $this->option_title; ?></h2>
 					<h4>Current Theme: <?php echo $this->default_theme; ?></h4>
+					<h3>Todo</h3>
+					<ul>
+						<li>Add metaboxes for reveal.js speaker notes (asides)</li>
+						<li>Add metaboxes for appearance/motion overrides</li>
+						<li>Append a bodyclass to the <body> tag for more specific style targetting</li>
+						<li>Ability to suppress titles</li>
+						<li>Peek at how MP6 does fonts / icons (OPEN SANS!)</li>
+						<li>REVEAL theme selector option for the theme customizer</li>
+						<li>Make the placeholders for the columns larger than the widget placeholders</li>
+						<li>Fix column saving ??</li>
+						<li> Figure out how to add style classes to the presentation admin menu</li>
+					</ul>
 				</div>
 				<div class="clear"></div>
 			</div><!-- wpbody-content -->
