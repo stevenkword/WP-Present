@@ -461,10 +461,7 @@ class WP_Present {
 			<div id="wpbody-content" aria-label="Main content" tabindex="0">
 				<div class="wrap">
 					<h2><?php echo $this->option_title; ?></h2>
-					<p>Configure all the things</p>
-
-					<h4>Select a Theme: Moon</h4>
-
+					<h4>Current Theme: <?php echo $this->default_theme; ?></h4>
 				</div>
 				<div class="clear"></div>
 			</div><!-- wpbody-content -->
