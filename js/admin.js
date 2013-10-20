@@ -68,7 +68,7 @@ var WPPresentAdmin;
 			});
 
 			self.enableColumns();
-
+			//self.widgetButtonExpand();
 		},
 
 		/**
@@ -162,7 +162,7 @@ var WPPresentAdmin;
 		 * Expand slide details
 		 */
 		widgetButtonExpand: function () {
-			$('.column').on('click', '.widget-title-action', function(e) {
+			$('#container').on('click', '.widget-title-action', function(e) {
 				$( this ).parents('.widget').children('.widget-inside').toggle();
 			});
 		},
@@ -229,7 +229,7 @@ var WPPresentAdmin;
 		// Bind Edit button
 		widgetButtonEdit: function () {
 			var self = this;
-			$('.column').on('click', '.widget-control-edit', function(e) {
+			$('#container').on('click', '.widget-control-edit', function(e) {
 				e.preventDefault();
 				var $button = $(this);
 				var $parentWidget = $button.parents('.widget');
@@ -312,7 +312,7 @@ var WPPresentAdmin;
 		// Bind Delete button
 		widgetButtonDelete: function () {
 			var self = this;
-			$('.column').on('click', '.widget-control-remove', function(e) {
+			$('#container').on('click', '.widget-control-remove', function(e) {
 				e.preventDefault();
 
 				var confirmDelete = confirm("You are about to permanently delete the selected slide. 'Cancel' to stop, 'OK' to delete.");

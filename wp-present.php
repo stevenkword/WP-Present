@@ -772,7 +772,7 @@ class WP_Present {
 								$col++;
 							}
 							unset( $col );
-						} elseif( 0 == count( $associated_slides ) ){ // If there are no slides
+						} elseif( 0 == count( $associated_slides ) ){ // If there are 0 slides
 							//echo '<p>Sorry, No ' . $this->post_type_name . ' found!</p>';
 							?>
 							<div class="column backfill" id="col-1">
