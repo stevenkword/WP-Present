@@ -2,7 +2,7 @@
 /*
 Plugin Name: WP Present
 Plugin URI: http://stevenword.com/plugins/wp-present/
-Description: Easily create slide presentations and with the power of WordPress and the elegance of reveal.js
+Description: Easily create slideshow presentations with the the power of WordPress and the elegance of reveal.js
 Author: stevenkword
 Version: 0.999
 Author URI: http://stevenword.com
@@ -51,8 +51,8 @@ class WP_Present {
 	public $nonce_field = 'wp-present-nonce';
 	public $nonce_fail_message = "fail!";
 	public $scripts_version = 200131007;
-	//public $max_num_slides = 250; //not currently used, proposed variable
 	public $default_theme = 'simple.css';
+	//public $max_num_slides = 250; //not currently used, proposed variable
 
 	public $plugins_url = '';
 
@@ -109,16 +109,11 @@ class WP_Present {
 		//Hide screen options
 		add_filter('screen_options_show_screen', '__return_false'); // a test
 
-		// Die on save post without a presentation
-
 		// Taxonomy
 		add_action( $this->taxonomy_slug . '_edit_form', array( $this, 'taxonomy_edit_form' ), 9, 2 );
 
 		add_action( 'restrict_manage_posts', array( $this, 'action_restrict_manage_posts' ) );
 		add_action( 'parse_query', array( $this, 'action_parse_query' ) );
-
-		// Modify the terms to display non-JSON encoded values
-		//add_filter( 'get_terms', array( $this, 'filter_get_terms' ), 5000 , 3 );
 
 		//Update the post links for slides
 		add_filter( 'post_type_link', array( $this, 'append_query_string' ), 10, 2 );
@@ -402,7 +397,7 @@ class WP_Present {
 	/**
 	 * Add the necessary menu pages
 	 *
-	 * @return
+	 * @return null
 	 */
 	function action_admin_menu(){
 		global $menu, $submenu;
@@ -421,7 +416,6 @@ class WP_Present {
 				$menu[ $menu_key ][0] = $this->taxonomy_name;
 			}
 		}
-
 
 		//It owuld be better to search for the keys based on url
 
@@ -443,6 +437,11 @@ class WP_Present {
 
 	}
 
+	/**
+	 * Markup for the Options page
+	 *
+	 * @return null
+	 */
 	function options_page(){
 		?>
 		<div id="wpbody">
@@ -1021,8 +1020,6 @@ class WP_Present {
 
 		die();
 	}
-
-
 
 } // Class
 WP_Present::instance();
