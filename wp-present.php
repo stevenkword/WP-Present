@@ -149,29 +149,6 @@ class WP_Present {
 	}
 
 	/**
-	 * Gets the current global post type if one is set
-	 *
-	 * @return string
-	 */
-	function get_current_post_type() {
-		global $post, $typenow, $current_screen;
-
-		if( $post && $post->post_type )
-			$post_type = $post->post_type;
-		elseif( $typenow )
-			$post_type = $typenow;
-		elseif( $current_screen && $current_screen->post_type )
-			$post_type = $current_screen->post_type;
-		elseif( isset( $_REQUEST['post_type'] ) )
-			$post_type = sanitize_key( $_REQUEST['post_type'] );
-		else
-			$post_type = null;
-
-		return $post_type;
-	}
-
-
-	/**
 	 * Remove the description column from the taxonomy overview page
 	 *
 	 * @return array
