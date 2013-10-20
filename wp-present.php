@@ -698,7 +698,7 @@ class WP_Present {
 	 * @return 	null
 	 */
 	function taxonomy_edit_form( $term, $taxonomy ) {
-
+		global $post;
 		$associated_slides = $this->get_associated_slide_ids( $term, $taxonomy );
 		//var_dump( $associated_slides );
 
@@ -765,31 +765,14 @@ class WP_Present {
 										</div>
 									</div>
 									<div class="column-inner">
-										<div id="slide-<?php the_ID(); ?>" class=" portlet widget">
-											<div class="widget-top">
-												<div class="widget-title-action">
-													<a class="widget-action hide-if-no-js" href="#available-widgets"></a>
-													<a class="widget-control-edit hide-if-js" href="/wp-admin/widgets.php?editwidget=ione-dart-ad-8&amp;sidebar=above-header&amp;key=0">
-														<span class="edit">Edit</span>
-														<span class="add">Add</span>
-														<span class="screen-reader-text"><?php the_title(); ?></span>
-													</a>
-												</div>
-												<div class="widget-title">
-													<h4><?php the_title(); ?><span class="in-widget-title"></span></h4>
-												</div>
-											</div>
-											<div class="widget-inside" style="display: none;">
-												<?php the_excerpt(); ?>
-											</div>
-										</div>
+										<?php $this->admin_render_slide( $post ); ?>
 									</div>
 								</div>
 								<?php
 								$col++;
 							}
 							unset( $col );
-						} elseif( 0 == count( $associated_slides ) ){
+						} elseif( 0 == count( $associated_slides ) ){ // If there are no slides
 							//echo '<p>Sorry, No ' . $this->post_type_name . ' found!</p>';
 							?>
 							<div class="column backfill" id="col-1">
