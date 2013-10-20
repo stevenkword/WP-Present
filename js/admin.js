@@ -15,27 +15,6 @@ var WPPresentAdmin;
 		init: function() {
 			var self = this;
 
-			self.widgetButtonExpand();
-			self.widgetButtonEdit();
-			self.widgetButtonDelete();
-			self.widgetButtonAdd();
-			self.widgetButtonTidy();
-			self.bindButtonAddColumn();
-			self.bindButtonViewPresentation();
-			self.uiSetup();
-
-			// Select the first column on load
-			self.activateColumn( $('#col-1').children('.widget-top').children('.widget-title') );
-
-			return self;
-		},
-
-		// Sortables and such
-		uiSetup: function () {
-			var self = this;
-
-			self.backfillSlides();
-
 			// Make the outer container resizeable
 			$( "#outer-container" ).resizable();
 
@@ -52,11 +31,31 @@ var WPPresentAdmin;
 				}
 			});
 
-			self.updateColumns();
-			$( ".column-inner" ).disableSelection();
+			self.widgetButtonExpand();
+			self.widgetButtonEdit();
+			self.widgetButtonDelete();
+			self.widgetButtonAdd();
+			self.widgetButtonTidy();
+			self.bindButtonAddColumn();
+			self.bindButtonViewPresentation();
+			self.backfillSlides();
+
+			// Select the first column on load
+			self.activateColumn( $('#col-1').children('.widget-top').children('.widget-title') );
+
+			$('.spinner').hide();
+
+			return self;
+		},
+
+		/**
+		 * Sortables and such
+		 */
+		refreshUI: function () {
+			var self = this;
 
 			// Append an inner column to each column that doesn't contain any slides.
-			jQuery('.column' ).not(":has(div.column-inner)").append('<div class="column-inner ui-sortable"></div>');
+			$('.column' ).not(":has(div.column-inner)").append('<div class="column-inner ui-sortable"></div>');
 
 			$( ".column-inner" ).sortable({
 				connectWith: ".column-inner",
@@ -65,7 +64,14 @@ var WPPresentAdmin;
 				}
 			});
 
+			$( "#container" ).sortable({
+				stop: function( event, ui ) {
+					self.updateColumns();
+				}
+			});
+
 			self.columnHandle();
+
 		},
 
 		/**
@@ -88,6 +94,7 @@ var WPPresentAdmin;
 				self.addColumn();
 			}
 			//$('#container').append( '<div style="clear: both;"></div>' );
+			self.refreshUI();
 		},
 
 		/**
@@ -125,8 +132,6 @@ var WPPresentAdmin;
 			self.updatePresentation();
 		},
 
-//Dude this is not okay. Fix the post data ajax call
-
 		/**
 		 * AJAX request to update the current presentation taxonomy
 		 */
@@ -141,9 +146,10 @@ var WPPresentAdmin;
 					$('.spinner').show();
 				},
 				complete: function( xhr ) {
-					$('.spinner').hide();
+					//$('.spinner').hide();
 				},
 				success: function(result) {
+					$('.spinner').hide();
 					// Return the excerpt from the editor
 					//console.log('presentation updated');
 				}
@@ -220,6 +226,9 @@ var WPPresentAdmin;
 			self.updateColumns();
 		},
 
+		/**
+		 *
+		 */
 		columnHandle: function () {
 			var self = this;
 			$('.column').children('.widget-top').on('click', '.widget-title', function(e) {
@@ -261,9 +270,10 @@ var WPPresentAdmin;
 								$('.spinner').show();
 							},
 							complete: function( xhr ) {
-								$('.spinner').hide();
+								//$('.spinner').hide();
 							},
 							success: function(result) {
+								$('.spinner').hide();
 								// Return the excerpt from the editor
 								$widgetPreview.html( result );
 						  }
@@ -334,9 +344,10 @@ var WPPresentAdmin;
 						$('.spinner').show();
 					},
 					complete: function( xhr ) {
-						$('.spinner').hide();
+						//$('.spinner').hide();
 					},
 					success: function(result) {
+						$('.spinner').hide();
 						$parentWidget.remove();
 						self.updateColumns();
 					}
@@ -370,9 +381,9 @@ var WPPresentAdmin;
 							data: jQuery.param(params),
 							success: function(result) {
 								$activeColumn.append(result);
-								self.addColumn();
 								WPPNumSlides[0]++;
-								self.updateColumns();
+								self.addColumn();
+								self.refreshUI();
 						  }
 						});
 						self.updateColumns();
@@ -407,12 +418,6 @@ var WPPresentAdmin;
 
 			$('#container').append( '<div class="column ui-sortable" id="col-'+col+'"><div class="widget-top"><div class="widget-title"><h4 class="hndle">'+col+'<span class="in-widget-title"></span></h4></div></div></div>' );
 			$('#container').width( $('#container').width() + 210 );
-
-			// Make sure all is good in the world
-			//self.uiSetup();
-
-			// Send this change off to ajax land
-			//self.updatePresentation();
 		},
 
 		//Bind Add Column button to addColumn()
@@ -421,6 +426,7 @@ var WPPresentAdmin;
 			$('.action-buttons').on('click', '#add-column', function(e) {
 				e.preventDefault();
 				self.addColumn();
+				self.refreshUI();
 			});
 		},
 
