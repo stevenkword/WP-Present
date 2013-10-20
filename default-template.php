@@ -22,7 +22,8 @@
 	<body <?php body_class(); ?>>
 		<?php if ( have_posts() ) : ?>
 				<div id="branding" style="color: lime; position: fixed; left: 0; bottom: 0; padding: 1em;">
-					<img height="50%" width="50%" src="http://localhost/sandbox/wp-content/uploads/2013/10/Oomph_Box_RGB_solid_Red_152x152.png" />
+					<img height="75px" width="75px" src="http://localhost/sandbox/wp-content/uploads/2013/10/Oomph_Box_RGB_solid_Red_152x152.png" />
+					<h2 style="font-family: 'Lato', sans-serif;display: inline; color: black; font-size: 2em;">@stevenkword</h2>
 				</div>
 				<div class="reveal">
 					<section id="primary" class="content-area">
@@ -89,7 +90,7 @@
 				<?php
 				// Get plugin path
 				$plugin_path = dirname( __FILE__ );
-				$plugin_url = plugins_url( '' , __FILE__ );
+				$plugin_url = plugins_url( '/wp-present/' );
 				//echo $plugin_url . '/js/reveal.js/lib/js/head.min.js';
 				?>
 

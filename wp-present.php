@@ -64,6 +64,7 @@ class WP_Present {
 	public $nonce_fail_message = "fail!";
 	public $scripts_version = 200131007;
 	//public $max_num_slides = 250; //not currently used, proposed variable
+	public $default_theme = 'simple.css';
 
 	public $plugins_url = '';
 
@@ -269,7 +270,7 @@ class WP_Present {
 		//If not page now tax or slide : return;
 		remove_editor_styles();
 		add_editor_style( plugins_url( '/wp-present/css/reset.css' ) );
-		add_editor_style( plugins_url( '/wp-present/js/reveal.js/css/theme/moon.css' ) );
+		add_editor_style( plugins_url( '/wp-present/js/reveal.js/css/theme/' . $this->default_theme ) );
 		add_editor_style( plugins_url( '/wp-present/js/reveal.js/lib/css/zenburn.css' ) );
 		add_editor_style( plugins_url( '/wp-present/css/custom.css?v=' . $this->scripts_version ) );
 	}
@@ -289,7 +290,7 @@ class WP_Present {
 
 		/* Reveal Styles */
 		wp_enqueue_style( 'reveal', $this->plugins_url . '/js/reveal.js/css/reveal.css', '', $this->scripts_version );
-		wp_enqueue_style( 'reveal-theme', $this->plugins_url . '/js/reveal.js/css/theme/moon.css', array('reveal'), $this->scripts_version );
+		wp_enqueue_style( 'reveal-theme', $this->plugins_url . '/js/reveal.js/css/theme/' . $this->default_theme, array('reveal'), $this->scripts_version );
 		wp_enqueue_style( 'zenburn', $this->plugins_url . '/js/reveal.js/lib/css/zenburn.css', '', $this->scripts_version, false );
 
 		/* Last run styles */

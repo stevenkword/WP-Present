@@ -1,6 +1,6 @@
 /* =Reveal.js
 -------------------------------------------------------------- */
-.reveal h1{ font-size: 2em; padding-bottom: .5em; line-height: 1em; }
+.reveal h1, .branding h1{ font-size: 2em; padding-bottom: .5em; line-height: 1em; }
 .reveal h2{ line-height: 1.5em; }
 .reveal ul li {
 	padding: 2px;
