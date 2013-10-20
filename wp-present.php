@@ -243,7 +243,6 @@ class WP_Present {
 	 * @return null
 	 */
 	function action_init_editor_styles() { // also should peep at mce_css
-
 		global $pagenow, $post;
 
 		// Only on the edit taxonomy and edit post type admin pages
@@ -343,11 +342,6 @@ class WP_Present {
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
-		<script>
-			document.write( '<link rel="stylesheet" href="<?php echo $this->plugins_url;?>/js/reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
-		</script>
 
 		<script type="text/javascript">
 			jQuery(function($){
@@ -485,8 +479,7 @@ class WP_Present {
 			return;
 
 		// Admin Styles
-		//wp_enqueue_style( 'jquery-ui-demo', $this->plugins_url . '/css/wp-admin-jquery-ui/jquery-ui-demo.css', '', $this->scripts_version );	// via helen
-		wp_enqueue_style( 'jquery-ui-fresh', $this->plugins_url . '/css/wp-admin-jquery-ui/jquery-ui-fresh.css', '', $this->scripts_version );	// via helen
+		wp_enqueue_style( 'jquery-ui-fresh', $this->plugins_url . '/css/wp-admin-jquery-ui/jquery-ui-fresh.css', '', $this->scripts_version );	// Thanks Helen
 		wp_enqueue_style( 'wp-present-admin', $this->plugins_url . '/css/admin.css', '', $this->scripts_version );
 
 		// Admin Scripts
@@ -523,7 +516,7 @@ class WP_Present {
 	}
 
 	/*
-	 * Save chosen primary category as post meta
+	 * Save chosen primary presentaiton as post meta
 	 * @param int $post_id
 	 * @uses wp_verify_nonce, current_user_can, update_post_meta, delete_post_meta, wp_die
 	 * @action save_post
@@ -542,7 +535,7 @@ class WP_Present {
 		elseif ( ! current_user_can( 'edit_post', $post_id ) )
 				return;
 
-//		wp_die( 'You must choose a presentation', 'ERROR', array( 'back_link' => true ) );
+		//wp_die( 'You must choose a presentation', 'ERROR', array( 'back_link' => true ) );
 	}
 
 	/**
@@ -650,7 +643,7 @@ class WP_Present {
 	 * @return
 	 */
 	function admin_render_columns( $term, $taxonomy ) {
-
+		global $post, $wp_query;
 		$term_description =  $this->get_term_description( $term, $taxonomy );
 
 		// Calculate the number of columns we need
@@ -660,28 +653,27 @@ class WP_Present {
 				$columns[] = $c;
 		}
 		// Let's take a look at the column array;
-		global $post, $wp_query;
 		for ($col = 1; $col <= count( $columns ); $col++) {
-				?>
-				<div class="column autopop" id="col-<?php echo intval( $col ); ?>">
-					<div class="widget-top">
-						<div class="widget-title">
-							<h4 class="hndle"><?php echo $col; ?><span class="in-widget-title"></span></h4>
-						</div>
+			?>
+			<div class="column autopop" id="col-<?php echo intval( $col ); ?>">
+				<div class="widget-top">
+					<div class="widget-title">
+						<h4 class="hndle"><?php echo $col; ?><span class="in-widget-title"></span></h4>
 					</div>
-					<div class="column-inner">
-					<?php
-					$slides = $term_description[ 'col-' . $col ];
-					foreach( $slides as $key => $slide ) {
-						list( $rubbish, $slide_id ) =  explode( '-', $slide );
-						$post = get_post( $slide_id );
-						$this->admin_render_slide( $post );
-					}
-					?>
-					</div><!--/.column-inner-->
-
 				</div>
-		<?php
+				<div class="column-inner">
+				<?php
+				$slides = $term_description[ 'col-' . $col ];
+				foreach( $slides as $key => $slide ) {
+					list( $rubbish, $slide_id ) =  explode( '-', $slide );
+					$post = get_post( $slide_id );
+					$this->admin_render_slide( $post );
+				}
+				?>
+				</div><!--/.column-inner-->
+
+			</div>
+			<?php
 		}
 		unset( $col );
 	}
@@ -692,8 +684,8 @@ class WP_Present {
 	 * Create image control for wp-admin/edit-tag-form.php.
 	 * Hooked into the '{$taxonomy}_edit_form_fields' action.
 	 *
-	 * @param	stdClass  Term object.
-	 * @param	string    Taxonomy slug
+	 * @param	stdClass Term object.
+	 * @param	string Taxonomy slug
 	 * @uses	add_action()
 	 * @uses	get_taxonomy()
 	 * @uses	get_term_field
@@ -845,7 +837,6 @@ class WP_Present {
 	 * @return
 	 */
 	function action_restrict_manage_posts() {
-
 		global $typenow;
 
 		if ( $typenow == $this->post_type_slug ) {
@@ -901,10 +892,6 @@ class WP_Present {
 	 * @return null
 	 */
     function modal_editor( $post_id = '' ) {
-
-		//$post = get_post( $post_id );
-		//$link = admin_url('admin-ajax.php?action=my_user_vote&post_id=' . $post->ID . '&nonce=' . wp_create_nonce( $this->nonce_field) );
-
         wp_editor( $content = '', $editor_id = 'editor_' . $this->post_type_slug, array(
 			'wpautop' => false, // use wpautop?
 			'media_buttons' => true, // show insert/upload button(s)
@@ -940,7 +927,7 @@ class WP_Present {
 	 * @return array
 	 */
 	function action_wp_ajax_get_slide() {
-
+		// Nonce check
 		if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], $this->nonce_field ) ) {
 			wp_die( $this->nonce_fail_message );
 		}
@@ -957,7 +944,7 @@ class WP_Present {
 	 * @return array
 	 */
 	function action_wp_ajax_update_slide() {
-
+		// Nonce check
 		if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], $this->nonce_field ) ) {
 			wp_die( $this->nonce_fail_message );
 		}
@@ -987,7 +974,7 @@ class WP_Present {
 	 * @return array
 	 */
 	function action_wp_ajax_new_slide() {
-
+		// Nonce check
 		if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], $this->nonce_field ) ) {
 			wp_die( $this->nonce_fail_message );
 		}
