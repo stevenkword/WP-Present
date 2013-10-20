@@ -36,8 +36,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * 4. Ability to suppress titles
  * 5. Peek at how MP6 does fonts / icons (OPEN SANS!)
  * 6. REVEAL theme selector option for the theme customizer
- * 7. Add settings page to the Slides menu
- * 8. Provide confirm dialogs when deleting slides
  * 9. Make the placeholders for the columns larger than the widget placeholders
  * 0. Fix column saving
  * 1. Trigger on Update button that forces presentation.(y/n)?

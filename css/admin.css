@@ -33,7 +33,7 @@
 .portlet-content, .portlet-edit { padding: 0.4em; overflow: hidden; }
 .portlet a.widget-action { text-decoration: none; }
 
-.ui-sortable-placeholder { border: 1px dotted black; visibility: visible !important; height: 24px; }
+.ui-sortable-placeholder { border: 1px dotted black; visibility: visible !important; min-height: 3em; }
 .ui-sortable-placeholder * { visibility: hidden; }
 
 #outer-container{ width: auto; min-height: 100px; overflow: scroll; border: 1px dashed #ccc; background: #fff; }
@@ -42,7 +42,7 @@
 #container .column > .widget-top > .widget-title{ cursor: move; border: 1px solid #aaa; background: #ddd;}
 
 /* Allows for empty columns to accept new slides */
-#container .column-inner.ui-sortable { min-height: 20px; }
+#container .column-inner.ui-sortable { min-height: 3em; }
 
 .action-buttons a { text-decoration: none; }
 
