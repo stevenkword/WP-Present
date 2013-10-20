@@ -27,7 +27,7 @@
 	cursor: move;
 }
 
-.portlet { margin: 0 1em 0.5em 0; overflow: hidden; min-height: 20px; }
+.portlet { margin: 0 1em 0.5em 0; overflow: hidden; min-height: 20px; -webkit-border-radius: 3px; border-radius: 3px; }
 .portlet-header { margin: 0.3em; padding-bottom: 4px; padding-left: 0.2em; overflow:hidden;}
 .portlet-header .ui-icon { float: right; }
 .portlet-content, .portlet-edit { padding: 0.4em; overflow: hidden; }
@@ -36,10 +36,10 @@
 .ui-sortable-placeholder { border: 1px dotted black; visibility: visible !important; min-height: 3em; }
 .ui-sortable-placeholder * { visibility: hidden; }
 
-#outer-container{ width: auto; min-height: 100px; overflow: scroll; border: 1px dashed #ccc; background: #fff; }
+#outer-container{ width: auto; min-height: 100px; overflow: scroll; border: 1px dashed #ccc; background: #fff; -webkit-border-radius: 3px; border-radius: 3px;}
 #container{ min-width: 1200px; /*width:auto;*/ padding: 1em; background: inherit; min-height: 400px }
 #container .column > .widget-top{ margin: 0 1em 0.5em 0; }
-#container .column > .widget-top > .widget-title{ cursor: move; border: 1px solid #aaa; background: #ddd;}
+#container .column > .widget-top > .widget-title{ cursor: move; border: 1px solid #aaa; background: #ddd; -webkit-border-radius: 3px; border-radius: 3px;}
 
 /* Allows for empty columns to accept new slides */
 #container .column-inner.ui-sortable { min-height: 3em; }
