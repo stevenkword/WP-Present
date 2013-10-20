@@ -8,9 +8,14 @@
 .form-field { display: none; }
 .form-field.form-required { display: block; }
 
-.spinner{ display: inline-block; float: none; };
+.spinner{ display: inline-block; float: none; }
 
 .widget-inside { text-align: center; }
+.widget-control-edit,
+.widget-control-remove,
+.widget-control-view { display: inline; padding: 0; line-height: 26px; }
+
+.widget-control-separator { padding: 0 0.5em; }
 
 .column { width: /*285*/200px; float: left; padding-bottom: 10px; margin: 5px; }
 .column-handle {

@@ -624,7 +624,8 @@ class WP_Present {
 				</div>
 				<div class="widget-control-actions">
 					<div class="alignleft">
-						<a class="widget-control-edit" href="<?php echo get_edit_post_link( get_the_ID() ); ?>" target="_blank">Edit</a> |
+						<a class="widget-control-edit" href="<?php echo get_edit_post_link( get_the_ID() ); ?>" target="_blank">Edit</a>
+						<span class='widget-control-separator'>|</span>
 						<a class="widget-control-remove" href="#remove">Delete</a>
 					</div>
 					<div class="widget-control-actions alignright">
