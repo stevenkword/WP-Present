@@ -445,7 +445,10 @@ class WP_Present {
 			<div id="wpbody-content" aria-label="Main content" tabindex="0">
 				<div class="wrap">
 					<h2><?php echo $this->option_title; ?></h2>
-					<h4>Current Theme: <?php echo $this->default_theme; ?></h4>
+					<h3>Select a Theme</h3>
+						<p>Current Theme: <?php echo $this->default_theme; ?></p>
+					<h3>Branding</h3>
+						<p>Branding HTML textarea goes here</p>
 					<h3>Coming soon</h3>
 					<ul>
 						<li>Add metaboxes for reveal.js speaker notes (asides)</li>
@@ -455,7 +458,8 @@ class WP_Present {
 						<li>Peek at how MP6 does fonts / icons (OPEN SANS!)</li>
 						<li>REVEAL theme selector option for the theme customizer</li>
 						<li>Make the placeholders for the columns larger than the widget placeholders</li>
-						<li>Fix column backfilling when empty columns are present</li>
+						<li>Fix column backfilling when empty columns are presentwq</li>
+						<li>Clean up the admin menu hackery</li>
 					</ul>
 				</div>
 				<div class="clear"></div>
