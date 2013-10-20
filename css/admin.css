@@ -39,7 +39,7 @@
 #outer-container{ width: auto; min-height: 100px; overflow: scroll; border: 1px dashed #ccc; background: #fff; -webkit-border-radius: 3px; border-radius: 3px;}
 #container{ min-width: 1200px; /*width:auto;*/ padding: 1em; background: inherit; min-height: 400px }
 #container .column > .widget-top{ margin: 0 1em 0.5em 0; }
-#container .column > .widget-top > .widget-title{ cursor: move; border: 1px solid #aaa; background: #ddd; -webkit-border-radius: 3px; border-radius: 3px;}
+#container .column > .widget-top > .widget-title{ cursor: move; border: 1px solid #aaa; background: #ddd; }
 
 /* Allows for empty columns to accept new slides */
 #container .column-inner.ui-sortable { min-height: 3em; }
