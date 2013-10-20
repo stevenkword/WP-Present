@@ -238,7 +238,8 @@ class WP_Present {
 				'update_item'         	=> __( 'Update ' . $this->taxonomy_singular_name ),
 				'add_new_item'        	=> __( 'Add New ' . $this->taxonomy_singular_name ),
 				'new_item_name'       	=> __( 'New ' . $this->taxonomy_singular_name. ' Name' ),
-				'menu_name'           	=> __( $this->taxonomy_name )
+				'menu_name'           	=> __( $this->taxonomy_name ),
+				'view_item'           	=> __( 'View ' . $this->taxonomy_singular_name )
 			),
 			'hierarchical'        	=> true,
 			'show_ui'             	=> true,
