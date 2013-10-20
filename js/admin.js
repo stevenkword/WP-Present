@@ -67,8 +67,8 @@ var WPPresentAdmin;
 				}
 			});
 
+			// This really should be called only once inside init
 			self.enableColumns();
-			//self.widgetButtonExpand();
 		},
 
 		/**
