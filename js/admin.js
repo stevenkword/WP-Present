@@ -34,10 +34,10 @@ var WPPresentAdmin;
 		uiSetup: function () {
 			var self = this;
 
+			self.backfillSlides();
+
 			// Make the outer container resizeable
 			$( "#outer-container" ).resizable();
-
-			self.backfillSlides();
 
 			$( ".column-inner" ).sortable({
 				connectWith: ".column-inner",
@@ -81,7 +81,7 @@ var WPPresentAdmin;
 		 */
 		backfillSlides: function () {
 			var self = this;
-			var numSlides = WPPNumSlides;
+			var numSlides = WPPNumSlides[0];
 			var numExisting = $('#container > .column').size();
 
 			for (var col=numExisting+1;col<=numSlides;col++){
@@ -369,6 +369,7 @@ var WPPresentAdmin;
 							success: function(result) {
 								$activeColumn.append(result);
 								self.addColumn();
+								WPPNumSlides[0]++;
 								self.updateColumns();
 						  }
 						});
@@ -406,12 +407,10 @@ var WPPresentAdmin;
 			$('#container').width( $('#container').width() + 210 );
 
 			// Make sure all is good in the world
-			self.uiSetup();
+			//self.uiSetup();
 
 			// Send this change off to ajax land
-			self.updatePresentation();
-
-			WPPNumSlides++;
+			//self.updatePresentation();
 		},
 
 		//Bind Add Column button to addColumn()
