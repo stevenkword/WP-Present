@@ -119,6 +119,8 @@ var WPPresentAdmin;
 			var encoded = JSON.stringify( columns );
 			$('#description').val(encoded);
 
+			self.renumberColumns();
+
 			// Send this change off to ajax land
 			self.updatePresentation();
 		},
@@ -427,6 +429,16 @@ var WPPresentAdmin;
 			$('.action-buttons').on('click', '#view-button', function(e) {
 				e.preventDefault();
 				window.open(WPPTaxonomyURL,'_blank');
+			});
+		},
+
+		renumberColumns: function() {
+			var i = 1;
+			$( '.column' ).each(function( index ) {
+				 var self = this;
+				 var $self = $(this);
+				 $self.find('> .widget-top > .widget-title > h4').html( i );
+				i++;
 			});
 		}
 
