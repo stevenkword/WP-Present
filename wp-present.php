@@ -279,7 +279,6 @@ class WP_Present {
 		wp_enqueue_style( 'zenburn', $this->plugins_url . '/js/reveal.js/lib/css/zenburn.css', '', $this->scripts_version, false );
 
 		/* Last run styles */
-		//wp_enqueue_style( 'home', $this->plugins_url . '/css/home.css', array('reveal-theme'), $ver_reveal );
 		wp_enqueue_style( 'custom', $this->plugins_url . '/css/custom.css', array('reveal'), $this->scripts_version );
 
 		/* Reveal Scripts */
@@ -999,7 +998,6 @@ class WP_Present {
 
 		$post = get_post( $post_id );
 		$this->admin_render_slide( $post );
-
 		die();
 	}
 
