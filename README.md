@@ -14,29 +14,29 @@ Demo available at http://slides.stevenword.com
 * License: GPLv2 or later
 * License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-== Description ==
+### Description ###
 Long description of this great plugin. No characters limit, and you can use markdown.
 
-== Installation ==
+### Installation ###
 1. Upload \\\\\\\"/wp-present\\\\\\\" to the \\\\\\\"/wp-content/plugins/\\\\\\\" directory.
 2. Activate the plugin through the \\\\\\\"Plugins\\\\\\\" menu in WordPress.
 
-== Frequently Asked Questions ==
+### Frequently Asked Questions ###
 = A question that someone might have =
 An answer to that question.
 
 = What about foo bar? =
 Answer to foo bar dilemma.
 
-== Screenshots ==
+### Screenshots ###
 1. The screenshot description corresponds to screenshot-1.(png|jpg|jpeg|gif).
 2. The screenshot description corresponds to screenshot-2.(png|jpg|jpeg|gif).
 3. The screenshot description corresponds to screenshot-3.(png|jpg|jpeg|gif).
 
-== Changelog ==
+### Changelog ###
 = 0.9 =
 * Initial release.
 
-== Upgrade Notice ==
+### Upgrade Notice ###
 = 0.9 =
 * Initial release.
