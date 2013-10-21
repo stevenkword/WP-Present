@@ -51,7 +51,7 @@ class WP_Present {
 	public $nonce_field = 'wp-present-nonce';
 	public $nonce_fail_message = "fail!";
 	public $scripts_version = 200131007;
-	public $default_theme = 'simple.css';
+	public $default_theme = 'moon.css'; //moon, night, simple, serif, solarized
 	//public $max_num_slides = 250; //not currently used, proposed variable
 
 	public $plugins_url = '';
@@ -450,6 +450,7 @@ class WP_Present {
 						<p>Branding HTML textarea goes here</p>
 					<h3>Coming soon</h3>
 					<ul>
+						<li>ADD SLUGS TO IDS IN THE DESCRIPTION FIELD</li>
 						<li>Add metaboxes for reveal.js speaker notes (asides)</li>
 						<li>Add metaboxes for appearance/motion overrides</li>
 						<li>Append a bodyclass to the <body> tag for more specific style targetting</li>
@@ -490,7 +491,9 @@ class WP_Present {
 		wp_enqueue_script( 'jquery-ui-dialog' );
 
 		wp_enqueue_script( 'wp-present-admin', $this->plugins_url . '/js/admin.js', array( 'jquery' ), $this->scripts_version, true );
-		wp_localize_script( 'wp-present-admin', 'presentation', $_REQUEST['tag_ID'] );
+
+		if( isset( $_REQUEST[ 'tag_ID' ] ) )
+			wp_localize_script( 'wp-present-admin', 'presentation', $_REQUEST[ 'tag_ID' ] );
 	}
 
 	/**
@@ -506,7 +509,9 @@ class WP_Present {
 
 		$num_slides = ( isset( $_GET[ 'tag_ID' ] ) ) ? count( $this->get_associated_slide_ids( $_GET[ 'tag_ID' ], $_GET[ 'taxonomy' ] ) ) : '';
 		wp_localize_script( 'wp-present-admin', 'WPPNumSlides', array( intval( $num_slides ) ) );
-		wp_localize_script( 'wp-present-admin', 'WPPTaxonomyURL', array( get_term_link( (int) $_GET[ 'tag_ID' ], $this->taxonomy_slug ) ) );
+
+		if( isset( $_REQUEST[ 'tag_ID' ] ) )
+			wp_localize_script( 'wp-present-admin', 'WPPTaxonomyURL', array( get_term_link( (int) $_GET[ 'tag_ID' ], $this->taxonomy_slug ) ) );
 
 		// Make the admin outer-container div big enough to prevent wrapping
 		$container_size = ( $num_slides + 1 ) * 210;
