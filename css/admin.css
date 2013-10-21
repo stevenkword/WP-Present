@@ -1,10 +1,4 @@
-/**
- * WP Present - admin.css
- *
- */
-
 /* Hide the things on the taxonomy screen */
-
 .form-field { display: none; }
 .form-field.form-required { display: block; }
 
