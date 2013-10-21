@@ -1,8 +1,3 @@
-/**
- * WP Present - admin.js
- *
- */
-
 var WPPresentAdmin;
 (function($) {
 
