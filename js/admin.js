@@ -32,11 +32,12 @@ var WPPresentAdmin;
 			self.widgetButtonTidy();
 			self.bindButtonAddColumn();
 			self.bindButtonViewPresentation();
-			self.backfillColumns();
+			//self.backfillColumns();
 			self.refreshUI();
 
 			// Select the first column on load
-			self.activateColumn( $('#col-1').children('.widget-top').children('.widget-title') );
+			var $columnTitleBar = $('#col-1').children('.widget-top').children('.widget-title');
+			self.activateColumn( $columnTitleBar );
 
 			$('.spinner').hide();
 			return self;
@@ -50,6 +51,10 @@ var WPPresentAdmin;
 
 			// Refresh the columns
 			$( "#container" ).sortable("refresh");
+
+			// TODO: Fixed outer containers resizable
+			//$( "#outer-container" ).resizable("destroy");
+			//$( "#outer-container" ).resizable();
 
 			// Append an inner column to each column that doesn't contain any slides.
 			$('.column' ).not(":has(div.column-inner)").append('<div class="column-inner ui-sortable"></div>');
@@ -403,11 +408,18 @@ var WPPresentAdmin;
 
 		// Adds a column to the presentation
 		addColumn: function () {
+			// TODO: I would be better if the column has the active class instead of the child elements
+
 			var self = this;
 			var col = $('#container > .column').size() + 1;
 
-			$('#container').append( '<div class="column ui-sortable" id="col-'+col+'"><div class="widget-top"><div class="widget-title"><h4 class="hndle">'+col+'<span class="in-widget-title"></span></h4></div></div></div>' );
+			// TODO: Insert column after the active column as opposed to the end
+			//var $activeColumn = $('.widget-title.active').parent('.widget-top').parent('.column').children('.column-inner');
+
+			//$('#container').append( '<div class="column ui-sortable" id="col-'+col+'"><div class="widget-top"><div class="widget-title"><h4 class="hndle">'+col+'<span class="in-widget-title"></span></h4></div></div></div>' );
+			$('.widget-title.active').parent('.widget-top').parent('.column').after( '<div class="column ui-sortable" id="col-'+col+'"><div class="widget-top"><div class="widget-title"><h4 class="hndle">'+col+'<span class="in-widget-title"></span></h4></div></div></div>' );
 			$('#container').width( $('#container').width() + 210 );
+			self.renumberColumns();
 		},
 
 		//Bind Add Column button to addColumn()

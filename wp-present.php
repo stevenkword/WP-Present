@@ -59,8 +59,9 @@ class WP_Present {
 	/* Define and register singleton */
 	private static $instance = false;
 	public static function instance() {
-	if( ! self::$instance )
-		self::$instance = new WP_Present;
+		if( ! self::$instance ) {
+			self::$instance = new WP_Present;
+		}
 		return self::$instance;
 	}
 
@@ -106,7 +107,7 @@ class WP_Present {
 		add_action( 'save_post', array( $this, 'action_save_post' ) );
 		add_action( 'admin_footer', array( $this, 'action_admin_footer' ), 20 );
 
-		//Hide screen options
+		// Hide screen options
 		add_filter('screen_options_show_screen', '__return_false'); // a test
 
 		// Taxonomy
@@ -451,6 +452,7 @@ class WP_Present {
 					<h3>Coming soon</h3>
 					<ul>
 						<li>ADD SLUGS TO IDS IN THE DESCRIPTION FIELD</li>
+						<li>When adding a new column, add it one column after the active column</li>
 						<li>Add metaboxes for reveal.js speaker notes (asides)</li>
 						<li>Add metaboxes for appearance/motion overrides</li>
 						<li>Append a bodyclass to the <body> tag for more specific style targetting</li>
@@ -566,6 +568,8 @@ class WP_Present {
 		if( ! is_array( $term_description ) )
 			return false;
 
+		global $post, $wp_query;
+		$num_columns = array();
 		$associated_slides =  array();
 
 		// Calculate the number of columns we need
@@ -575,7 +579,6 @@ class WP_Present {
 				$num_columns[] = $c;
 		}
 
-		global $post, $wp_query;
 		for ( $col = 1; $col <= count( $num_columns ); $col++ ) {
 			$slides = $term_description[ 'col-' . $col ];
 			foreach( $slides as $key => $slide ) {
