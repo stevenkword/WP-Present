@@ -51,7 +51,7 @@ class WP_Present {
 	public $nonce_field = 'wp-present-nonce';
 	public $nonce_fail_message = "fail!";
 	public $scripts_version = 200131007;
-	public $default_theme = 'moon.css'; //moon, night, simple, serif, solarized
+	public $default_theme = 'simple.css'; //moon, night, simple, serif, solarized
 	//public $max_num_slides = 250; //not currently used, proposed variable
 
 	public $plugins_url = '';

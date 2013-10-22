@@ -15,8 +15,8 @@
 		<?php if ( have_posts() ) : ?>
 			<div class="reveal">
 				<div id="branding" style="position: fixed; left: 0; bottom: 0; padding: 1em;">
-					<!--<img height="75px" width="75px" src="http://localhost/sandbox/wp-content/uploads/2013/10/Oomph_Box_RGB_solid_Red_152x152.png" />-->
-					<p>@stevenkword</p>
+					<img height="75px" width="75px" src="http://localhost/sandbox/wp-content/uploads/2013/10/Oomph_Box_RGB_solid_Red_152x152.png" />
+					<!--<p>@stevenkword</p>-->
 				</div>
 				<section id="primary" class="content-area">
 				<!-- Any section element inside of this container is displayed as a slide -->

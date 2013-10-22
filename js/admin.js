@@ -55,12 +55,18 @@ var WPPresentAdmin;
 			// Append an inner column to each column that doesn't contain any slides.
 			$('.column' ).not(":has(div.column-inner)").append('<div class="column-inner ui-sortable"></div>');
 
-			$( ".column-inner" ).sortable({
-				connectWith: ".column-inner",
-				stop: function( event, ui ) {
-					self.updateTaxonomyDescription();
-				}
-			});
+			// This is a little bit of hackery.  It would be nice if the sortable("refresh") method worked here.
+			// TODO: Investigate hackery
+			if ($( '.column-inner' ).data( 'sortable' )) {
+				$( ".column-inner" ).sortable("refresh");
+			} else {
+				$( ".column-inner" ).sortable({
+					connectWith: ".column-inner",
+					stop: function( event, ui ) {
+						self.updateTaxonomyDescription();
+					}
+				});
+			}
 
 			// This really should be called only once inside init
 			self.enableColumns();
@@ -84,6 +90,7 @@ var WPPresentAdmin;
 		 * Make the column the target for adding new columns
 		 */
 		activateColumn: function ( $col ) {
+			// TODO: cache widget-title
 			// Remove the active class from all columns
 			$('.widget-title').css('background', '');
 			$('.widget-title').css('color', '');
