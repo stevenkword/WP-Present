@@ -10,7 +10,6 @@ var WPPresentAdmin;
 		init: function() {
 			var self = this;
 
-			// Make the outer container resizeable
 			$( "#outer-container" ).resizable();
 
 			$( "#container" ).sortable({
@@ -40,7 +39,6 @@ var WPPresentAdmin;
 			self.activateColumn( $('#col-1').children('.widget-top').children('.widget-title') );
 
 			$('.spinner').hide();
-
 			return self;
 		},
 
@@ -50,6 +48,7 @@ var WPPresentAdmin;
 		refreshUI: function () {
 			var self = this;
 
+			// Refresh the columns
 			$( "#container" ).sortable("refresh");
 
 			// Append an inner column to each column that doesn't contain any slides.
@@ -141,14 +140,12 @@ var WPPresentAdmin;
 				},
 				success: function(result) {
 					$('.spinner').hide();
-					// Return the excerpt from the editor
-					//console.log('presentation updated');
 				}
 			});
 		},
 
 		/**
-		 * Bind Tidy button
+		 * Bind Tidy button (unused)
 		 */
 		widgetButtonTidy: function () {
 			var self = this;
@@ -170,7 +167,7 @@ var WPPresentAdmin;
 		},
 
 		/**
-		 * The action taken by the Tidy button
+		 * The action taken by the Tidy button (unused)
 		 */
 		consolidateColumns: function () {
 			var self = this;
@@ -228,7 +225,9 @@ var WPPresentAdmin;
 			});
 		},
 
-		// Bind Edit button
+		/**
+		 * Setup the slide 'Edit' links
+		 */
 		widgetButtonEdit: function () {
 			var self = this;
 			$('#container').on('click', '.widget-control-edit', function(e) {
