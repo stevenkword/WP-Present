@@ -9,9 +9,12 @@ var WPPresentAdmin;
 	WPPresentAdmin.prototype = {
 		init: function() {
 			var self = this;
+			var currentContainerWidth= $('#container').width();
+			var columnWidth = 210;
 
 			$( "#outer-container" ).resizable();
 
+			$('#container').width( currentContainerWidth + columnWidth );
 			$( "#container" ).sortable({
 				stop: function( event, ui ) {
 					self.updateTaxonomyDescription();
@@ -412,13 +415,16 @@ var WPPresentAdmin;
 
 			var self = this;
 			var col = $('#container > .column').size() + 1;
+			var currentContainerWidth= $('#container').width();
+			var columnWidth = 210;
 
 			// TODO: Insert column after the active column as opposed to the end
 			//var $activeColumn = $('.widget-title.active').parent('.widget-top').parent('.column').children('.column-inner');
 
 			//$('#container').append( '<div class="column ui-sortable" id="col-'+col+'"><div class="widget-top"><div class="widget-title"><h4 class="hndle">'+col+'<span class="in-widget-title"></span></h4></div></div></div>' );
 			$('.widget-title.active').parent('.widget-top').parent('.column').after( '<div class="column ui-sortable" id="col-'+col+'"><div class="widget-top"><div class="widget-title"><h4 class="hndle">'+col+'<span class="in-widget-title"></span></h4></div></div></div>' );
-			$('#container').width( $('#container').width() + 210 );
+
+			$('#container').width( currentContainerWidth + columnWidth );
 			self.renumberColumns();
 		},
 
