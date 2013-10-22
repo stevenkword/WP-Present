@@ -92,9 +92,9 @@ var WPPresentAdmin;
 		activateColumn: function ( $col ) {
 			// TODO: cache widget-title
 			// Remove the active class from all columns
-			$('.widget-title').css('background', '');
-			$('.widget-title').css('color', '');
-			$('.widget-title').removeClass('active');
+			$widgetTitle = $('.widget-title');
+			$widgetTitle.css({"background":"","color":""});
+			$widgetTitle.removeClass('active');
 
 			// Select the given column
 			$col.css('background-color', '#0074a2').css('color','#ffffff');

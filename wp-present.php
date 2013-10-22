@@ -714,6 +714,7 @@ class WP_Present {
 					<button id="add-column" class="button">New Column</button>
 					<!--<button id="tidy-button" class="button">Tidy</button>-->
 					<button id="view-button" class="button">View <?php echo $this->taxonomy_singular_name; ?></button>
+					<?php // TODO: Add Existing Slide Button ?>
 					<span class="spinner"></span>
 				</p>
 
