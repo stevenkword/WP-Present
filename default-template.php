@@ -14,9 +14,9 @@
 	<body <?php body_class(); ?>>
 		<?php if ( have_posts() ) : ?>
 			<div class="reveal">
-				<div id="branding" style="position: fixed; width: 75px;height: 75px;z-index: 30;left: 25px;bottom: 25px;">
-					<img height="75px" width="75px" src="http://localhost/sandbox/wp-content/uploads/2013/10/Oomph_Box_RGB_solid_Red_152x152.png" />
-					<!--<p>@stevenkword</p>-->
+				<div id="branding" style="position: fixed; width: 100%;height: 75px;z-index: 30;left: 25px;bottom: 25px;">
+					<img style="float:left" height="75px" width="75px" src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash2/c34.34.432.432/s160x160/1235230_634351096617288_313239610_n.png" />
+					<span style=" height: 70px; display: table-cell; vertical-align: middle;padding-left: 20px;">@stevenkword</span>
 				</div>
 				<section id="primary" class="content-area">
 				<!-- Any section element inside of this container is displayed as a slide -->
