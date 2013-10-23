@@ -89,8 +89,8 @@
 					// The "normal" size of the presentation, aspect ratio will be preserved
 					// when the presentation is scaled to fit different resolutions. Can be
 					// specified using percentage units.
-					width: 960,
-					height: 720,
+					width: 1024,
+					height: 768,
 					margin: 0.1, // Factor of the display size that should remain empty around the content
 					minScale: 0.2, // Bounds for smallest/largest possible scale to apply to content
 					maxScale: 1.0, // Bounds for smallest/largest possible scale to apply to content
