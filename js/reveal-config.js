@@ -1,8 +1,8 @@
 // Full list of configuration options available here:
 // https://github.com/hakimel/reveal.js#configuration
 Reveal.initialize({
-	width: 800,
-	height: 600,
+	width: 1024,
+	height: 768,
 	controls: true,
 	progress: false,
 	history: true,
