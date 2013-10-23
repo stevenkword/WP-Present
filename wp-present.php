@@ -420,7 +420,7 @@ class WP_Present {
 
 		//It owuld be better to search for the keys based on url
 
-		// Move the taxonomy menu to the top
+			// Move the taxonomy menu to the top
 		foreach( $submenu as $submenu_key => $submenu_item ) {
 			if( isset( $submenu_item[15][0] ) && $this->taxonomy_name == $submenu_item[15][0] ) {
 				//$submenu[$submenu_key][15][0] = 'toast';
@@ -920,7 +920,7 @@ class WP_Present {
 			'tabindex' => '',
 			'tabfocus_elements' => ':prev,:next', // the previous and next element ID to move the focus to when pressing the Tab key in TinyMCE
 			'editor_css' => '', // intended for extra styles for both visual and Text editors buttons, needs to include the <style> tags, can use "scoped".
-			'editor_class' => 'reveal-steven', // add extra class(es) to the editor textarea
+			'editor_class' => '', // add extra class(es) to the editor textarea
 			'teeny' => false, // output the minimal editor config used in Press This
 			'dfw' => false, // replace the default fullscreen with DFW (needs specific DOM elements and css)
             'tinymce' => array(
@@ -1070,9 +1070,9 @@ class WP_Present {
 	function filter_image_size_names_choose( $sizes ) {
 		global $_wp_additional_image_sizes;
 		$sizes = array_merge( $sizes, array(
-			'reveal-small' => $this->post_type_singular_name . ' Small',
-			'reveal-medium' => $this->post_type_singular_name . ' Medium',
-			'reveal-large' => $this->post_type_singular_name . ' Large',
+			'reveal-small' => __( $this->post_type_singular_name . ' Small' ),
+			'reveal-medium' => __( $this->post_type_singular_name . ' Medium' ),
+			'reveal-large' => __( $this->post_type_singular_name . ' Large' ),
 		) );
 		return $sizes;
 	}
