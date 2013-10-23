@@ -422,7 +422,7 @@ class WP_Present {
 
 		// Move the taxonomy menu to the top
 		foreach( $submenu as $submenu_key => $submenu_item ) {
-			if( $this->taxonomy_name == $submenu_item[15][0] ) {
+			if( isset( $submenu_item[15][0] ) && $this->taxonomy_name == $submenu_item[15][0] ) {
 				//$submenu[$submenu_key][15][0] = 'toast';
 
 				// This is a bit of hackery.  I should search for these keys
