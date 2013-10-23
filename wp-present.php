@@ -506,22 +506,37 @@ class WP_Present {
 	function action_admin_head() {
 		// Only add this variable on the edit taxonomy page
 		global $pagenow;
-		if( 'edit-tags.php' != $pagenow || ! isset( $_GET['taxonomy'] ) || $this->taxonomy_slug != $_GET['taxonomy'] )
+		if( 'edit-tags.php' != $pagenow || ! isset( $_GET['taxonomy'] ) || $this->taxonomy_slug != $_GET['taxonomy'] || ! isset( $_GET[ 'tag_ID' ] ) )
 			return;
 
 		$num_slides = ( isset( $_GET[ 'tag_ID' ] ) ) ? count( $this->get_associated_slide_ids( $_GET[ 'tag_ID' ], $_GET[ 'taxonomy' ] ) ) : '';
+
+		$slides_query = new WP_Query( array(
+			'post_type'     => $this->post_type_slug, //post type, I used 'product'
+			'post_status'   => 'publish', // just tried to find all published post
+			'posts_per_page' => -1,  //show all
+			'tax_query' => array( array(
+				'taxonomy' 	=> $this->taxonomy_slug,
+				'terms'		=> $_GET[ 'tag_ID' ]
+			) )
+		) );
+		$num_slides = (int) $slides_query->post_count;
+		unset( $slides_query );
+
 		wp_localize_script( 'wp-present-admin', 'WPPNumSlides', array( intval( $num_slides ) ) );
 
 		if( isset( $_REQUEST[ 'tag_ID' ] ) )
 			wp_localize_script( 'wp-present-admin', 'WPPTaxonomyURL', array( get_term_link( (int) $_GET[ 'tag_ID' ], $this->taxonomy_slug ) ) );
 
 		// Make the admin outer-container div big enough to prevent wrapping
-		$container_size = ( $num_slides + 1 ) * 210;
+		$column_width = 210;
+		$container_size = ( $num_slides + 1 ) * $column_width;
 		?>
 		<style type="text/css">
 			#container{ width: <?php echo $container_size; ?>px;}
 		</style>
 		<?php
+		unset( $num_slides );
 	}
 
 	/*
@@ -565,6 +580,7 @@ class WP_Present {
 	 */
 	function get_associated_slide_ids( $term, $taxonomy ) {
 		$term_description =  $this->get_term_description( $term, $taxonomy );
+
 		if( ! is_array( $term_description ) )
 			return false;
 

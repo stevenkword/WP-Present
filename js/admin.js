@@ -18,6 +18,7 @@ var WPPresentAdmin;
 			$( "#container" ).sortable({
 				stop: function( event, ui ) {
 					self.updateTaxonomyDescription();
+					self.updatePresentation();
 				}
 			});
 
@@ -25,6 +26,7 @@ var WPPresentAdmin;
 				connectWith: ".column-inner",
 				stop: function( event, ui ) {
 					self.updateTaxonomyDescription();
+					self.updatePresentation();
 				}
 			});
 
@@ -41,6 +43,12 @@ var WPPresentAdmin;
 			// Select the first column on load
 			var $columnTitleBar = $('#col-1').children('.widget-top').children('.widget-title');
 			self.activateColumn( $columnTitleBar );
+
+			// Save it after the autopop if this is our first time
+			if( '' == $('#description').val() ) {
+				self.updateTaxonomyDescription();
+				self.updatePresentation();
+			}
 
 			$('.spinner').hide();
 			return self;
@@ -71,6 +79,7 @@ var WPPresentAdmin;
 					connectWith: ".column-inner",
 					stop: function( event, ui ) {
 						self.updateTaxonomyDescription();
+						self.updatePresentation();
 					}
 				});
 			}
@@ -100,11 +109,11 @@ var WPPresentAdmin;
 			// TODO: cache widget-title
 			// Remove the active class from all columns
 			$widgetTitle = $('.widget-title');
-			$widgetTitle.css({"background":"","color":""});
+			$widgetTitle.css({ 'background' : '', 'color' : '' });
 			$widgetTitle.removeClass('active');
 
 			// Select the given column
-			$col.css('background-color', '#0074a2').css('color','#ffffff');
+			$col.css({ 'background-color' : '#0074a2', 'color' : '#ffffff' });
 			$col.addClass('active');
 		},
 
