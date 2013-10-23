@@ -442,7 +442,9 @@ var WPPresentAdmin;
 		removeColumn: function () {
 			// TODO: I would be better if the column has the active class instead of the child elements
 
-			confirm('really?');
+			var confirmRemove = confirm("You are about to permanently delete the selected column. 'Cancel' to stop, 'OK' to delete.");
+			if( false == confirmRemove )
+				return;
 
 			var self = this;
 			var currentContainerWidth= $('#container').width();
@@ -452,6 +454,10 @@ var WPPresentAdmin;
 
 			$('#container').width( currentContainerWidth - columnWidth );
 			self.renumberColumns();
+
+			// Activate the first column
+			var $columnTitleBar = $('#col-1').children('.widget-top').children('.widget-title');
+			self.activateColumn( $columnTitleBar );
 		},
 
 		//Bind Add Column button to addColumn()
@@ -475,10 +481,6 @@ var WPPresentAdmin;
 				self.refreshUI();
 				self.updateTaxonomyDescription();
 				self.updatePresentation();
-
-				// Activate the first column
-				var $columnTitleBar = $('#col-1').children('.widget-top').children('.widget-title');
-				self.activateColumn( $columnTitleBar );
 			});
 		},
 
