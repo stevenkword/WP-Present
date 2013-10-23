@@ -131,6 +131,10 @@ class WP_Present {
 
 		// Hide taxonomy description column
 		add_filter( 'manage_edit-' . $this->taxonomy_slug . '_columns', array( $this, 'filter_manage_edit_columns' ) );
+
+		// Adds custom image sizes that will play nice with the default slide resolution
+		add_action( 'init', array( $this, 'register_image_sizes' ) );
+		add_filter( 'image_size_names_choose', array( $this, 'filter_image_size_names_choose' ) );
 	}
 
 	/**
@@ -1054,6 +1058,24 @@ class WP_Present {
 		die();
 	}
 
+	function register_image_sizes() {
+		if( function_exists('add_theme_support') && function_exists( 'add_image_size' ) ) {
+			add_theme_support('post-thumbnails');
+			add_image_size( 'reveal-small', 320, 320, false );
+			add_image_size( 'reveal-medium', 640, 640, false );
+			add_image_size( 'reveal-large', 1024, 1024, false );
+		}
+	}
+
+	function filter_image_size_names_choose( $sizes ) {
+		global $_wp_additional_image_sizes;
+		$sizes = array_merge( $sizes, array(
+			'reveal-small' => $this->post_type_singular_name . ' Small',
+			'reveal-medium' => $this->post_type_singular_name . ' Medium',
+			'reveal-large' => $this->post_type_singular_name . ' Large',
+		) );
+		return $sizes;
+	}
+
 } // Class
 WP_Present::instance();
-
