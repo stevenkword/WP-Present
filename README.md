@@ -34,8 +34,8 @@ Answer to foo bar dilemma.
 
 ### Changelog ###
 = 0.9 =
-* Initial release.
+* Pre release.
 
 ### Upgrade Notice ###
 = 0.9 =
-* Initial release.
+* Pre release.
