@@ -447,22 +447,12 @@ class WP_Present {
 					<h2><?php echo $this->option_title; ?></h2>
 					<h3>Select a Theme</h3>
 						<p>Current Theme: <?php echo $this->default_theme; ?></p>
+					<h3>Resolution</h3>
+						<p>1024x768</p>
 					<h3>Branding</h3>
 						<p>Branding HTML textarea goes here</p>
 					<h3>Coming soon</h3>
-					<ul>
-						<li>ADD SLUGS TO IDS IN THE DESCRIPTION FIELD</li>
-						<li>When adding a new column, add it one column after the active column</li>
-						<li>Add metaboxes for reveal.js speaker notes (asides)</li>
-						<li>Add metaboxes for appearance/motion overrides</li>
-						<li>Append a bodyclass to the <body> tag for more specific style targetting</li>
-						<li>Ability to suppress titles</li>
-						<li>Peek at how MP6 does fonts / icons (OPEN SANS!)</li>
-						<li>REVEAL theme selector option for the theme customizer</li>
-						<li>Make the placeholders for the columns larger than the widget placeholders</li>
-						<li>Fix column backfilling when empty columns are presentwq</li>
-						<li>Clean up the admin menu hackery</li>
-					</ul>
+						<p>See master.plan</p>
 				</div>
 				<div class="clear"></div>
 			</div><!-- wpbody-content -->
