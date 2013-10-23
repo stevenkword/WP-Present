@@ -36,6 +36,7 @@ var WPPresentAdmin;
 			self.widgetButtonAdd();
 			self.widgetButtonTidy();
 			self.bindButtonAddColumn();
+			self.bindButtonRemoveColumn();
 			self.bindButtonViewPresentation();
 			//self.backfillColumns();
 			self.refreshUI();
@@ -437,6 +438,22 @@ var WPPresentAdmin;
 			self.renumberColumns();
 		},
 
+		// Adds a column to the presentation
+		removeColumn: function () {
+			// TODO: I would be better if the column has the active class instead of the child elements
+
+			confirm('really?');
+
+			var self = this;
+			var currentContainerWidth= $('#container').width();
+			var columnWidth = 210;
+
+			$('.widget-title.active').parent('.widget-top').parent('.column').remove();
+
+			$('#container').width( currentContainerWidth - columnWidth );
+			self.renumberColumns();
+		},
+
 		//Bind Add Column button to addColumn()
 		bindButtonAddColumn: function () {
 			var self = this;
@@ -444,6 +461,24 @@ var WPPresentAdmin;
 				e.preventDefault();
 				self.addColumn();
 				self.refreshUI();
+				self.updateTaxonomyDescription();
+				self.updatePresentation();
+			});
+		},
+
+		//Bind Remove Column button to removeColumn()
+		bindButtonRemoveColumn: function () {
+			var self = this;
+			$('.action-buttons').on('click', '#remove-column', function(e) {
+				e.preventDefault();
+				self.removeColumn();
+				self.refreshUI();
+				self.updateTaxonomyDescription();
+				self.updatePresentation();
+
+				// Activate the first column
+				var $columnTitleBar = $('#col-1').children('.widget-top').children('.widget-title');
+				self.activateColumn( $columnTitleBar );
 			});
 		},
 

@@ -14,7 +14,7 @@
 	<body <?php body_class(); ?>>
 		<?php if ( have_posts() ) : ?>
 			<div class="reveal">
-				<div id="branding" style="position: fixed; left: 0; bottom: 0; padding: 1em;">
+				<div id="branding" style="position: fixed; width: 75px;height: 75px;z-index: 30;left: 25px;bottom: 25px;">
 					<img height="75px" width="75px" src="http://localhost/sandbox/wp-content/uploads/2013/10/Oomph_Box_RGB_solid_Red_152x152.png" />
 					<!--<p>@stevenkword</p>-->
 				</div>

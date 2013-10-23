@@ -717,10 +717,9 @@ class WP_Present {
 		<tr class="form-field hide-if-no-js">
 			<th scope="row" valign="top">
 				<p class="action-buttons">
-					<?php submit_button( __('Update'), 'primary', 'submit', $wrap = false ); ?>
-					<?php //submit_button( __('Add New'), '', 'add-button', $wrap = false ); ?>
-					<button id="add-button" class="button">New <?php echo $this->post_type_singular_name; ?></button>
+					<button id="add-button" class="button button-primary">New <?php echo $this->post_type_singular_name; ?></button>
 					<button id="add-column" class="button">New Column</button>
+					<button id="remove-column" class="button">Remove Column</button>
 					<!--<button id="tidy-button" class="button">Tidy</button>-->
 					<button id="view-button" class="button">View <?php echo $this->taxonomy_singular_name; ?></button>
 					<?php // TODO: Add Existing Slide Button ?>
