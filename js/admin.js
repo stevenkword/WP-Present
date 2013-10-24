@@ -390,7 +390,6 @@ var WPPresentAdmin;
 							success: function(result) {
 								$activeColumn.append(result);
 								WPPNumSlides[0]++;
-								self.addColumn();
 								self.refreshUI();
 								self.updateTaxonomyDescription();
 						  }
