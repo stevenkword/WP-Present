@@ -205,7 +205,7 @@ class WP_Present {
 			'show_in_menu' => true,
 			//'menu_position' => 5,
 			'hierarchical' => true, //@todo within the same category?
-			'supports' => array( 'title', 'editor', 'page-attributes' ),
+			'supports' => array( 'title', 'editor', 'page-attributes', 'thumbnail' ),
 			'taxonomies' => array( $this->taxonomy_slug )
 		) );
 	}

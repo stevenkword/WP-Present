@@ -50,8 +50,9 @@
 									list( $rubbish, $slide_id ) =  explode( '-', $slide );
 									$post = get_post( $slide_id );
 									setup_postdata( $post );
+									$background_image = wp_get_attachment_url( get_post_thumbnail_id( $post->ID ) );
 									?>
-									<section id="<?php echo esc_attr( $post->post_name); ?>" data-transition="linear">
+									<section id="<?php echo esc_attr( $post->post_name); ?>" data-transition="linear"  <?php if( isset( $background_image ) ) echo 'data-background="'. esc_attr( $background_image ) .'"';?>>
 										<?php the_content(); ?>
 										<p>
 											<small><?php wp_link_pages( array( 'before' => '<div class="page-links">' . __( 'Pages:', '_s' ), 'after' => '</div>' ) ); ?></small>
