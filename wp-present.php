@@ -265,8 +265,6 @@ class WP_Present {
 		add_editor_style( plugins_url( '/wp-present/css/custom.css?v=' . $this->scripts_version ) );
 
 		add_editor_style( plugins_url( '/wp-present/css/tinymce.css.php?v=' . $this->scripts_version . '&post=' . $_REQUEST[ 'post' ] ) );
-
-		var_dump( $post );
 	}
 
 	/**
