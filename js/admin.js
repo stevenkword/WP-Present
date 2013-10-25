@@ -16,7 +16,7 @@ var WPPresentAdmin;
 
 			$('#container').width( currentContainerWidth + columnWidth );
 			$( "#container" ).sortable({
-				stop: function( event, ui ) {
+				stop: function() {
 					self.updateTaxonomyDescription();
 					self.updatePresentation();
 				}
@@ -24,7 +24,7 @@ var WPPresentAdmin;
 
 			$( ".column-inner" ).sortable({
 				connectWith: ".column-inner",
-				stop: function( event, ui ) {
+				stop: function() {
 					self.updateTaxonomyDescription();
 					self.updatePresentation();
 				}
@@ -78,7 +78,7 @@ var WPPresentAdmin;
 			} else {
 				$( ".column-inner" ).sortable({
 					connectWith: ".column-inner",
-					stop: function( event, ui ) {
+					stop: function() {
 						self.updateTaxonomyDescription();
 						self.updatePresentation();
 					}
@@ -109,7 +109,7 @@ var WPPresentAdmin;
 		activateColumn: function ( $col ) {
 			// TODO: cache widget-title
 			// Remove the active class from all columns
-			$widgetTitle = $('.widget-title');
+			var $widgetTitle = $('.widget-title');
 			$widgetTitle.css({ 'background' : '', 'color' : '' });
 			$widgetTitle.removeClass('active');
 
@@ -125,7 +125,7 @@ var WPPresentAdmin;
 			var self = this;
 			var columns = { }; // Creates a new object
 			var i = 1;
-			$( '.column-inner' ).each(function( index ) {
+			$( '.column-inner' ).each( function() {
 				var $order = $(this).sortable( "toArray" );
 				columns['col-'+i] = $order;
 				i++;
@@ -150,13 +150,13 @@ var WPPresentAdmin;
 				url: ajaxurl + '?action=update_presentation',
 				type: 'POST',
 				data: jQuery.param(params),
-				beforeSend: function( xhr ) {
+				beforeSend: function() {
 					$('.spinner').show();
 				},
-				complete: function( xhr ) {
+				complete: function() {
 					//$('.spinner').hide();
 				},
-				success: function(result) {
+				success: function() {
 					$('.spinner').hide();
 				}
 			});
@@ -166,7 +166,6 @@ var WPPresentAdmin;
 		 * Bind Tidy button (unused)
 		 */
 		widgetButtonTidy: function () {
-			var self = this;
 			$('.action-buttons').on('click', '#tidy-button', function(e) {
 				e.preventDefault();
 				this.consolidateColumns();
@@ -179,7 +178,7 @@ var WPPresentAdmin;
 		 * Expand slide details
 		 */
 		widgetButtonExpand: function () {
-			$('#container').on('click', '.widget-title-action', function(e) {
+			$('#container').on('click', '.widget-title-action', function() {
 				$( this ).parents('.widget').children('.widget-inside').toggle();
 			});
 		},
@@ -209,9 +208,6 @@ var WPPresentAdmin;
 
 				if( typeof(innerHTML) !== 'string' || '' == innerHTML ) {
 					var $nextOuterCol = $('#col-'+(outerIndex+1));
-					var $nextInnerCol = $nextOuterCol.children('.column-inner');
-
-					var nextInnerHTML = $nextInnerCol.html().trim();
 					var nextOuterHTML = $nextOuterCol.html().trim();
 
 					$outerCol.html(nextOuterHTML);
@@ -222,10 +218,10 @@ var WPPresentAdmin;
 			//Finally refresh description array
 			$( ".column-inner" ).sortable({
 				connectWith: ".column-inner",
-				stop: (function( event, ui ) {
+				stop: ( function() {
 					self.updateTaxonomyDescription();
 				}),
-				create: (function( event, ui ) {
+				create: ( function() {
 					self.updateTaxonomyDescription();
 				})
 			});
@@ -237,9 +233,9 @@ var WPPresentAdmin;
 		 */
 		enableColumns: function () {
 			var self = this;
-			$('.column').children('.widget-top').on('click', '.widget-title', function(e) {
-				$col = $(this);
-				self.activateColumn($col);
+			$('.column').children('.widget-top').on('click', '.widget-title', function() {
+				var $col = $(this);
+				self.activateColumn( $col );
 			});
 		},
 
@@ -255,7 +251,6 @@ var WPPresentAdmin;
 				var $widgetPreview = $parentWidget.find('.widget-preview');
 
 				// Send the contents from the widget to the editor
-				var contentEditor  = $widgetPreview.html();
 				var widgetID = $parentWidget.find('.slide-id').val();
 				var nonce = $('#wp-present-nonce').val();
 
@@ -274,10 +269,10 @@ var WPPresentAdmin;
 							url: ajaxurl + '?action=update_slide',
 							type: 'POST',
 							data: jQuery.param(params),
-							beforeSend: function( xhr ) {
+							beforeSend: function() {
 								$('.spinner').show();
 							},
-							complete: function( xhr ) {
+							complete: function() {
 								//$('.spinner').hide();
 							},
 							success: function(result) {
@@ -303,14 +298,14 @@ var WPPresentAdmin;
 						$.ajax({
 							url: ajaxurl + '?action=get_slide',
 							data: jQuery.param(params),
-							beforeSend: function( xhr ) {
+							beforeSend: function() {
 								$('.spinner').show();
 							},
-							complete: function( xhr ) {
+							complete: function() {
 								$('.spinner').hide();
 							},
 							success: function(contentEditor) {
-								tinymce.get('editor_slide').setContent(contentEditor);
+								tinymce.get( 'editor_slide' ).setContent( contentEditor );
 							}
 						});
 
@@ -335,7 +330,7 @@ var WPPresentAdmin;
 				e.preventDefault();
 
 				var confirmDelete = confirm("You are about to permanently delete the selected slide. 'Cancel' to stop, 'OK' to delete.");
-				if( false == confirmDelete )
+				if( false === confirmDelete )
 					return;
 
 				var $button = $(this);
@@ -348,13 +343,13 @@ var WPPresentAdmin;
 					url: ajaxurl + '?action=delete_slide',
 					type: 'POST',
 					data: jQuery.param(params),
-					beforeSend: function( xhr ) {
+					beforeSend: function() {
 						$('.spinner').show();
 					},
-					complete: function( xhr ) {
+					complete: function() {
 						//$('.spinner').hide();
 					},
-					success: function(result) {
+					success: function() {
 						$('.spinner').hide();
 						$parentWidget.remove();
 						self.updateTaxonomyDescription();
@@ -368,7 +363,6 @@ var WPPresentAdmin;
 			var self = this;
 			$('.action-buttons').on('click', '#add-button', function(e) {
 				e.preventDefault();
-				var $button = $(this);
 				var $activeColumn = $('.widget-title.active').parent('.widget-top').parent('.column').children('.column-inner');
 
 				$('#editor_slide-tmce').click(); //Necessary on subsequent loads of the editor
@@ -442,7 +436,7 @@ var WPPresentAdmin;
 			// TODO: I would be better if the column has the active class instead of the child elements
 
 			var confirmRemove = confirm("You are about to permanently delete the selected column. 'Cancel' to stop, 'OK' to delete.");
-			if( false == confirmRemove )
+			if( false === confirmRemove )
 				return;
 
 			var self = this;
@@ -485,7 +479,6 @@ var WPPresentAdmin;
 
 		//Bind View Presentation button
 		bindButtonViewPresentation: function () {
-			var self = this;
 			$('.action-buttons').on('click', '#view-button', function(e) {
 				e.preventDefault();
 				window.open(WPPTaxonomyURL,'_blank');
@@ -494,9 +487,9 @@ var WPPresentAdmin;
 
 		renumberColumns: function() {
 			var i = 1;
-			$( '.column' ).each(function( index ) {
+			$( '.column' ).each( function() {
 				 var self = this;
-				 var $self = $(this);
+				 var $self = $(self);
 				 $self.find('> .widget-top > .widget-title > h4').html( i );
 				i++;
 			});

@@ -1,59 +1,144 @@
 /* Hide the things on the taxonomy screen */
-.form-field { display: none; }
-.form-field.form-required { display: block; }
-
-.spinner{ display: inline-block; float: none; }
-
-.widget-inside { text-align: center; }
-.widget-control-edit,
-.widget-control-remove,
-.widget-control-view { display: inline; padding: 0; line-height: 26px; }
-
-.widget-control-separator { padding: 0 0.5em; }
-
-.column { width: /*285*/200px; float: left; padding-bottom: 10px; margin: 5px; }
-.column-handle {
-	margin: 0 1em 0.5em 0;
-	overflow: hidden;
-	min-height: 24px;
-	background: #ddd;
-	color: #333;
-	cursor: move;
+.form-field {
+    display: none;
 }
 
-/*lines up slide links*/
-.widget-control-actions div.alignleft{ margin-top: 8px; }
+.form-field.form-required {
+    display: block;
+}
 
-.portlet { margin: 0 1em 0.5em 0; overflow: hidden; min-height: 20px; -webkit-border-radius: 3px; border-radius: 3px; }
-.portlet-header { margin: 0.3em; padding-bottom: 4px; padding-left: 0.2em; overflow:hidden;}
-.portlet-header .ui-icon { float: right; }
-.portlet-content, .portlet-edit { padding: 0.4em; overflow: hidden; }
-.portlet a.widget-action { text-decoration: none; }
+/* Ajax Spinner */
 
-.ui-sortable-placeholder { border: 1px dotted black; visibility: visible !important; min-height: 3em; }
-.ui-sortable-placeholder * { visibility: hidden; }
+.spinner {
+    display: inline-block;
+    float: none;
+}
 
-#outer-container{ width: auto; min-height: 100px; overflow: scroll; border: 1px dashed #ccc; background: #fff; -webkit-border-radius: 3px; border-radius: 3px;}
-#container{ min-width: 1200px; /*width:auto;*/ padding: 1em; background: inherit; min-height: 400px }
-#container .column > .widget-top{ margin: 0 1em 0.5em 0; }
-#container .column > .widget-top > .widget-title{ cursor: move; border: 1px solid #aaa; background: #ddd; }
+/* Slide Widgets */
+.widget-inside {
+    text-align: center;
+}
+
+.widget-control-edit,
+.widget-control-remove,
+.widget-control-view {
+    display: inline;
+    padding: 0;
+    line-height: 26px;
+}
+
+.widget-control-separator {
+    padding: 0 0.5em;
+}
+
+.widget-control-actions div.alignleft { /* lines up slide links */
+    margin-top: 8px;
+}
+
+/* Columns */
+.column {
+    width: /*285*/200px;
+    float: left;
+    padding-bottom: 10px;
+    margin: 5px;
+}
+
+.column-handle {
+    margin: 0 1em 0.5em 0;
+    overflow: hidden;
+    min-height: 24px;
+    background: #ddd;
+    color: #333;
+    cursor: move;
+}
+
+.portlet {
+    margin: 0 1em 0.5em 0;
+    overflow: hidden;
+    min-height: 20px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.portlet-header {
+    margin: 0.3em;
+    padding-bottom: 4px;
+    padding-left: 0.2em;
+    overflow: hidden;
+}
+
+.portlet-header .ui-icon {
+    float: right;
+}
+
+.portlet-content, .portlet-edit {
+    padding: 0.4em;
+    overflow: hidden;
+}
+
+.portlet a.widget-action {
+    text-decoration: none;
+}
+
+.ui-sortable-placeholder {
+    border: 1px dotted black;
+    visibility: visible !important;
+    min-height: 3em;
+}
+
+.ui-sortable-placeholder * {
+    visibility: hidden;
+}
+
+#outer-container {
+    width: auto;
+    min-height: 100px;
+    overflow: scroll;
+    border: 1px dashed #ccc;
+    background: #fff;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+}
+
+#container {
+    min-width: 1200px;
+ 	/*width:auto;*/
+    padding: 1em;
+    background: inherit;
+    min-height: 400px;
+}
+
+#container .column > .widget-top {
+    margin: 0 1em 0.5em 0;
+}
+
+#container .column > .widget-top > .widget-title {
+    cursor: move;
+    border: 1px solid #aaa;
+    background: #ddd;
+}
 
 /* Allows for empty columns to accept new slides */
-#container .column-inner.ui-sortable { min-height: 3em; }
+#container .column-inner.ui-sortable {
+    min-height: 3em;
+}
 
-.action-buttons a { text-decoration: none; }
+.action-buttons a {
+    text-decoration: none;
+}
 
 /* jQuery UI Dialog */
 .ui-widget-overlay {
-	 position: absolute;
-	 top: 0;
-	 left: 0;
-	 width: 100%;
-	 height: 100%;
-	 background-color: #000;
-	 opacity: 0.9;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    opacity: 0.9;
 }
+
 ui-dialog-titlebar {
-	background-color: black;
-	color: white;
+    background-color: black;
+    color: white;
 }
