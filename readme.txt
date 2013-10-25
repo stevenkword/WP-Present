@@ -7,7 +7,6 @@ Stable tag: 0.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Easily create slideshow presentations with the the power of WordPress and the elegance of reveal.js
 == Description ==
 Easily create slideshow presentations with the the power of WordPress and the elegance of reveal.js
 Demo available at http://slides.stevenword.com
