@@ -21,6 +21,9 @@
 	cursor: move;
 }
 
+/*lines up slide links*/
+.widget-control-actions div.alignleft{ margin-top: 8px; }
+
 .portlet { margin: 0 1em 0.5em 0; overflow: hidden; min-height: 20px; -webkit-border-radius: 3px; border-radius: 3px; }
 .portlet-header { margin: 0.3em; padding-bottom: 4px; padding-left: 0.2em; overflow:hidden;}
 .portlet-header .ui-icon { float: right; }

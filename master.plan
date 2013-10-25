@@ -10,4 +10,4 @@ REVEAL theme selector option for the theme customizer
 Make the placeholders for the columns larger than the widget placeholders
 Fix column backfilling when empty columns are presentwq
 Clean up the admin menu hackery ( manual array key assignments )
-Update
+Add ability to highlight slides to target slide removal and insertions
