@@ -352,7 +352,7 @@ class WP_Present {
 
 		<script type="text/javascript">
 			jQuery(function($){
-				$('#wpadminbar').hide();
+				$('#wpadminbar').show();
 				$('#toggle-wpadminbar').click( function() {
 					$('#wpadminbar').toggle();
 				} );
