@@ -25,9 +25,8 @@ Demo available at http://slides.stevenword.com
 * Pre release.
 
 == Screenshots ==
-1. The screenshot description corresponds to screenshot-1.(png|jpg|jpeg|gif).
-2. The screenshot description corresponds to screenshot-2.(png|jpg|jpeg|gif).
-3. The screenshot description corresponds to screenshot-3.(png|jpg|jpeg|gif).
+1. The admin interface
+2. A slide in a presentation
 
 == Changelog ==
 = 0.9 =
