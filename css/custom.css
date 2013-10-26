@@ -24,6 +24,10 @@ body.reveal {
     border: none;
 }
 
+.reveal section img {
+	box-shadow: 0 !important;
+}
+
 /* =Misc
 -------------------------------------------------------------- */
 .alignleft {
