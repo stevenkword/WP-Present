@@ -25,7 +25,7 @@ body.reveal {
 }
 
 .reveal section img {
-	box-shadow: 0 !important;
+	box-shadow: none;
 }
 
 /* =Misc
