@@ -264,7 +264,8 @@ class WP_Present {
 		add_editor_style( plugins_url( '/wp-present/js/reveal.js/lib/css/zenburn.css' ) );
 		add_editor_style( plugins_url( '/wp-present/css/custom.css?v=' . $this->scripts_version ) );
 
-		add_editor_style( plugins_url( '/wp-present/css/tinymce.css.php?v=' . $this->scripts_version . '&post=' . $_REQUEST[ 'post' ] ) );
+		//TODO: Make this work to support backgrounds
+		//add_editor_style( plugins_url( '/wp-present/css/tinymce.css.php?v=' . $this->scripts_version . '&post=' . $_REQUEST[ 'post' ] ) );
 	}
 
 	/**
@@ -648,8 +649,7 @@ class WP_Present {
 						<a class="widget-control-edit" href="<?php echo get_edit_post_link( get_the_ID() ); ?>" target="_blank">Edit</a>
 						<span class='widget-control-separator'>|</span>
 						<a class="widget-control-remove" href="#remove">Delete</a>
-					</div>
-					<div class="widget-control-actions alignright">
+						<span class='widget-control-separator'>|</span>
 						<a class="widget-control-view" href="<?php echo get_permalink( get_the_ID() ); ?>" target="_blank">View</a>
 						<span class='widget-control-separator'>|</span>
 						<a class="widget-control-view" href="<?php echo get_edit_post_link( get_the_ID() ); ?>" target="_blank">More</a>
