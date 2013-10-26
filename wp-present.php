@@ -645,15 +645,13 @@ class WP_Present {
 					<?php the_excerpt(); ?>
 				</div>
 				<div class="widget-control-actions">
-					<div class="alignleft">
-						<a class="widget-control-edit" href="<?php echo get_edit_post_link( get_the_ID() ); ?>" target="_blank">Edit</a>
-						<span class='widget-control-separator'>|</span>
-						<a class="widget-control-remove" href="#remove">Delete</a>
-						<span class='widget-control-separator'>|</span>
-						<a class="widget-control-view" href="<?php echo get_permalink( get_the_ID() ); ?>" target="_blank">View</a>
-						<div class="clearfix"></div>
-						<a class="widget-control-view" href="<?php echo get_edit_post_link( get_the_ID() ); ?>" target="_blank">More</a>
-					</div>
+					<a class="widget-control-edit" href="<?php echo get_edit_post_link( get_the_ID() ); ?>" target="_blank">Edit</a>
+					<span class='widget-control-separator'>|</span>
+					<a class="widget-control-remove" href="#remove">Delete</a>
+					<span class='widget-control-separator'>|</span>
+					<a class="widget-control-view" href="<?php echo get_permalink( get_the_ID() ); ?>" target="_blank">View</a>
+					<div class="clearfix"></div>
+					<a class="widget-control-view" href="<?php echo get_edit_post_link( get_the_ID() ); ?>" target="_blank">More</a>
 					<br class="clear">
 				</div>
 			</div>
