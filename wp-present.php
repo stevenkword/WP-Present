@@ -651,7 +651,7 @@ class WP_Present {
 						<a class="widget-control-remove" href="#remove">Delete</a>
 						<span class='widget-control-separator'>|</span>
 						<a class="widget-control-view" href="<?php echo get_permalink( get_the_ID() ); ?>" target="_blank">View</a>
-						<span class='widget-control-separator'>|</span>
+						<div class="clearfix"></div>
 						<a class="widget-control-view" href="<?php echo get_edit_post_link( get_the_ID() ); ?>" target="_blank">More</a>
 					</div>
 					<br class="clear">
