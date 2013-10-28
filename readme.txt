@@ -3,7 +3,7 @@ Contributors: stevenkword
 Tags: presentation, slideshow, reveal.js, wp-present
 Requires at least: 3.5
 Tested up to: 3.7
-Stable tag: 0.9
+Stable tag: 0.91
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,6 +21,9 @@ Demo available at http://slides.stevenword.com
 * Pre release.
 
 == Upgrade Notice ==
+= 0.91 =
+* Kindly removes my twitter handle from every slide.
+
 = 0.9 =
 * Pre release.
 
