@@ -15,6 +15,7 @@ Demo available at http://slides.stevenword.com
 
 ### Description ###
 Easily create slideshow presentations with the the power of WordPress and the elegance of reveal.js
+
 Demo available at http://www.stevenword.com/presentation/breaking-away-from-the-blog-unconventional-wordpress/
 
 ### Installation ###
