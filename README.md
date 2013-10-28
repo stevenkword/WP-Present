@@ -3,7 +3,7 @@ WP-Present
 
 Easily create slideshow presentations with the the power of WordPress and the elegance of reveal.js
 
-Demo available at http://slides.stevenword.com
+Demos available at http://slides.stevenword.com
 
 * Contributors: stevenkword
 * Tags: presentation, slideshow, reveal.js, wp-present
@@ -16,7 +16,7 @@ Demo available at http://slides.stevenword.com
 ### Description ###
 Easily create slideshow presentations with the the power of WordPress and the elegance of reveal.js
 
-Demo available at http://www.stevenword.com/presentation/breaking-away-from-the-blog-unconventional-wordpress/
+Demos available at http://slides.stevenword.com
 
 ### Installation ###
 1. Upload "/wp-present" to the "/wp-content/plugins/" directory.
