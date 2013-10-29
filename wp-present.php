@@ -2,7 +2,7 @@
 /*
 Plugin Name: WP Present
 Plugin URI: http://stevenword.com/plugins/wp-present/
-Description: Easily create slideshow presentations with the the power of WordPress and the elegance of reveal.js
+Description: Easily create slide presentations with the the power of WordPress and the elegance of reveal.js
 Author: stevenkword
 Version: 0.92
 Author URI: http://stevenword.com
