@@ -16,25 +16,13 @@ Demo available at http://slides.stevenword.com
 1. Upload "/wp-present" to the "/wp-content/plugins/" directory.
 2. Activate the plugin through the "Plugins" menu in WordPress.
 
-== Changelog ==
-= 0.9 =
-* Pre release.
-
-== Upgrade Notice ==
-= 0.91 =
-* Kindly removes my twitter handle from every slide.
-
-= 0.9 =
-* Pre release.
-
 == Screenshots ==
 1. The admin interface
 2. A slide in a presentation
 
 == Changelog ==
-= 0.9 =
-* Pre release.
+= 0.91 =
+* Kindly removes my twitter handle from every slide.
 
-== Upgrade Notice ==
 = 0.9 =
 * Pre release.
