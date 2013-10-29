@@ -4,7 +4,7 @@ Plugin Name: WP Present
 Plugin URI: http://stevenword.com/plugins/wp-present/
 Description: Easily create slideshow presentations with the the power of WordPress and the elegance of reveal.js
 Author: stevenkword
-Version: 0.91
+Version: 0.92
 Author URI: http://stevenword.com
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -253,8 +253,9 @@ class WP_Present {
 		// Only on the edit taxonomy and edit post type admin pages
 		$is_tax = ( 'edit-tags.php' == $pagenow || ( isset( $_GET['taxonomy'] ) && $this->taxonomy_slug == $_GET['taxonomy'] ) ) ? true : false;
 		$is_cpt = ( 'post.php' == $pagenow && isset( $_GET[ 'post' ] ) && $this->post_type_slug == get_post_type( $_GET[ 'post' ] ) ) ? true : false;
+		$is_cpt_new = ( 'post-new.php' == $pagenow && $this->post_type_slug == $_GET[ 'post_type' ] ) ? true : false;
 
-		if( ! $is_tax && ! $is_cpt )
+		if( ! $is_tax && ! $is_cpt && ! $is_cpt_new )
 			return;
 
 		//If not page now tax or slide : return;
@@ -675,7 +676,7 @@ class WP_Present {
 				$columns[] = $c;
 		}
 		// Let's take a look at the column array;
-		for ($col = 1; $col <= count( $columns ); $col++) {
+		for ( $col = 1; $col <= max( 1, count( $columns ) ); $col++ ) {
 			?>
 			<div class="column autopop" id="col-<?php echo intval( $col ); ?>">
 				<div class="widget-top">
@@ -1034,7 +1035,9 @@ class WP_Present {
 
 		global $post;
 		$post_id = $_REQUEST[ 'id' ];
-		wp_delete_post( $_REQUEST[ 'id' ], false );
+
+		// Trash this slide
+		wp_trash_post( $post_id );
 		die();
 	}
 
