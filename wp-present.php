@@ -949,8 +949,9 @@ class WP_Present {
 	 * @return array
 	 */
 	function filter_tiny_mce_before_init( $args ) {
-   		$args['body_class'] = 'reveal';
-   		$args['height'] = "450";
+   		$args[ 'body_class' ] = 'reveal';
+   		$args[ 'height' ] = '450';
+   		$args[ 'wordpress_adv_hidden' ] = false;
     	return $args;
 	}
 
