@@ -14,6 +14,10 @@
     float: none;
 }
 
+#container .widget.ui-sortable-helper {
+	width: 180px !;
+}
+
 /* Slide Widgets */
 .widget-inside {
     text-align: center;
