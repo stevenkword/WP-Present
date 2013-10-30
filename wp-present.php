@@ -118,6 +118,7 @@ class WP_Present {
 
 		//Update the post links for slides
 		add_filter( 'post_type_link', array( $this, 'append_query_string' ), 10, 2 );
+		add_filter( 'get_edit_term_link', array( $this, 'filter_get_edit_term_link' ) );
 
 		// AJAX
 		add_action( 'wp_ajax_get_slide', array( $this, 'action_wp_ajax_get_slide' ) );
@@ -907,6 +908,15 @@ class WP_Present {
 			$url = home_url( implode( '/', array( $this->taxonomy_slug, $term->slug, '#', $post->post_name ) ) );
 		}
 		return $url;
+	}
+
+	/**
+	 * Append the slide post type to the query string
+	 *
+	 * @return null
+	 */
+	function filter_get_edit_term_link( $location ) {
+		return add_query_arg( array( 'post_type', $this->post_type_slug ), $location );
 	}
 
 	/**
