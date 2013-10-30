@@ -15,7 +15,7 @@
 }
 
 #container .widget.ui-sortable-helper {
-	width: 180px !;
+	width: 180px !important;
 }
 
 /* Slide Widgets */
