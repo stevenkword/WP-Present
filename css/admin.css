@@ -140,9 +140,54 @@
     height: 100%;
     background-color: #000;
     opacity: 0.9;
+    z-index: 99 !important;
 }
 
-ui-dialog-titlebar {
-    background-color: black;
-    color: white;
+#dialog{
+	/*background: lime;*/
+	padding: 0px;
+}
+
+.ui-dialog {
+	background: whitesmoke;
+	position: fixed !important;
+	padding: 30px !important;
+	width: auto !important;
+	top: 30px !important;
+	bottom: 20px;
+	left: 20px !important;
+	right: 20px !important;
+	display: block;
+}
+
+.ui-dialog .ui-dialog-titlebar {
+    display: none;
+}
+
+.ui-dialog .ui-dialog-content {
+	position: static !important;
+	padding: 30px;
+}
+
+.ui-dialog-buttonpane {
+	position: fixed;
+	right: 30px;
+	bottom: 30px;
+}
+
+.modal-inner-left{
+	width: 300px;
+	position: fixed;
+	border: 0px solid red;
+	/*background: red;*/
+}
+.modal-inner-right{
+	min-width: 640px;
+	height: 100%;
+	border: 0px solid lime;
+	margin-left: 315px;
+}
+
+.modal-inner-right{
+
 }

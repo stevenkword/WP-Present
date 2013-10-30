@@ -127,6 +127,8 @@ class WP_Present {
 		add_action( 'wp_ajax_delete_slide', array( $this, 'action_wp_ajax_delete_slide' ) );
 		add_action( 'wp_ajax_update_presentation', array( $this, 'action_wp_ajax_update_presentation' ) );
 
+add_action( 'wp_ajax_fetch_css', array( $this, 'action_wp_ajax_fetch_css' ) );
+
 		// TinyMCE
 		add_filter( 'tiny_mce_before_init', array( $this, 'filter_tiny_mce_before_init' ) );
 
@@ -136,6 +138,34 @@ class WP_Present {
 		// Adds custom image sizes that will play nice with the default slide resolution
 		add_action( 'init', array( $this, 'register_image_sizes' ) );
 		add_filter( 'image_size_names_choose', array( $this, 'filter_image_size_names_choose' ) );
+	}
+
+	function action_wp_ajax_fetch_css() {
+
+		global $post;
+
+		var_dump( $post_id );
+
+	//	$post = get_post( (int) $post_id );
+	//	setup_postdata( $post );
+
+		var_dump( $post );
+		echo 'test';
+		$thumbnail_id = get_post_thumbnail_id( (int) $post_id );
+
+		var_dump( $thumbnail_id );
+
+
+		echo $background_image_url = wp_get_attachment_url( $thumbnail_id );
+
+		//if( ! isset( $background_image_url ) && empty( $background_image_url ) )
+		//	return false;
+		//echo '.mceContentBody.reveal { background: url("' . esc_url( $background_image_url ) . '"); background-size: cover; }';
+
+
+		die();
+
+
 	}
 
 	/**
@@ -267,7 +297,7 @@ class WP_Present {
 		add_editor_style( plugins_url( '/wp-present/css/custom.css?v=' . $this->scripts_version ) );
 
 		//TODO: Make this work to support backgrounds
-		//add_editor_style( plugins_url( '/wp-present/css/tinymce.css.php?v=' . $this->scripts_version . '&post=' . $_REQUEST[ 'post' ] ) );
+		add_editor_style( plugins_url( '/wp-present/css/tinymce.css.php?v=' . $this->scripts_version . '&post=' . $_REQUEST[ 'post' ] ) );
 	}
 
 	/**
@@ -394,6 +424,21 @@ class WP_Present {
 				transition: 'default', // default/cube/page/concave/zoom/linear/fade/none
 				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
 				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: '<?php echo $this->plugins_url;?>/js/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '<?php echo $this->plugins_url;?>/js/reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '<?php echo $this->plugins_url;?>/js/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '<?php $this->plugins_url;?>/js/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '<?php echo $this->plugins_url;?>/js/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: '<?php echo $this->plugins_url;?>/js/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+
+					//{ src: '<?php echo $this->plugins_url;?>/js/reveal.js/plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } },
+					//{ src: '<?php echo $this->plugins_url;?>/js/reveal.js/plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+
+
 			});
 		});
 		</script>
@@ -483,7 +528,6 @@ class WP_Present {
 			return;
 
 		// Admin Styles
-		wp_enqueue_style( 'jquery-ui-fresh', $this->plugins_url . '/css/wp-admin-jquery-ui/jquery-ui-fresh.css', '', $this->scripts_version );	// Thanks Helen
 		wp_enqueue_style( 'wp-present-admin', $this->plugins_url . '/css/admin.css', '', $this->scripts_version );
 
 		// Admin Scripts
@@ -492,6 +536,11 @@ class WP_Present {
 		wp_enqueue_script( 'jquery-ui-dialog' );
 
 		wp_enqueue_script( 'wp-present-admin', $this->plugins_url . '/js/admin.js', array( 'jquery' ), $this->scripts_version, true );
+
+		//wp_enqueue_media();
+		wp_enqueue_style( 'media-views' );
+		//wp_enqueue_script('custom-background');
+		//wp_enqueue_style('wp-color-picker');
 
 		if( isset( $_REQUEST[ 'tag_ID' ] ) )
 			wp_localize_script( 'wp-present-admin', 'presentation', $_REQUEST[ 'tag_ID' ] );
@@ -733,10 +782,6 @@ class WP_Present {
 					<?php // TODO: Add Existing Slide Button ?>
 					<span class="spinner"></span>
 				</p>
-
-				<div id="dialog" title="Edit <?php echo $this->post_type_singular_name; ?>" style="display: none;">
-					<?php $this->modal_editor(); ?>
-				</div>
 			</th>
 			<td>
 				<div id="outer-container"  class="ui-widget-content">
@@ -808,6 +853,17 @@ class WP_Present {
 				</div><!--/#outer-container-->
 			</td>
 		</tr>
+		<div id="dialog" class="media-modal" title="Edit <?php echo $this->post_type_singular_name; ?>" style="display: none;">
+			<div class="modal-inner-left">
+				<p>Title</p>
+				<input id="slide-title" name="slide-title" style="width:95%;"/>
+				<p>Slug</p>
+				<input id="slide-slug" name="slide-slug" style="width:95%;" disabled/>
+			</div>
+			<div class="modal-inner-right">
+				<?php $this->modal_editor(); ?>
+			</div>
+		</div>
 		<?php
 		// Cleanup
 		wp_reset_postdata();
@@ -925,6 +981,7 @@ class WP_Present {
 	 * @return null
 	 */
     function modal_editor( $post_id = '' ) {
+	?><a class="media-modal-close" href="#" title="<?php esc_attr_e('Close'); ?>"><span class="media-modal-icon"></span></a> <?php
         wp_editor( $content = '', $editor_id = 'editor_' . $this->post_type_slug, array(
 			'wpautop' => false, // use wpautop?
 			'media_buttons' => true, // show insert/upload button(s)
@@ -932,7 +989,7 @@ class WP_Present {
 			'textarea_rows' => 20,
 			'tabindex' => '',
 			'tabfocus_elements' => ':prev,:next', // the previous and next element ID to move the focus to when pressing the Tab key in TinyMCE
-			'editor_css' => '', // intended for extra styles for both visual and Text editors buttons, needs to include the <style> tags, can use "scoped".
+			'editor_css' => '<style>wp-editor-area{ background: blue; }</style>', // intended for extra styles for both visual and Text editors buttons, needs to include the <style> tags, can use "scoped".
 			'editor_class' => '', // add extra class(es) to the editor textarea
 			'teeny' => false, // output the minimal editor config used in Press This
 			'dfw' => false, // replace the default fullscreen with DFW (needs specific DOM elements and css)
@@ -950,7 +1007,7 @@ class WP_Present {
 	 */
 	function filter_tiny_mce_before_init( $args ) {
    		$args[ 'body_class' ] = 'reveal';
-   		$args[ 'height' ] = '450';
+   		$args[ 'height' ] = '100%';
    		$args[ 'wordpress_adv_hidden' ] = false;
     	return $args;
 	}
@@ -968,7 +1025,8 @@ class WP_Present {
 
 		$post_id = $_REQUEST[ 'id' ];
 		$post = get_post( $post_id );
-		echo $post->post_content;
+
+		echo json_encode( $post );
 		die();
 	}
 
@@ -987,10 +1045,12 @@ class WP_Present {
 
 		$post_id = $_REQUEST[ 'id' ];
 		$safe_content = wp_kses_post( $_REQUEST[ 'content' ] );
+		$safe_title = sanitize_text_field( $_REQUEST[ 'title' ] );
 
 		$updated_post = array(
 			'ID' => $post_id,
 			'post_content' => $safe_content,
+			'post_title' => $safe_title,
 		);
 		wp_update_post( $updated_post );
 
@@ -1015,11 +1075,12 @@ class WP_Present {
 
 		global $post;
 		$safe_content = wp_kses_post( $_REQUEST[ 'content' ] );
+		$safe_title = sanitize_text_field( $_REQUEST[ 'title' ] );
 
 		$presentation = get_term_by( 'id', $_REQUEST['presentation'], $this->taxonomy_slug );
 
 		$new_post = array(
-			'post_title' => strip_tags($safe_content),
+			'post_title' => ( $safe_title ) ? $safe_title : strip_tags( $safe_content ),
 			'post_content' => $safe_content,
 			'post_status' => 'publish',
 			'post_type' => $this->post_type_slug

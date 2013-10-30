@@ -38,6 +38,7 @@ var WPPresentAdmin;
 			self.bindButtonAddColumn();
 			self.bindButtonRemoveColumn();
 			self.bindButtonViewPresentation();
+			self.bindCloseModal();
 			//self.backfillColumns();
 			self.refreshUI();
 
@@ -190,7 +191,6 @@ var WPPresentAdmin;
 		consolidateColumns: function () {
 			var self = this;
 			var numCols = $('.column').length;
-			// console.log(numCols);
 
 			$('.column').each(function(outerIndex){
 
@@ -250,49 +250,68 @@ var WPPresentAdmin;
 				var $button = $(this);
 				var $parentWidget = $button.parents('.widget');
 				var $widgetPreview = $parentWidget.find('.widget-preview');
+				var $widgetTitle = $parentWidget.find( '.widget-title h4' );
 
 				// Send the contents from the widget to the editor
 				var widgetID = $parentWidget.find('.slide-id').val();
 				var nonce = $('#wp-present-nonce').val();
 
 				$('#editor_slide-tmce').click(); //Necessary on subsequent loads of the editor
+
+				// Clear the form out before we show it
+				self.resetModal();
+
 				$( "#dialog" ).dialog({
-				  autoOpen: true,
-				  width: 640,
-				  height: 640,
-				  modal: false,
-				  buttons: {
-					"Update": function() {
-						var editorContents = tinymce.get('editor_slide').getContent();
-						var params = { 'content':editorContents, 'id':widgetID, 'nonce':nonce };
-						// Send the contents of the existing post
-						$.ajax({
-							url: ajaxurl + '?action=update_slide',
-							type: 'POST',
-							data: jQuery.param(params),
-							beforeSend: function() {
-								$('.spinner').show();
-							},
-							complete: function() {
-								//$('.spinner').hide();
-							},
-							success: function(result) {
-								$('.spinner').hide();
-								// Return the excerpt from the editor
-								$widgetPreview.html( result );
-						  }
-						});
-						self.closeModal();
+					autoOpen: true,
+					modal: true,
+					closeOnEscape: true,
+					resizable: false,
+					dialogClass: 'media-modal',
+					buttons: {
+						"Update": {
+							class: 'button button-primary',
+							text: 'Update',
+							click: function() {
+								var editorContents = tinymce.get('editor_slide').getContent();
+								var postTitle = $( '#slide-title' ).val();
+								var params = { 'id':widgetID, 'content':editorContents, 'title':postTitle, 'nonce':nonce };
+								// Send the contents of the existing post
+								$.ajax({
+									url: ajaxurl + '?action=update_slide',
+									type: 'POST',
+									data: jQuery.param(params),
+									beforeSend: function() {
+										$('.spinner').show();
+									},
+									complete: function() {
+										//$('.spinner').hide();
+									},
+									success: function(result) {
+										$('.spinner').hide();
+										// Return the excerpt from the editor
+										$widgetPreview.html( result );
+										$widgetTitle.text( postTitle );
+
+									}
+								});
+								self.closeModal();
+							}
+						},
+						Cancel: {
+							class: 'button',
+							text: 'Cancel',
+							click: function() {
+								self.closeModal();
+							}
+						},
 					},
-					Cancel: function() {
-						self.closeModal();
-					}
-				  },
-				  create: function() {
+					create: function() {
 						tinymce.execCommand('mceRemoveControl',true,'editor_slide');
 						tinymce.execCommand('mceAddControl',true,'editor_slide');
-				  },
-				  open: function() {
+					},
+					open: function() {
+						//$( ".ui-dialog" ).removeClass( 'ui-dialog' );
+
 						// Load the contents of the existing post
 						var nonce = $('#wp-present-nonce').val();
 						var params = { 'id':widgetID, 'nonce':nonce };
@@ -305,8 +324,11 @@ var WPPresentAdmin;
 							complete: function() {
 								$('.spinner').hide();
 							},
-							success: function(contentEditor) {
-								tinymce.get( 'editor_slide' ).setContent( contentEditor );
+							success: function( contentEditor ) {
+								var slide = jQuery.parseJSON( contentEditor );
+								tinymce.get( 'editor_slide' ).setContent( slide.post_content );
+								$( '#slide-title' ).val( slide.post_title );
+								$( '#slide-slug' ).val( slide.post_name );
 							}
 						});
 
@@ -316,10 +338,13 @@ var WPPresentAdmin;
 						$editorIframe.find('body').addClass('reveal');
 						$editorIframe.css('height','500px');
 
-				  },
-				  close: function() {
-						self.closeModal();
-				  }
+					},
+					close: {
+						class: 'button',
+						click: function() {
+							self.closeModal();
+						}
+					}
 				});
 			});
 		},
@@ -365,50 +390,74 @@ var WPPresentAdmin;
 			$('.action-buttons').on('click', '#add-button', function(e) {
 				e.preventDefault();
 				var $activeColumn = $('.widget-title.active').parent('.widget-top').parent('.column').children('.column-inner');
+				var nonce = $('#wp-present-nonce').val();
 
 				$('#editor_slide-tmce').click(); //Necessary on subsequent loads of the editor
+
+				// Clear the form out before we show it
+				self.resetModal();
+
 				$( "#dialog" ).dialog({
-				  autoOpen: true,
-				  width: 600,
-				  height: 600,
-				  modal: false,
-				  buttons: {
-					"Publish": function() {
-						var editorContents = tinymce.get('editor_slide').getContent();
-						var nonce = $('#wp-present-nonce').val();
-						var params = { content:editorContents,'presentation':presentation, 'nonce':nonce };
-						// Send the contents of the existing post
-						$.ajax({
-							url: ajaxurl + '?action=new_slide',
-							type: 'POST',
-							data: jQuery.param(params),
-							success: function(result) {
-								$activeColumn.append(result);
-								WPPNumSlides[0]++;
-								self.refreshUI();
-								self.updateTaxonomyDescription();
-						  }
-						});
-						self.closeModal();
+					autoOpen: true,
+					modal: true,
+					closeOnEscape: true,
+					resizable: false,
+					dialogClass: 'media-modal',
+					buttons: {
+						"Publish": {
+							class: 'button button-primary',
+							text: 'Publish',
+							click: function() {
+								var editorContents = tinymce.get('editor_slide').getContent();
+								var postTitle = $( '#slide-title' ).val();
+								var params = { content:editorContents,'presentation':presentation, 'nonce':nonce };
+
+								// Send the contents of the existing post
+								var editorContents = tinymce.get('editor_slide').getContent();
+								var postTitle = $( '#slide-title' ).val();
+								var params = { 'content':editorContents, 'title':postTitle, 'nonce':nonce };
+
+								$.ajax({
+									url: ajaxurl + '?action=new_slide',
+									type: 'POST',
+									data: jQuery.param(params),
+									success: function(result) {
+										$activeColumn.append(result);
+										WPPNumSlides[0]++;
+										self.refreshUI();
+										self.updateTaxonomyDescription();
+								  }
+								});
+								self.closeModal();
+							},
+						},
+						Cancel: {
+							class: 'button',
+							text: 'Cancel',
+							click: function() {
+								self.closeModal();
+							}
+						},
 					},
-					Cancel: function() {
-						self.closeModal();
-					}
-				  },
-				  create: function() {
+					create: function() {
 						tinymce.execCommand('mceRemoveControl',true,'editor_slide');
 						tinymce.execCommand('mceAddControl',true,'editor_slide');
-				  },
-				  open: function() {
+					},
+					open: function() {
+						//$( ".ui-dialog" ).removeClass( 'ui-dialog' );
+
 						// Clear the editor
 						tinymce.get('editor_slide').setContent('');
 						// Hack for getting the reveal class added to tinymce editor body
 						var $editorIframe = $('#editor_slide_ifr').contents();
 						$editorIframe.find('body').addClass('reveal');
-				  },
-				  close: function() {
-						self.closeModal();
-				  }
+					},
+					close: {
+						class: 'button',
+						click: function() {
+							self.closeModal();
+						}
+					}
 				});
 			});
 		},
@@ -500,10 +549,31 @@ var WPPresentAdmin;
 		 * Close Modal
 		 */
 		closeModal: function() {
+			var self = this;
+			self.resetModal();
 			tinymce.execCommand('mceRemoveControl',true,'editor_slide');
 			$( '#dialog' ).dialog( "close" );
-		}
+		},
 
+		/**
+		 * Reset Modal
+		 */
+		resetModal: function() {
+			// Make existing content go away
+			$( '#slide-title' ).val( '' );
+			$( '#slide-slug' ).val( '' );
+		},
+
+		/**
+		 * Bind Close Modal Button
+		 */
+		bindCloseModal: function() {
+			var self = this;
+			$('.media-modal').on('click', '.media-modal-close', function(e) {
+				e.preventDefault();
+				self.closeModal();
+			});
+		},
 	};
 
 })(jQuery);
