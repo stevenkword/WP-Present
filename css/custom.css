@@ -1,7 +1,11 @@
 /* =Reveal.js
 -------------------------------------------------------------- */
+p { line-height: 1.5em;}
+
 body.reveal {
     text-align: center;
+    height: auto;
+    width: auto;
 }
 
 .reveal h1, .branding h1 {
@@ -53,7 +57,19 @@ body.admin-bar .reveal {
 }
 
 body.mceContentBody.reveal {
-    margin: 50px auto;
+    margin: 0px auto;
     width: 960px;
     zoom: 0.6;
+    border:0px solid red;
+    display: block;
+    min-height: 2em;
+}
+
+body.mceContentBody.reveal:berfore {
+    content: ' ';
+    display: block;
+	top: 50%;
+	position; absolute;
+    text-align: center;
+    border: 0px solid red;
 }

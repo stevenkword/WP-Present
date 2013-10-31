@@ -50,7 +50,7 @@ class WP_Present {
 	public $capability = 'edit_others_posts';
 	public $nonce_field = 'wp-present-nonce';
 	public $nonce_fail_message = "fail!";
-	public $scripts_version = 20131030;
+	public $scripts_version = 20131031;
 	public $default_theme = 'simple.css'; //moon, night, simple, serif, solarized
 	//public $max_num_slides = 250; //not currently used, proposed variable
 
@@ -291,13 +291,14 @@ add_action( 'wp_ajax_fetch_css', array( $this, 'action_wp_ajax_fetch_css' ) );
 
 		//If not page now tax or slide : return;
 		remove_editor_styles();
-		add_editor_style( plugins_url( '/wp-present/css/reset.css' ) );
+//		add_editor_style( plugins_url( '/wp-present/css/reset.css' ) );
+		add_editor_style( plugins_url( '/wp-present/js/reveal.js/css/reveal.css' ) );
 		add_editor_style( plugins_url( '/wp-present/js/reveal.js/css/theme/' . $this->default_theme ) );
 		add_editor_style( plugins_url( '/wp-present/js/reveal.js/lib/css/zenburn.css' ) );
 		add_editor_style( plugins_url( '/wp-present/css/custom.css?v=' . $this->scripts_version ) );
 
 		//TODO: Make this work to support backgrounds
-		add_editor_style( plugins_url( '/wp-present/css/tinymce.css.php?v=' . $this->scripts_version . '&post=' . $_REQUEST[ 'post' ] ) );
+		//add_editor_style( plugins_url( '/wp-present/css/tinymce.css.php?v=' . $this->scripts_version . '&post=' . $_REQUEST[ 'post' ] ) );
 	}
 
 	/**
@@ -311,7 +312,7 @@ add_action( 'wp_ajax_fetch_css', array( $this, 'action_wp_ajax_fetch_css' ) );
 			return;
 
 		/* Browser reset styles */
-		wp_enqueue_style( 'reset', $this->plugins_url . '/css/reset.css', '', $this->scripts_version );
+		//wp_enqueue_style( 'reset', $this->plugins_url . '/css/reset.css', '', $this->scripts_version );
 
 		/* Reveal Styles */
 		wp_enqueue_style( 'reveal', $this->plugins_url . '/js/reveal.js/css/reveal.css', '', $this->scripts_version );
@@ -972,7 +973,7 @@ add_action( 'wp_ajax_fetch_css', array( $this, 'action_wp_ajax_fetch_css' ) );
 	 * @return null
 	 */
 	function filter_get_edit_term_link( $location ) {
-		return add_query_arg( array( 'post_type', $this->post_type_slug ), $location );
+		return add_query_arg( array( 'post_type' => $this->post_type_slug ), $location );
 	}
 
 	/**
@@ -1026,6 +1027,7 @@ add_action( 'wp_ajax_fetch_css', array( $this, 'action_wp_ajax_fetch_css' ) );
 		$post_id = $_REQUEST[ 'id' ];
 		$post = get_post( $post_id );
 
+		$post->post_thumbnail_url = wp_get_attachment_url( get_post_thumbnail_id( $post->ID ) );
 		echo json_encode( $post );
 		die();
 	}

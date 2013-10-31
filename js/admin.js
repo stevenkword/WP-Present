@@ -86,6 +86,11 @@ var WPPresentAdmin;
 				});
 			}
 
+			console.log( $('#wpbody-content') );
+			$('#wpbody-content').on( 'click', '#name', function(e) {
+				alert( 'toast' );
+			});
+
 			// This really should be called only once inside init
 			self.enableColumns();
 			self.renumberColumns();
@@ -245,6 +250,8 @@ var WPPresentAdmin;
 		 */
 		widgetButtonEdit: function () {
 			var self = this;
+			var $editorIframe = $('#editor_slide_ifr').contents();
+
 			$('#container').on('click', '.widget-control-edit', function(e) {
 				e.preventDefault();
 				var $button = $(this);
@@ -329,6 +336,13 @@ var WPPresentAdmin;
 								tinymce.get( 'editor_slide' ).setContent( slide.post_content );
 								$( '#slide-title' ).val( slide.post_title );
 								$( '#slide-slug' ).val( slide.post_name );
+
+								// Set tinymce background image
+								var frameBackgroundImage = "url(" + slide.post_thumbnail_url + ")";
+								$editorIframe.contents().find('.reveal').css( 'background-image' , frameBackgroundImage ).css( 'background-size', 'cover' );
+
+								// This has to be the most hacky thing in this entire project
+								self.resizeModal();
 							}
 						});
 
@@ -440,12 +454,11 @@ var WPPresentAdmin;
 						},
 					},
 					create: function() {
+						// Re-init tinymce so the modal doesn't flip out
 						tinymce.execCommand('mceRemoveControl',true,'editor_slide');
 						tinymce.execCommand('mceAddControl',true,'editor_slide');
 					},
 					open: function() {
-						//$( ".ui-dialog" ).removeClass( 'ui-dialog' );
-
 						// Clear the editor
 						tinymce.get('editor_slide').setContent('');
 						// Hack for getting the reveal class added to tinymce editor body
@@ -545,6 +558,11 @@ var WPPresentAdmin;
 			});
 		},
 
+		loadModalBackground: function() {
+			var self = this;
+
+		},
+
 		/**
 		 * Close Modal
 		 */
@@ -574,6 +592,21 @@ var WPPresentAdmin;
 				self.closeModal();
 			});
 		},
+
+		resizeModal: function() {
+			// Set tinymce background image
+			var $editorIframe = $( '#editor_slide_ifr' );
+
+			// This has to be the most hacky thing in this entire project
+			var $editor = $editorIframe.contents().find('body.mceContentBody.reveal');
+			var editorHeightBefore = Math.round( $editor.height() );
+
+			$editor.css( 'display', 'table' );
+			var editorHeightAfter = Math.round( $editor.height() );
+
+			var topMiddle = Math.round( ( editorHeightBefore / 2 ) - ( editorHeightAfter / 2 ) );
+			$editor.css( 'padding-top', topMiddle );
+		}
 	};
 
 })(jQuery);
