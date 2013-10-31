@@ -176,7 +176,7 @@
 }
 
 .modal-inner-left{
-	width: 300px;
+	width: 260px;
 	position: fixed;
 	border: 0px solid red;
 	/*background: red;*/
@@ -185,5 +185,5 @@
 	min-width: 640px;
 	height: 100%;
 	border: 0px solid lime;
-	margin-left: 315px;
+	margin-left: 275px;
 }

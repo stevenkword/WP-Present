@@ -540,8 +540,11 @@ add_action( 'wp_ajax_fetch_css', array( $this, 'action_wp_ajax_fetch_css' ) );
 
 		//wp_enqueue_media();
 		wp_enqueue_style( 'media-views' );
+
 		//wp_enqueue_script('custom-background');
-		//wp_enqueue_style('wp-color-picker');
+
+		wp_enqueue_style( 'wp-color-picker' );
+		wp_enqueue_script( 'wp-color-picker' );
 
 		if( isset( $_REQUEST[ 'tag_ID' ] ) )
 			wp_localize_script( 'wp-present-admin', 'presentation', $_REQUEST[ 'tag_ID' ] );
@@ -860,11 +863,18 @@ add_action( 'wp_ajax_fetch_css', array( $this, 'action_wp_ajax_fetch_css' ) );
 				<input id="slide-title" name="slide-title" style="width:95%;"/>
 				<p>Slug</p>
 				<input id="slide-slug" name="slide-slug" style="width:95%;" disabled/>
+				<p>Background Color</p>
+				<input type="text" value="" class="my-color-field" />
 			</div>
 			<div class="modal-inner-right">
 				<?php $this->modal_editor(); ?>
 			</div>
 		</div>
+		<script>
+		jQuery(document).ready(function($){
+		    $('.my-color-field').wpColorPicker();
+		});
+		</script>
 		<?php
 		// Cleanup
 		wp_reset_postdata();

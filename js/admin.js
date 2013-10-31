@@ -605,7 +605,10 @@ var WPPresentAdmin;
 			$editor.css( 'display', 'table' );
 			var editorHeightAfter = Math.round( $editor.height() );
 
-			var topMiddle = Math.round( ( editorHeightBefore / 2 * zoom ) - ( editorHeightAfter / 2 ) );
+			var topMiddle = 60 + Math.round( ( editorHeightBefore / 2 ) - ( editorHeightAfter / 2 ) );
+			console.log( 'Before: ' + editorHeightBefore );
+			console.log( 'After: ' + editorHeightAfter );
+			console.log( 'Result: ' + topMiddle );
 			$editor.css( 'padding-top', topMiddle );
 		}
 	};

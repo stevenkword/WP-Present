@@ -58,15 +58,14 @@ body.admin-bar .reveal {
 
 body.mceContentBody.reveal {
     margin: 0px auto;
-    width: 960px;
     zoom: 0.6;
     border:0px solid red;
     display: block;
     min-height: 2em;
-    padding: 20px;
+    padding: 60px;
 }
 
-body.mceContentBody.reveal:berfore {
+body.mceContentBody.reveal:before {
     content: ' ';
     display: block;
 	top: 50%;
