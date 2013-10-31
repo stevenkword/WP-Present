@@ -600,11 +600,12 @@ var WPPresentAdmin;
 			// This has to be the most hacky thing in this entire project
 			var $editor = $editorIframe.contents().find('body.mceContentBody.reveal');
 			var editorHeightBefore = Math.round( $editor.height() );
+			var zoom = 0.6;
 
 			$editor.css( 'display', 'table' );
 			var editorHeightAfter = Math.round( $editor.height() );
 
-			var topMiddle = Math.round( ( editorHeightBefore / 2 ) - ( editorHeightAfter / 2 ) );
+			var topMiddle = Math.round( ( editorHeightBefore / 2 * zoom ) - ( editorHeightAfter / 2 ) );
 			$editor.css( 'padding-top', topMiddle );
 		}
 	};

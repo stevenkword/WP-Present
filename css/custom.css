@@ -63,6 +63,7 @@ body.mceContentBody.reveal {
     border:0px solid red;
     display: block;
     min-height: 2em;
+    padding: 20px;
 }
 
 body.mceContentBody.reveal:berfore {
