@@ -50,7 +50,7 @@ class WP_Present {
 	public $capability = 'edit_others_posts';
 	public $nonce_field = 'wp-present-nonce';
 	public $nonce_fail_message = "fail!";
-	public $scripts_version = 20131031;
+	public $scripts_version = 201310314;
 	public $default_theme = 'simple.css'; //moon, night, simple, serif, solarized
 	//public $max_num_slides = 250; //not currently used, proposed variable
 
@@ -292,7 +292,7 @@ add_action( 'wp_ajax_fetch_css', array( $this, 'action_wp_ajax_fetch_css' ) );
 		//If not page now tax or slide : return;
 		remove_editor_styles();
 //		add_editor_style( plugins_url( '/wp-present/css/reset.css' ) );
-//		add_editor_style( plugins_url( '/wp-present/js/reveal.js/css/reveal.css' ) );
+		add_editor_style( plugins_url( '/wp-present/js/reveal.js/css/reveal.css' ) );
 		add_editor_style( plugins_url( '/wp-present/js/reveal.js/css/theme/' . $this->default_theme ) );
 		add_editor_style( plugins_url( '/wp-present/js/reveal.js/lib/css/zenburn.css' ) );
 		add_editor_style( plugins_url( '/wp-present/css/custom.css?v=' . $this->scripts_version ) );
@@ -310,6 +310,16 @@ add_action( 'wp_ajax_fetch_css', array( $this, 'action_wp_ajax_fetch_css' ) );
 	function action_wp_enqueue_scripts() {
 		if( ! is_tax( $this->taxonomy_slug ) )
 			return;
+
+		// Deregister theme specific stylesheets
+		global $wp_styles;
+		foreach( $wp_styles->registered as $handle => $object ) {
+			$stylesheet_relative_uri = str_replace( home_url(), '', get_stylesheet_directory_uri() );
+			if( ! empty( $stylesheet_relative_uri ) && strpos( $object->src, $stylesheet_relative_uri ) ) {
+				unset( $wp_styles->$handle );
+				wp_dequeue_style( $handle );
+			}
+		}
 
 		/* Browser reset styles */
 		//wp_enqueue_style( 'reset', $this->plugins_url . '/css/reset.css', '', $this->scripts_version );
@@ -431,7 +441,7 @@ add_action( 'wp_ajax_fetch_css', array( $this, 'action_wp_ajax_fetch_css' ) );
 					{ src: '<?php echo $this->plugins_url;?>/js/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
 					{ src: '<?php echo $this->plugins_url;?>/js/reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
 					{ src: '<?php echo $this->plugins_url;?>/js/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: '<?php $this->plugins_url;?>/js/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '<?php echo $this->plugins_url;?>/js/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
 					{ src: '<?php echo $this->plugins_url;?>/js/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
 					{ src: '<?php echo $this->plugins_url;?>/js/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
 
@@ -863,6 +873,8 @@ add_action( 'wp_ajax_fetch_css', array( $this, 'action_wp_ajax_fetch_css' ) );
 				<input id="slide-title" name="slide-title" style="width:95%;"/>
 				<p>Slug</p>
 				<input id="slide-slug" name="slide-slug" style="width:95%;" disabled/>
+				<p>Font Color</p>
+				<input type="text" value="" class="my-color-field" />
 				<p>Background Color</p>
 				<input type="text" value="" class="my-color-field" />
 			</div>

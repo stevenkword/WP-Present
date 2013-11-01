@@ -424,12 +424,7 @@ var WPPresentAdmin;
 							click: function() {
 								var editorContents = tinymce.get('editor_slide').getContent();
 								var postTitle = $( '#slide-title' ).val();
-								var params = { content:editorContents,'presentation':presentation, 'nonce':nonce };
-
-								// Send the contents of the existing post
-								var editorContents = tinymce.get('editor_slide').getContent();
-								var postTitle = $( '#slide-title' ).val();
-								var params = { 'content':editorContents, 'title':postTitle, 'nonce':nonce };
+								var params = { content:editorContents, 'presentation':presentation, 'title':postTitle,'nonce':nonce };
 
 								$.ajax({
 									url: ajaxurl + '?action=new_slide',
@@ -560,7 +555,6 @@ var WPPresentAdmin;
 
 		loadModalBackground: function() {
 			var self = this;
-
 		},
 
 		/**
@@ -597,6 +591,11 @@ var WPPresentAdmin;
 			// Set tinymce background image
 			var $editorIframe = $( '#editor_slide_ifr' );
 
+
+			var test = $('.modal-inner-right' ).height() - 110;
+			$editorIframe.height( test );
+
+
 			// This has to be the most hacky thing in this entire project
 			var $editor = $editorIframe.contents().find('body.mceContentBody.reveal');
 			var editorHeightBefore = Math.round( $editor.height() );
@@ -604,12 +603,11 @@ var WPPresentAdmin;
 
 			$editor.css( 'display', 'table' );
 			var editorHeightAfter = Math.round( $editor.height() );
-
 			var topMiddle = 60 + Math.round( ( editorHeightBefore / 2 ) - ( editorHeightAfter / 2 ) );
-			console.log( 'Before: ' + editorHeightBefore );
-			console.log( 'After: ' + editorHeightAfter );
-			console.log( 'Result: ' + topMiddle );
+
+			// Act on said hackiness
 			$editor.css( 'padding-top', topMiddle );
+			$editor.css( 'display', 'block' );
 		}
 	};
 

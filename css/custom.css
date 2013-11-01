@@ -57,12 +57,17 @@ body.admin-bar .reveal {
 }
 
 body.mceContentBody.reveal {
-    margin: 0px auto;
-    zoom: 0.6;
-    border:0px solid red;
-    display: block;
-    min-height: 2em;
-    padding: 60px;
+	margin: 0px auto;
+	border: 0px solid red;
+	display: block;
+	min-height: 2em;
+	padding: 60px 0;
+	max-width: 1024px;
+	zoom: 0.6;
+	background-color: rgba( 0, 0, 0, 0 );
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	background-size: cover !important;
 }
 
 body.mceContentBody.reveal:before {

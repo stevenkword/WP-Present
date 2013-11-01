@@ -137,5 +137,25 @@
 				});
 			</script>
 		<?php endif; ?>
+		<div id="dialog" class="media-modal" title="Edit <?php echo $this->post_type_singular_name; ?>" style="display: none;">
+			<div class="modal-inner-left">
+				<p>Title</p>
+				<input id="slide-title" name="slide-title" style="width:95%;"/>
+				<p>Slug</p>
+				<input id="slide-slug" name="slide-slug" style="width:95%;" disabled/>
+				<p>Font Color</p>
+				<input type="text" value="" class="my-color-field" />
+				<p>Background Color</p>
+				<input type="text" value="" class="my-color-field" />
+			</div>
+			<div class="modal-inner-right">
+				<?php $this->modal_editor(); ?>
+			</div>
+		</div>
+		<script>
+		jQuery(document).ready(function($){
+		    $('.my-color-field').wpColorPicker();
+		});
+		</script>
 	</body>
 </html>

@@ -171,8 +171,8 @@
 
 .ui-dialog-buttonpane {
 	position: fixed;
-	right: 30px;
-	bottom: 30px;
+	left: 44px;
+	top: 44px;
 }
 
 .modal-inner-left{
@@ -180,10 +180,20 @@
 	position: fixed;
 	border: 0px solid red;
 	/*background: red;*/
+	padding-top: 25px;
 }
 .modal-inner-right{
 	min-width: 640px;
-	height: 100%;
+	/*height: 100%;*/
 	border: 0px solid lime;
-	margin-left: 275px;
+	left: 320px;
+	display: block;
+	position: fixed;
+	bottom: 40px;
+	top: 60px;
+	right: 40px;
+}
+.media-modal-close {
+	top: -30px !important;
+	right: -15px !important;
 }
