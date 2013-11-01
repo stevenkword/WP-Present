@@ -889,14 +889,16 @@ do_action( 'customize_controls_enqueue_scripts' );
 				<input type="text" value="" class="my-color-field" />
 				-->
 
-
-<form id="customize-controls" class="wrap wp-full-overlay-sidebar steven">
+<div id="customize-controls" class="wrap wp-full-overlay-sidebar"/>
+	<div id="customize-header-actions" class="wp-full-overlay-header">
+		<input type="submit" name="save" id="save" class="button button-primary save" value="Saved" disabled="">			<span class="spinner"></span>
+		<a class="back button" href="http://www.stevenword.com/">Close</a>
+	</div>
 	<div class="wp-full-overlay-sidebar-content accordion-container" tabindex="-1">
 		<div id="customize-info" class="accordion-section ">
 			<div class="accordion-section-title" aria-label="Theme Customizer Options" tabindex="0">
 				<span class="preview-notice">
-				You are previewing <strong class="theme-name">
-				Simple </strong>
+				You are editing <strong class="theme-name"></strong>
 				</span>
 			</div>
 			<div class="accordion-section-content">
@@ -912,7 +914,7 @@ do_action( 'customize_controls_enqueue_scripts' );
 		</div>
 		<div id="customize-theme-controls">
 			<ul>
-				<li id="accordion-section-colors" class="control-section accordion-section open top">
+				<li id="accordion-section-colors" class="control-section accordion-section top">
 				<h3 class="accordion-section-title" tabindex="0">
 				Colors </h3>
 				<ul class="accordion-section-content">
@@ -950,7 +952,7 @@ do_action( 'customize_controls_enqueue_scripts' );
 			</ul>
 		</div>
 	</div>
-</form>
+</div>
 
 
 

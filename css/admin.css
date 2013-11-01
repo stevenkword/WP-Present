@@ -147,7 +147,9 @@
 	/*background: lime;*/
 	padding: 0px;
 }
+.ui-front{
 
+}
 .ui-dialog {
 	background: whitesmoke;
 	position: fixed !important;
@@ -158,6 +160,7 @@
 	left: 20px !important;
 	right: 20px !important;
 	display: block;
+	z-index: 16000000 !important;
 }
 
 .ui-dialog .ui-dialog-titlebar {
@@ -174,9 +177,33 @@
 	left: 44px;
 	top: 22px;
 }
+.mp6 .ui-dialog-buttonpane{
+	left: 35px;
+	top: 24px;
+}
 
+.mp6 .modal-inner-left{
+	left: 20px;
+	top: 30px;
+	bottom: 30px;
+}
+#customize-controls {
+	position: fixed;
+	width: 300px;
+	height: auto;
+	border: 0px solid red;
+	top: 30px;
+	height: auto;
+	bottom: 20px;
+	left: 20px;
+
+}
+.mp6 #customize-controls{
+	bottom: 30px;
+	left: 20px;
+}
 .modal-inner-left{
-	width: 260px;
+	width: 300px;
 	position: fixed;
 	left: 20px;
 	bottom: 20px;
@@ -191,15 +218,16 @@
 	border: 0px solid lime;
 	display: block;
 	position: fixed;
-	left: 300px;
+	left: 330px;
 	bottom: 40px;
 	top: 40px;
 	right: 40px;
 }
-.wp-full-overlay-sidebar-content{
-	margin-top: 40px !important;
-}
 .media-modal-close {
 	top: -10px !important;
 	right: -15px !important;
+}
+.mp6 .media-modal-close{
+	top: -18px !important;
+	right: -22px !important;
 }

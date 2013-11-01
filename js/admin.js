@@ -336,7 +336,7 @@ var WPPresentAdmin;
 								tinymce.get( 'editor_slide' ).setContent( slide.post_content );
 								$( '#slide-title' ).val( slide.post_title );
 								$( '#slide-slug' ).val( slide.post_name );
-
+								$('.theme-name').html( slide.post_title );
 								// Set tinymce background image
 								var frameBackgroundImage = "url(" + slide.post_thumbnail_url + ")";
 								$editorIframe.contents().find('.reveal').css( 'background-image' , frameBackgroundImage ).css( 'background-size', 'cover' );
@@ -592,10 +592,8 @@ var WPPresentAdmin;
 		resizeModal: function() {
 			// Set tinymce background image
 			var $editorIframe = $( '#editor_slide_ifr' );
-
-
-			var test = $('.modal-inner-right' ).height() - 110;
-			$editorIframe.height( test );
+			var resize = $('.modal-inner-right' ).height() - 110;
+			$editorIframe.height( resize );
 
 
 			// This has to be the most hacky thing in this entire project
@@ -605,7 +603,11 @@ var WPPresentAdmin;
 
 			$editor.css( 'display', 'table' );
 			var editorHeightAfter = Math.round( $editor.height() );
-			var topMiddle = 60 + Math.round( ( editorHeightBefore / 2 ) - ( editorHeightAfter / 2 ) );
+
+			console.log( 'Before: ' + editorHeightBefore );
+			console.log( 'After: ' + editorHeightAfter );
+			var topMiddle = Math.round( ( editorHeightBefore - editorHeightAfter ) );
+			console.log( 'Diff: ' + topMiddle );
 
 			// Act on said hackiness
 			$editor.css( 'padding-top', topMiddle );
