@@ -556,6 +556,15 @@ add_action( 'wp_ajax_fetch_css', array( $this, 'action_wp_ajax_fetch_css' ) );
 		wp_enqueue_style( 'wp-color-picker' );
 		wp_enqueue_script( 'wp-color-picker' );
 
+do_action( 'customize_controls_init' );
+
+wp_enqueue_script( 'customize-controls' );
+wp_enqueue_style( 'customize-controls' );
+
+wp_enqueue_script( 'accordion' );
+
+do_action( 'customize_controls_enqueue_scripts' );
+
 		if( isset( $_REQUEST[ 'tag_ID' ] ) )
 			wp_localize_script( 'wp-present-admin', 'presentation', $_REQUEST[ 'tag_ID' ] );
 	}
@@ -869,6 +878,7 @@ add_action( 'wp_ajax_fetch_css', array( $this, 'action_wp_ajax_fetch_css' ) );
 		</tr>
 		<div id="dialog" class="media-modal" title="Edit <?php echo $this->post_type_singular_name; ?>" style="display: none;">
 			<div class="modal-inner-left">
+				<!--
 				<p>Title</p>
 				<input id="slide-title" name="slide-title" style="width:95%;"/>
 				<p>Slug</p>
@@ -877,6 +887,73 @@ add_action( 'wp_ajax_fetch_css', array( $this, 'action_wp_ajax_fetch_css' ) );
 				<input type="text" value="" class="my-color-field" />
 				<p>Background Color</p>
 				<input type="text" value="" class="my-color-field" />
+				-->
+
+
+<form id="customize-controls" class="wrap wp-full-overlay-sidebar steven">
+	<div class="wp-full-overlay-sidebar-content accordion-container" tabindex="-1">
+		<div id="customize-info" class="accordion-section ">
+			<div class="accordion-section-title" aria-label="Theme Customizer Options" tabindex="0">
+				<span class="preview-notice">
+				You are previewing <strong class="theme-name">
+				Simple </strong>
+				</span>
+			</div>
+			<div class="accordion-section-content">
+				<p>
+					Title
+				</p>
+				<input id="slide-title" name="slide-title" style="width:95%;"/>
+				<p>
+					Slug
+				</p>
+				<input id="slide-slug" name="slide-slug" style="width:95%;" disabled/>
+			</div>
+		</div>
+		<div id="customize-theme-controls">
+			<ul>
+				<li id="accordion-section-colors" class="control-section accordion-section open top">
+				<h3 class="accordion-section-title" tabindex="0">
+				Colors </h3>
+				<ul class="accordion-section-content">
+					<li id="customize-control-header_textcolor" class="customize-control customize-control-color">
+					<label>
+					<span class="customize-control-title">
+					Font Color </span>
+					<div class="customize-control-content">
+						<input type="text" value="" class="my-color-field"/>
+					</div>
+					</label>
+					</li>
+					<li id="customize-control-background_color" class="customize-control customize-control-color">
+					<label>
+					<span class="customize-control-title">
+					Background Color </span>
+					<div class="customize-control-content">
+						<input type="text" value="" class="my-color-field"/>
+					</div>
+					</label>
+					</li>
+				</ul>
+				</li>
+				<li id="accordion-section-background_image" class="control-section accordion-section">
+				<h3 class="accordion-section-title" tabindex="0">
+				Background Image </h3>
+				<ul class="accordion-section-content"></ul>
+				</li>
+				<li id="accordion-section-static_front_page" class="control-section accordion-section bottom">
+				<h3 class="accordion-section-title" tabindex="0">
+				Static Front Page </h3>
+				<ul class="accordion-section-content bottom">
+				</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+</form>
+
+
+
 			</div>
 			<div class="modal-inner-right">
 				<?php $this->modal_editor(); ?>

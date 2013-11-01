@@ -172,28 +172,34 @@
 .ui-dialog-buttonpane {
 	position: fixed;
 	left: 44px;
-	top: 44px;
+	top: 22px;
 }
 
 .modal-inner-left{
 	width: 260px;
 	position: fixed;
+	left: 20px;
+	bottom: 20px;
 	border: 0px solid red;
-	/*background: red;*/
-	padding-top: 25px;
+	top: 30px;
+	box-shadow: -5px 0 4px -4px rgba(0,0,0,.1) inset;
+	border-right: 1px solid rgba(0,0,0,.2);
 }
 .modal-inner-right{
 	min-width: 640px;
 	/*height: 100%;*/
 	border: 0px solid lime;
-	left: 320px;
 	display: block;
 	position: fixed;
+	left: 300px;
 	bottom: 40px;
-	top: 60px;
+	top: 40px;
 	right: 40px;
 }
+.wp-full-overlay-sidebar-content{
+	margin-top: 40px !important;
+}
 .media-modal-close {
-	top: -30px !important;
+	top: -10px !important;
 	right: -15px !important;
 }

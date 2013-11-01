@@ -64,7 +64,6 @@ body.mceContentBody.reveal {
 	padding: 60px 0;
 	max-width: 1024px;
 	zoom: 0.6;
-	background-color: rgba( 0, 0, 0, 0 );
 	background-position: 50% 50%;
 	background-repeat: no-repeat;
 	background-size: cover !important;

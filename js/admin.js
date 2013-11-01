@@ -459,6 +459,8 @@ var WPPresentAdmin;
 						// Hack for getting the reveal class added to tinymce editor body
 						var $editorIframe = $('#editor_slide_ifr').contents();
 						$editorIframe.find('body').addClass('reveal');
+
+						self.resizeModal();
 					},
 					close: {
 						class: 'button',
