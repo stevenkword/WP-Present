@@ -50,7 +50,7 @@ class WP_Present {
 	public $capability = 'edit_others_posts';
 	public $nonce_field = 'wp-present-nonce';
 	public $nonce_fail_message = "fail!";
-	public $scripts_version = 201310314;
+	public $scripts_version = 20131102;
 	public $default_theme = 'simple.css'; //moon, night, simple, serif, solarized
 	//public $max_num_slides = 250; //not currently used, proposed variable
 
@@ -131,6 +131,7 @@ add_action( 'wp_ajax_fetch_css', array( $this, 'action_wp_ajax_fetch_css' ) );
 
 		// TinyMCE
 		add_filter( 'tiny_mce_before_init', array( $this, 'filter_tiny_mce_before_init' ) );
+		add_filter( 'mce_external_plugins', array( $this, 'filter_mce_external_plugins' ) );
 
 		// Hide taxonomy description column
 		add_filter( 'manage_edit-' . $this->taxonomy_slug . '_columns', array( $this, 'filter_manage_edit_columns' ) );
@@ -425,7 +426,7 @@ add_action( 'wp_ajax_fetch_css', array( $this, 'action_wp_ajax_fetch_css' ) );
 				width: 1024,
 				height: 768,
 				controls: true,
-				progress: false,
+				progress: true,
 				history: true,
 				center: true,
 				autoSlide: 0, // in milliseconds, 0 to disable
@@ -1111,7 +1112,25 @@ do_action( 'customize_controls_enqueue_scripts' );
    		$args[ 'body_class' ] = 'reveal';
    		$args[ 'height' ] = '100%';
    		$args[ 'wordpress_adv_hidden' ] = false;
+   		//$args[ 'resize' ] = "both";
     	return $args;
+	}
+
+	/**
+	 * Load External TinyMCE plugins
+	 *
+	 * @return array
+	 */
+	function filter_mce_external_plugins() {
+		return;
+		$plugins = array( 'autoresize', 'autolink', 'code' ); //Add any more plugins you want to load here
+		$plugins_array = array();
+
+		//Build the response - the key is the plugin name, value is the URL to the plugin JS
+		foreach ($plugins as $plugin ) {
+			$plugins_array[ $plugin ] = $this->plugins_url . '/js/tinymce/plugins/' . $plugin . '/editor_plugin.js';
+		}
+		return $plugins_array;
 	}
 
 	/**

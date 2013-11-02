@@ -213,7 +213,6 @@
 	border-right: 1px solid rgba(0,0,0,.2);
 }
 .modal-inner-right{
-	min-width: 640px;
 	/*height: 100%;*/
 	border: 0px solid lime;
 	display: block;
@@ -224,6 +223,7 @@
 	right: 40px;
 }
 .media-modal-close {
+	display: none;
 	top: -10px !important;
 	right: -15px !important;
 }

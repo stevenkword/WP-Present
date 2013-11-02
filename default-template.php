@@ -75,67 +75,8 @@
 				</div><!--/.slides-->
 			</div><!-- .reveal -->
 
-			<!-- Enqueue these things, for reals -->
-			<?php
-			// Get plugin path
-			$plugin_path = dirname( __FILE__ );
-			$plugin_url = plugins_url( '/wp-present/' );
-			//echo $plugin_url . '/js/reveal.js/lib/js/head.min.js';
-			?>
-
 			<?php wp_footer(); ?>
 
-			<script type="text/javascript">
-				// Full list of configuration options available here:
-				// https://github.com/hakimel/reveal.js#configuration
-				Reveal.initialize({
-					// The "normal" size of the presentation, aspect ratio will be preserved
-					// when the presentation is scaled to fit different resolutions. Can be
-					// specified using percentage units.
-					width: 1024,
-					height: 768,
-					margin: 0.1, // Factor of the display size that should remain empty around the content
-					minScale: 0.2, // Bounds for smallest/largest possible scale to apply to content
-					maxScale: 1.0, // Bounds for smallest/largest possible scale to apply to content
-					controls: true,
-					progress: false,
-					history: true,
-					center: false,
-					autoSlide: 0, // in milliseconds, 0 to disable
-					loop: false,
-					mouseWheel: false,
-					rollingLinks: false,
-					transition: 'default', // default/cube/page/concave/zoom/linear/fade/none
-
-					theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
-					transition: Reveal.getQueryHash().transition || 'concave', // default/cube/page/concave/zoom/linear/fade/none
-
-					// Optional libraries used to extend on reveal.js
-					dependencies: [
-						{ src: '<?php echo $plugin_url;?>/js/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-						{ src: '<?php echo $plugin_url;?>/js/reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-						{ src: '<?php echo $plugin_url;?>/js/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-						{ src: '<?php echo $plugin_url;?>/js/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-						{ src: '<?php echo $plugin_url;?>/js/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-						{ src: '<?php echo $plugin_url;?>/js/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
-						// { src: '<?php echo $plugin_url;?>/js/reveal.js/plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
-						// { src: '<?php echo $plugin_url;?>/js/reveal.js/plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
-					]
-				});
-
-				Reveal.addEventListener( 'slidechanged', function( event ) {
-					// event.previousSlide, event.currentSlide, event.indexh, event.indexv
-					console.log("x=" + event.indexh + " y=" + event.indexv);
-
-					//$('input[id][name$="man"]')
-					//jQuery('a[data-indexh$='+event.indexh+']').css('color','red');
-
-					console.log(jQuery(".home .main-navigation a").parent());
-
-					jQuery(".home .main-navigation .mneu-item a").parent().removeClass("current-menu-item");
-					//$('a[data-indexh$='+event.indexh+']').parent().addClass("current-menu-item");
-				});
-			</script>
 		<?php endif; ?>
 		<div id="dialog" class="media-modal" title="Edit <?php echo $this->post_type_singular_name; ?>" style="display: none;">
 			<div class="modal-inner-left">

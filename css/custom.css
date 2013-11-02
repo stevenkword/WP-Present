@@ -57,16 +57,33 @@ body.admin-bar .reveal {
 }
 
 body.mceContentBody.reveal {
+	/*
 	margin: 0px auto;
 	border: 0px solid red;
 	display: block;
 	min-height: 2em;
 	padding: 60px 0;
+	*/
 	max-width: 1024px;
 	zoom: 0.6;
 	background-position: 50% 50%;
 	background-repeat: no-repeat;
 	background-size: cover !important;
+
+
+position: relative;
+margin: 0 auto;
+
+
+/*
+position: absolute;
+top: 50%;
+*/
+/*
+height: 10em;
+margin-top: -5em;
+*/
+
 }
 
 body.mceContentBody.reveal:before {

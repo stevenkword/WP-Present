@@ -315,13 +315,20 @@ var WPPresentAdmin;
 					create: function() {
 						tinymce.execCommand('mceRemoveControl',true,'editor_slide');
 						tinymce.execCommand('mceAddControl',true,'editor_slide');
+
+						var $editorIframe = $( '#editor_slide_ifr' );
+						var $editor = $editorIframe.contents().find('body.mceContentBody.reveal');
+						console.log( $editor );
+						$editor.on('keyup', function(e) {
+							self.resizeModal();
+						});
+
 					},
 					open: function() {
-						//$( ".ui-dialog" ).removeClass( 'ui-dialog' );
-
 						// Load the contents of the existing post
 						var nonce = $('#wp-present-nonce').val();
 						var params = { 'id':widgetID, 'nonce':nonce };
+
 						$.ajax({
 							url: ajaxurl + '?action=get_slide',
 							data: jQuery.param(params),
@@ -334,12 +341,16 @@ var WPPresentAdmin;
 							success: function( contentEditor ) {
 								var slide = jQuery.parseJSON( contentEditor );
 								tinymce.get( 'editor_slide' ).setContent( slide.post_content );
+
 								$( '#slide-title' ).val( slide.post_title );
 								$( '#slide-slug' ).val( slide.post_name );
 								$('.theme-name').html( slide.post_title );
+
+
 								// Set tinymce background image
-								var frameBackgroundImage = "url(" + slide.post_thumbnail_url + ")";
-								$editorIframe.contents().find('.reveal').css( 'background-image' , frameBackgroundImage ).css( 'background-size', 'cover' );
+								if( false != slide.post_thumbnail_url ) {
+									$editorIframe.contents().find('.reveal').css( 'background-image' , 'url(' + slide.post_thumbnail_url + ')' ).css( 'background-size', 'cover' );
+								}
 
 								// This has to be the most hacky thing in this entire project
 								self.resizeModal();
@@ -418,6 +429,13 @@ var WPPresentAdmin;
 					resizable: false,
 					dialogClass: 'media-modal',
 					buttons: {
+						Cancel: {
+							class: 'button',
+							text: 'Cancel',
+							click: function() {
+								self.closeModal();
+							}
+						},
 						"Publish": {
 							class: 'button button-primary',
 							text: 'Publish',
@@ -440,18 +458,18 @@ var WPPresentAdmin;
 								self.closeModal();
 							},
 						},
-						Cancel: {
-							class: 'button',
-							text: 'Cancel',
-							click: function() {
-								self.closeModal();
-							}
-						},
 					},
 					create: function() {
 						// Re-init tinymce so the modal doesn't flip out
 						tinymce.execCommand('mceRemoveControl',true,'editor_slide');
 						tinymce.execCommand('mceAddControl',true,'editor_slide');
+
+						var $editorIframe = $( '#editor_slide_ifr' );
+						var $editor = $editorIframe.contents().find('body.mceContentBody.reveal');
+						console.log( $editor );
+						$editor.on('keyup', function(e) {
+							self.resizeModal();
+						});
 					},
 					open: function() {
 						// Clear the editor
@@ -590,30 +608,55 @@ var WPPresentAdmin;
 		},
 
 		resizeModal: function() {
-			// Set tinymce background image
+
+			console.log( 'resizeModal' );
+
+			var self = this;
+			// Reside the TinyMCE Editor
 			var $editorIframe = $( '#editor_slide_ifr' );
-			var resize = $('.modal-inner-right' ).height() - 110;
+			var resize = $('.modal-inner-right' ).height() -
+						 $( '#wp-editor_slide-editor-tools' ).height() -
+						 $( '.mceLast' ).height() - $( '.mceLast' ).height() + 31;
+
+
 			$editorIframe.height( resize );
 
-
-			// This has to be the most hacky thing in this entire project
+			/**
+			 *  This has to be the most hacky thing in this entire project
+			 *  but it sure is cool!
+			 */
 			var $editor = $editorIframe.contents().find('body.mceContentBody.reveal');
-			var editorHeightBefore = Math.round( $editor.height() );
 			var zoom = 0.6;
+			var editorHeightFull = 0;
+
+			$editor.css( 'display', 'block' );
+
+			if( 0 == WPPresentAdmin.maxModalEditorHeight ) {
+				WPPresentAdmin.maxModalEditorHeight = Math.round( $editor.height() );
+			}
+			editorHeightFull = Math.round( WPPresentAdmin.maxModalEditorHeight );
 
 			$editor.css( 'display', 'table' );
-			var editorHeightAfter = Math.round( $editor.height() );
+			var editorHeightTable = Math.round( $editor.height() );
 
-			console.log( 'Before: ' + editorHeightBefore );
-			console.log( 'After: ' + editorHeightAfter );
-			var topMiddle = Math.round( ( editorHeightBefore - editorHeightAfter ) );
-			console.log( 'Diff: ' + topMiddle );
+			//console.log( 'Max: ' + WPPresentAdmin.maxModalEditorHeight );
+			//console.log( 'Before: ' + editorHeightFull );
+			//console.log( 'After: ' + editorHeightTable );
+
+			var availableSpace = 0;
+			if( editorHeightFull > editorHeightTable ) {
+				console.log( 'if hit' );
+				availableSpace = Math.round( ( editorHeightFull - editorHeightTable ) / 2 );
+			}
+
+			//console.log( 'Diff: ' + availableSpace);
 
 			// Act on said hackiness
-			$editor.css( 'padding-top', topMiddle );
+			$editor.css( 'padding-top', availableSpace );
 			$editor.css( 'display', 'block' );
 		}
 	};
 
 })(jQuery);
 var slideManager = new WPPresentAdmin();
+WPPresentAdmin.maxModalEditorHeight = 0;
