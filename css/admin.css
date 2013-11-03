@@ -140,7 +140,7 @@
     height: 100%;
     background-color: #000;
     opacity: 0.9;
-    z-index: 99 !important;
+    z-index: 119900 !important;
 }
 
 #dialog{
@@ -160,7 +160,7 @@
 	left: 20px !important;
 	right: 20px !important;
 	display: block;
-	z-index: 16000000 !important;
+	z-index: 120000 !important;
 }
 
 .ui-dialog .ui-dialog-titlebar {
