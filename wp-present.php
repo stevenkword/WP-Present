@@ -4,7 +4,7 @@ Plugin Name: WP Present
 Plugin URI: http://stevenword.com/plugins/wp-present/
 Description: Easily create slide presentations with the the power of WordPress and the elegance of reveal.js
 Author: stevenkword
-Version: 0.92
+Version: 0.9.3
 Author URI: http://stevenword.com
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -849,88 +849,89 @@ do_action( 'customize_controls_enqueue_scripts' );
 		</tr>
 		<div id="dialog" class="media-modal" title="Edit <?php echo $this->post_type_singular_name; ?>" style="display: none;">
 			<div class="modal-inner-left">
-				<!--
-				<p>Title</p>
-				<input id="slide-title" name="slide-title" style="width:95%;"/>
-				<p>Slug</p>
-				<input id="slide-slug" name="slide-slug" style="width:95%;" disabled/>
-				<p>Font Color</p>
-				<input type="text" value="" class="my-color-field" />
-				<p>Background Color</p>
-				<input type="text" value="" class="my-color-field" />
-				-->
-
-<div id="customize-controls" class="wrap wp-full-overlay-sidebar"/>
-	<div id="customize-header-actions" class="wp-full-overlay-header">
-	<!--
-		<input type="submit" name="save" id="save" class="button button-primary save" value="Saved" disabled="">			<span class="spinner"></span>
-		<a class="back button" href="http://www.stevenword.com/">Close</a>
-	-->
-	</div>
-	<div class="wp-full-overlay-sidebar-content accordion-container" tabindex="-1">
-		<div id="customize-info" class="accordion-section ">
-			<div class="accordion-section-title" aria-label="Theme Customizer Options" tabindex="0">
-				<span class="preview-notice">
-				You are editing <strong class="theme-name"></strong>
-				</span>
-			</div>
-			<div class="accordion-section-content">
-				<p>
-					Title
-				</p>
-				<input id="slide-title" name="slide-title" style="width:95%;"/>
-				<p>
-					Slug
-				</p>
-				<input id="slide-slug" name="slide-slug" style="width:95%;" disabled/>
-			</div>
-		</div>
-		<div id="customize-theme-controls">
-			<ul>
-				<li id="accordion-section-colors" class="control-section accordion-section top">
-				<h3 class="accordion-section-title" tabindex="0">
-				Colors </h3>
-				<ul class="accordion-section-content">
-					<li id="customize-control-header_textcolor" class="customize-control customize-control-color">
-					<label>
-					<span class="customize-control-title">
-					Font Color </span>
-					<div class="customize-control-content">
-						<p>coming soon</p>
-						<input type="text" value="" class="my-color-field"/>
+				<div id="customize-controls" class="wrap wp-full-overlay-sidebar">
+				  <div id="customize-header-actions" class="wp-full-overlay-header">
+					<!--
+					<input type="submit" name="save" id="save" class="button button-primary save" value="Saved" disabled="">
+					<span class="spinner"></span>
+					<a class="back button" href="http://www.stevenword.com/">Close</a>
+					-->
+				  </div>
+				  <div class="wp-full-overlay-sidebar-content accordion-container" tabindex="-1">
+					<div id="customize-info" class="accordion-section ">
+					  <div class="accordion-section-title" aria-label="Theme Customizer Options" tabindex="0">
+						<span class="preview-notice">
+						  You are editing
+						  <strong class="theme-name">
+						  </strong>
+						</span>
+					  </div>
+					  <div class="accordion-section-content">
+						<p>
+						  Title
+						</p>
+						<input id="slide-title" name="slide-title" style="width:95%;"/>
+					  </div>
 					</div>
-					</label>
-					</li>
-					<li id="customize-control-background_color" class="customize-control customize-control-color">
-					<label>
-					<span class="customize-control-title">
-					Background Color </span>
-					<div class="customize-control-content">
-						<p>coming soon</p>
-						<input type="text" value="" class="my-color-field"/>
+					<div id="customize-theme-controls">
+					  <ul>
+						<li id="accordion-section-colors" class="control-section accordion-section top">
+						  <h3 class="accordion-section-title" tabindex="0">
+							Colors
+						  </h3>
+						  <ul class="accordion-section-content">
+							<li id="customize-control-header_textcolor" class="customize-control customize-control-color">
+							  <label>
+								<span class="customize-control-title">
+								  Font Color
+								</span>
+								<div class="customize-control-content">
+								  <p>
+									coming soon
+								  </p>
+								  <input type="text" value="" class="my-color-field"/>
+								</div>
+							  </label>
+							</li>
+							<li id="customize-control-background_color" class="customize-control customize-control-color">
+							  <label>
+								<span class="customize-control-title">
+								  Background Color
+								</span>
+								<div class="customize-control-content">
+								  <p>
+									coming soon
+								  </p>
+								  <input type="text" value="" class="my-color-field"/>
+								</div>
+							  </label>
+							</li>
+						  </ul>
+						</li>
+						<li id="accordion-section-background_image" class="control-section accordion-section">
+						  <h3 class="accordion-section-title" tabindex="0">
+							Background Image
+						  </h3>
+						  <ul class="accordion-section-content">
+							<p>
+							  coming soon
+							</p>
+						  </ul>
+						</li>
+						<li id="accordion-section-static_front_page" class="control-section accordion-section bottom">
+						  <h3 class="accordion-section-title" tabindex="0">
+							Transition
+						  </h3>
+						  <ul class="accordion-section-content bottom">
+							<p>
+							  coming soon
+							</p>
+						  </ul>
+						</li>
+					  </ul>
 					</div>
-					</label>
-					</li>
-				</ul>
-				</li>
-				<li id="accordion-section-background_image" class="control-section accordion-section">
-				<h3 class="accordion-section-title" tabindex="0">
-				Background Image </h3>
-				<ul class="accordion-section-content"></ul>
-				</li>
-				<li id="accordion-section-static_front_page" class="control-section accordion-section bottom">
-				<h3 class="accordion-section-title" tabindex="0">
-				Static Front Page </h3>
-				<ul class="accordion-section-content bottom">
-				</ul>
-				</li>
-			</ul>
-		</div>
-	</div>
-</div>
-
-
-
+				  </div>
+				</div>
 			</div>
 			<div class="modal-inner-right">
 				<?php $this->modal_editor(); ?>
@@ -1069,9 +1070,9 @@ do_action( 'customize_controls_enqueue_scripts' );
 			'editor_class' => '', // add extra class(es) to the editor textarea
 			'teeny' => false, // output the minimal editor config used in Press This
 			'dfw' => false, // replace the default fullscreen with DFW (needs specific DOM elements and css)
-            'tinymce' => array(
-            	'plugins' => 'inlinepopups, fullscreen, wordpress, wplink, wpdialogs',
-             ),
+            /*'tinymce' => array(
+            	'plugins' => 'inlinepopups, wordpress, wplink, wpdialogs',
+             ),*/
 			'quicktags' => true // load Quicktags, can be used to pass settings directly to Quicktags using an array()
 		) );
     }
