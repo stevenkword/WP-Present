@@ -156,9 +156,9 @@
 	padding: 30px !important;
 	width: auto !important;
 	top: 30px !important;
-	bottom: 20px;
-	left: 20px !important;
-	right: 20px !important;
+	bottom: 30px;
+	left: 30px !important;
+	right: 30px !important;
 	display: block;
 	z-index: 120000 !important;
 }
@@ -183,7 +183,7 @@
 }
 
 .mp6 .modal-inner-left{
-	left: 20px;
+	left: 30px;
 	top: 30px;
 	bottom: 30px;
 }
@@ -194,19 +194,19 @@
 	border: 0px solid red;
 	top: 30px;
 	height: auto;
-	bottom: 20px;
-	left: 20px;
+	bottom: 30px;
+	left: 30px;
 
 }
 .mp6 #customize-controls{
 	bottom: 30px;
-	left: 20px;
+	left: 30px;
 }
 .modal-inner-left{
 	width: 300px;
 	position: fixed;
-	left: 20px;
-	bottom: 20px;
+	left: 30px;
+	bottom: 30px;
 	border: 0px solid red;
 	top: 30px;
 	box-shadow: -5px 0 4px -4px rgba(0,0,0,.1) inset;
@@ -217,7 +217,7 @@
 	border: 0px solid lime;
 	display: block;
 	position: fixed;
-	left: 330px;
+	left: 340px;
 	bottom: 40px;
 	top: 40px;
 	right: 40px;

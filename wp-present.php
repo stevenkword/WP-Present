@@ -127,8 +127,6 @@ class WP_Present {
 		add_action( 'wp_ajax_delete_slide', array( $this, 'action_wp_ajax_delete_slide' ) );
 		add_action( 'wp_ajax_update_presentation', array( $this, 'action_wp_ajax_update_presentation' ) );
 
-add_action( 'wp_ajax_fetch_css', array( $this, 'action_wp_ajax_fetch_css' ) );
-
 		// TinyMCE
 		add_filter( 'tiny_mce_before_init', array( $this, 'filter_tiny_mce_before_init' ) );
 		add_filter( 'mce_external_plugins', array( $this, 'filter_mce_external_plugins' ) );
@@ -139,34 +137,6 @@ add_action( 'wp_ajax_fetch_css', array( $this, 'action_wp_ajax_fetch_css' ) );
 		// Adds custom image sizes that will play nice with the default slide resolution
 		add_action( 'init', array( $this, 'register_image_sizes' ) );
 		add_filter( 'image_size_names_choose', array( $this, 'filter_image_size_names_choose' ) );
-	}
-
-	function action_wp_ajax_fetch_css() {
-
-		global $post;
-
-		var_dump( $post_id );
-
-	//	$post = get_post( (int) $post_id );
-	//	setup_postdata( $post );
-
-		var_dump( $post );
-		echo 'test';
-		$thumbnail_id = get_post_thumbnail_id( (int) $post_id );
-
-		var_dump( $thumbnail_id );
-
-
-		echo $background_image_url = wp_get_attachment_url( $thumbnail_id );
-
-		//if( ! isset( $background_image_url ) && empty( $background_image_url ) )
-		//	return false;
-		//echo '.mceContentBody.reveal { background: url("' . esc_url( $background_image_url ) . '"); background-size: cover; }';
-
-
-		die();
-
-
 	}
 
 	/**
@@ -892,8 +862,10 @@ do_action( 'customize_controls_enqueue_scripts' );
 
 <div id="customize-controls" class="wrap wp-full-overlay-sidebar"/>
 	<div id="customize-header-actions" class="wp-full-overlay-header">
+	<!--
 		<input type="submit" name="save" id="save" class="button button-primary save" value="Saved" disabled="">			<span class="spinner"></span>
 		<a class="back button" href="http://www.stevenword.com/">Close</a>
+	-->
 	</div>
 	<div class="wp-full-overlay-sidebar-content accordion-container" tabindex="-1">
 		<div id="customize-info" class="accordion-section ">
@@ -924,6 +896,7 @@ do_action( 'customize_controls_enqueue_scripts' );
 					<span class="customize-control-title">
 					Font Color </span>
 					<div class="customize-control-content">
+						<p>coming soon</p>
 						<input type="text" value="" class="my-color-field"/>
 					</div>
 					</label>
@@ -933,6 +906,7 @@ do_action( 'customize_controls_enqueue_scripts' );
 					<span class="customize-control-title">
 					Background Color </span>
 					<div class="customize-control-content">
+						<p>coming soon</p>
 						<input type="text" value="" class="my-color-field"/>
 					</div>
 					</label>
@@ -1084,7 +1058,6 @@ do_action( 'customize_controls_enqueue_scripts' );
 	 * @return null
 	 */
     function modal_editor( $post_id = '' ) {
-	?><a class="media-modal-close" href="#" title="<?php esc_attr_e('Close'); ?>"><span class="media-modal-icon"></span></a> <?php
         wp_editor( $content = '', $editor_id = 'editor_' . $this->post_type_slug, array(
 			'wpautop' => false, // use wpautop?
 			'media_buttons' => true, // show insert/upload button(s)
