@@ -62,8 +62,8 @@ class WP_Present_Customizer {
 		wp_enqueue_script( 'customize-controls' );
 		wp_enqueue_style( 'customize-controls' );
 		wp_enqueue_script( 'accordion' );
-		wp_enqueue_style( 'wp-color-picker' );
-		wp_enqueue_script( 'wp-color-picker' );
+		//wp_enqueue_style( 'wp-color-picker' );
+		//wp_enqueue_script( 'wp-color-picker' );
 
 		do_action( 'customize_controls_enqueue_scripts' );
 	}
@@ -108,16 +108,98 @@ class WP_Present_Customizer {
 				<span class="collapse-sidebar-label"><?php _e('Collapse'); ?></span>
 			</a>
 		</div>
+		<!--
 		<script>
 		jQuery(document).ready(function($){
 		    $('.color-picker-hex').wpColorPicker();
 		});
 		</script>
+		-->
 		<?php
 	}
 
 	public function action_admin_footer() {
+		global $wp_customize;
+
 		do_action( 'customize_controls_print_footer_scripts' );
+
+
+//	return;
+		// If the frontend and the admin are served from the same domain, load the
+		// preview over ssl if the customizer is being loaded over ssl. This avoids
+		// insecure content warnings. This is not attempted if the admin and frontend
+		// are on different domains to avoid the case where the frontend doesn't have
+		// ssl certs. Domain mapping plugins can allow other urls in these conditions
+		// using the customize_allowed_urls filter.
+
+		$allowed_urls = array( home_url('/') );
+		$admin_origin = parse_url( admin_url() );
+		$home_origin  = parse_url( home_url() );
+		$cross_domain = ( strtolower( $admin_origin[ 'host' ] ) != strtolower( $home_origin[ 'host' ] ) );
+
+		if ( is_ssl() && ! $cross_domain )
+			$allowed_urls[] = home_url( '/', 'https' );
+
+		$allowed_urls = array_unique( apply_filters( 'customize_allowed_urls', $allowed_urls ) );
+
+		$fallback_url = add_query_arg( array(
+			'preview'        => 1,
+			'template'       => $wp_customize->get_template(),
+			'stylesheet'     => $wp_customize->get_stylesheet(),
+			'preview_iframe' => true,
+			'TB_iframe'      => 'true'
+		), home_url( '/' ) );
+
+		$login_url = add_query_arg( array(
+			'interim-login' => 1,
+			'customize-login' => 1
+		), wp_login_url() );
+
+		$settings = array(
+			'theme'    => array(
+				'stylesheet' => $wp_customize->get_stylesheet(),
+				'active'     => $wp_customize->is_theme_active(),
+			),
+			'url'      => array(
+				'preview'       => esc_url( $url ? $url : home_url( '/' ) ),
+				'parent'        => esc_url( admin_url() ),
+				'activated'     => admin_url( 'themes.php?activated=true&previewed' ),
+				'ajax'          => esc_url( admin_url( 'admin-ajax.php', 'relative' ) ),
+				'allowed'       => array_map( 'esc_url', $allowed_urls ),
+				'isCrossDomain' => $cross_domain,
+				'fallback'      => $fallback_url,
+				'home'          => esc_url( home_url( '/' ) ),
+				'login'         => $login_url,
+			),
+			'browser'  => array(
+				'mobile' => wp_is_mobile(),
+				'ios'    => $is_ios,
+			),
+			'settings' => array(),
+			'controls' => array(),
+			'nonce'    => array(
+				'save'    => wp_create_nonce( 'save-customize_' . $wp_customize->get_stylesheet() ),
+				'preview' => wp_create_nonce( 'preview-customize_' . $wp_customize->get_stylesheet() )
+			),
+		);
+
+		foreach ( $wp_customize->settings() as $id => $setting ) {
+			$settings['settings'][ $id ] = array(
+				'value'     => $setting->js_value(),
+				'transport' => $setting->transport,
+			);
+		}
+
+		foreach ( $wp_customize->controls() as $id => $control ) {
+			$control->to_json();
+			$settings['controls'][ $id ] = $control->json;
+		}
+
+		?>
+		<script type="text/javascript">
+			var _wpCustomizeSettings = <?php echo json_encode( $settings ); ?>;
+		</script>
+		<?php
 	}
 
 } // Class
