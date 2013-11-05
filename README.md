@@ -1,24 +1,30 @@
 WP-Present - beta
 =================
+Contributors: stevenkword
+Tags: presentation, slides, reveal.js, wp-present
+Requires at least: 3.5
+Tested up to: 3.7
+Stable tag: trunk
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Easily create slide presentations with the the power of WordPress and the elegance of reveal.js
+## Description ##
 
-Demos available at http://slides.stevenword.com
+Create beautiful slide presentations with the the power of WordPress and the elegance of reveal.js
 
-* Contributors: stevenkword
-* Tags: presentation, slides, reveal.js, wp-present
-* Requires at least: 3.5
-* Tested up to: 3.7
-* Stable tag: trunk
-* License: GPLv2 or later
-* License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Demo available at [http://wppresent.org]
 
-### Installation ###
+## Installation ##
 1. Upload "/wp-present" to the "/wp-content/plugins/" directory.
 2. Activate the plugin through the "Plugins" menu in WordPress.
 
-### Changelog ###
-= 0.92 =
+## Changelog ##
+= 0.9.3 =
+* Modal redesign
+* Removes jQueryUI plugin dependency
+
+
+= 0.9.2 =
 * Changes delete slide to trash slide
 * Fixes bug when creating a new presentation
 * Fixes renumber problem on first load
@@ -30,6 +36,6 @@ Demos available at http://slides.stevenword.com
 = 0.9 =
 * Pre release.
 
-### Upgrade Notice ###
+## Upgrade Notice ##
 = 0.9 =
 * Pre release.

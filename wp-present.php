@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: WP Present
-Plugin URI: http://stevenword.com/plugins/wp-present/
-Description: Easily create slide presentations with the the power of WordPress and the elegance of reveal.js
+Plugin URI: http://wppresent.org/
+Description: Create beautiful slide presentations with the the power of WordPress and the elegance of reveal.js
 Author: stevenkword
 Version: 0.9.3
-Author URI: http://stevenword.com
+Author URI: http://stevenword.com/
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -144,7 +144,7 @@ class WP_Present {
 	 *
 	 * @return array
 	 */
-	function filter_manage_edit_columns( $theme_columns ) {
+	public function filter_manage_edit_columns( $theme_columns ) {
 		unset( $theme_columns['description'] );
 		return $theme_columns;
 	}
@@ -155,7 +155,7 @@ class WP_Present {
 	 * @uses maths
 	 * @return bool (hopefully)
 	 */
-	function is() {
+	public function is() {
 		return ( 2 + 2 ) != 4 ? false : true;
 	}
 
@@ -165,7 +165,7 @@ class WP_Present {
 	 * @uses flush_rewrite_rules()
 	 * @return null
 	 */
-	function activate() {
+	public function activate() {
 		$this->action_init_register_post_type();
 		$this->action_init_register_taxonomy();
 		flush_rewrite_rules();
@@ -177,7 +177,7 @@ class WP_Present {
 	 * @uses flush_rewrite_rules()
 	 * @return null
 	 */
-	function deactivate() {
+	public function deactivate() {
 		flush_rewrite_rules();
 	}
 
@@ -187,7 +187,7 @@ class WP_Present {
 	 * @uses add_action()
 	 * @return null
 	 */
-	function action_init_register_post_type() {
+	public function action_init_register_post_type() {
 		register_post_type( $this->post_type_slug, array(
 			'labels' => array(
 				//@todo http://codex.wordpress.org/Function_Reference/register_post_type
@@ -198,7 +198,6 @@ class WP_Present {
 				'new_item' => __( 'New ' . $this->post_type_singular_name ),
 				'view_item' => __( 'View ' . $this->post_type_singular_name ),
 				'search_items' => __( 'Search' . $this->post_type_name ),
-				/*'menu_name' => __( 'asdf' )*/
 			),
 			'public' => true,
 			'capability_type' => $this->post_type_capability_type,
@@ -218,7 +217,7 @@ class WP_Present {
 	 * @uses add_action()
 	 * @return null
 	 */
-	function action_init_register_taxonomy() {
+	public function action_init_register_taxonomy() {
 		register_taxonomy( $this->taxonomy_slug, $this->post_types, array(
 			'labels'              	=> array(
 				'name'            		=> _x( $this->taxonomy_name, 'taxonomy general name' ),
@@ -249,7 +248,7 @@ class WP_Present {
 	 * @uses add_action()
 	 * @return null
 	 */
-	function action_init_editor_styles() { // also should peep at mce_css
+	public function action_init_editor_styles() { // also should peep at mce_css
 		global $pagenow, $post;
 
 		// Only on the edit taxonomy and edit post type admin pages
@@ -278,7 +277,7 @@ class WP_Present {
 	 * @uses wp_enqueue_script
 	 * @return null
 	 */
-	function action_wp_enqueue_scripts() {
+	public function action_wp_enqueue_scripts() {
 		if( ! is_tax( $this->taxonomy_slug ) )
 			return;
 
@@ -324,10 +323,10 @@ class WP_Present {
 		//Get plugin path
 		$plugin_path = dirname( __FILE__ );
 
-		if ( file_exists( $plugin_path . '/default-template.php' ) && $this->is() )
+		if ( file_exists( $plugin_path . '/templates/default-template.php' ) && $this->is() )
 			$template = array(
 				'name' => 'wp-presents-default',
-				'path' => $plugin_path . '/default-template.php'
+				'path' => $plugin_path . '/templates/default-template.php'
 			);
 
 		return isset( $template ) ? $template : false;
@@ -355,7 +354,7 @@ class WP_Present {
 	 * @uses is_tax
 	 * @return null
 	 */
-	function action_wp_head() {
+	public function action_wp_head() {
 		if( ! is_tax( $this->taxonomy_slug ) )
 			return false;
 		?>
@@ -382,7 +381,7 @@ class WP_Present {
 	 * @uses is_tax
 	 * @return null
 	 */
-	function action_wp_footer() {
+	public function action_wp_footer() {
 		//if( ! is_tax( $this->taxonomy_slug ) )
 		//	return false;
 		?>
@@ -432,7 +431,7 @@ class WP_Present {
 	 *
 	 * @return null
 	 */
-	function action_admin_menu(){
+	public function action_admin_menu(){
 		global $menu, $submenu;
 
 		// Taxonomy Menu
@@ -450,24 +449,20 @@ class WP_Present {
 			}
 		}
 
-		//It owuld be better to search for the keys based on url
-
-			// Move the taxonomy menu to the top
+		// Move the taxonomy menu to the top
+		// TODO: It owuld be better to search for the keys based on url
 		foreach( $submenu as $submenu_key => $submenu_item ) {
 			if( isset( $submenu_item[15][0] ) && $this->taxonomy_name == $submenu_item[15][0] ) {
-				//$submenu[$submenu_key][15][0] = 'toast';
-
 				// This is a bit of hackery.  I should search for these keys
 				$submenu[$submenu_key][2] = $submenu[$submenu_key][15];
 				unset( $submenu[$submenu_key][15] );
 
-				//Not a fan of the add new bit
+				// Not a fan of the add new bit
 				unset( $submenu[$submenu_key][10] );
 
 				ksort( $submenu[$post_type_url] );
 			}
 		}
-
 	}
 
 	/**
@@ -475,7 +470,7 @@ class WP_Present {
 	 *
 	 * @return null
 	 */
-	function options_page(){
+	public function options_page(){
 		?>
 		<div id="wpbody">
 			<div id="wpbody-content" aria-label="Main content" tabindex="0">
@@ -503,7 +498,7 @@ class WP_Present {
 	 * @uses wp_enqueue_script
 	 * @return null
 	 */
-	function action_admin_enqueue_scripts() {
+	public function action_admin_enqueue_scripts() {
 		global $pagenow;
 		// Only on the edit taxonomy page
 		if( 'edit-tags.php' != $pagenow || !isset( $_GET['taxonomy'] ) || $this->taxonomy_slug != $_GET['taxonomy'] )
@@ -545,7 +540,7 @@ do_action( 'customize_controls_enqueue_scripts' );
 	 *
 	 * @return null
 	 */
-	function action_admin_head() {
+	public function action_admin_head() {
 		// Only add this variable on the edit taxonomy page
 		global $pagenow;
 		if( 'edit-tags.php' != $pagenow || ! isset( $_GET['taxonomy'] ) || $this->taxonomy_slug != $_GET['taxonomy'] || ! isset( $_GET[ 'tag_ID' ] ) )
@@ -609,7 +604,7 @@ do_action( 'customize_controls_enqueue_scripts' );
 	 *
 	 * @return null
 	 */
-	function action_admin_footer() {
+	public function action_admin_footer() {
 		// Only run on the edit taxonomy page
 		global $pagenow;
 		if( 'edit-tags.php' != $pagenow || ! isset( $_GET['taxonomy'] ) || $this->taxonomy_slug != $_GET['taxonomy'] )
@@ -620,7 +615,7 @@ do_action( 'customize_controls_enqueue_scripts' );
 	 *
 	 * @return array
 	 */
-	function get_associated_slide_ids( $term, $taxonomy ) {
+	public function get_associated_slide_ids( $term, $taxonomy ) {
 		$term_description =  $this->get_term_description( $term, $taxonomy );
 
 		if( ! is_array( $term_description ) )
@@ -655,7 +650,7 @@ do_action( 'customize_controls_enqueue_scripts' );
 	 *
 	 * @return array
 	 */
-	function get_term_description( $term, $taxonomy ) {
+	public function get_term_description( $term, $taxonomy ) {
 		$obj = get_term( $term, $taxonomy );
 		if( ! isset( $obj->term_taxonomy_id ) )
 			return '';
@@ -667,7 +662,7 @@ do_action( 'customize_controls_enqueue_scripts' );
 	 *
 	 * @return null
 	 */
-	function admin_render_slide( $post ) {
+	public function admin_render_slide( $post ) {
 		setup_postdata( $post );
 		?>
 		<div id="slide-<?php the_ID(); ?>" class=" portlet widget">
@@ -709,7 +704,7 @@ do_action( 'customize_controls_enqueue_scripts' );
 	 *
 	 * @return
 	 */
-	function admin_render_columns( $term, $taxonomy ) {
+	public function admin_render_columns( $term, $taxonomy ) {
 		global $post, $wp_query;
 		$term_description =  $this->get_term_description( $term, $taxonomy );
 
@@ -758,7 +753,7 @@ do_action( 'customize_controls_enqueue_scripts' );
 	 * @uses	get_term_field
 	 * @return 	null
 	 */
-	function taxonomy_edit_form( $term, $taxonomy ) {
+	public function taxonomy_edit_form( $term, $taxonomy ) {
 		global $post;
 		$associated_slides = $this->get_associated_slide_ids( $term, $taxonomy );
 		//var_dump( $associated_slides );
@@ -955,7 +950,7 @@ do_action( 'customize_controls_enqueue_scripts' );
 	 *
 	 * @return stdClass
 	 */
-	function filter_get_terms( $terms, $taxonomies, $args ) {
+	public function filter_get_terms( $terms, $taxonomies, $args ) {
 		global $wpdb, $pagenow;
 
 		/**********************************************
@@ -985,7 +980,7 @@ do_action( 'customize_controls_enqueue_scripts' );
 	 *
 	 * @return string
 	 */
-	function get_taxonomy_slug() {
+	public function get_taxonomy_slug() {
 		return $this->taxonomy_slug;
 	}
 
@@ -994,7 +989,7 @@ do_action( 'customize_controls_enqueue_scripts' );
 	 *
 	 * @return
 	 */
-	function action_restrict_manage_posts() {
+	public function action_restrict_manage_posts() {
 		global $typenow;
 
 		if ( $typenow == $this->post_type_slug ) {
@@ -1017,7 +1012,7 @@ do_action( 'customize_controls_enqueue_scripts' );
 	 *
 	 * @return
 	 */
-	function action_parse_query( $query ) {
+	public function action_parse_query( $query ) {
 		global $pagenow;
 
 		if ( $pagenow == 'edit.php' && isset( $query->query_vars[ 'post_type' ] ) && $query->query_vars[ 'post_type' ] == $this->post_type_slug
@@ -1032,7 +1027,7 @@ do_action( 'customize_controls_enqueue_scripts' );
 	 *
 	 * @return string
 	 */
-	function append_query_string( $url, $post ) {
+	public function append_query_string( $url, $post ) {
 		global $pagenow;
 
 		// Do not do this on the create new post screen since there is no post ID yet
@@ -1049,7 +1044,7 @@ do_action( 'customize_controls_enqueue_scripts' );
 	 *
 	 * @return null
 	 */
-	function filter_get_edit_term_link( $location ) {
+	public function filter_get_edit_term_link( $location ) {
 		return add_query_arg( array( 'post_type' => $this->post_type_slug ), $location );
 	}
 
@@ -1058,7 +1053,7 @@ do_action( 'customize_controls_enqueue_scripts' );
 	 *
 	 * @return null
 	 */
-    function modal_editor( $post_id = '' ) {
+    public function modal_editor( $post_id = '' ) {
         wp_editor( $content = '', $editor_id = 'editor_' . $this->post_type_slug, array(
 			'wpautop' => false, // use wpautop?
 			'media_buttons' => true, // show insert/upload button(s)
@@ -1082,7 +1077,7 @@ do_action( 'customize_controls_enqueue_scripts' );
 	 *
 	 * @return array
 	 */
-	function filter_tiny_mce_before_init( $args ) {
+	public function filter_tiny_mce_before_init( $args ) {
    		$args[ 'body_class' ] = 'reveal';
    		$args[ 'height' ] = '100%';
    		$args[ 'wordpress_adv_hidden' ] = false;
@@ -1095,7 +1090,7 @@ do_action( 'customize_controls_enqueue_scripts' );
 	 *
 	 * @return array
 	 */
-	function filter_mce_external_plugins() {
+	public function filter_mce_external_plugins() {
 		return;
 		$plugins = array( 'autoresize', 'autolink', 'code' ); //Add any more plugins you want to load here
 		$plugins_array = array();
@@ -1112,7 +1107,7 @@ do_action( 'customize_controls_enqueue_scripts' );
 	 *
 	 * @return array
 	 */
-	function action_wp_ajax_get_slide() {
+	public function action_wp_ajax_get_slide() {
 		// Nonce check
 		if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], $this->nonce_field ) ) {
 			wp_die( $this->nonce_fail_message );
@@ -1131,7 +1126,7 @@ do_action( 'customize_controls_enqueue_scripts' );
 	 *
 	 * @return array
 	 */
-	function action_wp_ajax_update_slide() {
+	public function action_wp_ajax_update_slide() {
 		// Nonce check
 		if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], $this->nonce_field ) ) {
 			wp_die( $this->nonce_fail_message );
@@ -1163,7 +1158,7 @@ do_action( 'customize_controls_enqueue_scripts' );
 	 *
 	 * @return array
 	 */
-	function action_wp_ajax_new_slide() {
+	public function action_wp_ajax_new_slide() {
 		// Nonce check
 		if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], $this->nonce_field ) ) {
 			wp_die( $this->nonce_fail_message );
@@ -1195,7 +1190,7 @@ do_action( 'customize_controls_enqueue_scripts' );
 	 *
 	 * @return array
 	 */
-	function action_wp_ajax_delete_slide() {
+	public function action_wp_ajax_delete_slide() {
 		// Nonce check
 		if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], $this->nonce_field ) ) {
 			wp_die( $this->nonce_fail_message );
@@ -1214,7 +1209,7 @@ do_action( 'customize_controls_enqueue_scripts' );
 	 *
 	 * @return array
 	 */
-	function action_wp_ajax_update_presentation() {
+	public function action_wp_ajax_update_presentation() {
 		// Nonce check
 		if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], $this->nonce_field ) ) {
 			wp_die( $this->nonce_fail_message );
@@ -1231,7 +1226,12 @@ do_action( 'customize_controls_enqueue_scripts' );
 		die();
 	}
 
-	function register_image_sizes() {
+	/**
+	 * Register custom image sizes
+	 *
+	 * @return null
+	 */
+	public function register_image_sizes() {
 		if( function_exists('add_theme_support') && function_exists( 'add_image_size' ) ) {
 			add_theme_support('post-thumbnails');
 			add_image_size( 'reveal-small', 320, 320, false );
@@ -1240,7 +1240,12 @@ do_action( 'customize_controls_enqueue_scripts' );
 		}
 	}
 
-	function filter_image_size_names_choose( $sizes ) {
+	/**
+	 * Alter the Media Modal size dropmenu
+	 *
+	 * @return array
+	 */
+	public function filter_image_size_names_choose( $sizes ) {
 		global $_wp_additional_image_sizes;
 		$sizes = array_merge( $sizes, array(
 			'reveal-small' => __( $this->post_type_singular_name . ' Small' ),
