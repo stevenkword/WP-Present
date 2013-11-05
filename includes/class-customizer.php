@@ -108,6 +108,11 @@ class WP_Present_Customizer {
 				<span class="collapse-sidebar-label"><?php _e('Collapse'); ?></span>
 			</a>
 		</div>
+		<script>
+		jQuery(document).ready(function($){
+		    $('.color-picker-hex').wpColorPicker();
+		});
+		</script>
 		<?php
 	}
 
