@@ -28,6 +28,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+require_once( 'includes/class-customizer.php' );
 class WP_Present {
 
 	/* Post Type */
@@ -517,20 +518,6 @@ class WP_Present {
 		//wp_enqueue_media();
 		wp_enqueue_style( 'media-views' );
 
-		//wp_enqueue_script('custom-background');
-
-		wp_enqueue_style( 'wp-color-picker' );
-		wp_enqueue_script( 'wp-color-picker' );
-
-do_action( 'customize_controls_init' );
-
-wp_enqueue_script( 'customize-controls' );
-wp_enqueue_style( 'customize-controls' );
-
-wp_enqueue_script( 'accordion' );
-
-do_action( 'customize_controls_enqueue_scripts' );
-
 		if( isset( $_REQUEST[ 'tag_ID' ] ) )
 			wp_localize_script( 'wp-present-admin', 'presentation', $_REQUEST[ 'tag_ID' ] );
 	}
@@ -844,99 +831,12 @@ do_action( 'customize_controls_enqueue_scripts' );
 		</tr>
 		<div id="dialog" class="media-modal" title="Edit <?php echo $this->post_type_singular_name; ?>" style="display: none;">
 			<div class="modal-inner-left">
-				<div id="customize-controls" class="wrap wp-full-overlay-sidebar">
-				  <div id="customize-header-actions" class="wp-full-overlay-header">
-					<!--
-					<input type="submit" name="save" id="save" class="button button-primary save" value="Saved" disabled="">
-					<span class="spinner"></span>
-					<a class="back button" href="http://www.stevenword.com/">Close</a>
-					-->
-				  </div>
-				  <div class="wp-full-overlay-sidebar-content accordion-container" tabindex="-1">
-					<div id="customize-info" class="accordion-section ">
-					  <div class="accordion-section-title" aria-label="Theme Customizer Options" tabindex="0">
-						<span class="preview-notice">
-						  You are editing
-						  <strong class="theme-name">
-						  </strong>
-						</span>
-					  </div>
-					  <div class="accordion-section-content">
-						<p>
-						  Title
-						</p>
-						<input id="slide-title" name="slide-title" style="width:95%;"/>
-					  </div>
-					</div>
-					<div id="customize-theme-controls">
-					  <ul>
-						<li id="accordion-section-colors" class="control-section accordion-section top">
-						  <h3 class="accordion-section-title" tabindex="0">
-							Colors
-						  </h3>
-						  <ul class="accordion-section-content">
-							<li id="customize-control-header_textcolor" class="customize-control customize-control-color">
-							  <label>
-								<span class="customize-control-title">
-								  Font Color
-								</span>
-								<div class="customize-control-content">
-								  <p>
-									coming soon
-								  </p>
-								  <input type="text" value="" class="my-color-field"/>
-								</div>
-							  </label>
-							</li>
-							<li id="customize-control-background_color" class="customize-control customize-control-color">
-							  <label>
-								<span class="customize-control-title">
-								  Background Color
-								</span>
-								<div class="customize-control-content">
-								  <p>
-									coming soon
-								  </p>
-								  <input type="text" value="" class="my-color-field"/>
-								</div>
-							  </label>
-							</li>
-						  </ul>
-						</li>
-						<li id="accordion-section-background_image" class="control-section accordion-section">
-						  <h3 class="accordion-section-title" tabindex="0">
-							Background Image
-						  </h3>
-						  <ul class="accordion-section-content">
-							<p>
-							  coming soon
-							</p>
-						  </ul>
-						</li>
-						<li id="accordion-section-static_front_page" class="control-section accordion-section bottom">
-						  <h3 class="accordion-section-title" tabindex="0">
-							Transition
-						  </h3>
-						  <ul class="accordion-section-content bottom">
-							<p>
-							  coming soon
-							</p>
-						  </ul>
-						</li>
-					  </ul>
-					</div>
-				  </div>
-				</div>
+				<?php WP_Present_Customizer::render(); ?>
 			</div>
 			<div class="modal-inner-right">
 				<?php $this->modal_editor(); ?>
 			</div>
 		</div>
-		<script>
-		jQuery(document).ready(function($){
-		    $('.my-color-field').wpColorPicker();
-		});
-		</script>
 		<?php
 		// Cleanup
 		wp_reset_postdata();
