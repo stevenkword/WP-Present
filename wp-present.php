@@ -622,6 +622,12 @@ class WP_Present_Core {
 		for ( $col = 1; $col <= count( $num_columns ); $col++ ) {
 			$slides = $term_description[ 'col-' . $col ];
 			foreach( $slides as $key => $slide ) {
+
+				// TODO: This safeguard shouldn't be necessary
+				if( ! strpos($slide, '-', 0) )
+					continue;
+
+
 				list( $rubbish, $slide_id ) =  explode( '-', $slide );
 				$post = get_post( $slide_id );
 				setup_postdata( $post );
@@ -714,6 +720,11 @@ class WP_Present_Core {
 				<?php
 				$slides = $term_description[ 'col-' . $col ];
 				foreach( $slides as $key => $slide ) {
+
+					// TODO: This safeguard shouldn't be necessary
+					if( ! strpos($slide, '-', 0) )
+						continue;
+
 					list( $rubbish, $slide_id ) =  explode( '-', $slide );
 					$post = get_post( $slide_id );
 					$this->admin_render_slide( $post );
@@ -831,7 +842,7 @@ class WP_Present_Core {
 		</tr>
 		<div id="dialog" class="media-modal" title="Edit <?php echo $this->post_type_singular_name; ?>" style="display: none;">
 			<div class="modal-inner-left">
-				<?php WP_Present_Customizer::render(); ?>
+				<?php WP_Present_Customizer::instance()->render(); ?>
 			</div>
 			<div class="modal-inner-right">
 				<?php $this->modal_editor(); ?>
@@ -932,9 +943,13 @@ class WP_Present_Core {
 
 		// Do not do this on the create new post screen since there is no post ID yet
 		if( $pagenow != 'post-new.php' && $this->post_type_slug == $post->post_type ) {
-			$terms = array_values( get_the_terms( $post->ID, $this->taxonomy_slug ) );
-			$term = $terms[0];
-			$url = home_url( implode( '/', array( $this->taxonomy_slug, $term->slug, '#', $post->post_name ) ) );
+
+			$terms = get_the_terms( $post->ID, $this->taxonomy_slug );
+			if( is_array( $terms ) ) {
+				$terms = array_values( get_the_terms( $post->ID, $this->taxonomy_slug ) );
+				$term = $terms[0];
+				$url = home_url( implode( '/', array( $this->taxonomy_slug, $term->slug, '#', $post->post_name ) ) );
+			}
 		}
 		return $url;
 	}

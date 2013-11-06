@@ -23,11 +23,12 @@ class WP_Present_Customizer {
 	 */
 	public function __construct() {
 		global $pagenow;
-
-		// $pagenow is not set on this page
-		if( ! is_admin() && $pagenow != 'customize.php' ) {
+		// Only on the edit taxonomy page
+		if( 'edit-tags.php' != $pagenow || !isset( $_GET['taxonomy'] ) || WP_Present_Core::instance()->taxonomy_slug != $_GET['taxonomy'] )
 			return;
-		}
+
+		// Remove and define new Theme Customizer sections, settings, and controls
+	    add_action( 'customize_register', array( $this, 'action_customize_register' ), 99 );
 
 		add_action( 'plugins_loaded', array( $this, 'action_plugins_loaded' ) );
 		add_action( 'admin_init', array( $this, 'action_admin_init' ) );
@@ -121,7 +122,7 @@ class WP_Present_Customizer {
 		do_action( 'customize_controls_print_footer_scripts' );
 
 		$url = $is_ios = false;
-//	return;
+
 		// If the frontend and the admin are served from the same domain, load the
 		// preview over ssl if the customizer is being loaded over ssl. This avoids
 		// insecure content warnings. This is not attempted if the admin and frontend
@@ -197,6 +198,78 @@ class WP_Present_Customizer {
 			var _wpCustomizeSettings = <?php echo json_encode( $settings ); ?>;
 		</script>
 		<?php
+	}
+
+	/**
+	 * Remove and define new Theme Customizer sections, settings, and controls
+	 */
+	public function action_customize_register( $wp_customize ) {
+
+		// Remove all existing sections
+		foreach( $wp_customize->sections() as $id => $section ) {
+			$wp_customize->remove_section( $id );
+		}
+
+		// Remove all existing controls
+		foreach( $wp_customize->controls() as $id => $control ) {
+			$wp_customize->remove_control( $id );
+		}
+
+		// Remove all existing settings
+		foreach( $wp_customize->settings() as $id => $setting ) {
+			$wp_customize->remove_setting( $id );
+		}
+
+		// Create a new COLORS section
+		$wp_customize->add_section( 'wp_present_colors', array(
+			'title'   => __( 'Colors', 'wp-present' ),
+			'priority'  => 10,
+			'capability' => 'read',
+		) );
+
+		// Background color
+		$wp_customize->add_setting( 'wp_present_background_color', array(
+			'default' => '#f5f5f5', //whitesmoke
+		  	'sanitize_callback' => 'sanitize_hex_color',
+		  	'transport' => 'postMessage',
+		) );
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'wp_present_background_color', array(
+			'label'   => __( 'Background Color', 'wp-present' ),
+			'section' => 'wp_present_colors',
+			'settings'  => 'wp_present_background_color',
+		) ) );
+
+		// Text Color
+		$wp_customize->add_setting( 'wp_present_text_color', array(
+			'default' => '#333333',
+			'sanitize_callback' => 'sanitize_hex_color',
+			'transport' => 'postMessage',
+		) );
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'wp_present_text_color', array(
+			'label'   => __( 'Text Color', 'wp-present' ),
+			'section' => 'wp_present_colors',
+			'settings'  => 'wp_present_text_color',
+		) ) );
+
+		// Accent Text Color
+		$wp_customize->add_setting( 'wp_present_link_color', array(
+			'default' => '#5f00d3', //blurple
+			'sanitize_callback' => 'sanitize_hex_color',
+			'transport' => 'postMessage',
+		) );
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'wp_present_link_color', array(
+			'label'   => __( 'Link Color', 'wp-present' ),
+			'section' => 'wp_present_colors',
+			'settings'  => 'wp_present_link_color',
+		) ) );
+
+
+		foreach ( $wp_customize->settings() as $id => $setting ) {
+			oomph_error_log( 'after: ' . $id );
+		}
+
+		// We can also change built-in settings by modifying properties. For instance, let's make some stuff use live preview JS...
+		//$wp_customize->get_setting( 'body_background_color' )->transport = 'postMessage';
 	}
 
 } // Class
