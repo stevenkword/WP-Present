@@ -50,12 +50,12 @@ class WP_Present_Core {
 	/* Misc */
 	public $capability = 'edit_others_posts';
 	public $nonce_field = 'wp-present-nonce';
-	public $nonce_fail_message = "fail!";
 	public $scripts_version = 20131102;
 	public $default_theme = 'simple.css'; //moon, night, simple, serif, solarized
 	//public $max_num_slides = 250; //not currently used, proposed variable
 
 	public $plugins_url = '';
+	public $nonce_fail_message = '';
 
 	/* Define and register singleton */
 	private static $instance = false;
@@ -81,6 +81,7 @@ class WP_Present_Core {
 
 		// Setup
 		$this->plugins_url = plugins_url( '/wp-present' );
+		$this->nonce_fail_message = __( 'Cheatin&#8217; huh?' );
 
 		// On Activation
 		register_activation_hook( __FILE__, array( $this, 'activate' ) );

@@ -229,7 +229,7 @@ class WP_Present_Customizer {
 
 		// Background color
 		$wp_customize->add_setting( 'wp_present_background_color', array(
-			'default' => '#f5f5f5', //whitesmoke
+			'default' => '',
 		  	'sanitize_callback' => 'sanitize_hex_color',
 		  	'transport' => 'postMessage',
 		) );
@@ -241,7 +241,7 @@ class WP_Present_Customizer {
 
 		// Text Color
 		$wp_customize->add_setting( 'wp_present_text_color', array(
-			'default' => '#333333',
+			'default' => '',
 			'sanitize_callback' => 'sanitize_hex_color',
 			'transport' => 'postMessage',
 		) );
@@ -253,7 +253,7 @@ class WP_Present_Customizer {
 
 		// Accent Text Color
 		$wp_customize->add_setting( 'wp_present_link_color', array(
-			'default' => '#5f00d3', //blurple
+			'default' => '',
 			'sanitize_callback' => 'sanitize_hex_color',
 			'transport' => 'postMessage',
 		) );
