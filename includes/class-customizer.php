@@ -220,7 +220,7 @@ class WP_Present_Customizer {
 			$wp_customize->remove_setting( $id );
 		}
 
-		// Create a new COLORS section
+		/** COLORS **/
 		$wp_customize->add_section( 'wp_present_colors', array(
 			'title'   => __( 'Colors', 'wp-present' ),
 			'priority'  => 10,
@@ -263,6 +263,23 @@ class WP_Present_Customizer {
 			'settings'  => 'wp_present_link_color',
 		) ) );
 
+		/** BACKGROUND **/
+		$wp_customize->add_section( 'wp_present_background', array(
+			'title'   => __( 'Background', 'wp-present' ),
+			'priority'  => 20,
+			'capability' => 'read',
+		) );
+
+		// Background Image
+		$wp_customize->add_setting( 'wp_present_background_image' , array(
+			'transport' => 'postMessage',
+		) );
+
+		$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'wp_present_background_image', array(
+			'label'   => __( 'Background Image', 'wp-present' ),
+			'section' => 'wp_present_background',
+			'settings'  => 'wp_present_background_image',
+		) ) );
 
 		foreach ( $wp_customize->settings() as $id => $setting ) {
 			oomph_error_log( 'after: ' . $id );
