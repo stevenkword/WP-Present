@@ -24,6 +24,7 @@ class WP_Present_Customizer {
 	public function __construct() {
 		global $pagenow;
 
+		// $pagenow is not set on this page
 		if( ! is_admin() && $pagenow != 'customize.php' ) {
 			return;
 		}
@@ -59,11 +60,10 @@ class WP_Present_Customizer {
 	}
 
 	public function action_admin_enqueue_scripts() {
-		wp_enqueue_script( 'customize-controls' );
 		wp_enqueue_style( 'customize-controls' );
+
+		wp_enqueue_script( 'customize-controls' );
 		wp_enqueue_script( 'accordion' );
-		//wp_enqueue_style( 'wp-color-picker' );
-		//wp_enqueue_script( 'wp-color-picker' );
 
 		do_action( 'customize_controls_enqueue_scripts' );
 	}
@@ -102,19 +102,16 @@ class WP_Present_Customizer {
 				</ul></div>
 			</div>
 		</div>
+
+		<div id="customize-preview" class="wp-full-overlay-main"></div>
+
+
 		<div id="customize-footer-actions" class="wp-full-overlay-footer">
 			<a href="#" class="collapse-sidebar button-secondary" title="<?php esc_attr_e('Collapse Sidebar'); ?>">
 				<span class="collapse-sidebar-arrow"></span>
 				<span class="collapse-sidebar-label"><?php _e('Collapse'); ?></span>
 			</a>
 		</div>
-		<!--
-		<script>
-		jQuery(document).ready(function($){
-		    $('.color-picker-hex').wpColorPicker();
-		});
-		</script>
-		-->
 		<?php
 	}
 
@@ -123,7 +120,7 @@ class WP_Present_Customizer {
 
 		do_action( 'customize_controls_print_footer_scripts' );
 
-
+		$url = $is_ios = false;
 //	return;
 		// If the frontend and the admin are served from the same domain, load the
 		// preview over ssl if the customizer is being loaded over ssl. This avoids

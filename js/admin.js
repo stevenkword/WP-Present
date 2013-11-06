@@ -86,7 +86,6 @@ var WPPresentAdmin;
 				});
 			}
 
-			console.log( $('#wpbody-content') );
 			$('#wpbody-content').on( 'click', '#name', function(e) {
 				alert( 'toast' );
 			});
@@ -608,9 +607,6 @@ var WPPresentAdmin;
 		},
 
 		resizeModal: function() {
-
-			console.log( 'resizeModal' );
-
 			var self = this;
 			// Reside the TinyMCE Editor
 			var $editorIframe = $( '#editor_slide_ifr' );
@@ -645,7 +641,6 @@ var WPPresentAdmin;
 
 			var availableSpace = 0;
 			if( editorHeightFull > editorHeightTable ) {
-				console.log( 'if hit' );
 				availableSpace = Math.round( ( editorHeightFull - editorHeightTable ) / 2 );
 			}
 

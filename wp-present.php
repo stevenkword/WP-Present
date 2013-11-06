@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
 require_once( 'includes/class-customizer.php' );
-class WP_Present {
+class WP_Present_Core {
 
 	/* Post Type */
 	public $post_type_slug = 'slide';
@@ -61,7 +61,7 @@ class WP_Present {
 	private static $instance = false;
 	public static function instance() {
 		if( ! self::$instance ) {
-			self::$instance = new WP_Present;
+			self::$instance = new WP_Present_Core;
 		}
 		return self::$instance;
 	}
@@ -1156,4 +1156,4 @@ class WP_Present {
 	}
 
 } // Class
-WP_Present::instance();
+WP_Present_Core::instance();
