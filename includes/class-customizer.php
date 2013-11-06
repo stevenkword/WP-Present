@@ -23,9 +23,12 @@ class WP_Present_Customizer {
 	 */
 	public function __construct() {
 		global $pagenow;
+
 		// Only on the edit taxonomy page
 		if( 'edit-tags.php' != $pagenow || !isset( $_GET['taxonomy'] ) || WP_Present_Core::instance()->taxonomy_slug != $_GET['taxonomy'] )
 			return;
+
+		// Let's roll.
 
 		// Remove and define new Theme Customizer sections, settings, and controls
 	    add_action( 'customize_register', array( $this, 'action_customize_register' ), 99 );
