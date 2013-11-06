@@ -383,8 +383,8 @@ class WP_Present_Core {
 	 * @return null
 	 */
 	public function action_wp_footer() {
-		//if( ! is_tax( $this->taxonomy_slug ) )
-		//	return false;
+		if( ! is_tax( $this->taxonomy_slug ) )
+			return;
 		?>
 		<script>
 		/* Custom jQuery Reveal Code */
@@ -1047,11 +1047,17 @@ class WP_Present_Core {
 			wp_die( $this->nonce_fail_message );
 		}
 
-		global $post;
+		global $post, $wpdb;
 
 		$post_id = $_REQUEST[ 'id' ];
 		$safe_content = wp_kses_post( $_REQUEST[ 'content' ] );
 		$safe_title = sanitize_text_field( $_REQUEST[ 'title' ] );
+		$thumbnail_id = esc_url( url_to_postid( $_REQUEST[ 'background-image' ] ) );
+
+		// Work around for getting the attachment id
+		$prefix = $wpdb->prefix;
+		$attachment = $wpdb->get_col($wpdb->prepare( "SELECT ID FROM " . $prefix . "posts" . " WHERE guid='%s';", esc_url( $_REQUEST[ 'background-image' ] ) ) );
+		$thumbnail_id = ( isset( $attachment[0] ) ) ? $attachment[0] : false;
 
 		$updated_post = array(
 			'ID' => $post_id,
@@ -1062,6 +1068,7 @@ class WP_Present_Core {
 
 		$post = get_post( $post_id );
 		setup_postdata( $post );
+		set_post_thumbnail( $post, $thumbnail_id );
 		the_excerpt();
 		wp_reset_postdata();
 

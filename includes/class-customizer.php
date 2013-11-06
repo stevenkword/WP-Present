@@ -273,6 +273,7 @@ class WP_Present_Customizer {
 		// Background Image
 		$wp_customize->add_setting( 'wp_present_background_image' , array(
 			'transport' => 'postMessage',
+			'default' => ''
 		) );
 
 		$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'wp_present_background_image', array(
@@ -280,10 +281,6 @@ class WP_Present_Customizer {
 			'section' => 'wp_present_background',
 			'settings'  => 'wp_present_background_image',
 		) ) );
-
-		foreach ( $wp_customize->settings() as $id => $setting ) {
-			oomph_error_log( 'after: ' . $id );
-		}
 
 		// We can also change built-in settings by modifying properties. For instance, let's make some stuff use live preview JS...
 		//$wp_customize->get_setting( 'body_background_color' )->transport = 'postMessage';

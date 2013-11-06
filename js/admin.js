@@ -280,7 +280,8 @@ var WPPresentAdmin;
 							click: function() {
 								var editorContents = tinymce.get('editor_slide').getContent();
 								var postTitle = $( '#slide-title' ).val();
-								var params = { 'id':widgetID, 'content':editorContents, 'title':postTitle, 'nonce':nonce };
+								var backgroundImage = $('#customize-control-wp_present_background_image img').attr('src');
+								var params = { 'id':widgetID, 'content':editorContents, 'title':postTitle, 'background-image':backgroundImage, 'nonce':nonce };
 								// Send the contents of the existing post
 								$.ajax({
 									url: ajaxurl + '?action=update_slide',
@@ -346,9 +347,22 @@ var WPPresentAdmin;
 								$('.theme-name').html( slide.post_title );
 
 
-								// Set tinymce background image
+								// Background
 								if( false != slide.post_thumbnail_url ) {
+									// Set tinymce background image
 									$editorIframe.contents().find('.reveal').css( 'background-image' , 'url(' + slide.post_thumbnail_url + ')' ).css( 'background-size', 'cover' );
+
+									// Set the customizer image
+									var $backgroundImageControl = $('#customize-control-wp_present_background_image img');
+
+									if( 'undefined' != $backgroundImageControl.attr('src' ) ) {
+										$backgroundImageControl.attr('src', slide.post_thumbnail_url );
+									} else {
+										$('#customize-control-wp_present_background_image .dropdown-content').append('<p>FICK</p>');
+									}
+									$('#customize-control-wp_present_background_image .dropdown-content img').show();
+									$('#customize-control-wp_present_background_image .dropdown-status').hide();
+
 								}
 
 								// This has to be the most hacky thing in this entire project
@@ -593,6 +607,10 @@ var WPPresentAdmin;
 			// Make existing content go away
 			$( '#slide-title' ).val( '' );
 			$( '#slide-slug' ).val( '' );
+
+			// Reset customizer background image
+			$('#customize-control-wp_present_background_image .dropdown-content img').hide();
+			$('#customize-control-wp_present_background_image .dropdown-status').show();
 		},
 
 		/**
