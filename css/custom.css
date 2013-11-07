@@ -8,7 +8,7 @@ body.reveal {
     width: auto;
 }
 
-.reveal h1, .branding h1 {
+.reveal h12, .branding h1 {
     font-size: 2em;
     padding-bottom: .5em;
     line-height: 1em;

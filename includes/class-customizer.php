@@ -325,6 +325,36 @@ class WP_Present_Customizer {
 			'section' => 'wp_present_background',
 			'settings'  => 'wp_present_background_image',
 		) ) );
+
+		/** EFFECTS **/
+		$wp_customize->add_section( 'wp_present_effects', array(
+			'title'   => __( 'Effects', 'wp-present' ),
+			'priority'  => 30,
+			'capability' => 'read',
+		) );
+
+		// Transition
+		$wp_customize->add_setting( 'wp_present_transition' , array(
+			'transport' => 'postMessage',
+			'default' => ''
+		) );
+
+		$wp_customize->add_control( 'wp_present_transition', array(
+			'label'   => 'Transition',
+			'section' => 'wp_present_effects',
+			'type'    => 'select',
+			'choices'    => array(
+				'default' => 'Default',
+				'cube' => 'Cube',
+				'page' => 'Page',
+				'concave' => 'Concave',
+				'zoom' => 'Zoom',
+				'linear' => 'Linear',
+				'fade' => 'Fade',
+				'none' => '-none-',
+			),
+		) );
+
 	}
 
 } // Class
