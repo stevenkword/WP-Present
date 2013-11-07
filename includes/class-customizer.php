@@ -24,11 +24,15 @@ class WP_Present_Customizer {
 	public function __construct() {
 		global $pagenow;
 
-		// Only on the edit taxonomy page
+		// everywhere
+		add_action( 'wp_head', array( $this, 'action_wp_head' ), 99 );
+
+		// Only do admin stuff on the edit taxonomy page
 		if( 'edit-tags.php' != $pagenow || !isset( $_GET['taxonomy'] ) || WP_Present_Core::instance()->taxonomy_slug != $_GET['taxonomy'] )
 			return;
 
 		// Let's roll.
+		add_action( 'wp_loaded', array( $this, 'action_wp_loaded' ) );
 
 		// Remove and define new Theme Customizer sections, settings, and controls
 	    add_action( 'customize_register', array( $this, 'action_customize_register' ), 99 );
@@ -44,6 +48,44 @@ class WP_Present_Customizer {
 		add_action( 'customize_controls_print_footer_scripts', '_wp_footer_scripts' );
 		add_action( 'customize_controls_print_styles', 'print_admin_styles', 20 );
 
+	}
+
+	public function action_wp_head(){
+		//global theme overrides would go here (options);
+	}
+
+	/**
+	 * Register styles/scripts and initialize the preview of each setting
+	 *
+	 * @since 3.4.0
+	 */
+	public function action_wp_loaded() {
+		$this->customize_preview_init();
+	}
+
+	/**
+	 * Print javascript settings.
+	 *
+	 * @since 3.4.0
+	 */
+	public function customize_preview_init() {
+		global $wp_customize;
+
+		$wp_customize->prepare_controls();
+
+		wp_enqueue_script( 'customize-preview' );
+		add_action( 'wp_head', array( $wp_customize, 'customize_preview_base' ) );
+		add_action( 'wp_head', array( $wp_customize, 'customize_preview_html5' ) );
+		add_action( 'wp_footer', array( $wp_customize, 'customize_preview_settings' ), 20 );
+		add_action( 'shutdown', array( $wp_customize, 'customize_preview_signature' ), 1000 );
+		add_filter( 'wp_die_handler', array( $wp_customize, 'remove_preview_signature' ) );
+
+		foreach ( $wp_customize->settings() as $setting ) {
+			$setting->preview();
+			oomph_error_log( 'setting',$setting );
+		}
+
+		do_action( 'customize_preview_init', $wp_customize );
 	}
 
 	public function action_plugins_loaded() {
@@ -65,10 +107,9 @@ class WP_Present_Customizer {
 
 	public function action_admin_enqueue_scripts() {
 		wp_enqueue_style( 'customize-controls' );
-
 		wp_enqueue_script( 'customize-controls' );
 		wp_enqueue_script( 'accordion' );
-
+		wp_enqueue_script( 'wp-present-customize-controls', WP_Present_Core::instance()->plugins_url . '/js/customize-controls.js', array( 'jquery' ), WP_Present_Core::instance()->scripts_version, true );
 		do_action( 'customize_controls_enqueue_scripts' );
 	}
 
@@ -284,9 +325,6 @@ class WP_Present_Customizer {
 			'section' => 'wp_present_background',
 			'settings'  => 'wp_present_background_image',
 		) ) );
-
-		// We can also change built-in settings by modifying properties. For instance, let's make some stuff use live preview JS...
-		//$wp_customize->get_setting( 'body_background_color' )->transport = 'postMessage';
 	}
 
 } // Class

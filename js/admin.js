@@ -86,9 +86,11 @@ var WPPresentAdmin;
 				});
 			}
 
+			/*
 			$('#wpbody-content').on( 'click', '#name', function(e) {
 				alert( 'toast' );
 			});
+			*/
 
 			// This really should be called only once inside init
 			self.enableColumns();
@@ -281,7 +283,21 @@ var WPPresentAdmin;
 								var editorContents = tinymce.get('editor_slide').getContent();
 								var postTitle = $( '#slide-title' ).val();
 								var backgroundImage = $('#customize-control-wp_present_background_image img').attr('src');
-								var params = { 'id':widgetID, 'content':editorContents, 'title':postTitle, 'background-image':backgroundImage, 'nonce':nonce };
+
+								var colorBackground = $('#customize-control-wp_present_background_color .color-picker-hex').val();
+								var colorText = $('#customize-control-wp_present_text_color .color-picker-hex').val();
+								var colorLink = $('#customize-control-wp_present_link_color .color-picker-hex').val();
+
+								var params = {
+									'id':widgetID,
+									'content':editorContents,
+									'title':postTitle,
+									'background-image':backgroundImage,
+									'background-color':colorBackground,
+									'text-color':colorText,
+									'link-color':colorLink,
+									'nonce':nonce
+								};
 								// Send the contents of the existing post
 								$.ajax({
 									url: ajaxurl + '?action=update_slide',
@@ -318,7 +334,7 @@ var WPPresentAdmin;
 
 						var $editorIframe = $( '#editor_slide_ifr' );
 						var $editor = $editorIframe.contents().find('body.mceContentBody.reveal');
-						console.log( $editor );
+						// console.log( $editor );
 						$editor.on('keyup', function(e) {
 							self.resizeModal();
 						});
@@ -328,7 +344,7 @@ var WPPresentAdmin;
 						// Load the contents of the existing post
 						var nonce = $('#wp-present-nonce').val();
 						var params = { 'id':widgetID, 'nonce':nonce };
-
+						// console.log( params );
 						$.ajax({
 							url: ajaxurl + '?action=get_slide',
 							data: jQuery.param(params),
@@ -341,6 +357,8 @@ var WPPresentAdmin;
 							success: function( contentEditor ) {
 								var slide = jQuery.parseJSON( contentEditor );
 								tinymce.get( 'editor_slide' ).setContent( slide.post_content );
+
+								//console.log( slide );
 
 								$( '#slide-title' ).val( slide.post_title );
 								$( '#slide-slug' ).val( slide.post_name );
@@ -358,12 +376,19 @@ var WPPresentAdmin;
 									if( 'undefined' != $backgroundImageControl.attr('src' ) ) {
 										$backgroundImageControl.attr('src', slide.post_thumbnail_url );
 									} else {
-										$('#customize-control-wp_present_background_image .dropdown-content').append('<p>FICK</p>');
+										$('#customize-control-wp_present_background_image .dropdown-content').append('<p>you broke it</p>');
 									}
 									$('#customize-control-wp_present_background_image .dropdown-content img').show();
 									$('#customize-control-wp_present_background_image .dropdown-status').hide();
-
+								} else {
+									//reset
+									//$('#customize-control-wp_present_background_image img').attr('src', false );
 								}
+
+								// Colors
+								$('#customize-control-wp_present_background_color .color-picker-hex').iris( 'color', slide.background_color );
+								$('#customize-control-wp_present_text_color .color-picker-hex').iris( 'color', slide.text_color );
+								$('#customize-control-wp_present_link_color .color-picker-hex').iris( 'color', slide.link_color );
 
 								// This has to be the most hacky thing in this entire project
 								self.resizeModal();
@@ -611,6 +636,11 @@ var WPPresentAdmin;
 			// Reset customizer background image
 			$('#customize-control-wp_present_background_image .dropdown-content img').hide();
 			$('#customize-control-wp_present_background_image .dropdown-status').show();
+
+			// Colors
+			$('#customize-control-wp_present_background_color .color-picker-hex').val( '' );
+			$('#customize-control-wp_present_text_color .color-picker-hex').val( '' );
+			$('#customize-control-wp_present_link_color .color-picker-hex').val( '' );
 		},
 
 		/**

@@ -53,12 +53,27 @@
 									$post = get_post( $slide_id );
 									setup_postdata( $post );
 									$background_image = wp_get_attachment_url( get_post_thumbnail_id( $post->ID ) );
+									$post_thumbnail_url = wp_get_attachment_url( get_post_thumbnail_id( $post->ID ) );
+									$background_color = get_post_meta( $post->ID, 'background-color', true );
+									$text_color = get_post_meta( $post->ID, 'text-color', true );
+									$link_color = get_post_meta( $post->ID, 'link-color', true );
+
+
+									// Give priority to the thumbnail, but fallback to the background color
+									$data_background = ( isset( $post_thumbnail_url ) && ! empty( $post_thumbnail_url ) ) ? $post_thumbnail_url : '';
+									if( ! $data_background )
+										$data_background = ( isset( $background_color ) && ! empty( $background_color ) ) ? $background_color : '';
+
+									$style = "color: $text_color; ";
+
 									?>
-									<section id="<?php echo esc_attr( $post->post_name); ?>" data-transition="linear"  <?php if( isset( $background_image ) && ! empty( $background_image ) ) echo 'data-background="'. esc_attr( $background_image ) .'"';?>>
-										<?php the_content(); ?>
-										<p>
-											<small><?php wp_link_pages( array( 'before' => '<div class="page-links">' . __( 'Pages:', '_s' ), 'after' => '</div>' ) ); ?></small>
-										</p>
+									<section id="<?php echo esc_attr( $post->post_name); ?>" data-transition="linear"  <?php if( isset( $data_background )  ) echo 'data-background="' . $data_background . '"';?>>
+										<div steven style="<?php echo $style; ?>">
+											<?php the_content(); ?>
+											<p>
+												<small><?php wp_link_pages( array( 'before' => '<div class="page-links">' . __( 'Pages:', '_s' ), 'after' => '</div>' ) ); ?></small>
+											</p>
+										</div>
 									</section>
 									<?php
 									$i++;
@@ -78,25 +93,6 @@
 			<?php wp_footer(); ?>
 
 		<?php endif; ?>
-		<div id="dialog" class="media-modal" title="Edit <?php echo $this->post_type_singular_name; ?>" style="display: none;">
-			<div class="modal-inner-left">
-				<p>Title</p>
-				<input id="slide-title" name="slide-title" style="width:95%;"/>
-				<p>Slug</p>
-				<input id="slide-slug" name="slide-slug" style="width:95%;" disabled/>
-				<p>Font Color</p>
-				<input type="text" value="" class="my-color-field" />
-				<p>Background Color</p>
-				<input type="text" value="" class="my-color-field" />
-			</div>
-			<div class="modal-inner-right">
-				<?php $this->modal_editor(); ?>
-			</div>
-		</div>
-		<script>
-		jQuery(document).ready(function($){
-		    $('.my-color-field').wpColorPicker();
-		});
-		</script>
+
 	</body>
 </html>

@@ -846,6 +846,7 @@ class WP_Present_Core {
 				<?php WP_Present_Customizer::instance()->render(); ?>
 			</div>
 			<div class="modal-inner-right">
+
 				<?php $this->modal_editor(); ?>
 			</div>
 		</div>
@@ -1033,6 +1034,10 @@ class WP_Present_Core {
 		$post = get_post( $post_id );
 
 		$post->post_thumbnail_url = wp_get_attachment_url( get_post_thumbnail_id( $post->ID ) );
+		$post->background_color = get_post_meta( $post->ID, 'background-color', true );
+		$post->text_color = get_post_meta( $post->ID, 'text-color', true );
+		$post->link_color = get_post_meta( $post->ID, 'link-color', true );
+
 		echo json_encode( $post );
 		die();
 	}
@@ -1055,6 +1060,10 @@ class WP_Present_Core {
 		$safe_title = sanitize_text_field( $_REQUEST[ 'title' ] );
 		$thumbnail_id = esc_url( url_to_postid( $_REQUEST[ 'background-image' ] ) );
 
+		$safe_background_color = sanitize_text_field( $_REQUEST[ 'background-color' ] );
+		$safe_text_color = sanitize_text_field( $_REQUEST[ 'text-color' ] );
+		$safe_link_color = sanitize_text_field( $_REQUEST[ 'link-color' ] );
+
 		// Work around for getting the attachment id
 		$prefix = $wpdb->prefix;
 		$attachment = $wpdb->get_col($wpdb->prepare( "SELECT ID FROM " . $prefix . "posts" . " WHERE guid='%s';", esc_url( $_REQUEST[ 'background-image' ] ) ) );
@@ -1066,6 +1075,10 @@ class WP_Present_Core {
 			'post_title' => $safe_title,
 		);
 		wp_update_post( $updated_post );
+
+		update_post_meta( $post_id, 'background-color', $safe_background_color );
+		update_post_meta( $post_id, 'text-color', $safe_text_color );
+		update_post_meta( $post_id, 'link-color', $safe_link_color );
 
 		$post = get_post( $post_id );
 		setup_postdata( $post );
