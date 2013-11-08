@@ -638,9 +638,11 @@ var WPPresentAdmin;
 			$('#customize-control-wp_present_background_image .dropdown-status').show();
 
 			// Colors
-			$('#customize-control-wp_present_background_color .color-picker-hex').val( '' );
-			$('#customize-control-wp_present_text_color .color-picker-hex').val( '' );
-			$('#customize-control-wp_present_link_color .color-picker-hex').val( '' );
+			$('#customize-control-wp_present_background_color .color-picker-hex').val( '' ).change();
+			$('#customize-control-wp_present_text_color .color-picker-hex').val( '' ).change();
+			$('#customize-control-wp_present_link_color .color-picker-hex').val( '' ).change();
+
+			$('.dropdown-content img').attr('src','').change();
 		},
 
 		/**
