@@ -363,15 +363,18 @@ var WPPresentAdmin;
 								$( '#slide-title' ).val( slide.post_title );
 								$( '#slide-slug' ).val( slide.post_name );
 								$('.theme-name').html( slide.post_title );
+								$('.preview-notice-text').html('You are editing');
 
 
 								// Background
+/*
 								if( false != slide.post_thumbnail_url ) {
 									// Set tinymce background image
 									$editorIframe.contents().find('.reveal').css( 'background-image' , 'url(' + slide.post_thumbnail_url + ')' ).css( 'background-size', 'cover' );
 
 									// Set the customizer image
-									var $backgroundImageControl = $('#customize-control-wp_present_background_image img');
+
+			var $backgroundImageControl = $('#customize-control-wp_present_background_image img');
 
 									if( 'undefined' != $backgroundImageControl.attr('src' ) ) {
 										$backgroundImageControl.attr('src', slide.post_thumbnail_url );
@@ -384,7 +387,7 @@ var WPPresentAdmin;
 									//reset
 									//$('#customize-control-wp_present_background_image img').attr('src', false );
 								}
-
+*/
 								// Colors
 								$('#customize-control-wp_present_background_color .color-picker-hex').iris( 'color', slide.background_color );
 								$('#customize-control-wp_present_text_color .color-picker-hex').iris( 'color', slide.text_color );
@@ -504,6 +507,8 @@ var WPPresentAdmin;
 
 						var $editorIframe = $( '#editor_slide_ifr' );
 						var $editor = $editorIframe.contents().find('body.mceContentBody.reveal');
+
+
 						console.log( $editor );
 						$editor.on('keyup', function(e) {
 							self.resizeModal();
@@ -515,6 +520,8 @@ var WPPresentAdmin;
 						// Hack for getting the reveal class added to tinymce editor body
 						var $editorIframe = $('#editor_slide_ifr').contents();
 						$editorIframe.find('body').addClass('reveal');
+
+						$('.preview-notice-text').html('Name this slide');
 
 						self.resizeModal();
 					},
@@ -632,6 +639,7 @@ var WPPresentAdmin;
 			// Make existing content go away
 			$( '#slide-title' ).val( '' );
 			$( '#slide-slug' ).val( '' );
+			$('.theme-name').html( '' );
 
 			// Reset customizer background image
 			$('#customize-control-wp_present_background_image .dropdown-content img').hide();

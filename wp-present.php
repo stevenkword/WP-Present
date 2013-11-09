@@ -1069,6 +1069,8 @@ class WP_Present_Core {
 		$attachment = $wpdb->get_col($wpdb->prepare( "SELECT ID FROM " . $prefix . "posts" . " WHERE guid='%s';", esc_url( $_REQUEST[ 'background-image' ] ) ) );
 		$thumbnail_id = ( isset( $attachment[0] ) ) ? $attachment[0] : false;
 
+oomph_error_log( $thumbnail_id );
+
 		$updated_post = array(
 			'ID' => $post_id,
 			'post_content' => $safe_content,

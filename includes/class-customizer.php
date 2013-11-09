@@ -1,4 +1,7 @@
 <?php
+/**
+ *  WP Present Modal Customizer
+ */
 class WP_Present_Customizer {
 
 	/* Define and register singleton */
@@ -90,6 +93,7 @@ class WP_Present_Customizer {
 
 	public function action_plugins_loaded() {
 		require( ABSPATH . WPINC . '/class-wp-customize-manager.php' );
+
 		// Init Customize class
 		$GLOBALS['wp_customize'] = new WP_Customize_Manager;
 	}
@@ -131,7 +135,7 @@ class WP_Present_Customizer {
 			<div class="wp-full-overlay-sidebar-content accordion-container" tabindex="-1">
 				<div id="customize-info" class="accordion-section ">
 					<div class="accordion-section-title" aria-label="Theme Customizer Options" tabindex="0">
-						<span class="preview-notice">You are editing<strong class="theme-name"></strong></span>
+						<span class="preview-notice"><span class="preview-notice-text">You are editing</span><strong class="theme-name"></strong></span>
 					</div>
 					<div class="accordion-section-content">
 						<p>Title</p>
@@ -249,6 +253,8 @@ class WP_Present_Customizer {
 	 */
 	public function action_customize_register( $wp_customize ) {
 
+		require( plugin_dir_path( __FILE__ ) . '/class-customizer-background-image-control.php' );
+
 		// Remove all existing sections
 		foreach( $wp_customize->sections() as $id => $section ) {
 			$wp_customize->remove_section( $id );
@@ -317,13 +323,14 @@ class WP_Present_Customizer {
 		// Background Image
 		$wp_customize->add_setting( 'wp_present_background_image' , array(
 			'transport' => 'postMessage',
-			'default' => ''
+			'default' => 'http://media.npr.org/images/picture-show-flickr-promo.jpg',
 		) );
 
-		$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'wp_present_background_image', array(
+		$wp_customize->add_control( new WP_Present_Background_Image_Control( $wp_customize, 'wp_present_background_image', array(
 			'label'   => __( 'Background Image', 'wp-present' ),
 			'section' => 'wp_present_background',
 			'settings'  => 'wp_present_background_image',
+			'context'   => 'wp-present_' . $_REQUEST[ 'tag_ID' ]
 		) ) );
 
 		/** EFFECTS **/
