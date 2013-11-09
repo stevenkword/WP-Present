@@ -282,7 +282,15 @@ var WPPresentAdmin;
 							click: function() {
 								var editorContents = tinymce.get('editor_slide').getContent();
 								var postTitle = $( '#slide-title' ).val();
-								var backgroundImage = $('#customize-control-wp_present_background_image img').attr('src');
+
+								var backgroundImage = $('#customize-control-wp_present_background_image img');
+								var backgroundImageURL = '';
+
+								if( 'none' != backgroundImage.css( 'display' ) ) {
+									backgroundImageURL = backgroundImage.attr('src');
+								} else {
+									backgroundImageURL = '';
+								}
 
 								var colorBackground = $('#customize-control-wp_present_background_color .color-picker-hex').val();
 								var colorText = $('#customize-control-wp_present_text_color .color-picker-hex').val();
@@ -292,7 +300,7 @@ var WPPresentAdmin;
 									'id':widgetID,
 									'content':editorContents,
 									'title':postTitle,
-									'background-image':backgroundImage,
+									'background-image':backgroundImageURL,
 									'background-color':colorBackground,
 									'text-color':colorText,
 									'link-color':colorLink,

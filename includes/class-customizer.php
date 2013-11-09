@@ -89,7 +89,6 @@ class WP_Present_Customizer {
 
 		foreach ( $wp_customize->settings() as $setting ) {
 			$setting->preview();
-			oomph_error_log( 'setting',$setting );
 		}
 
 		do_action( 'customize_preview_init', $wp_customize );
@@ -327,7 +326,7 @@ class WP_Present_Customizer {
 		// Background Image
 		$wp_customize->add_setting( 'wp_present_background_image' , array(
 			'transport' => 'postMessage',
-			'default' => 'http://media.npr.org/images/picture-show-flickr-promo.jpg',
+			'default' => '',
 		) );
 
 		$wp_customize->add_control( new WP_Present_Background_Image_Control( $wp_customize, 'wp_present_background_image', array(

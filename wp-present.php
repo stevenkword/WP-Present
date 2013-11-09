@@ -1069,8 +1069,6 @@ class WP_Present_Core {
 		$attachment = $wpdb->get_col($wpdb->prepare( "SELECT ID FROM " . $prefix . "posts" . " WHERE guid='%s';", esc_url( $_REQUEST[ 'background-image' ] ) ) );
 		$thumbnail_id = ( isset( $attachment[0] ) ) ? $attachment[0] : false;
 
-oomph_error_log( $thumbnail_id );
-
 		$updated_post = array(
 			'ID' => $post_id,
 			'post_content' => $safe_content,
@@ -1084,7 +1082,13 @@ oomph_error_log( $thumbnail_id );
 
 		$post = get_post( $post_id );
 		setup_postdata( $post );
-		set_post_thumbnail( $post, $thumbnail_id );
+
+		// Thumbnail
+		if( ! isset( $thumbnail_id ) || empty( $thumbnail_id ) )
+			delete_post_thumbnail( $post );
+		else
+			set_post_thumbnail( $post, $thumbnail_id );
+
 		the_excerpt();
 		wp_reset_postdata();
 
