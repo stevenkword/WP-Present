@@ -358,36 +358,20 @@ var WPPresentAdmin;
 								var slide = jQuery.parseJSON( contentEditor );
 								tinymce.get( 'editor_slide' ).setContent( slide.post_content );
 
-								//console.log( slide );
+								console.log( 'slide' );
+								console.log( slide );
 
 								$( '#slide-title' ).val( slide.post_title );
 								$( '#slide-slug' ).val( slide.post_name );
 								$('.theme-name').html( slide.post_title );
 								$('.preview-notice-text').html('You are editing');
 
-
 								// Background
-/*
-								if( false != slide.post_thumbnail_url ) {
-									// Set tinymce background image
-									$editorIframe.contents().find('.reveal').css( 'background-image' , 'url(' + slide.post_thumbnail_url + ')' ).css( 'background-size', 'cover' );
-
-									// Set the customizer image
-
-			var $backgroundImageControl = $('#customize-control-wp_present_background_image img');
-
-									if( 'undefined' != $backgroundImageControl.attr('src' ) ) {
-										$backgroundImageControl.attr('src', slide.post_thumbnail_url );
-									} else {
-										$('#customize-control-wp_present_background_image .dropdown-content').append('<p>you broke it</p>');
-									}
-									$('#customize-control-wp_present_background_image .dropdown-content img').show();
-									$('#customize-control-wp_present_background_image .dropdown-status').hide();
-								} else {
-									//reset
-									//$('#customize-control-wp_present_background_image img').attr('src', false );
+								var api = wp.customize, background_image = api.instance( 'wp_present_background_image' );
+								if( false !== slide.post_thumbnail_url ) {
+									background_image.set(slide.post_thumbnail_url);
 								}
-*/
+
 								// Colors
 								$('#customize-control-wp_present_background_color .color-picker-hex').iris( 'color', slide.background_color );
 								$('#customize-control-wp_present_text_color .color-picker-hex').iris( 'color', slide.text_color );

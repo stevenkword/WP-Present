@@ -3,11 +3,11 @@ Add option for display resolution ( consider detection )
 When adding a new column, add it one column after the active column
 Add metaboxes for reveal.js speaker notes (asides)
 Add metaboxes for appearance/motion overrides
-Append a bodyclass to the <body> tag for more specific style targetting
-Ability to suppress titles
+Append a bodyclass to the <body> tag for more specific style targeting
 Peek at how MP6 does fonts / icons (OPEN SANS!)
 REVEAL theme selector option for the theme customizer
 Make the placeholders for the columns larger than the widget placeholders
-Fix column backfilling when empty columns are presentwq
+Fix column backfilling when empty columns are present
 Clean up the admin menu hackery ( manual array key assignments )
 Add ability to highlight slides to target slide removal and insertions
+Admin class
