@@ -704,6 +704,12 @@ class WP_Present_Core {
 
 		// Calculate the number of columns we need
 		$columns = array();
+
+		//var_dump( $term_description );
+
+		if( empty( $term_description ) || 0 >= (int) count( $term_description ) )
+			return;
+
 		foreach( $term_description as $c => $column ) {
 			if( ! empty( $term_description[ $c ] ) )
 				$columns[] = $c;
@@ -782,10 +788,13 @@ class WP_Present_Core {
 						// Calculate the number of columns we need
 						$columns = array();
 						$term_description =  $this->get_term_description( $term, $taxonomy );
+
+					if( ! empty( $term_description ) && 0 < (int) count( $term_description ) ) {
 						foreach( $term_description as $c => $column ) {
 							if( ! empty( $term_description[ $c ] ) )
 								$columns[] = $c;
 						}
+					}
 
 						// The Slides Query
 						$slides_query = new WP_Query( array(
@@ -823,19 +832,22 @@ class WP_Present_Core {
 								$col++;
 							}
 							unset( $col );
-						} elseif( 0 == count( $associated_slides ) ){ // If there are 0 slides
+						} elseif( isset( $associated_slides ) || 0 == count( $associated_slides ) ) { // If there are 0 slides
 							//echo '<p>Sorry, No ' . $this->post_type_name . ' found!</p>';
-							?>
-							<div class="column backfill" id="col-1">
-								<div class="widget-top">
-									<div class="widget-title">
-										<h4 class="hndle"><?php echo '1'; ?><span class="in-widget-title"></span></h4>
+
+							// If taxonomy is empty
+							if( empty( $term_description ) ) {
+								?>
+								<div class="column backfill" id="col-1">
+									<div class="widget-top">
+										<div class="widget-title">
+											<h4 class="hndle"><?php echo '1'; ?><span class="in-widget-title"></span></h4>
+										</div>
 									</div>
 								</div>
-							</div>
-							<?php
+								<?php
+							}
 						}
-
 						?>
 					</div><!--/#container-->
 				</div><!--/#outer-container-->

@@ -86,12 +86,6 @@ var WPPresentAdmin;
 				});
 			}
 
-			/*
-			$('#wpbody-content').on( 'click', '#name', function(e) {
-				alert( 'toast' );
-			});
-			*/
-
 			// This really should be called only once inside init
 			self.enableColumns();
 			self.renumberColumns();
@@ -345,7 +339,7 @@ var WPPresentAdmin;
 						$editor.on('keyup', function(e) {
 							self.resizeModal();
 						});
-
+						//self.resizeModal();
 					},
 					open: function() {
 						// Load the contents of the existing post
