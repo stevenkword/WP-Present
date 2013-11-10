@@ -342,7 +342,6 @@ var WPPresentAdmin;
 
 						var $editorIframe = $( '#editor_slide_ifr' );
 						var $editor = $editorIframe.contents().find('body.mceContentBody.reveal');
-						// console.log( $editor );
 						$editor.on('keyup', function(e) {
 							self.resizeModal();
 						});
@@ -352,7 +351,6 @@ var WPPresentAdmin;
 						// Load the contents of the existing post
 						var nonce = $('#wp-present-nonce').val();
 						var params = { 'id':widgetID, 'nonce':nonce };
-						// console.log( params );
 						$.ajax({
 							url: ajaxurl + '?action=get_slide',
 							data: jQuery.param(params),
@@ -366,18 +364,16 @@ var WPPresentAdmin;
 								var slide = jQuery.parseJSON( contentEditor );
 								tinymce.get( 'editor_slide' ).setContent( slide.post_content );
 
-								console.log( 'slide' );
-								console.log( slide );
-
 								$( '#slide-title' ).val( slide.post_title );
 								$( '#slide-slug' ).val( slide.post_name );
 								$('.theme-name').html( slide.post_title );
 								$('.preview-notice-text').html('You are editing');
 
 								// Background
-								var api = wp.customize, background_image = api.instance( 'wp_present_background_image' );
+								var api = wp.customize, backgroundImage = api.instance( 'wp_present_background_image' );
 								if( false !== slide.post_thumbnail_url ) {
-									background_image.set(slide.post_thumbnail_url);
+									backgroundImage.set(slide.post_thumbnail_url);
+									$( '#editor_slide_ifr' ).contents().find('.reveal').css("background-image", "url('"+slide.post_thumbnail_url+"')");
 								}
 
 								// Colors
@@ -500,8 +496,6 @@ var WPPresentAdmin;
 						var $editorIframe = $( '#editor_slide_ifr' );
 						var $editor = $editorIframe.contents().find('body.mceContentBody.reveal');
 
-
-						console.log( $editor );
 						$editor.on('keyup', function(e) {
 							self.resizeModal();
 						});
@@ -685,16 +679,10 @@ var WPPresentAdmin;
 			$editor.css( 'display', 'table' );
 			var editorHeightTable = Math.round( $editor.height() );
 
-			//console.log( 'Max: ' + WPPresentAdmin.maxModalEditorHeight );
-			//console.log( 'Before: ' + editorHeightFull );
-			//console.log( 'After: ' + editorHeightTable );
-
 			var availableSpace = 0;
 			if( editorHeightFull > editorHeightTable ) {
 				availableSpace = Math.round( ( editorHeightFull - editorHeightTable ) / 2 );
 			}
-
-			//console.log( 'Diff: ' + availableSpace);
 
 			// Act on said hackiness
 			$editor.css( 'padding-top', availableSpace );

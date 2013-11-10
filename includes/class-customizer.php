@@ -337,6 +337,7 @@ class WP_Present_Customizer {
 		) ) );
 
 		/** EFFECTS **/
+		/*
 		$wp_customize->add_section( 'wp_present_effects', array(
 			'title'   => __( 'Effects', 'wp-present' ),
 			'priority'  => 30,
@@ -364,6 +365,28 @@ class WP_Present_Customizer {
 				'none' => '-none-',
 			),
 		) );
+		*/
+
+		/** SPEAKER NOTES **/
+		/*
+		$wp_customize->add_section( 'wp_present_speaker_notes', array(
+			'title'   => __( 'Speaker Notes', 'wp-present' ),
+			'priority'  => 40,
+			'capability' => 'read',
+		) );
+
+		// Aside
+		$wp_customize->add_setting( 'wp_present_aside' , array(
+			'transport' => 'postMessage',
+			'default' => ''
+		) );
+
+		$wp_customize->add_control( 'wp_present_aside', array(
+			'label'   => 'Aside',
+			'section' => 'wp_present_speaker_notes',
+			'type'    => 'text',
+		) );
+		*/
 
 	}
 
