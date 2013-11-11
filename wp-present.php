@@ -709,8 +709,6 @@ class WP_Present_Core {
 		// Calculate the number of columns we need
 		$columns = array();
 
-		//var_dump( $term_description );
-
 		if( empty( $term_description ) || 0 >= (int) count( $term_description ) )
 			return;
 
@@ -765,8 +763,6 @@ class WP_Present_Core {
 	public function taxonomy_edit_form( $term, $taxonomy ) {
 		global $post;
 		$associated_slides = $this->get_associated_slide_ids( $term, $taxonomy );
-		//var_dump( $associated_slides );
-
 		wp_nonce_field( $this->nonce_field, $this->nonce_field, false );
 		?>
 		<tr class="form-field hide-if-no-js">

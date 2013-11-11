@@ -21,14 +21,20 @@ Demo available at http://slides.stevenword.com
 2. A slide in a presentation
 
 == Changelog ==
-= 0.92 =
+= 0.9.3 =
+* Modal redesign
+* Removes jQueryUI plugin dependency
+* Resolves column backfill bug on new presentations
+* MP6 Dashicon support
+
+= 0.9.2 =
 * Changes delete slide to trash slide
 * Fixes bug when creating a new presentation
 * Fixes renumber problem on first load
 * Adds missing style rules from post-new.php
 
-= 0.91 =
+= 0.9.1 =
 * Kindly removes my twitter handle from every slide.
 
 = 0.9 =
-* Pre release.
+* Pre release

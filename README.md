@@ -22,7 +22,8 @@ Demo available at [http://wppresent.org]
 = 0.9.3 =
 * Modal redesign
 * Removes jQueryUI plugin dependency
-
+* Resolves column backfill bug on new presentations
+* MP6 Dashicon support
 
 = 0.9.2 =
 * Changes delete slide to trash slide
@@ -38,4 +39,4 @@ Demo available at [http://wppresent.org]
 
 ## Upgrade Notice ##
 = 0.9 =
-* Pre release.
+* Pre release
