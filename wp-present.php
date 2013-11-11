@@ -529,6 +529,10 @@ class WP_Present_Core {
 	 * @return null
 	 */
 	public function action_admin_head() {
+
+		// Presentation dashicon
+	    echo '<style type="text/css">.mp6 #adminmenu #menu-posts-slide div.wp-menu-image:before { content: "\f181" !important; }</style>';
+
 		// Only add this variable on the edit taxonomy page
 		global $pagenow;
 		if( 'edit-tags.php' != $pagenow || ! isset( $_GET['taxonomy'] ) || $this->taxonomy_slug != $_GET['taxonomy'] || ! isset( $_GET[ 'tag_ID' ] ) )
