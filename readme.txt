@@ -34,7 +34,7 @@ Demo available at http://slides.stevenword.com
 * Adds missing style rules from post-new.php
 
 = 0.9.1 =
-* Kindly removes my twitter handle from every slide.
+* Kindly removes my twitter handle from every slide
 
 = 0.9 =
 * Pre release

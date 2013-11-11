@@ -31,8 +31,8 @@ Demo available at [http://wppresent.org]
 * Fixes renumber problem on first load
 * Adds missing style rules from post-new.php
 
-= 0.91 =
-* Kindly removes my twitter handle from every slide.
+= 0.9.1 =
+* Kindly removes my twitter handle from every slide
 
 = 0.9 =
 * Pre release.
