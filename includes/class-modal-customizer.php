@@ -27,7 +27,7 @@ class WP_Present_Customizer {
 	public function __construct() {
 		global $pagenow;
 
-		// Everywhere
+		// everywhere
 		add_action( 'wp_head', array( $this, 'action_wp_head' ), 99 );
 
 		// Only do admin stuff on the edit taxonomy page
