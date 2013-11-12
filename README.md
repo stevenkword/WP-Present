@@ -14,6 +14,8 @@ Create beautiful slide presentations with the the power of WordPress and the ele
 
 Demo available at [http://wppresent.org]
 
+Currently works best with Chrome & Safari
+
 ## Installation ##
 1. Upload "/wp-present" to the "/wp-content/plugins/" directory.
 2. Activate the plugin through the "Plugins" menu in WordPress.
