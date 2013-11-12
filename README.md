@@ -12,7 +12,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Create elegant slide presentations with the the power of WordPress and the beauty of reveal.js
 
-Demo coming soon to [http://wppresent.org]
+Demo coming soon to http://wppresent.org
 
 Currently works best with Chrome & Safari
 
