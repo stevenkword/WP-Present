@@ -28,7 +28,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-require_once( 'includes/class-customizer.php' );
+require_once( 'includes/class-modal-customizer.php' );
 class WP_Present_Core {
 
 	/* Post Type */
@@ -325,10 +325,10 @@ class WP_Present_Core {
 		//Get plugin path
 		$plugin_path = dirname( __FILE__ );
 
-		if ( file_exists( $plugin_path . '/templates/default-template.php' ) && $this->is() )
+		if ( file_exists( $plugin_path . '/templates/presentation.php' ) && $this->is() )
 			$template = array(
 				'name' => 'wp-presents-default',
-				'path' => $plugin_path . '/templates/default-template.php'
+				'path' => $plugin_path . '/templates/presentation.php'
 			);
 
 		return isset( $template ) ? $template : false;
@@ -483,9 +483,14 @@ class WP_Present_Core {
 					<h3>Resolution</h3>
 						<p>1024x768</p>
 					<h3>Branding</h3>
-						<p>Branding HTML textarea goes here</p>
+						<p><textarea>Branding HTML textarea goes here</textarea></p>
 					<h3>Coming soon</h3>
-						<p>See master.plan</p>
+						<?php
+						$master_plan_file = fopen( 'master.plan', 'r', __FILE__ );
+						while ( ! feof( $master_plan_file ) )
+							echo fgets( $master_plan_file ) . '<br />';
+						fclose( $master_plan_file );
+						?>
 				</div>
 				<div class="clear"></div>
 			</div><!-- wpbody-content -->

@@ -20,10 +20,12 @@ Demo available at [http://wppresent.org]
 
 ## Changelog ##
 = 0.9.3 =
+* Updates to reveal.js v2.5.0
 * Modal redesign
-* Removes jQueryUI plugin dependency
-* Resolves column backfill bug on new presentations
 * MP6 Dashicon support
+* Removes reveal.js submodule dependency
+* Removes jQueryUI submodule dependency
+* Resolves column backfill bug when creating new presentations
 
 = 0.9.2 =
 * Changes delete slide to trash slide

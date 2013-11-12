@@ -365,7 +365,9 @@ var WPPresentAdmin;
 
 								// Background
 								var api = wp.customize, backgroundImage = api.instance( 'wp_present_background_image' );
+
 								if( false !== slide.post_thumbnail_url ) {
+									backgroundImage.set(''); // Necessary because the thumbnail image wont init without a change event
 									backgroundImage.set(slide.post_thumbnail_url);
 									$( '#editor_slide_ifr' ).contents().find('.reveal').css("background-image", "url('"+slide.post_thumbnail_url+"')");
 								}
@@ -622,8 +624,8 @@ var WPPresentAdmin;
 			$('.theme-name').html( '' );
 
 			// Reset customizer background image
-			$('#customize-control-wp_present_background_image .dropdown-content img').hide();
-			$('#customize-control-wp_present_background_image .dropdown-status').show();
+//			$('#customize-control-wp_present_background_image .dropdown-content img').hide();
+//			$('#customize-control-wp_present_background_image .dropdown-status').show();
 
 			// Colors
 			$('#customize-control-wp_present_background_color .color-picker-hex').val( '' ).change();

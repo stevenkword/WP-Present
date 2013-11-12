@@ -17,9 +17,7 @@ class WP_Present_Background_Image_Control extends WP_Customize_Image_Control {
 	 * @param WP_Customize_Manager $manager
 	 */
 	public function __construct( $manager, $id, $args = array() ) {
-
 		parent::__construct( $manager, $id, $args );
-
 	}
 
 	/**
@@ -35,7 +33,6 @@ class WP_Present_Background_Image_Control extends WP_Customize_Image_Control {
 		'orderby'    => 'post_date',
 		'nopaging'   => true,
 	) );
-
 	?>
 
 	<div class="uploaded-target"></div>
