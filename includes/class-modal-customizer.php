@@ -2,13 +2,13 @@
 /**
  *  WP Present Modal Customizer
  */
-class WP_Present_Customizer {
+class WP_Present_Modal_Customizer {
 
 	/* Define and register singleton */
 	private static $instance = false;
 	public static function instance() {
 		if( ! self::$instance ) {
-			self::$instance = new WP_Present_Customizer;
+			self::$instance = new WP_Present_Modal_Customizer;
 		}
 		return self::$instance;
 	}
@@ -27,14 +27,12 @@ class WP_Present_Customizer {
 	public function __construct() {
 		global $pagenow;
 
-		// everywhere
-		add_action( 'wp_head', array( $this, 'action_wp_head' ), 99 );
-
 		// Only do admin stuff on the edit taxonomy page
-		if( 'edit-tags.php' != $pagenow || !isset( $_GET['taxonomy'] ) || WP_Present_Core::instance()->taxonomy_slug != $_GET['taxonomy'] )
-			return;
+		// Also, $pagenow is not defined at this point in multisite networks only
+		//if( /* 'edit-tags.php' != $pagenow || */ ! isset( $_GET['taxonomy'] ) || WP_Present_Core::instance()->taxonomy_slug != $_GET['taxonomy'] )
+		//	return;
 
-		// Only if the taxonomy is set (not a listing)
+		//Only if the taxonomy is set (not a listing)
 		if( ! isset( $_REQUEST[ 'tag_ID' ] ) )
 			return;
 
@@ -55,10 +53,6 @@ class WP_Present_Customizer {
 		add_action( 'customize_controls_print_footer_scripts', '_wp_footer_scripts' );
 		add_action( 'customize_controls_print_styles', 'print_admin_styles', 20 );
 
-	}
-
-	public function action_wp_head(){
-		//global theme overrides would go here (options);
 	}
 
 	/**
@@ -95,10 +89,13 @@ class WP_Present_Customizer {
 	}
 
 	public function action_plugins_loaded() {
+
 		require( ABSPATH . WPINC . '/class-wp-customize-manager.php' );
 
 		// Init Customize class
 		$GLOBALS['wp_customize'] = new WP_Customize_Manager;
+
+		require( plugin_dir_path( __FILE__ ) . '/class-customizer-background-image-control.php' );
 	}
 
 	public function action_admin_init() {
@@ -256,8 +253,6 @@ class WP_Present_Customizer {
 	 */
 	public function action_customize_register( $wp_customize ) {
 
-		require( plugin_dir_path( __FILE__ ) . '/class-customizer-background-image-control.php' );
-
 		// Remove all existing sections
 		foreach( $wp_customize->sections() as $id => $section ) {
 			$wp_customize->remove_section( $id );
@@ -391,4 +386,4 @@ class WP_Present_Customizer {
 	}
 
 } // Class
-WP_Present_Customizer::instance();
+WP_Present_Modal_Customizer::instance();

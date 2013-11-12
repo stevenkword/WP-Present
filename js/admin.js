@@ -355,6 +355,7 @@ var WPPresentAdmin;
 								$('.spinner').hide();
 							},
 							success: function( contentEditor ) {
+
 								var slide = jQuery.parseJSON( contentEditor );
 								tinymce.get( 'editor_slide' ).setContent( slide.post_content );
 

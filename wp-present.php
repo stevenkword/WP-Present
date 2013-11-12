@@ -28,7 +28,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-require_once( 'includes/class-modal-customizer.php' );
 class WP_Present_Core {
 
 	/* Post Type */
@@ -82,6 +81,12 @@ class WP_Present_Core {
 		// Setup
 		$this->plugins_url = plugins_url( '/wp-present' );
 		$this->nonce_fail_message = __( 'Cheatin&#8217; huh?' );
+
+		// Check the things
+		//if( isset( $_REQUEST[ 'tag_ID' ] ) && isset( $_GET['taxonomy'] ) && WP_Present_Core::instance()->taxonomy_slug == $_GET['taxonomy'] ) {
+		if( is_admin() )
+			require( plugin_dir_path( __FILE__ ) . 'includes/class-modal-customizer.php' );
+		//}
 
 		// On Activation
 		register_activation_hook( __FILE__, array( $this, 'activate' ) );
@@ -506,10 +511,6 @@ class WP_Present_Core {
 	 * @return null
 	 */
 	public function action_admin_enqueue_scripts() {
-		global $pagenow;
-		// Only on the edit taxonomy page
-		if( 'edit-tags.php' != $pagenow || !isset( $_GET['taxonomy'] ) || $this->taxonomy_slug != $_GET['taxonomy'] )
-			return;
 
 		// Admin Styles
 		wp_enqueue_style( 'wp-present-admin', $this->plugins_url . '/css/admin.css', '', $this->scripts_version );
@@ -860,7 +861,7 @@ class WP_Present_Core {
 		</tr>
 		<div id="dialog" class="media-modal" title="Edit <?php echo $this->post_type_singular_name; ?>" style="display: none;">
 			<div class="modal-inner-left">
-				<?php WP_Present_Customizer::instance()->render(); ?>
+				<?php WP_Present_Modal_Customizer::instance()->render(); ?>
 			</div>
 			<div class="modal-inner-right">
 
