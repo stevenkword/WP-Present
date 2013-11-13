@@ -1,6 +1,6 @@
 === WP Present - beta ===
 Contributors: stevenkword
-Tags: presentation, slides, reveal.js, wp-present, WordCamp, present, slide, powerpoint, slidedeck
+Tags: present, presentation, slide, slides, reveal.js, wp-present, WordCamp, present, slide, powerpoint, slidedeck
 Requires at least: 3.5
 Tested up to: 3.7
 Stable tag: trunk
