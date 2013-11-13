@@ -16,6 +16,8 @@ Demo coming soon to http://wppresent.org
 
 Currently works best with Chrome & Safari
 
+A big shout out to Hakim El Hattab of reveal.js
+
 ## Installation ##
 1. Upload "/wp-present" to the "/wp-content/plugins/" directory.
 2. Activate the plugin through the "Plugins" menu in WordPress.
