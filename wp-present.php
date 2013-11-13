@@ -2,9 +2,9 @@
 /*
 Plugin Name: WP Present
 Plugin URI: http://wppresent.org/
-Description: Create elegant slide presentations with the the power of WordPress and the beauty of reveal.js
+Description: Create beautiful slide presentations with the the power of WordPress and the elegance of reveal.js
 Author: stevenkword
-Version: 0.9.3
+Version: 0.9.4
 Author URI: http://stevenword.com/
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html

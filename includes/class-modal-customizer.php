@@ -25,19 +25,12 @@ class WP_Present_Modal_Customizer {
 	 * @return null
 	 */
 	public function __construct() {
-		global $pagenow;
 
+		// Only if the taxonomy is set (not a listing)
+		if( ! is_admin() || ! isset( $_REQUEST[ 'tag_ID' ] ) )
+			return;
 
 		add_action( 'plugins_loaded', array( $this, 'action_plugins_loaded' ) );
-
-		// Only do admin stuff on the edit taxonomy page
-		// Also, $pagenow is not defined at this point in multisite networks only
-		//if( /* 'edit-tags.php' != $pagenow || */ ! isset( $_GET['taxonomy'] ) || WP_Present_Core::instance()->taxonomy_slug != $_GET['taxonomy'] )
-		//	return;
-
-		//Only if the taxonomy is set (not a listing)
-		if( ! isset( $_REQUEST[ 'tag_ID' ] ) )
-			return;
 
 		// Let's roll.
 		add_action( 'wp_loaded', array( $this, 'action_wp_loaded' ) );

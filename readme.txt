@@ -8,11 +8,11 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
-Create elegant slide presentations with the the power of WordPress and the beauty of reveal.js
+Create beautiful slide presentations with the the power of WordPress and the elegance of reveal.js
 
 Demo comming soon to http://wppresent.org
 
-A big shout out to Hakim El Hattab of reveal.js
+A big shout out to Hakim El Hattab of reveal.js, http://hakim.se
 
 == Installation ==
 1. Upload "/wp-present" to the "/wp-content/plugins/" directory.
@@ -23,6 +23,9 @@ A big shout out to Hakim El Hattab of reveal.js
 2. A slide in a presentation
 
 == Changelog ==
+= 0.9.4 =
+* First item
+
 = 0.9.3 =
 * Updates to reveal.js v2.5.0
 * Modal redesign
