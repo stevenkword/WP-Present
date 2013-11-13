@@ -1,18 +1,18 @@
 WP-Present - beta
 =================
-Contributors: stevenkword
-Tags: presentation, slides, reveal.js, wp-present
-Requires at least: 3.5
-Tested up to: 3.7
-Stable tag: trunk
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+* Contributors: stevenkword
+* Tags: present, presentation, slide, slides, reveal.js, wp-present, WordCamp, powerpoint, slidedeck
+* Requires at least: 3.5
+* Tested up to: 3.7
+* Stable tag: trunk
+* License: GPLv2 or later
+* License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 ## Description ##
 
-Create beautiful slide presentations with the the power of WordPress and the elegance of reveal.js
+Create elegant slide presentations with the the power of WordPress and the beauty of reveal.js
 
-Demo available at [http://wppresent.org]
+Demo coming soon to http://wppresent.org
 
 Currently works best with Chrome & Safari
 
