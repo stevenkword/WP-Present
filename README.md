@@ -1,7 +1,7 @@
 WP-Present - beta
 =================
 * Contributors: stevenkword
-* Tags: presentation, slides, reveal.js, wp-present
+* Tags: present, presentation, slide, slides, reveal.js, wp-present
 * Requires at least: 3.5
 * Tested up to: 3.7
 * Stable tag: trunk
