@@ -27,6 +27,9 @@ class WP_Present_Modal_Customizer {
 	public function __construct() {
 		global $pagenow;
 
+
+		add_action( 'plugins_loaded', array( $this, 'action_plugins_loaded' ) );
+
 		// Only do admin stuff on the edit taxonomy page
 		// Also, $pagenow is not defined at this point in multisite networks only
 		//if( /* 'edit-tags.php' != $pagenow || */ ! isset( $_GET['taxonomy'] ) || WP_Present_Core::instance()->taxonomy_slug != $_GET['taxonomy'] )
@@ -42,7 +45,6 @@ class WP_Present_Modal_Customizer {
 		// Remove and define new Theme Customizer sections, settings, and controls
 	    add_action( 'customize_register', array( $this, 'action_customize_register' ), 99 );
 
-		add_action( 'plugins_loaded', array( $this, 'action_plugins_loaded' ) );
 		add_action( 'admin_init', array( $this, 'action_admin_init' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'action_admin_enqueue_scripts' ) );
 		add_action( 'admin_head', array( $this, 'action_admin_head' ), 20 );
