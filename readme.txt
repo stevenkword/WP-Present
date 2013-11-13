@@ -12,6 +12,8 @@ Create elegant slide presentations with the the power of WordPress and the beaut
 
 Demo comming soon to http://wppresent.org
 
+A big shout out to Hakim El Hattab of reveal.js
+
 == Installation ==
 1. Upload "/wp-present" to the "/wp-content/plugins/" directory.
 2. Activate the plugin through the "Plugins" menu in WordPress.
