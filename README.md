@@ -1,12 +1,12 @@
 WP-Present - beta
 =================
-Contributors: stevenkword
-Tags: presentation, slides, reveal.js, wp-present
-Requires at least: 3.5
-Tested up to: 3.7
-Stable tag: trunk
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+* Contributors: stevenkword
+* Tags: presentation, slides, reveal.js, wp-present
+* Requires at least: 3.5
+* Tested up to: 3.7
+* Stable tag: trunk
+* License: GPLv2 or later
+* License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 ## Description ##
 
