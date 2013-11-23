@@ -144,6 +144,20 @@ class WP_Present_Core {
 		// Adds custom image sizes that will play nice with the default slide resolution
 		add_action( 'init', array( $this, 'register_image_sizes' ) );
 		add_filter( 'image_size_names_choose', array( $this, 'filter_image_size_names_choose' ) );
+
+
+		// Add specific CSS class by filter
+		add_filter('body_class', array( $this, 'filter_body_class' ) );
+	}
+
+	/**
+	 * Adds a wp-present body class
+	 *
+	 * @return array
+	 */
+	function filter_body_class($classes) {
+		$classes[] = 'wp-present';
+		return $classes;
 	}
 
 	/**

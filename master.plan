@@ -1,21 +1,25 @@
 = Milestone 1.0 =
-* ADD SLUGS TO IDS IN THE DESCRIPTION FIELD
 * Add option for display resolution ( consider detection )
-* When adding a new column, add it one column after the active column
 * Add metaboxes for reveal.js speaker notes (asides)
 * Add metaboxes for appearance/motion overrides
-* Append a body class to the <body> tag for more specific style targeting
-* Peek at how MP6 does fonts / icons (OPEN SANS!)
-* Prevent double toggle on click events for taxonomy widget handles
 * REVEAL theme selector option for the theme customizer
+* Peek at how MP6 does fonts / icons (OPEN SANS!)
+* Clean up the admin menu hackery ( manual array key assignments )
+
+= Milestone 0.9.5 =
+* ADD SLUGS TO IDS IN THE DESCRIPTION FIELD
+* When adding a new column, add it one column after the active column
+* Admin body class for more specific CSS selectors
 * Make the placeholders for the columns larger than the widget placeholders
 * Fix column backfilling when empty columns are present
-* Clean up the admin menu hackery ( manual array key assignments )
 * Add ability to highlight slides to target slide removal and insertions
-* Admin body class for more specific CSS selectors
 * Resolve loading modal customize background on 2nd load after background image removal
 * Have a template for displaying slides that are not found in a presentation
 
-= Unschedule =
+= Unscheduled =
 * Optimize jQuery object caching
 * Break Core class into new classes, Core & Admin, Front End
+
+= Ideas =
+* Take the json array stored in the taxonomy description. field. On save, store the col and row of that slide in that current taxonomy
+in each slide. In other words, save the coordinates on save_post.
