@@ -180,9 +180,7 @@ var WPPresentAdmin;
 		 * Expand slide details
 		 */
 		widgetButtonExpand: function () {
-			$('#container').on('click', '.widget-title-action', function() {
-				$( this ).parents('.widget').children('.widget-inside').toggle();
-			});
+			// Change Icons, that's it!
 		},
 
 		/**

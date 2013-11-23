@@ -466,7 +466,6 @@ class WP_Present_Core {
 
 				// Not a fan of the add new bit
 				unset( $submenu[$submenu_key][10] );
-
 				ksort( $submenu[$post_type_url] );
 			}
 		}
