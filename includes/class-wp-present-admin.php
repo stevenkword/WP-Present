@@ -103,7 +103,9 @@ class WP_Present_Admin {
 						<p><textarea>Branding HTML textarea goes here</textarea></p>
 					<h3>Coming soon</h3>
 						<?php
-						$master_plan_file = fopen( 'master.plan', 'r', __FILE__ );
+						//Get plugin path
+						$plugin_path = dirname( dirname( __FILE__ ) );
+						$master_plan_file = fopen( $plugin_path . '/master.plan', 'r' );
 						while ( ! feof( $master_plan_file ) )
 							echo fgets( $master_plan_file ) . '<br />';
 						fclose( $master_plan_file );
