@@ -62,7 +62,7 @@ class WP_Present_Modal_Customizer {
 	/**
 	 * Print javascript settings.
 	 *
-	 * @since 1.0.0
+	 * @since 0.9.0
 	 */
 	public function customize_preview_init() {
 		global $wp_customize;

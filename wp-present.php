@@ -52,7 +52,7 @@ class WP_Present_Loader {
 	/**
 	 * Clone
 	 *
-	 * @since 1.0.0
+	 * @since 0.9.0
 	 */
 	private function __clone() { }
 
@@ -60,7 +60,7 @@ class WP_Present_Loader {
 	 * Add actions and filters
 	 *
 	 * @uses add_action, add_filter
-	 * @since 1.0.0
+	 * @since 0.9.0
 	 */
 	function __construct() {
 
@@ -116,7 +116,7 @@ class WP_Present_Loader {
 	/**
 	 * Version Check
 	 *
-	 * @since 1.0.0
+	 * @since 0.9.0
 	 */
 	function action_init_check_version() {
 		// Check if the version has changed and if so perform the necessary actions
