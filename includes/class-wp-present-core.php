@@ -156,23 +156,23 @@ class WP_Present_Core {
 		register_post_type( self::POST_TYPE_SLUG, array(
 			'labels' => array(
 				//@todo http://codex.wordpress.org/Function_Reference/register_post_type
-				'name' => __( self::POST_TYPE_NAME ),
+				'name'          => __( self::POST_TYPE_NAME ),
 				'singular_name' => __( self::POST_TYPE_SINGULAR ),
-				'add_new_item' => __( 'Add New ' . self::POST_TYPE_SINGULAR ),
-				'edit_item' => __( 'Edit ' . self::POST_TYPE_SINGULAR ),
-				'new_item' => __( 'New ' . self::POST_TYPE_SINGULAR ),
-				'view_item' => __( 'View ' . self::POST_TYPE_SINGULAR ),
-				'search_items' => __( 'Search' . self::POST_TYPE_NAME ),
+				'add_new_item'  => __( 'Add New ' . self::POST_TYPE_SINGULAR ),
+				'edit_item'     => __( 'Edit ' . self::POST_TYPE_SINGULAR ),
+				'new_item'      => __( 'New ' . self::POST_TYPE_SINGULAR ),
+				'view_item'     => __( 'View ' . self::POST_TYPE_SINGULAR ),
+				'search_items'  => __( 'Search' . self::POST_TYPE_NAME ),
 			),
-			'public' => true,
+			'public'          => true,
 			'capability_type' => self::POST_TYPE_CAP_TYPE,
-			'has_archive' => true,
-			'show_ui' => true,
-			'show_in_menu' => true,
-			//'menu_position' => 5,
-			'hierarchical' => true, //@todo within the same category?
-			'supports' => array( 'title', 'editor', 'page-attributes', 'thumbnail' ),
-			'taxonomies' => array( self::TAXONOMY_SLUG )
+			'has_archive'     => true,
+			'show_ui'         => true,
+			'show_in_menu'    => true,
+			//'menu_position'   => 5,
+			'hierarchical'    => true, //@todo within the same category?
+			'supports'        => array( 'title', 'editor', 'page-attributes', 'thumbnail' ),
+			'taxonomies'      => array( self::TAXONOMY_SLUG )
 		) );
 	}
 
@@ -184,25 +184,25 @@ class WP_Present_Core {
 	 */
 	public function action_init_register_taxonomy() {
 		register_taxonomy( self::TAXONOMY_SLUG, $this->post_types, array(
-			'labels'              	=> array(
-				'name'            		=> _x( self::TAXONOMY_NAME, 'taxonomy general name' ),
-				'singular_name'       	=> _x( self::TAXONOMY_SINGULAR, 'taxonomy singular name' ),
-				'search_items'        	=> __( 'Search ' . self::TAXONOMY_NAME ),
-				'all_items'           	=> __( 'All ' . self::TAXONOMY_NAME ),
-				'parent_item'         	=> __( 'Parent ' . self::TAXONOMY_SINGULAR ),
-				'parent_item_colon'   	=> __( 'Parent ' . self::TAXONOMY_SINGULAR . ':' ),
-				'edit_item'           	=> __( 'Edit ' . self::TAXONOMY_SINGULAR ),
-				'update_item'         	=> __( 'Update ' . self::TAXONOMY_SINGULAR ),
-				'add_new_item'        	=> __( 'Add New ' . self::TAXONOMY_SINGULAR ),
-				'new_item_name'       	=> __( 'New ' . self::TAXONOMY_SINGULAR. ' Name' ),
-				'menu_name'           	=> __( self::TAXONOMY_NAME ),
-				'view_item'           	=> __( 'View ' . self::TAXONOMY_SINGULAR )
+			'labels' => array(
+				'name'              => _x( self::TAXONOMY_NAME, 'taxonomy general name' ),
+				'singular_name'     => _x( self::TAXONOMY_SINGULAR, 'taxonomy singular name' ),
+				'search_items'      => __( 'Search ' . self::TAXONOMY_NAME ),
+				'all_items'         => __( 'All ' . self::TAXONOMY_NAME ),
+				'parent_item'       => __( 'Parent ' . self::TAXONOMY_SINGULAR ),
+				'parent_item_colon' => __( 'Parent ' . self::TAXONOMY_SINGULAR . ':' ),
+				'edit_item'         => __( 'Edit ' . self::TAXONOMY_SINGULAR ),
+				'update_item'       => __( 'Update ' . self::TAXONOMY_SINGULAR ),
+				'add_new_item'      => __( 'Add New ' . self::TAXONOMY_SINGULAR ),
+				'new_item_name'     => __( 'New ' . self::TAXONOMY_SINGULAR. ' Name' ),
+				'menu_name'         => __( self::TAXONOMY_NAME ),
+				'view_item'         => __( 'View ' . self::TAXONOMY_SINGULAR )
 			),
-			'hierarchical'        	=> true,
-			'show_ui'             	=> true,
-			'show_admin_column'   	=> true,
-			'query_var'         	=> true,
-			'rewrite'             	=> array( 'slug' => self::TAXONOMY_SLUG )
+			'hierarchical'      => true,
+			'show_ui'           => true,
+			'show_admin_column' => true,
+			'query_var'         => true,
+			'rewrite'           => array( 'slug' => self::TAXONOMY_SLUG )
 		) );
 	}
 
