@@ -38,7 +38,7 @@ define( 'WP_PRESENT_VERSION', 1 );
 class WP_Present_Loader {
 
 	const OPTION_VERSION  = 'wp-present-version';
-	private $version = false;
+	protected $version = false;
 
 	// Define and register singleton
 	private static $instance = false;
@@ -95,6 +95,7 @@ class WP_Present_Loader {
 	 * On plugin activation
 	 *
 	 * @uses flush_rewrite_rules()
+	 * @since 0.9.0
 	 * @return null
 	 */
 	public function activate() {
@@ -107,6 +108,7 @@ class WP_Present_Loader {
 	 * On plugin deactivation
 	 *
 	 * @uses flush_rewrite_rules()
+	 * @since 0.9.0
 	 * @return null
 	 */
 	public function deactivate() {
