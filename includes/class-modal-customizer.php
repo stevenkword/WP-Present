@@ -62,7 +62,7 @@ class WP_Present_Modal_Customizer {
 	/**
 	 * Print javascript settings.
 	 *
-	 * @since 3.4.0
+	 * @since 1.0.0
 	 */
 	public function customize_preview_init() {
 		global $wp_customize;
@@ -108,7 +108,7 @@ class WP_Present_Modal_Customizer {
 		wp_enqueue_style( 'customize-controls' );
 		wp_enqueue_script( 'customize-controls' );
 		wp_enqueue_script( 'accordion' );
-		wp_enqueue_script( 'wp-present-customize-controls', WP_Present_Core::instance()->plugins_url . '/js/customize-controls.js', array( 'jquery' ), WP_Present_Core::instance()->scripts_version, true );
+		wp_enqueue_script( 'wp-present-customize-controls', WP_Present_Core::instance()->plugins_url . '/js/customize-controls.js', array( 'jquery' ), WP_Present_Core::SCRIPTS_VERSION, true );
 		do_action( 'customize_controls_enqueue_scripts' );
 	}
 

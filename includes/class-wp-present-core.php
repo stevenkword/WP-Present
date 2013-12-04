@@ -6,28 +6,30 @@
  **/
 class WP_Present_Core {
 
+	const SCRIPTS_VERSION = 20131204;
+
 	/* Post Type */
-	public $post_type_slug = 'slide';
-	public $post_type_name = 'Slides';
-	public $post_type_singular_name = 'Slide';
-	public $post_type_capability_type = 'post';
+	const POST_TYPE_SLUG = 'slide';
+	const POST_TYPE_NAME = 'Slides';
+	const POST_TYPE_SINGULAR = 'Slide';
+	const POST_TYPE_CAP_TYPE = 'post';
+
 	public $post_types = array( 'slide' );
 
 	/* Taxonomy */
-	public $taxonomy_slug = 'presentation';
-	public $taxonomy_name = 'Presentations';
-	public $taxonomy_singular_name = 'Presentation';
+	const TAXONOMY_SLUG = 'presentation';
+	const TAXONOMY_NAME = 'Presentations';
+	const TAXONOMY_SINGULAR = 'Presentation';
 
 	/* Options */
-	public $option_name = 'presentation-options';
-	public $option_title = 'Presentation Options';
+	const OPTION_NAME = 'presentation-options';
+	const OPTION_TITLE = 'Presentation Options';
 
 	/* Misc */
-	public $capability = 'edit_others_posts';
-	public $nonce_field = 'wp-present-nonce';
-	public $scripts_version = 20131111;
-	public $default_theme = 'simple.css'; //moon, night, simple, serif, solarized
-	//public $max_num_slides = 250; //not currently used, proposed variable
+	const CAPABILITY = 'edit_others_posts';
+	const NONCE_FIELD = 'wp-present-nonce';
+	const DEFAULT_THEME = 'simple.css'; // moon, night, simple, serif, solarized
+	//const MAX_NUM_SLIDES = 250; // not currently used, proposed variable
 
 	public $plugins_url = '';
 	public $nonce_fail_message = '';
@@ -82,7 +84,7 @@ class WP_Present_Core {
 		add_filter('screen_options_show_screen', '__return_false'); // a test
 
 		// Taxonomy
-		add_action( $this->taxonomy_slug . '_edit_form', array( $this, 'taxonomy_edit_form' ), 9, 2 );
+		add_action( self::TAXONOMY_SLUG . '_edit_form', array( $this, 'taxonomy_edit_form' ), 9, 2 );
 
 		add_action( 'restrict_manage_posts', array( $this, 'action_restrict_manage_posts' ) );
 		add_action( 'parse_query', array( $this, 'action_parse_query' ) );
@@ -103,7 +105,7 @@ class WP_Present_Core {
 		add_filter( 'mce_external_plugins', array( $this, 'filter_mce_external_plugins' ) );
 
 		// Hide taxonomy description column
-		add_filter( 'manage_edit-' . $this->taxonomy_slug . '_columns', array( $this, 'filter_manage_edit_columns' ) );
+		add_filter( 'manage_edit-' . self::TAXONOMY_SLUG . '_columns', array( $this, 'filter_manage_edit_columns' ) );
 
 		// Adds custom image sizes that will play nice with the default slide resolution
 		add_action( 'init', array( $this, 'register_image_sizes' ) );
@@ -151,26 +153,26 @@ class WP_Present_Core {
 	 * @return null
 	 */
 	public function action_init_register_post_type() {
-		register_post_type( $this->post_type_slug, array(
+		register_post_type( self::POST_TYPE_SLUG, array(
 			'labels' => array(
 				//@todo http://codex.wordpress.org/Function_Reference/register_post_type
-				'name' => __( $this->post_type_name ),
-				'singular_name' => __( $this->post_type_singular_name ),
-				'add_new_item' => __( 'Add New ' . $this->post_type_singular_name ),
-				'edit_item' => __( 'Edit ' . $this->post_type_singular_name ),
-				'new_item' => __( 'New ' . $this->post_type_singular_name ),
-				'view_item' => __( 'View ' . $this->post_type_singular_name ),
-				'search_items' => __( 'Search' . $this->post_type_name ),
+				'name' => __( self::POST_TYPE_NAME ),
+				'singular_name' => __( self::POST_TYPE_SINGULAR ),
+				'add_new_item' => __( 'Add New ' . self::POST_TYPE_SINGULAR ),
+				'edit_item' => __( 'Edit ' . self::POST_TYPE_SINGULAR ),
+				'new_item' => __( 'New ' . self::POST_TYPE_SINGULAR ),
+				'view_item' => __( 'View ' . self::POST_TYPE_SINGULAR ),
+				'search_items' => __( 'Search' . self::POST_TYPE_NAME ),
 			),
 			'public' => true,
-			'capability_type' => $this->post_type_capability_type,
+			'capability_type' => self::POST_TYPE_CAP_TYPE,
 			'has_archive' => true,
 			'show_ui' => true,
 			'show_in_menu' => true,
 			//'menu_position' => 5,
 			'hierarchical' => true, //@todo within the same category?
 			'supports' => array( 'title', 'editor', 'page-attributes', 'thumbnail' ),
-			'taxonomies' => array( $this->taxonomy_slug )
+			'taxonomies' => array( self::TAXONOMY_SLUG )
 		) );
 	}
 
@@ -181,26 +183,26 @@ class WP_Present_Core {
 	 * @return null
 	 */
 	public function action_init_register_taxonomy() {
-		register_taxonomy( $this->taxonomy_slug, $this->post_types, array(
+		register_taxonomy( self::TAXONOMY_SLUG, $this->post_types, array(
 			'labels'              	=> array(
-				'name'            		=> _x( $this->taxonomy_name, 'taxonomy general name' ),
-				'singular_name'       	=> _x( $this->taxonomy_singular_name, 'taxonomy singular name' ),
-				'search_items'        	=> __( 'Search ' . $this->taxonomy_name ),
-				'all_items'           	=> __( 'All ' . $this->taxonomy_name ),
-				'parent_item'         	=> __( 'Parent ' . $this->taxonomy_singular_name ),
-				'parent_item_colon'   	=> __( 'Parent ' . $this->taxonomy_singular_name . ':' ),
-				'edit_item'           	=> __( 'Edit ' . $this->taxonomy_singular_name ),
-				'update_item'         	=> __( 'Update ' . $this->taxonomy_singular_name ),
-				'add_new_item'        	=> __( 'Add New ' . $this->taxonomy_singular_name ),
-				'new_item_name'       	=> __( 'New ' . $this->taxonomy_singular_name. ' Name' ),
-				'menu_name'           	=> __( $this->taxonomy_name ),
-				'view_item'           	=> __( 'View ' . $this->taxonomy_singular_name )
+				'name'            		=> _x( self::TAXONOMY_NAME, 'taxonomy general name' ),
+				'singular_name'       	=> _x( self::TAXONOMY_SINGULAR, 'taxonomy singular name' ),
+				'search_items'        	=> __( 'Search ' . self::TAXONOMY_NAME ),
+				'all_items'           	=> __( 'All ' . self::TAXONOMY_NAME ),
+				'parent_item'         	=> __( 'Parent ' . self::TAXONOMY_SINGULAR ),
+				'parent_item_colon'   	=> __( 'Parent ' . self::TAXONOMY_SINGULAR . ':' ),
+				'edit_item'           	=> __( 'Edit ' . self::TAXONOMY_SINGULAR ),
+				'update_item'         	=> __( 'Update ' . self::TAXONOMY_SINGULAR ),
+				'add_new_item'        	=> __( 'Add New ' . self::TAXONOMY_SINGULAR ),
+				'new_item_name'       	=> __( 'New ' . self::TAXONOMY_SINGULAR. ' Name' ),
+				'menu_name'           	=> __( self::TAXONOMY_NAME ),
+				'view_item'           	=> __( 'View ' . self::TAXONOMY_SINGULAR )
 			),
 			'hierarchical'        	=> true,
 			'show_ui'             	=> true,
 			'show_admin_column'   	=> true,
 			'query_var'         	=> true,
-			'rewrite'             	=> array( 'slug' => $this->taxonomy_slug )
+			'rewrite'             	=> array( 'slug' => self::TAXONOMY_SLUG )
 		) );
 	}
 
@@ -215,9 +217,9 @@ class WP_Present_Core {
 		global $pagenow, $post;
 
 		// Only on the edit taxonomy and edit post type admin pages
-		$is_tax = ( 'edit-tags.php' == $pagenow || ( isset( $_GET['taxonomy'] ) && $this->taxonomy_slug == $_GET['taxonomy'] ) ) ? true : false;
-		$is_cpt = ( 'post.php' == $pagenow && isset( $_GET[ 'post' ] ) && $this->post_type_slug == get_post_type( $_GET[ 'post' ] ) ) ? true : false;
-		$is_cpt_new = ( 'post-new.php' == $pagenow && $this->post_type_slug == $_GET[ 'post_type' ] ) ? true : false;
+		$is_tax = ( 'edit-tags.php' == $pagenow || ( isset( $_GET['taxonomy'] ) && self::TAXONOMY_SLUG == $_GET['taxonomy'] ) ) ? true : false;
+		$is_cpt = ( 'post.php' == $pagenow && isset( $_GET[ 'post' ] ) && self::POST_TYPE_SLUG == get_post_type( $_GET[ 'post' ] ) ) ? true : false;
+		$is_cpt_new = ( 'post-new.php' == $pagenow && self::POST_TYPE_SLUG == $_GET[ 'post_type' ] ) ? true : false;
 
 		if( ! $is_tax && ! $is_cpt && ! $is_cpt_new )
 			return;
@@ -226,12 +228,12 @@ class WP_Present_Core {
 		remove_editor_styles();
 //		add_editor_style( plugins_url( '/wp-present/css/reset.css' ) );
 		add_editor_style( plugins_url( '/wp-present/js/reveal.js/css/reveal.css' ) );
-		add_editor_style( plugins_url( '/wp-present/js/reveal.js/css/theme/' . $this->default_theme ) );
+		add_editor_style( plugins_url( '/wp-present/js/reveal.js/css/theme/' . self::DEFAULT_THEME ) );
 		add_editor_style( plugins_url( '/wp-present/js/reveal.js/lib/css/zenburn.css' ) );
-		add_editor_style( plugins_url( '/wp-present/css/custom.css?v=' . $this->scripts_version ) );
+		add_editor_style( plugins_url( '/wp-present/css/custom.css?v=' . self::SCRIPTS_VERSION ) );
 
 		//TODO: Make this work to support backgrounds
-		//add_editor_style( plugins_url( '/wp-present/css/tinymce.css.php?v=' . $this->scripts_version . '&post=' . $_REQUEST[ 'post' ] ) );
+		//add_editor_style( plugins_url( '/wp-present/css/tinymce.css.php?v=' . self::SCRIPTS_VERSION . '&post=' . $_REQUEST[ 'post' ] ) );
 	}
 
 	/**
@@ -241,7 +243,7 @@ class WP_Present_Core {
 	 * @return null
 	 */
 	public function action_wp_enqueue_scripts() {
-		if( ! is_tax( $this->taxonomy_slug ) )
+		if( ! is_tax( self::TAXONOMY_SLUG ) )
 			return;
 
 		// Deregister theme specific stylesheets
@@ -255,20 +257,20 @@ class WP_Present_Core {
 		}
 
 		/* Browser reset styles */
-		//wp_enqueue_style( 'reset', $this->plugins_url . '/css/reset.css', '', $this->scripts_version );
+		//wp_enqueue_style( 'reset', $this->plugins_url . '/css/reset.css', '', self::SCRIPTS_VERSION );
 
 		/* Reveal Styles */
-		wp_enqueue_style( 'reveal', $this->plugins_url . '/js/reveal.js/css/reveal.css', '', $this->scripts_version );
-		wp_enqueue_style( 'reveal-theme', $this->plugins_url . '/js/reveal.js/css/theme/' . $this->default_theme, array('reveal'), $this->scripts_version );
-		wp_enqueue_style( 'zenburn', $this->plugins_url . '/js/reveal.js/lib/css/zenburn.css', '', $this->scripts_version, false );
+		wp_enqueue_style( 'reveal', $this->plugins_url . '/js/reveal.js/css/reveal.css', '', self::SCRIPTS_VERSION );
+		wp_enqueue_style( 'reveal-theme', $this->plugins_url . '/js/reveal.js/css/theme/' . self::DEFAULT_THEME, array('reveal'), self::SCRIPTS_VERSION );
+		wp_enqueue_style( 'zenburn', $this->plugins_url . '/js/reveal.js/lib/css/zenburn.css', '', self::SCRIPTS_VERSION, false );
 
 		/* Last run styles */
-		wp_enqueue_style( 'custom', $this->plugins_url . '/css/custom.css', array('reveal'), $this->scripts_version );
+		wp_enqueue_style( 'custom', $this->plugins_url . '/css/custom.css', array('reveal'), self::SCRIPTS_VERSION );
 
 		/* Reveal Scripts */
-		wp_enqueue_script( 'reveal-head', $this->plugins_url . '/js/reveal.js/lib/js/head.min.js', array( 'jquery' ), $this->scripts_version, true );
-		wp_enqueue_script( 'reveal', $this->plugins_url . '/js/reveal.js/js/reveal.min.js', array( 'jquery' ), $this->scripts_version, true );
-		//wp_enqueue_script( 'reveal-config', $this->plugins_url . '/js/reveal-config.js', array( 'jquery' ), $this->scripts_version );
+		wp_enqueue_script( 'reveal-head', $this->plugins_url . '/js/reveal.js/lib/js/head.min.js', array( 'jquery' ), self::SCRIPTS_VERSION, true );
+		wp_enqueue_script( 'reveal', $this->plugins_url . '/js/reveal.js/js/reveal.min.js', array( 'jquery' ), self::SCRIPTS_VERSION, true );
+		//wp_enqueue_script( 'reveal-config', $this->plugins_url . '/js/reveal-config.js', array( 'jquery' ), self::SCRIPTS_VERSION );
 	}
 
 	/**
@@ -305,7 +307,7 @@ class WP_Present_Core {
 	 * @return string
 	 */
 	public function filter_template_include( $template ) {
-		if ( is_tax( $this->taxonomy_slug ) && ( $taxonomy_template = $this->template_chooser() ) )
+		if ( is_tax( self::TAXONOMY_SLUG ) && ( $taxonomy_template = $this->template_chooser() ) )
 			$template = $taxonomy_template[ 'path' ];
 
 		return $template;
@@ -318,7 +320,7 @@ class WP_Present_Core {
 	 * @return null
 	 */
 	public function action_wp_head() {
-		if( ! is_tax( $this->taxonomy_slug ) )
+		if( ! is_tax( self::TAXONOMY_SLUG ) )
 			return false;
 		?>
 		<!-- Reveal -->
@@ -345,7 +347,7 @@ class WP_Present_Core {
 	 * @return null
 	 */
 	public function action_wp_footer() {
-		if( ! is_tax( $this->taxonomy_slug ) )
+		if( ! is_tax( self::TAXONOMY_SLUG ) )
 			return;
 		?>
 		<script>
@@ -398,24 +400,24 @@ class WP_Present_Core {
 		global $menu, $submenu;
 
 		// Taxonomy Menu
-		$taxonomy_url = 'edit-tags.php?taxonomy=' . $this->taxonomy_slug . '&post_type='.$this->post_type_slug;
-		$post_type_url = 'edit.php?post_type=' . $this->post_type_slug;
+		$taxonomy_url = 'edit-tags.php?taxonomy=' . self::TAXONOMY_SLUG . '&post_type='.self::POST_TYPE_SLUG;
+		$post_type_url = 'edit.php?post_type=' . self::POST_TYPE_SLUG;
 
 
 		// Add the options page
-		add_submenu_page( $post_type_url, $this->option_title, 'Options', $this->capability, $this->option_name, array( $this, 'options_page' ) );
+		add_submenu_page( $post_type_url, self::OPTION_TITLE, 'Options', self::CAPABILITY, self::OPTION_NAME, array( $this, 'options_page' ) );
 
 		// Rename the menu item
 		foreach( $menu as $menu_key => $menu_item ) {
-			if( $this->post_type_name == $menu_item[0] ) {
-				$menu[ $menu_key ][0] = $this->taxonomy_name;
+			if( self::POST_TYPE_NAME == $menu_item[0] ) {
+				$menu[ $menu_key ][0] = self::TAXONOMY_NAME;
 			}
 		}
 
 		// Move the taxonomy menu to the top
 		// TODO: It owuld be better to search for the keys based on url
 		foreach( $submenu as $submenu_key => $submenu_item ) {
-			if( isset( $submenu_item[15][0] ) && $this->taxonomy_name == $submenu_item[15][0] ) {
+			if( isset( $submenu_item[15][0] ) && self::TAXONOMY_NAME == $submenu_item[15][0] ) {
 				// This is a bit of hackery.  I should search for these keys
 				$submenu[$submenu_key][2] = $submenu[$submenu_key][15];
 				unset( $submenu[$submenu_key][15] );
@@ -437,9 +439,9 @@ class WP_Present_Core {
 		<div id="wpbody">
 			<div id="wpbody-content" aria-label="Main content" tabindex="0">
 				<div class="wrap">
-					<h2><?php echo $this->option_title; ?></h2>
+					<h2><?php echo self::OPTION_TITLE; ?></h2>
 					<h3>Select a Theme</h3>
-						<p>Current Theme: <?php echo $this->default_theme; ?></p>
+						<p>Current Theme: <?php echo self::DEFAULT_THEME; ?></p>
 					<h3>Resolution</h3>
 						<p>1024x768</p>
 					<h3>Branding</h3>
@@ -468,14 +470,14 @@ class WP_Present_Core {
 	public function action_admin_enqueue_scripts() {
 
 		// Admin Styles
-		wp_enqueue_style( 'wp-present-admin', $this->plugins_url . '/css/admin.css', '', $this->scripts_version );
+		wp_enqueue_style( 'wp-present-admin', $this->plugins_url . '/css/admin.css', '', self::SCRIPTS_VERSION );
 
 		// Admin Scripts
 		wp_enqueue_script( 'jquery-ui-sortable' );
 		wp_enqueue_script( 'jquery-ui-resizable' );
 		wp_enqueue_script( 'jquery-ui-dialog' );
 
-		wp_enqueue_script( 'wp-present-admin', $this->plugins_url . '/js/admin.js', array( 'jquery' ), $this->scripts_version, true );
+		wp_enqueue_script( 'wp-present-admin', $this->plugins_url . '/js/admin.js', array( 'jquery' ), self::SCRIPTS_VERSION, true );
 
 		//wp_enqueue_media();
 		wp_enqueue_style( 'media-views' );
@@ -496,17 +498,17 @@ class WP_Present_Core {
 
 		// Only add this variable on the edit taxonomy page
 		global $pagenow;
-		if( 'edit-tags.php' != $pagenow || ! isset( $_GET['taxonomy'] ) || $this->taxonomy_slug != $_GET['taxonomy'] || ! isset( $_GET[ 'tag_ID' ] ) )
+		if( 'edit-tags.php' != $pagenow || ! isset( $_GET['taxonomy'] ) || self::TAXONOMY_SLUG != $_GET['taxonomy'] || ! isset( $_GET[ 'tag_ID' ] ) )
 			return;
 
 		$num_slides = ( isset( $_GET[ 'tag_ID' ] ) ) ? count( $this->get_associated_slide_ids( $_GET[ 'tag_ID' ], $_GET[ 'taxonomy' ] ) ) : '';
 
 		$slides_query = new WP_Query( array(
-			'post_type'     => $this->post_type_slug, //post type, I used 'product'
+			'post_type'     => self::POST_TYPE_SLUG, //post type, I used 'product'
 			'post_status'   => 'publish', // just tried to find all published post
 			'posts_per_page' => -1,  //show all
 			'tax_query' => array( array(
-				'taxonomy' 	=> $this->taxonomy_slug,
+				'taxonomy' 	=> self::TAXONOMY_SLUG,
 				'terms'		=> $_GET[ 'tag_ID' ]
 			) )
 		) );
@@ -516,7 +518,7 @@ class WP_Present_Core {
 		wp_localize_script( 'wp-present-admin', 'WPPNumSlides', array( intval( $num_slides ) ) );
 
 		if( isset( $_REQUEST[ 'tag_ID' ] ) )
-			wp_localize_script( 'wp-present-admin', 'WPPTaxonomyURL', array( get_term_link( (int) $_GET[ 'tag_ID' ], $this->taxonomy_slug ) ) );
+			wp_localize_script( 'wp-present-admin', 'WPPTaxonomyURL', array( get_term_link( (int) $_GET[ 'tag_ID' ], self::TAXONOMY_SLUG ) ) );
 
 		// Make the admin outer-container div big enough to prevent wrapping
 		$column_width = 210;
@@ -541,7 +543,7 @@ class WP_Present_Core {
 			return;
 
 		// Broken
-		//if ( ! isset( $_POST[ $this->nonce_field ] ) || ! wp_verify_nonce( $_POST[ $this->nonce_field ], $this->nonce_field ) )
+		//if ( ! isset( $_POST[ self::NONCE_FIELD ] ) || ! wp_verify_nonce( $_POST[ self::NONCE_FIELD ], self::NONCE_FIELD ) )
 			//return;
 
 		if ( 'page' == get_post_type( $post_id ) && ! current_user_can( 'edit_page', $post_id ) )
@@ -560,7 +562,7 @@ class WP_Present_Core {
 	public function action_admin_footer() {
 		// Only run on the edit taxonomy page
 		global $pagenow;
-		if( 'edit-tags.php' != $pagenow || ! isset( $_GET['taxonomy'] ) || $this->taxonomy_slug != $_GET['taxonomy'] )
+		if( 'edit-tags.php' != $pagenow || ! isset( $_GET['taxonomy'] ) || self::TAXONOMY_SLUG != $_GET['taxonomy'] )
 			return;
 	}
 
@@ -724,16 +726,16 @@ class WP_Present_Core {
 	public function taxonomy_edit_form( $term, $taxonomy ) {
 		global $post;
 		$associated_slides = $this->get_associated_slide_ids( $term, $taxonomy );
-		wp_nonce_field( $this->nonce_field, $this->nonce_field, false );
+		wp_nonce_field( self::NONCE_FIELD, self::NONCE_FIELD, false );
 		?>
 		<tr class="form-field hide-if-no-js">
 			<th scope="row" valign="top">
 				<p class="action-buttons">
-					<button id="add-button" class="button button-primary">New <?php echo $this->post_type_singular_name; ?></button>
+					<button id="add-button" class="button button-primary">New <?php echo self::POST_TYPE_SINGULAR; ?></button>
 					<button id="add-column" class="button">New Column</button>
 					<button id="remove-column" class="button">Remove Column</button>
 					<!--<button id="tidy-button" class="button">Tidy</button>-->
-					<button id="view-button" class="button">View <?php echo $this->taxonomy_singular_name; ?></button>
+					<button id="view-button" class="button">View <?php echo self::TAXONOMY_SINGULAR; ?></button>
 					<?php // TODO: Add Existing Slide Button ?>
 					<span class="spinner"></span>
 				</p>
@@ -765,7 +767,7 @@ class WP_Present_Core {
 							'order' => 'ASC',
 							'cache_results' => true,
 							'tax_query' => array( array(
-								'taxonomy' => $this->taxonomy_slug,
+								'taxonomy' => self::TAXONOMY_SLUG,
 								'field' => 'id',
 								'terms' => $term->term_id
 							) ),
@@ -794,7 +796,7 @@ class WP_Present_Core {
 							}
 							unset( $col );
 						} elseif( isset( $associated_slides ) || 0 == count( $associated_slides ) ) { // If there are 0 slides
-							//echo '<p>Sorry, No ' . $this->post_type_name . ' found!</p>';
+							//echo '<p>Sorry, No ' . self::POST_TYPE_NAME . ' found!</p>';
 
 							// If taxonomy is empty
 							if( empty( $term_description ) ) {
@@ -814,7 +816,7 @@ class WP_Present_Core {
 				</div><!--/#outer-container-->
 			</td>
 		</tr>
-		<div id="dialog" class="media-modal" title="Edit <?php echo $this->post_type_singular_name; ?>" style="display: none;">
+		<div id="dialog" class="media-modal" title="Edit <?php echo self::POST_TYPE_SINGULAR; ?>" style="display: none;">
 			<div class="modal-inner-left">
 				<?php WP_Present_Modal_Customizer::instance()->render(); ?>
 			</div>
@@ -844,7 +846,7 @@ class WP_Present_Core {
 		*********************************************/
 
  		/* Bail if we are not looking at this taxonomy's directory */
-		if( 'edit-tags.php' != $pagenow || ( $this->taxonomy_slug != $_GET[ 'taxonomy' ] && 'category' != $_GET[ 'taxonomy' ] ) || isset( $_GET[ 'tag_ID' ] ) )
+		if( 'edit-tags.php' != $pagenow || ( self::TAXONOMY_SLUG != $_GET[ 'taxonomy' ] && 'category' != $_GET[ 'taxonomy' ] ) || isset( $_GET[ 'tag_ID' ] ) )
 			return $terms;
 
 		$taxonomy = $taxonomies[0];
@@ -867,7 +869,7 @@ class WP_Present_Core {
 	 * @return string
 	 */
 	public function get_taxonomy_slug() {
-		return $this->taxonomy_slug;
+		return self::TAXONOMY_SLUG;
 	}
 
 	/**
@@ -878,13 +880,13 @@ class WP_Present_Core {
 	public function action_restrict_manage_posts() {
 		global $typenow;
 
-		if ( $typenow == $this->post_type_slug ) {
-			$selected = isset( $_GET[ $this->taxonomy_slug ] ) ? $_GET[ $this->taxonomy_slug ] : '';
-			$info_taxonomy = get_taxonomy( $this->taxonomy_slug );
+		if ( $typenow == self::POST_TYPE_SLUG ) {
+			$selected = isset( $_GET[ self::TAXONOMY_SLUG ] ) ? $_GET[ self::TAXONOMY_SLUG ] : '';
+			$info_taxonomy = get_taxonomy( self::TAXONOMY_SLUG );
 			wp_dropdown_categories( array(
 				'show_option_all' => __( "Show All {$info_taxonomy->label}" ),
-				'taxonomy' => $this->taxonomy_slug,
-				'name' => $this->taxonomy_slug,
+				'taxonomy' => self::TAXONOMY_SLUG,
+				'name' => self::TAXONOMY_SLUG,
 				'orderby' => 'name',
 				'selected' => $selected,
 				'show_count' => true,
@@ -901,10 +903,10 @@ class WP_Present_Core {
 	public function action_parse_query( $query ) {
 		global $pagenow;
 
-		if ( $pagenow == 'edit.php' && isset( $query->query_vars[ 'post_type' ] ) && $query->query_vars[ 'post_type' ] == $this->post_type_slug
-		&& isset( $query->query_vars[ $this->taxonomy_slug] ) && is_numeric( $query->query_vars[ $this->taxonomy_slug ] ) && $query->query_vars[ $this->taxonomy_slug ] != 0 ) {
+		if ( $pagenow == 'edit.php' && isset( $query->query_vars[ 'post_type' ] ) && $query->query_vars[ 'post_type' ] == self::POST_TYPE_SLUG
+		&& isset( $query->query_vars[ self::TAXONOMY_SLUG] ) && is_numeric( $query->query_vars[ self::TAXONOMY_SLUG ] ) && $query->query_vars[ self::TAXONOMY_SLUG ] != 0 ) {
 			$term = get_term_by( 'id', $q_vars[$taxonomy], $taxonomy );
-			$query->query_vars[ $this->taxonomy_slug ] = $term->slug;
+			$query->query_vars[ self::TAXONOMY_SLUG ] = $term->slug;
 		}
 	}
 
@@ -917,13 +919,13 @@ class WP_Present_Core {
 		global $pagenow;
 
 		// Do not do this on the create new post screen since there is no post ID yet
-		if( $pagenow != 'post-new.php' && $this->post_type_slug == $post->post_type ) {
+		if( $pagenow != 'post-new.php' && self::POST_TYPE_SLUG == $post->post_type ) {
 
-			$terms = get_the_terms( $post->ID, $this->taxonomy_slug );
+			$terms = get_the_terms( $post->ID, self::TAXONOMY_SLUG );
 			if( is_array( $terms ) ) {
-				$terms = array_values( get_the_terms( $post->ID, $this->taxonomy_slug ) );
+				$terms = array_values( get_the_terms( $post->ID, self::TAXONOMY_SLUG ) );
 				$term = $terms[0];
-				$url = home_url( implode( '/', array( $this->taxonomy_slug, $term->slug, '#', $post->post_name ) ) );
+				$url = home_url( implode( '/', array( self::TAXONOMY_SLUG, $term->slug, '#', $post->post_name ) ) );
 			}
 		}
 		return $url;
@@ -935,7 +937,7 @@ class WP_Present_Core {
 	 * @return null
 	 */
 	public function filter_get_edit_term_link( $location ) {
-		return add_query_arg( array( 'post_type' => $this->post_type_slug ), $location );
+		return add_query_arg( array( 'post_type' => self::POST_TYPE_SLUG ), $location );
 	}
 
 	/**
@@ -944,7 +946,7 @@ class WP_Present_Core {
 	 * @return null
 	 */
     public function modal_editor( $post_id = '' ) {
-        wp_editor( $content = '', $editor_id = 'editor_' . $this->post_type_slug, array(
+        wp_editor( $content = '', $editor_id = 'editor_' . self::POST_TYPE_SLUG, array(
 			'wpautop' => false, // use wpautop?
 			'media_buttons' => true, // show insert/upload button(s)
 			'textarea_name' => $editor_id, // set the textarea name to something different, square brackets [] can be used here
@@ -999,7 +1001,7 @@ class WP_Present_Core {
 	 */
 	public function action_wp_ajax_get_slide() {
 		// Nonce check
-		if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], $this->nonce_field ) ) {
+		if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], self::NONCE_FIELD ) ) {
 			wp_die( $this->nonce_fail_message );
 		}
 
@@ -1022,7 +1024,7 @@ class WP_Present_Core {
 	 */
 	public function action_wp_ajax_update_slide() {
 		// Nonce check
-		if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], $this->nonce_field ) ) {
+		if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], self::NONCE_FIELD ) ) {
 			wp_die( $this->nonce_fail_message );
 		}
 
@@ -1075,7 +1077,7 @@ class WP_Present_Core {
 	 */
 	public function action_wp_ajax_new_slide() {
 		// Nonce check
-		if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], $this->nonce_field ) ) {
+		if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], self::NONCE_FIELD ) ) {
 			wp_die( $this->nonce_fail_message );
 		}
 
@@ -1083,17 +1085,17 @@ class WP_Present_Core {
 		$safe_content = wp_kses_post( $_REQUEST[ 'content' ] );
 		$safe_title = sanitize_text_field( $_REQUEST[ 'title' ] );
 
-		$presentation = get_term_by( 'id', $_REQUEST['presentation'], $this->taxonomy_slug );
+		$presentation = get_term_by( 'id', $_REQUEST['presentation'], self::TAXONOMY_SLUG );
 
 		$new_post = array(
 			'post_title' => ( $safe_title ) ? $safe_title : strip_tags( $safe_content ),
 			'post_content' => $safe_content,
 			'post_status' => 'publish',
-			'post_type' => $this->post_type_slug
+			'post_type' => self::POST_TYPE_SLUG
 		);
 
 		$post_id = wp_insert_post( $new_post );
-		wp_set_object_terms( $post_id , $presentation->name, $this->taxonomy_slug );
+		wp_set_object_terms( $post_id , $presentation->name, self::TAXONOMY_SLUG );
 
 		$post = get_post( $post_id );
 		$this->admin_render_slide( $post );
@@ -1107,7 +1109,7 @@ class WP_Present_Core {
 	 */
 	public function action_wp_ajax_delete_slide() {
 		// Nonce check
-		if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], $this->nonce_field ) ) {
+		if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], self::NONCE_FIELD ) ) {
 			wp_die( $this->nonce_fail_message );
 		}
 
@@ -1126,7 +1128,7 @@ class WP_Present_Core {
 	 */
 	public function action_wp_ajax_update_presentation() {
 		// Nonce check
-		if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], $this->nonce_field ) ) {
+		if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], self::NONCE_FIELD ) ) {
 			wp_die( $this->nonce_fail_message );
 		}
 
@@ -1137,7 +1139,7 @@ class WP_Present_Core {
 			'description' => $safe_description
 		);
 
-		wp_update_term( $presentation_id, $this->taxonomy_slug, $updated_presentation );
+		wp_update_term( $presentation_id, self::TAXONOMY_SLUG, $updated_presentation );
 		die();
 	}
 
@@ -1163,9 +1165,9 @@ class WP_Present_Core {
 	public function filter_image_size_names_choose( $sizes ) {
 		global $_wp_additional_image_sizes;
 		$sizes = array_merge( $sizes, array(
-			'reveal-small' => __( $this->post_type_singular_name . ' Small' ),
-			'reveal-medium' => __( $this->post_type_singular_name . ' Medium' ),
-			'reveal-large' => __( $this->post_type_singular_name . ' Large' ),
+			'reveal-small' => __( self::POST_TYPE_SINGULAR . ' Small' ),
+			'reveal-medium' => __( self::POST_TYPE_SINGULAR . ' Medium' ),
+			'reveal-large' => __( self::POST_TYPE_SINGULAR . ' Large' ),
 		) );
 		return $sizes;
 	}
