@@ -6,7 +6,7 @@
  **/
 class WP_Present_Admin {
 
-	const SCRIPTS_VERSION = 20131204;
+	const REVISION = 20131204;
 
 	public $plugins_url = '';
 	public $nonce_fail_message = '';
@@ -125,14 +125,14 @@ class WP_Present_Admin {
 	public function action_admin_enqueue_scripts() {
 
 		// Admin Styles
-		wp_enqueue_style( 'wp-present-admin', $this->plugins_url . '/css/admin.css', '', self::SCRIPTS_VERSION );
+		wp_enqueue_style( 'wp-present-admin', $this->plugins_url . '/css/admin.css', '', self::REVISION );
 
 		// Admin Scripts
 		wp_enqueue_script( 'jquery-ui-sortable' );
 		wp_enqueue_script( 'jquery-ui-resizable' );
 		wp_enqueue_script( 'jquery-ui-dialog' );
 
-		wp_enqueue_script( 'wp-present-admin', $this->plugins_url . '/js/admin.js', array( 'jquery' ), self::SCRIPTS_VERSION, true );
+		wp_enqueue_script( 'wp-present-admin', $this->plugins_url . '/js/admin.js', array( 'jquery' ), self::REVISION, true );
 
 		//wp_enqueue_media();
 		wp_enqueue_style( 'media-views' );

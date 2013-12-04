@@ -6,7 +6,7 @@
  **/
 class WP_Present_Core {
 
-	const SCRIPTS_VERSION = 20131204;
+	const REVISION = 20131204;
 
 	/* Post Type */
 	const POST_TYPE_SLUG     = 'slide';
@@ -222,10 +222,10 @@ class WP_Present_Core {
 		add_editor_style( plugins_url( '/wp-present/js/reveal.js/css/reveal.css' ) );
 		add_editor_style( plugins_url( '/wp-present/js/reveal.js/css/theme/' . self::DEFAULT_THEME ) );
 		add_editor_style( plugins_url( '/wp-present/js/reveal.js/lib/css/zenburn.css' ) );
-		add_editor_style( plugins_url( '/wp-present/css/custom.css?v=' . self::SCRIPTS_VERSION ) );
+		add_editor_style( plugins_url( '/wp-present/css/custom.css?v=' . self::REVISION ) );
 
 		//TODO: Make this work to support backgrounds
-		//add_editor_style( plugins_url( '/wp-present/css/tinymce.css.php?v=' . self::SCRIPTS_VERSION . '&post=' . $_REQUEST[ 'post' ] ) );
+		//add_editor_style( plugins_url( '/wp-present/css/tinymce.css.php?v=' . self::REVISION . '&post=' . $_REQUEST[ 'post' ] ) );
 	}
 
 	/**
@@ -249,20 +249,20 @@ class WP_Present_Core {
 		}
 
 		/* Browser reset styles */
-		//wp_enqueue_style( 'reset', $this->plugins_url . '/css/reset.css', '', self::SCRIPTS_VERSION );
+		//wp_enqueue_style( 'reset', $this->plugins_url . '/css/reset.css', '', self::REVISION );
 
 		/* Reveal Styles */
-		wp_enqueue_style( 'reveal', $this->plugins_url . '/js/reveal.js/css/reveal.css', '', self::SCRIPTS_VERSION );
-		wp_enqueue_style( 'reveal-theme', $this->plugins_url . '/js/reveal.js/css/theme/' . self::DEFAULT_THEME, array('reveal'), self::SCRIPTS_VERSION );
-		wp_enqueue_style( 'zenburn', $this->plugins_url . '/js/reveal.js/lib/css/zenburn.css', '', self::SCRIPTS_VERSION, false );
+		wp_enqueue_style( 'reveal', $this->plugins_url . '/js/reveal.js/css/reveal.css', '', self::REVISION );
+		wp_enqueue_style( 'reveal-theme', $this->plugins_url . '/js/reveal.js/css/theme/' . self::DEFAULT_THEME, array('reveal'), self::REVISION );
+		wp_enqueue_style( 'zenburn', $this->plugins_url . '/js/reveal.js/lib/css/zenburn.css', '', self::REVISION, false );
 
 		/* Last run styles */
-		wp_enqueue_style( 'custom', $this->plugins_url . '/css/custom.css', array('reveal'), self::SCRIPTS_VERSION );
+		wp_enqueue_style( 'custom', $this->plugins_url . '/css/custom.css', array('reveal'), self::REVISION );
 
 		/* Reveal Scripts */
-		wp_enqueue_script( 'reveal-head', $this->plugins_url . '/js/reveal.js/lib/js/head.min.js', array( 'jquery' ), self::SCRIPTS_VERSION, true );
-		wp_enqueue_script( 'reveal', $this->plugins_url . '/js/reveal.js/js/reveal.min.js', array( 'jquery' ), self::SCRIPTS_VERSION, true );
-		//wp_enqueue_script( 'reveal-config', $this->plugins_url . '/js/reveal-config.js', array( 'jquery' ), self::SCRIPTS_VERSION );
+		wp_enqueue_script( 'reveal-head', $this->plugins_url . '/js/reveal.js/lib/js/head.min.js', array( 'jquery' ), self::REVISION, true );
+		wp_enqueue_script( 'reveal', $this->plugins_url . '/js/reveal.js/js/reveal.min.js', array( 'jquery' ), self::REVISION, true );
+		//wp_enqueue_script( 'reveal-config', $this->plugins_url . '/js/reveal-config.js', array( 'jquery' ), self::REVISION );
 	}
 
 	/**
