@@ -14,23 +14,22 @@ class WP_Present_Core {
 	const POST_TYPE_SINGULAR = 'Slide';
 	const POST_TYPE_CAP_TYPE = 'post';
 
-	public $post_types = array( 'slide' );
-
 	/* Taxonomy */
-	const TAXONOMY_SLUG     = 'presentation';
-	const TAXONOMY_NAME     = 'Presentations';
-	const TAXONOMY_SINGULAR = 'Presentation';
+	const TAXONOMY_SLUG      = 'presentation';
+	const TAXONOMY_NAME      = 'Presentations';
+	const TAXONOMY_SINGULAR  = 'Presentation';
 
 	/* Options */
-	const OPTION_NAME  = 'presentation-options';
-	const OPTION_TITLE = 'Presentation Options';
+	const OPTION_NAME        = 'presentation-options';
+	const OPTION_TITLE       = 'Presentation Options';
 
 	/* Misc */
-	const CAPABILITY     = 'edit_others_posts';
-	const NONCE_FIELD    = 'wp-present-nonce';
-	const DEFAULT_THEME  = 'simple.css'; // moon, night, simple, serif, solarized
-	const MAX_NUM_SLIDES = 250; // not currently used, proposed variable
+	const CAPABILITY         = 'edit_others_posts';
+	const NONCE_FIELD        = 'wp-present-nonce';
+	const DEFAULT_THEME      = 'simple.css'; // moon, night, simple, serif, solarized
+	const MAX_NUM_SLIDES     = 250; // not currently used, proposed variable
 
+	public $post_types = array( 'slide' );
 	public $plugins_url = '';
 	public $nonce_fail_message = '';
 
