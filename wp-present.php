@@ -72,14 +72,15 @@ class WP_Present_Loader {
 			add_option( self::OPTION_VERSION, $this->version );
 		}
 
-		// Load the plugin
+		// Load the assets
 		require( plugin_dir_path( __FILE__ ) . 'includes/class-wp-present-core.php' );
+		require( plugin_dir_path( __FILE__ ) . 'includes/class-wp-present-admin.php' );
 
 		// Check the things
 		//if( isset( $_REQUEST[ 'tag_ID' ] ) && isset( $_GET['taxonomy'] ) && WP_Present_Core::instance()->taxonomy_slug == $_GET['taxonomy'] ) {
-		if( is_admin() )
+		if( is_admin() ) {
 			require( plugin_dir_path( __FILE__ ) . 'includes/class-modal-customizer.php' );
-		//}
+		}
 
 		// On Activation
 		register_activation_hook( __FILE__, array( $this, 'activate' ) );
