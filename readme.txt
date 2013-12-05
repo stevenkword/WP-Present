@@ -24,7 +24,14 @@ A big shout out to Hakim El Hattab of reveal.js, http://hakim.se
 
 == Changelog ==
 = 0.9.4 =
-* First item
+* Resolves double triggering of hide/show state in slide organizer
+* Adds wp-present body class
+* Adds Loader, Core, and Admin classes and reorganizes project
+* Changes class public properties into constants
+* Updates PHPDoc and formatting
+* Seed 'WP Present Admin' class
+* Renames 'SCRIPTS_VERSION constant to REVISION
+* Fixes the loading of the master plan
 
 = 0.9.3 =
 * Updates to reveal.js v2.5.0
