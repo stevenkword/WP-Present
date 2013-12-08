@@ -44,14 +44,22 @@ class WP_Present_Loader {
 	private static $instance = false;
 	public static function instance() {
 		if( ! self::$instance ) {
-			self::$instance = new WP_Present_Loader;
+			self::$instance = new self;
+			self::$instance->setup();
 		}
 		return self::$instance;
 	}
 
 	/**
+	 * Constructor
+     *
+	 * @since 0.9.0
+	 */
+	private function __construct() { }
+
+	/**
 	 * Clone
-	 *
+     *
 	 * @since 0.9.0
 	 */
 	private function __clone() { }
@@ -60,9 +68,9 @@ class WP_Present_Loader {
 	 * Add actions and filters
 	 *
 	 * @uses add_action, add_filter
-	 * @since 0.9.0
+	 * @since 0.9.5
 	 */
-	function __construct() {
+	function setup() {
 
 		// Version Check
 		if( $version = get_option( self::OPTION_VERSION, false ) ) {
