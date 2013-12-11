@@ -497,7 +497,7 @@ var WPPresentAdmin;
 					},
 					open: function() {
 						// Clear the editor
-						tinymce.get('editor_slide').setContent('');
+						// tinymce.get('editor_slide').setContent('');
 						// Hack for getting the reveal class added to tinymce editor body
 						var $editorIframe = $('#editor_slide_ifr').contents();
 						$editorIframe.find('body').addClass('reveal');

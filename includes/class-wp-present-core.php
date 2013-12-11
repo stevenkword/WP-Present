@@ -65,6 +65,7 @@ class WP_Present_Core {
 		add_action( 'init', array( $this, 'action_init_editor_styles' ) );
 
 		// Front End
+		add_action( 'wp', array( $this, 'action_wp_show_admin_bar' ), 99 );
 		add_action( 'wp_head', array( $this, 'action_wp_head' ), 99 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'action_wp_enqueue_scripts' ), 99 );
 		add_action( 'wp_footer', array( $this, 'action_wp_footer' ), 99 );
@@ -303,6 +304,19 @@ class WP_Present_Core {
 			$template = $taxonomy_template[ 'path' ];
 
 		return $template;
+	}
+
+	/**
+	 * Always show the admin bar
+	 *
+	 * @uses show_admin_bar()
+	 * @return null
+	 */
+	function action_wp_show_admin_bar() {
+		if( ! is_tax( self::TAXONOMY_SLUG ) )
+			return false;
+
+		show_admin_bar( false );
 	}
 
 	/**
