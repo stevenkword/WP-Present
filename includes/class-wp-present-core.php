@@ -212,7 +212,7 @@ class WP_Present_Core {
 		// Only on the edit taxonomy and edit post type admin pages
 		$is_tax = ( 'edit-tags.php' == $pagenow || ( isset( $_GET['taxonomy'] ) && self::TAXONOMY_SLUG == $_GET['taxonomy'] ) ) ? true : false;
 		$is_cpt = ( 'post.php' == $pagenow && isset( $_GET[ 'post' ] ) && self::POST_TYPE_SLUG == get_post_type( $_GET[ 'post' ] ) ) ? true : false;
-		$is_cpt_new = ( 'post-new.php' == $pagenow && self::POST_TYPE_SLUG == $_GET[ 'post_type' ] ) ? true : false;
+		$is_cpt_new = ( 'post-new.php' == $pagenow && isset( $_GET[ 'post_type' ] ) && self::POST_TYPE_SLUG == $_GET[ 'post_type' ] ) ? true : false;
 
 		if( ! $is_tax && ! $is_cpt && ! $is_cpt_new )
 			return;
