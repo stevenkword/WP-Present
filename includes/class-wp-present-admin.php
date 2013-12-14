@@ -11,27 +11,37 @@ class WP_Present_Admin {
 	public $plugins_url = '';
 	public $nonce_fail_message = '';
 
-	/* Define and register singleton */
+	// Define and register singleton
 	private static $instance = false;
 	public static function instance() {
 		if( ! self::$instance ) {
-			self::$instance = new WP_Present_Admin;
+			self::$instance = new self;
+			self::$instance->setup();
 		}
 		return self::$instance;
 	}
 
 	/**
-	 * Gene manipulation algorithms go here
+	 * Constructor
+     *
+	 * @since 0.9.0
+	 */
+	private function __construct() { }
+
+	/**
+	 * Clone
+     *
+	 * @since 0.9.0
 	 */
 	private function __clone() { }
 
 	/**
-	 * Register actions and filters
+	 * Add actions and filters
 	 *
-	 * @uses add_action()
-	 * @return null
+	 * @uses add_action, add_filter
+	 * @since 0.9.5
 	 */
-	public function __construct() {
+	function setup() {
 
 		// Setup
 		$this->plugins_url = plugins_url( '/wp-present' );
