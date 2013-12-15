@@ -28,9 +28,9 @@
 
 	// Update the background header image
 	wp.customize( 'wp_present_background_image', function( value ) {
-    	value.bind( function( newval ) {
-      		$( '#editor_slide_ifr' ).contents().find('.reveal').css("background-image", "url('"+newval+"')");
-    	} );
-  	} );
+	value.bind( function( newval ) {
+			$( '#editor_slide_ifr' ).contents().find('.reveal').css("background-image", "url('"+newval+"')");
+		} );
+	} );
 
 } )( jQuery );
