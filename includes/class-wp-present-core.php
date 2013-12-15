@@ -493,7 +493,7 @@ class WP_Present_Core {
 					<span class='widget-control-separator'>|</span>
 					<a class="widget-control-view" href="<?php echo get_permalink( get_the_ID() ); ?>" target="_blank">View</a>
 					<div class="clearfix"></div>
-					<a class="widget-control-view" href="<?php echo get_edit_post_link( get_the_ID() ); ?>" target="_blank">More</a>
+					<!--<a class="widget-control-view" href="<?php echo get_edit_post_link( get_the_ID() ); ?>" target="_blank">Advance</a>-->
 					<br class="clear">
 				</div>
 			</div>
