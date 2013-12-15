@@ -63,8 +63,10 @@
     margin: 0 1em 0.5em 0;
     overflow: hidden;
     min-height: 20px;
+    /*
     -webkit-border-radius: 3px;
     border-radius: 3px;
+    */
 }
 
 .portlet-header {
@@ -103,15 +105,16 @@
     overflow: scroll;
     border: 1px dashed #ccc;
     background: #fff;
+    /*
     -webkit-border-radius: 3px;
     border-radius: 3px;
-
-position: absolute;
-top: 200px;
-bottom: 20px;
-right: 20px;
-left: 0px;
-height: 90%;
+    */
+    position: absolute;
+    top: 200px;
+    bottom: 20px;
+    right: 20px;
+    left: 0px;
+    height: 90%;
 
 }
 
