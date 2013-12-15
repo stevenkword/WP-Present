@@ -161,7 +161,7 @@ class WP_Present_Admin {
 	public function action_admin_head() {
 
 		// Presentation dashicon
-	    echo '<style type="text/css">.mp6 #adminmenu #menu-posts-slide div.wp-menu-image:before { content: "\f181" !important; }</style>';
+	    echo '<style type="text/css">#adminmenu #menu-posts-slide div.wp-menu-image:before { content: "\f181" !important; }</style>';
 
 		// Only add this variable on the edit taxonomy page
 		global $pagenow;
