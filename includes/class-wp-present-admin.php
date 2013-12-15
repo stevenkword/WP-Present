@@ -54,6 +54,26 @@ class WP_Present_Admin {
 		add_action( 'save_post', array( $this, 'action_save_post' ) );
 		add_action( 'admin_footer', array( $this, 'action_admin_footer' ), 20 );
 
+		add_filter( 'admin_body_class', array( $this, 'filter_admin_body_class' ) );
+
+	}
+
+	/**
+	 * MP6 or bust.
+	 *
+	 * http://make.wordpress.org/ui/2013/11/19/targeting-the-new-dashboard-design-in-a-post-mp6-world/
+	 *
+	 * @since 0.9.5
+	 */
+	function filter_admin_body_class( $classes ) {
+	    if ( version_compare( $GLOBALS['wp_version'], '3.8-alpha', '>' ) ) {
+	        $classes = explode( " ", $classes );
+	        if ( ! in_array( 'mp6', $classes ) ) {
+	            $classes[] = 'mp6';
+	        }
+	        $classes = implode( " ", $classes );
+	    }
+	    return $classes;
 	}
 
 	/**
@@ -161,7 +181,7 @@ class WP_Present_Admin {
 	public function action_admin_head() {
 
 		// Presentation dashicon
-	    echo '<style type="text/css">#adminmenu #menu-posts-slide div.wp-menu-image:before { content: "\f181" !important; }</style>';
+	    echo '<style type="text/css">.mp6 #adminmenu #menu-posts-slide div.wp-menu-image:before { content: "\f181" !important; }</style>';
 
 		// Only add this variable on the edit taxonomy page
 		global $pagenow;

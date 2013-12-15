@@ -582,7 +582,7 @@ class WP_Present_Core {
 				</p>
 			</th>
 			<td>
-				<div id="outer-container"  class="wp-ui-core ui-widget-content">
+				<div id="outer-container"  class="ui-widget-content">
 					<!--<h3 class="ui-widget-header">Resizable</h3>-->
 					<div id="container">
 						<?php
