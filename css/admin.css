@@ -7,6 +7,9 @@
     display: block;
 }
 
+#submit {
+    display: none;
+}
 /* Ajax Spinner */
 
 .spinner {
@@ -102,6 +105,14 @@
     background: #fff;
     -webkit-border-radius: 3px;
     border-radius: 3px;
+
+position: absolute;
+top: 200px;
+bottom: 20px;
+right: 20px;
+left: 0px;
+height: 90%;
+
 }
 
 #container {
