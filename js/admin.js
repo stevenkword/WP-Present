@@ -1,9 +1,11 @@
 var WPPresentAdmin;
-(function ($) {
-	WPPresentAdmin = function () {
+(function($) {
+
+	WPPresentAdmin = function() {
 		this.init();
 		return this;
-	},
+	};
+
 	WPPresentAdmin.prototype = {
 		init: function() {
 			var self = this;
@@ -22,7 +24,7 @@ var WPPresentAdmin;
 
 			$( ".column-inner" ).sortable({
 				connectWith: ".column-inner",
-				stop: function () {
+				stop: function() {
 					self.updateTaxonomyDescription();
 					self.updatePresentation();
 				}
@@ -244,7 +246,6 @@ var WPPresentAdmin;
 			var $editorIframe = $('#editor_slide_ifr').contents();
 
 			$('#container').on('click', '.widget-control-edit', function(e) {
-
 				e.preventDefault();
 				var $button        = $(this);
 				var $parentWidget  = $button.parents('.widget');
@@ -328,8 +329,6 @@ var WPPresentAdmin;
 						},
 					},
 					create: function() {
-console.log( 'Edit: create' );
-
 						tinymce.execCommand('mceRemoveControl',true,'editor_slide');
 						tinymce.execCommand('mceAddControl',true,'editor_slide');
 
@@ -341,10 +340,6 @@ console.log( 'Edit: create' );
 						//self.resizeModal();
 					},
 					open: function() {
-
-
-console.log( 'Edit: open' );
-
 						// Load the contents of the existing post
 						var nonce = $('#wp-present-nonce').val();
 						var params = { 'id':widgetID, 'nonce':nonce };
@@ -360,12 +355,7 @@ console.log( 'Edit: open' );
 							success: function( contentEditor ) {
 
 								var slide = jQuery.parseJSON( contentEditor );
-								if( slide.post_content.length > 0){
-									console.log('set');
-									tinymce.get( 'editor_slide' ).setContent( slide.post_content );
-								}
-console.log( tinymce );
-console.log( slide.post_content );
+								tinymce.get( 'editor_slide' ).setContent( slide.post_content );
 
 								$( '#slide-title' ).val( slide.post_title );
 								$( '#slide-slug' ).val( slide.post_name );
@@ -456,21 +446,6 @@ console.log( slide.post_content );
 				// Clear the form out before we show it
 				self.resetModal();
 
-if (typeof(tinyMCE) != "undefined") {
-  if (tinyMCE.activeEditor === null || tinyMCE.activeEditor.isHidden() !== false) {
-    tinyMCE.editors=[]; // remove any existing references
-
-
-
-
-						// Re-init tinymce so the modal doesn't flip out
-						tinymce.execCommand('mceRemoveControl',true,'editor_slide');
-						tinymce.execCommand('mceAddControl',true,'editor_slide');
-
-
-  }
-}
-
 				$( "#dialog" ).dialog({
 					autoOpen: true,
 					modal: true,
@@ -509,23 +484,9 @@ if (typeof(tinyMCE) != "undefined") {
 						},
 					},
 					create: function() {
-
-if (typeof(tinyMCE) != "undefined") {
-  if (tinyMCE.activeEditor === null || tinyMCE.activeEditor.isHidden() !== false) {
-    tinyMCE.editors=[]; // remove any existing references
-
-
-
-
 						// Re-init tinymce so the modal doesn't flip out
 						tinymce.execCommand('mceRemoveControl',true,'editor_slide');
 						tinymce.execCommand('mceAddControl',true,'editor_slide');
-
-
-  }
-}
-
-
 
 						var $editorIframe = $( '#editor_slide_ifr' );
 						var $editor = $editorIframe.contents().find('body.mceContentBody.reveal');
@@ -705,7 +666,7 @@ if (typeof(tinyMCE) != "undefined") {
 
 			$editor.css( 'display', 'block' );
 
-			if( 0 === WPPresentAdmin.maxModalEditorHeight ) {
+			if( 0 == WPPresentAdmin.maxModalEditorHeight ) {
 				WPPresentAdmin.maxModalEditorHeight = Math.round( $editor.height() );
 			}
 			editorHeightFull = Math.round( WPPresentAdmin.maxModalEditorHeight );
