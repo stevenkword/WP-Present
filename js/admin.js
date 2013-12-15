@@ -653,7 +653,6 @@ var WPPresentAdmin;
 						$( '#wp-media-buttons' ).height() -
 						$( '.mceLast' ).height() - $( '.mceLast' ).height();
 
-
 			$editorIframe.height( resize );
 
 			/**
@@ -666,7 +665,7 @@ var WPPresentAdmin;
 
 			$editor.css( 'display', 'block' );
 
-			if( 0 == WPPresentAdmin.maxModalEditorHeight ) {
+			if( WPPresentAdmin.maxModalEditorHeight < 1 ) {
 				WPPresentAdmin.maxModalEditorHeight = Math.round( $editor.height() );
 			}
 			editorHeightFull = Math.round( WPPresentAdmin.maxModalEditorHeight );
