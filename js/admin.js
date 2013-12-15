@@ -362,7 +362,7 @@ console.log( 'Edit: open' );
 								var slide = jQuery.parseJSON( contentEditor );
 								if( slide.post_content.length > 0){
 									console.log('set');
-									tinymce.get( 'editor_slide' ).setContent( '<p>steven</p>' );
+									tinymce.get( 'editor_slide' ).setContent( slide.post_content );
 								}
 console.log( tinymce );
 console.log( slide.post_content );
