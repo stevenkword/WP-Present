@@ -4,7 +4,7 @@
  */
 class WP_Present_Modal_Customizer {
 
-	// Define and register singleton
+	/* Define and register singleton */
 	private static $instance = false;
 	public static function instance() {
 		if( ! self::$instance ) {

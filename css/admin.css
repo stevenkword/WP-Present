@@ -118,8 +118,10 @@
 
 #container .column > .widget-top > .widget-title {
     cursor: move;
+    /*
     border: 1px solid #aaa;
     background: #ddd;
+    */
 }
 
 /* Allows for empty columns to accept new slides */

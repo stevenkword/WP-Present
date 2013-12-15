@@ -40,7 +40,7 @@ class WP_Present_Loader {
 	const OPTION_VERSION  = 'wp-present-version';
 	protected $version = false;
 
-	// Define and register singleton
+	/* Define and register singleton */
 	private static $instance = false;
 	public static function instance() {
 		if( ! self::$instance ) {

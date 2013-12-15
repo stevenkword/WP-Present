@@ -112,12 +112,12 @@ var WPPresentAdmin;
 			// TODO: cache widget-title
 			// Remove the active class from all columns
 			var $widgetTitle = $('.widget-title');
-			$widgetTitle.css({ 'background' : '', 'color' : '' });
-			$widgetTitle.removeClass('active');
+			//$widgetTitle.css({ 'background' : '', 'color' : '' });
+			$widgetTitle.removeClass('active wp-ui-highlight');
 
 			// Select the given column
-			$col.css({ 'background-color' : '#0074a2', 'color' : '#ffffff' });
-			$col.addClass('active');
+			//$col.css({ 'background-color' : '#0074a2', 'color' : '#ffffff' });
+			$col.addClass('active wp-ui-highlight');
 		},
 
 		/**
@@ -247,10 +247,10 @@ var WPPresentAdmin;
 
 			$('#container').on('click', '.widget-control-edit', function(e) {
 				e.preventDefault();
-				var $button = $(this);
-				var $parentWidget = $button.parents('.widget');
+				var $button        = $(this);
+				var $parentWidget  = $button.parents('.widget');
 				var $widgetPreview = $parentWidget.find('.widget-preview');
-				var $widgetTitle = $parentWidget.find( '.widget-title h4' );
+				var $widgetTitle   = $parentWidget.find( '.widget-title h4' );
 
 				// Send the contents from the widget to the editor
 				var widgetID = $parentWidget.find('.slide-id').val();
@@ -289,14 +289,14 @@ var WPPresentAdmin;
 								var colorLink = $('#customize-control-wp_present_link_color .color-picker-hex').val();
 
 								var params = {
-									'id':widgetID,
-									'content':editorContents,
-									'title':postTitle,
-									'background-image':backgroundImageURL,
-									'background-color':colorBackground,
-									'text-color':colorText,
-									'link-color':colorLink,
-									'nonce':nonce
+									'id'               : widgetID,
+									'content'          : editorContents,
+									'title'            : postTitle,
+									'background-image' : backgroundImageURL,
+									'background-color' : colorBackground,
+									'text-color'       : colorText,
+									'link-color'       : colorLink,
+									'nonce'            : nonce
 								};
 								// Send the contents of the existing post
 								$.ajax({
@@ -408,11 +408,11 @@ var WPPresentAdmin;
 				if( false === confirmDelete )
 					return;
 
-				var $button = $(this);
+				var $button       = $(this);
 				var $parentWidget = $button.parents('.widget');
-				var widgetID = $parentWidget.find('.slide-id').val();
-				var nonce = $('#wp-present-nonce').val();
-				var params = { 'id':widgetID, 'nonce':nonce };
+				var widgetID      = $parentWidget.find('.slide-id').val();
+				var nonce         = $('#wp-present-nonce').val();
+				var params        = { 'id':widgetID, 'nonce':nonce };
 
 				$.ajax({
 					url: ajaxurl + '?action=delete_slide',
@@ -465,8 +465,8 @@ var WPPresentAdmin;
 							text: 'Publish',
 							click: function() {
 								var editorContents = tinymce.get('editor_slide').getContent();
-								var postTitle = $( '#slide-title' ).val();
-								var params = { content:editorContents, 'presentation':presentation, 'title':postTitle,'nonce':nonce };
+								var postTitle      = $( '#slide-title' ).val();
+								var params         = { content:editorContents, 'presentation':presentation, 'title':postTitle,'nonce':nonce };
 
 								$.ajax({
 									url: ajaxurl + '?action=new_slide',
@@ -477,7 +477,7 @@ var WPPresentAdmin;
 										WPPNumSlides[0]++;
 										self.refreshUI();
 										self.updateTaxonomyDescription();
-								  }
+								 	}
 								});
 								self.closeModal();
 							},
@@ -520,10 +520,10 @@ var WPPresentAdmin;
 		addColumn: function () {
 			// TODO: I would be better if the column has the active class instead of the child elements
 
-			var self = this;
-			var col = $('#container > .column').size() + 1;
-			var currentContainerWidth= $('#container').width();
-			var columnWidth = 210;
+			var self                  = this;
+			var col                   = $('#container > .column').size() + 1;
+			var currentContainerWidth = $('#container').width();
+			var columnWidth           = 210;
 
 			// TODO: Insert column after the active column as opposed to the end
 			//var $activeColumn = $('.widget-title.active').parent('.widget-top').parent('.column').children('.column-inner');
