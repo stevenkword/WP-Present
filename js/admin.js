@@ -650,8 +650,8 @@ var WPPresentAdmin;
 			// Reside the TinyMCE Editor
 			var $editorIframe = $( '#editor_slide_ifr' );
 			var resize = $('.modal-inner-right' ).height() -
-						 $( '#wp-editor_slide-editor-tools' ).height() -
-						 $( '.mceLast' ).height() - $( '.mceLast' ).height() + 31;
+						$( '#wp-media-buttons' ).height() -
+						$( '.mceLast' ).height() - $( '.mceLast' ).height();
 
 
 			$editorIframe.height( resize );
