@@ -8,7 +8,7 @@
 }
 
 #submit {
-    display: none;
+    /*display: none;*/
 }
 /* Ajax Spinner */
 
@@ -24,6 +24,7 @@
 /* Slide Widgets */
 .widget-inside {
     text-align: center;
+    padding: 1px 15px 15px 15px;
 }
 
 .widget-control-edit,
@@ -32,6 +33,9 @@
     display: inline;
     padding: 0;
     line-height: 26px;
+    background: white;
+    color: #0074a2;
+    border: 0;
 }
 
 .widget-control-separator {
