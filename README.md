@@ -23,6 +23,9 @@ A big shout out to Hakim El Hattab of reveal.js, http://hakim.se
 2. Activate the plugin through the "Plugins" menu in WordPress.
 
 ## Changelog ##
+= Milestone 0.9.5 =
+* Emergency patches to fix support in preparation for WordPress 3.8
+
 = 0.9.4 =
 * Resolves double triggering of hide/show state in slide organizer
 * Adds wp-present body class
