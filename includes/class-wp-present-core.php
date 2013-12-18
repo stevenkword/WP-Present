@@ -291,11 +291,24 @@ class WP_Present_Core {
 		//Get plugin path
 		$plugin_path = dirname( dirname( __FILE__ ) );
 
-		if ( file_exists( $plugin_path . '/templates/presentation.php' ) && $this->is() )
+		$theme_path = get_stylesheet_directory();
+
+
+
+echo $theme_path . '/presentation.php';
+
+	if ( file_exists(  $theme_path . '/presentation.php' ) && $this->is() ) {
+			$template = array(
+				'name' => 'wp-presents-theme',
+				'path' => $theme_path . '/presentation.php'
+			);
+		}
+		elseif ( file_exists( $plugin_path . '/templates/presentation.php' ) && $this->is() ) {
 			$template = array(
 				'name' => 'wp-presents-default',
 				'path' => $plugin_path . '/templates/presentation.php'
 			);
+		}
 
 		return isset( $template ) ? $template : false;
 	}
