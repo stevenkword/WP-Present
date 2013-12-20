@@ -85,9 +85,9 @@ class WP_Present_Loader {
 		require( plugin_dir_path( __FILE__ ) . 'includes/class-wp-present-admin.php' );
 
 		// Check the things
-		//if( isset( $_REQUEST[ 'tag_ID' ] ) && isset( $_GET['taxonomy'] ) && WP_Present_Core::instance()->taxonomy_slug == $_GET['taxonomy'] ) {
+		//if( isset( $_REQUEST['tag_ID'] ) && isset( $_GET['taxonomy'] ) && WP_Present_Core::instance()->taxonomy_slug == $_GET['taxonomy'] ) {
 
-		if( is_admin() && ! strpos( $_SERVER[ 'REQUEST_URI' ], 'customize.php' ) ) {
+		if( is_admin() && ! strpos( $_SERVER['REQUEST_URI'], 'customize.php' ) ) {
 			require( plugin_dir_path( __FILE__ ) . 'includes/class-modal-customizer.php' );
 		}
 

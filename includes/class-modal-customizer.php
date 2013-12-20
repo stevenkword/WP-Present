@@ -37,7 +37,7 @@ class WP_Present_Modal_Customizer {
 	function setup() {
 
 		// Only if the taxonomy is set (not a listing)
-		if( ! is_admin() || ! isset( $_REQUEST[ 'tag_ID' ] ) )
+		if( ! is_admin() || ! isset( $_REQUEST['tag_ID'] ) )
 			return;
 
 		add_action( 'plugins_loaded', array( $this, 'action_plugins_loaded' ) );
@@ -186,7 +186,7 @@ class WP_Present_Modal_Customizer {
 		$allowed_urls = array( home_url('/') );
 		$admin_origin = parse_url( admin_url() );
 		$home_origin  = parse_url( home_url() );
-		$cross_domain = ( strtolower( $admin_origin[ 'host' ] ) != strtolower( $home_origin[ 'host' ] ) );
+		$cross_domain = ( strtolower( $admin_origin['host'] ) != strtolower( $home_origin['host'] ) );
 
 		if ( is_ssl() && ! $cross_domain )
 			$allowed_urls[] = home_url( '/', 'https' );
@@ -333,7 +333,7 @@ class WP_Present_Modal_Customizer {
 			'label'   => __( 'Background Image', 'wp-present' ),
 			'section' => 'wp_present_background',
 			'settings'  => 'wp_present_background_image',
-			'context'   => 'wp-present_' . $_REQUEST[ 'tag_ID' ]
+			'context'   => 'wp-present_' . $_REQUEST['tag_ID']
 		) ) );
 
 		/** EFFECTS **/

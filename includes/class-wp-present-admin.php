@@ -170,8 +170,8 @@ class WP_Present_Admin {
 		//wp_enqueue_media();
 		wp_enqueue_style( 'media-views' );
 
-		if( isset( $_REQUEST[ 'tag_ID' ] ) )
-			wp_localize_script( 'wp-present-admin', 'presentation', $_REQUEST[ 'tag_ID' ] );
+		if( isset( $_REQUEST['tag_ID'] ) )
+			wp_localize_script( 'wp-present-admin', 'presentation', $_REQUEST['tag_ID'] );
 	}
 
 	/**
@@ -186,10 +186,10 @@ class WP_Present_Admin {
 
 		// Only add this variable on the edit taxonomy page
 		global $pagenow;
-		if( 'edit-tags.php' != $pagenow || ! isset( $_GET['taxonomy'] ) || WP_Present_Core::TAXONOMY_SLUG != $_GET['taxonomy'] || ! isset( $_GET[ 'tag_ID' ] ) )
+		if( 'edit-tags.php' != $pagenow || ! isset( $_GET['taxonomy'] ) || WP_Present_Core::TAXONOMY_SLUG != $_GET['taxonomy'] || ! isset( $_GET['tag_ID'] ) )
 			return;
 
-		$num_slides = ( isset( $_GET[ 'tag_ID' ] ) ) ? count( WP_Present_Core::get_associated_slide_ids( $_GET[ 'tag_ID' ], $_GET[ 'taxonomy' ] ) ) : '';
+		$num_slides = ( isset( $_GET['tag_ID'] ) ) ? count( WP_Present_Core::get_associated_slide_ids( $_GET['tag_ID'], $_GET['taxonomy'] ) ) : '';
 
 		$slides_query = new WP_Query( array(
 			'post_type'     => WP_Present_Core::POST_TYPE_SLUG, //post type, I used 'product'
@@ -197,7 +197,7 @@ class WP_Present_Admin {
 			'posts_per_page' => -1,  //show all
 			'tax_query' => array( array(
 				'taxonomy' 	=> WP_Present_Core::TAXONOMY_SLUG,
-				'terms'		=> $_GET[ 'tag_ID' ]
+				'terms'		=> $_GET['tag_ID']
 			) )
 		) );
 		$num_slides = (int) $slides_query->post_count;
@@ -205,8 +205,8 @@ class WP_Present_Admin {
 
 		wp_localize_script( 'wp-present-admin', 'WPPNumSlides', array( intval( $num_slides ) ) );
 
-		if( isset( $_REQUEST[ 'tag_ID' ] ) )
-			wp_localize_script( 'wp-present-admin', 'WPPTaxonomyURL', array( get_term_link( (int) $_GET[ 'tag_ID' ], WP_Present_Core::TAXONOMY_SLUG ) ) );
+		if( isset( $_REQUEST['tag_ID'] ) )
+			wp_localize_script( 'wp-present-admin', 'WPPTaxonomyURL', array( get_term_link( (int) $_GET['tag_ID'], WP_Present_Core::TAXONOMY_SLUG ) ) );
 
 		// Make the admin outer-container div big enough to prevent wrapping
 		$column_width = 210;

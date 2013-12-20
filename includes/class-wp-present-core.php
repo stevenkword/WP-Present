@@ -221,8 +221,8 @@ class WP_Present_Core {
 
 		// Only on the edit taxonomy and edit post type admin pages
 		$is_tax = ( 'edit-tags.php' == $pagenow || ( isset( $_GET['taxonomy'] ) && self::TAXONOMY_SLUG == $_GET['taxonomy'] ) ) ? true : false;
-		$is_cpt = ( 'post.php' == $pagenow && isset( $_GET[ 'post' ] ) && self::POST_TYPE_SLUG == get_post_type( $_GET[ 'post' ] ) ) ? true : false;
-		$is_cpt_new = ( 'post-new.php' == $pagenow && isset( $_GET[ 'post_type' ] ) && self::POST_TYPE_SLUG == $_GET[ 'post_type' ] ) ? true : false;
+		$is_cpt = ( 'post.php' == $pagenow && isset( $_GET['post'] ) && self::POST_TYPE_SLUG == get_post_type( $_GET['post'] ) ) ? true : false;
+		$is_cpt_new = ( 'post-new.php' == $pagenow && isset( $_GET['post_type'] ) && self::POST_TYPE_SLUG == $_GET['post_type'] ) ? true : false;
 
 		if( ! $is_tax && ! $is_cpt && ! $is_cpt_new )
 			return;
@@ -236,7 +236,7 @@ class WP_Present_Core {
 		add_editor_style( plugins_url( '/wp-present/css/custom.css?v=' . self::REVISION ) );
 
 		//TODO: Make this work to support backgrounds
-		//add_editor_style( plugins_url( '/wp-present/css/tinymce.css.php?v=' . self::REVISION . '&post=' . $_REQUEST[ 'post' ] ) );
+		//add_editor_style( plugins_url( '/wp-present/css/tinymce.css.php?v=' . self::REVISION . '&post=' . $_REQUEST['post'] ) );
 	}
 
 	/**
@@ -295,7 +295,7 @@ class WP_Present_Core {
 
 
 
-echo $theme_path . '/presentation.php';
+//echo $theme_path . '/presentation.php';
 
 	if ( file_exists(  $theme_path . '/presentation.php' ) && $this->is() ) {
 			$template = array(
@@ -324,7 +324,7 @@ echo $theme_path . '/presentation.php';
 	 */
 	public function filter_template_include( $template ) {
 		if ( is_tax( self::TAXONOMY_SLUG ) && ( $taxonomy_template = $this->template_chooser() ) )
-			$template = $taxonomy_template[ 'path' ];
+			$template = $taxonomy_template['path'];
 
 		return $template;
 	}
@@ -700,7 +700,7 @@ echo $theme_path . '/presentation.php';
 		*********************************************/
 
  		/* Bail if we are not looking at this taxonomy's directory */
-		if( 'edit-tags.php' != $pagenow || ( self::TAXONOMY_SLUG != $_GET[ 'taxonomy' ] && 'category' != $_GET[ 'taxonomy' ] ) || isset( $_GET[ 'tag_ID' ] ) )
+		if( 'edit-tags.php' != $pagenow || ( self::TAXONOMY_SLUG != $_GET['taxonomy'] && 'category' != $_GET['taxonomy'] ) || isset( $_GET['tag_ID'] ) )
 			return $terms;
 
 		$taxonomy = $taxonomies[0];
@@ -757,7 +757,7 @@ echo $theme_path . '/presentation.php';
 	public function action_parse_query( $query ) {
 		global $pagenow;
 
-		if ( $pagenow == 'edit.php' && isset( $query->query_vars[ 'post_type' ] ) && $query->query_vars[ 'post_type' ] == self::POST_TYPE_SLUG
+		if ( $pagenow == 'edit.php' && isset( $query->query_vars['post_type'] ) && $query->query_vars['post_type'] == self::POST_TYPE_SLUG
 		&& isset( $query->query_vars[ self::TAXONOMY_SLUG] ) && is_numeric( $query->query_vars[ self::TAXONOMY_SLUG ] ) && $query->query_vars[ self::TAXONOMY_SLUG ] != 0 ) {
 			$term = get_term_by( 'id', $q_vars[$taxonomy], $taxonomy );
 			$query->query_vars[ self::TAXONOMY_SLUG ] = $term->slug;
@@ -824,10 +824,10 @@ echo $theme_path . '/presentation.php';
 	 * @return array
 	 */
 	public function filter_tiny_mce_before_init( $args ) {
-   		$args[ 'body_class' ] = 'reveal';
-   		$args[ 'height' ] = '100%';
-   		$args[ 'wordpress_adv_hidden' ] = false;
-   		//$args[ 'resize' ] = "both";
+   		$args['body_class'] = 'reveal';
+   		$args['height'] = '100%';
+   		$args['wordpress_adv_hidden'] = false;
+   		//$args['resize'] = "both";
     	return $args;
 	}
 
@@ -855,11 +855,11 @@ echo $theme_path . '/presentation.php';
 	 */
 	public function action_wp_ajax_get_slide() {
 		// Nonce check
-		if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], self::NONCE_FIELD ) ) {
+		if ( ! wp_verify_nonce( $_REQUEST['nonce'], self::NONCE_FIELD ) ) {
 			wp_die( $this->nonce_fail_message );
 		}
 
-		$post_id = $_REQUEST[ 'id' ];
+		$post_id = $_REQUEST['id'];
 		$post = get_post( $post_id );
 
 		$post->post_thumbnail_url = wp_get_attachment_url( get_post_thumbnail_id( $post->ID ) );
@@ -878,24 +878,24 @@ echo $theme_path . '/presentation.php';
 	 */
 	public function action_wp_ajax_update_slide() {
 		// Nonce check
-		if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], self::NONCE_FIELD ) ) {
+		if ( ! wp_verify_nonce( $_REQUEST['nonce'], self::NONCE_FIELD ) ) {
 			wp_die( $this->nonce_fail_message );
 		}
 
 		global $post, $wpdb;
 
-		$post_id      = $_REQUEST[ 'id' ];
-		$safe_content = wp_kses_post( $_REQUEST[ 'content' ] );
-		$safe_title   = sanitize_text_field( $_REQUEST[ 'title' ] );
-		$thumbnail_id = esc_url( url_to_postid( $_REQUEST[ 'background-image' ] ) );
+		$post_id      = $_REQUEST['id'];
+		$safe_content = wp_kses_post( $_REQUEST['content'] );
+		$safe_title   = sanitize_text_field( $_REQUEST['title'] );
+		$thumbnail_id = esc_url( url_to_postid( $_REQUEST['background-image'] ) );
 
-		$safe_background_color = sanitize_text_field( $_REQUEST[ 'background-color' ] );
-		$safe_text_color       = sanitize_text_field( $_REQUEST[ 'text-color' ] );
-		$safe_link_color       = sanitize_text_field( $_REQUEST[ 'link-color' ] );
+		$safe_background_color = sanitize_text_field( $_REQUEST['background-color'] );
+		$safe_text_color       = sanitize_text_field( $_REQUEST['text-color'] );
+		$safe_link_color       = sanitize_text_field( $_REQUEST['link-color'] );
 
 		// Work around for getting the attachment id
 		$prefix       = $wpdb->prefix;
-		$attachment   = $wpdb->get_col($wpdb->prepare( "SELECT ID FROM " . $prefix . "posts" . " WHERE guid='%s';", esc_url( $_REQUEST[ 'background-image' ] ) ) );
+		$attachment   = $wpdb->get_col($wpdb->prepare( "SELECT ID FROM " . $prefix . "posts" . " WHERE guid='%s';", esc_url( $_REQUEST['background-image'] ) ) );
 		$thumbnail_id = ( isset( $attachment[0] ) ) ? $attachment[0] : false;
 
 		$updated_post = array(
@@ -931,13 +931,13 @@ echo $theme_path . '/presentation.php';
 	 */
 	public function action_wp_ajax_new_slide() {
 		// Nonce check
-		if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], self::NONCE_FIELD ) ) {
+		if ( ! wp_verify_nonce( $_REQUEST['nonce'], self::NONCE_FIELD ) ) {
 			wp_die( $this->nonce_fail_message );
 		}
 
 		global $post;
-		$safe_content = wp_kses_post( $_REQUEST[ 'content' ] );
-		$safe_title   = sanitize_text_field( $_REQUEST[ 'title' ] );
+		$safe_content = wp_kses_post( $_REQUEST['content'] );
+		$safe_title   = sanitize_text_field( $_REQUEST['title'] );
 
 		$presentation = get_term_by( 'id', $_REQUEST['presentation'], self::TAXONOMY_SLUG );
 
@@ -963,12 +963,12 @@ echo $theme_path . '/presentation.php';
 	 */
 	public function action_wp_ajax_delete_slide() {
 		// Nonce check
-		if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], self::NONCE_FIELD ) ) {
+		if ( ! wp_verify_nonce( $_REQUEST['nonce'], self::NONCE_FIELD ) ) {
 			wp_die( $this->nonce_fail_message );
 		}
 
 		global $post;
-		$post_id = $_REQUEST[ 'id' ];
+		$post_id = $_REQUEST['id'];
 
 		// Trash this slide
 		wp_trash_post( $post_id );
@@ -982,12 +982,12 @@ echo $theme_path . '/presentation.php';
 	 */
 	public function action_wp_ajax_update_presentation() {
 		// Nonce check
-		if ( ! wp_verify_nonce( $_REQUEST[ 'nonce' ], self::NONCE_FIELD ) ) {
+		if ( ! wp_verify_nonce( $_REQUEST['nonce'], self::NONCE_FIELD ) ) {
 			wp_die( $this->nonce_fail_message );
 		}
 
-		$presentation_id  = $_REQUEST[ 'id' ];
-		$safe_description = sanitize_text_field( $_REQUEST[ 'content' ] );
+		$presentation_id  = $_REQUEST['id'];
+		$safe_description = sanitize_text_field( $_REQUEST['content'] );
 
 		$updated_presentation = array(
 			'description' => $safe_description
