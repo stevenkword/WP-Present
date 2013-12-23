@@ -156,6 +156,11 @@ class WP_Present_Admin {
 	 */
 	public function action_admin_enqueue_scripts() {
 
+		// Only add this variable on the edit taxonomy page
+		global $pagenow;
+		if( 'edit-tags.php' != $pagenow || ! isset( $_GET['taxonomy'] ) || WP_Present_Core::TAXONOMY_SLUG != $_GET['taxonomy'] || ! isset( $_GET['tag_ID'] ) )
+			return;
+
 		// Admin Styles
 		wp_enqueue_style( 'wp-present-admin', $this->plugins_url . '/css/admin.css', '', self::REVISION );
 
