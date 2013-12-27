@@ -19,6 +19,9 @@ class WP_Present_Core {
 	const TAXONOMY_NAME      = 'Presentations';
 	const TAXONOMY_SINGULAR  = 'Presentation';
 
+	/* Shortcode */
+	const SHORTCODE          = 'wppresent';
+
 	/* Options */
 	const OPTION_NAME        = 'presentation-options';
 	const OPTION_TITLE       = 'Presentation Options';
@@ -72,6 +75,7 @@ class WP_Present_Core {
 		// Initialize
 		add_action( 'init', array( $this, 'action_init_register_post_type' ) );
 		add_action( 'init', array( $this, 'action_init_register_taxonomy' ) );
+		add_action( 'init', array( $this, 'action_init_register_shortcode' ) );
 		add_action( 'init', array( $this, 'action_init_editor_styles' ) );
 
 		// Front End
@@ -209,6 +213,35 @@ class WP_Present_Core {
 		) );
 	}
 
+	/**
+	 * Register the shortcode(s)
+	 *
+	 * @since  0.9.6
+	 * @uses add_shortcode()
+	 * @return null
+	 */
+	public function action_init_register_shortcode() {
+		add_shortcode( self::SHORTCODE, array( $this, 'do_shortcode' ) );
+	}
+
+	/**
+	 * Render a iframe shortcode
+	 *
+	 * @since  0.9.6
+	 * @return string $html
+	 */
+	function do_shortcode( $atts ) {
+		ob_start();
+		extract( shortcode_atts( array(
+			'src' => '#',
+			'w' => '640',
+			'h' => '270',
+		), $atts ) );
+		?>
+		<iframe id="presentation-iframe" src="<?php echo esc_attr( $src ); ?>" width="<?php echo esc_attr( $w ); ?>" height="<?php echo esc_attr( $h ); ?>" onload="this.contentWindow.focus()" >no iframes</iframe>
+		<?php
+		return ob_get_clean();
+	}
 
 	/**
 	 * Register editor styles
