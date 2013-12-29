@@ -1,8 +1,5 @@
 /* Hide the things on the taxonomy screen */
-#edittag{
-    border: 0px solid red;
-    display: block;
-}
+
 .form-field {
     display: none;
 }
@@ -118,6 +115,19 @@
     overflow: scroll;
     border: 1px dashed #ccc;
     background: #fff;
+
+
+position: fixed;
+right: 20px;
+left: 180px;
+top: 230px;
+bottom: 40px;
+
+
+
+
+
+
 }
 
 #container {
