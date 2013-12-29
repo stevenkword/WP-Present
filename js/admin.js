@@ -608,8 +608,9 @@ var WPPresentAdmin;
 		 */
 		closeModal: function() {
 			var self = this;
-			self.resetModal();
 			$( '#dialog' ).dialog( "close" );
+			self.resetModal();
+			tinymce.execCommand('mceRemoveControl',true,'editor_slide');
 		},
 
 		/**
@@ -620,9 +621,11 @@ var WPPresentAdmin;
 			// Critical to make TinyMCE working in Firefox
 			// http://www.tinymce.com/develop/bugtracker_view.php?id=6013
 			if( typeof(tinymce) !== undefined ) {
-				tinymce.get('editor_slide').remove();
+			//	tinymce.get('editor_slide').remove();
+			//	var ed = new tinymce.Editor('editor_slide');
+			//	console.log(ed);
 			}
-			tinymce.execCommand('mceRemoveControl',true,'editor_slide');
+			//tinymce.execCommand('mceRemoveControl',true,'editor_slide');
 
 			// Make existing content go away
 			$( '#slide-title' ).val( '' );
