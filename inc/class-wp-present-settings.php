@@ -47,6 +47,28 @@ class WP_Present_Settings {
 		$this->plugins_url = plugins_url( '/wp-present' );
 		$this->nonce_fail_message = __( 'Cheatin&#8217; huh?' );
 
+		// Admin
+		add_action( 'admin_enqueue_scripts', array( $this, 'action_admin_enqueue_scripts' ) );
+
+	}
+
+	/**
+	 * Enqueue necessary admin scripts
+	 *
+	 * @uses wp_enqueue_script
+	 * @return null
+	 */
+	public function action_admin_enqueue_scripts() {
+
+		// Only add this variable on the settings page
+		global $pagenow;
+		if( 'edit.php' != $pagenow || ! isset( $_GET['page'] ) || 'presentation-options' != $_GET['page'] ) {
+			return;
+		}
+
+		// Settings Styles
+		wp_enqueue_style( 'wp-present-genericons', $this->plugins_url . '/fonts/genericons/genericons.css', '', self::REVISION );
+		wp_enqueue_style( 'wp-present-admin', $this->plugins_url . '/css/settings.css', '', self::REVISION );
 	}
 
 	/**
