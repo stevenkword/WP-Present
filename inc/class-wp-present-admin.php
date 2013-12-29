@@ -160,6 +160,11 @@ class WP_Present_Admin {
 							</div>
 						</div>
 						<div id="post-body-content">
+							<h2 class="nav-tab-wrapper" style="padding: 0;">
+								<a href="#" class="nav-tab">General</a>
+								<a href="#" class="nav-tab">Coming Soon</a>
+								<a href="#" class="nav-tab">About</a>
+							</h2>
 							<h2><?php echo WP_Present_Core::OPTION_TITLE; ?></h2>
 							<h3>Select a Theme</h3>
 								<p>Current Theme: <?php echo WP_Present_Core::DEFAULT_THEME; ?></p>
