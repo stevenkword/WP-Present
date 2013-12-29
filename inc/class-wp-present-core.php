@@ -625,7 +625,7 @@ class WP_Present_Core {
 					<!--<button id="tidy-button" class="button">Tidy</button>-->
 					<button id="view-button" class="button">View <?php echo self::TAXONOMY_SINGULAR; ?></button>
 					<?php // TODO: Add Existing Slide Button ?>
-					<span class="spinner"></span>
+					<span class="spinner">Saving</span>
 				</p>
 			</th>
 			<td>
