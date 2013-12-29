@@ -126,23 +126,15 @@ class WP_Present_Settings {
 								<a href="?post_type=slide&page=presentation-options&tab=general" class="nav-tab <?php echo $active_tab == 'general' ? 'nav-tab-active' : ''; ?>">General</a>
 
 								<a href="?post_type=slide&page=presentation-options&tab=about" class="nav-tab <?php echo $active_tab == 'about' ? 'nav-tab-active' : ''; ?>">About</a>
-
-								<a href="?post_type=slide&page=presentation-options&tab=coming-soon" class="nav-tab <?php echo $active_tab == 'coming-soon' ? 'nav-tab-active' : ''; ?>">Coming Soon</a>
-
 							</h2>
 							<form method="post" action="options.php">
 								<?php
-
-								if( $active_tab == 'coming-soon' ) {
-									self::display_coming_soon();
-								} elseif( $active_tab == 'about' ) {
+								if( $active_tab == 'about' ) {
 									self::display_about_page();
 								} else {
 									self::display_general_options();
+									submit_button();
 								} // end if/else
-
-								submit_button();
-
 								?>
 							</form>
 						</div>
@@ -166,8 +158,10 @@ class WP_Present_Settings {
 		<?php
 	}
 
-	function display_coming_soon(){
+	function display_about_page(){
 		?>
+		<h3>About</h3>
+			<p>Create elegant slide presentations with the the power of WordPress and the beauty of reveal.js</p>
 		<h3>Coming soon</h3>
 			<?php
 			//Get plugin path
@@ -176,12 +170,6 @@ class WP_Present_Settings {
 			while ( ! feof( $master_plan_file ) )
 				echo fgets( $master_plan_file ) . '<br />';
 			fclose( $master_plan_file );
-	}
-
-	function display_about_page(){
-		?>
-		<h3>About</h3>
-		<?php
 	}
 
 } // Class
