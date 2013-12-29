@@ -280,7 +280,7 @@ class WP_Present_Core {
 	 * @return null
 	 */
 	public function action_wp_enqueue_scripts() {
-		if( ! is_tax( self::TAXONOMY_SLUG ) && ! is_single( self::POST_TYPE_SLUG ) ) {
+		if( ! is_tax( self::TAXONOMY_SLUG ) && ! is_singular( self::POST_TYPE_SLUG ) ) {
 			return;
 		}
 
@@ -370,14 +370,15 @@ class WP_Present_Core {
 	}
 
 	/**
-	 * Always show the admin bar
+	 * Always hide the admin bar
 	 *
 	 * @uses show_admin_bar()
 	 * @return null
 	 */
 	function action_wp_show_admin_bar() {
-		if( ! is_tax( self::TAXONOMY_SLUG ) )
+		if( ! is_tax( self::TAXONOMY_SLUG ) && ! is_singular( self::POST_TYPE_SLUG ) ) {
 			return false;
+		}
 
 		show_admin_bar( false );
 	}
@@ -389,8 +390,9 @@ class WP_Present_Core {
 	 * @return null
 	 */
 	public function action_wp_head() {
-		if( ! is_tax( self::TAXONOMY_SLUG ) )
-			return false;
+		if( ! is_tax( self::TAXONOMY_SLUG ) && ! is_singular( self::POST_TYPE_SLUG ) ) {
+			return;
+		}
 		?>
 		<!-- Reveal -->
 		<meta name="apple-mobile-web-app-capable" content="yes" />
@@ -416,8 +418,9 @@ class WP_Present_Core {
 	 * @return null
 	 */
 	public function action_wp_footer() {
-		if( ! is_tax( self::TAXONOMY_SLUG ) )
+		if( ! is_tax( self::TAXONOMY_SLUG ) && ! is_singular( self::POST_TYPE_SLUG ) ) {
 			return;
+		}
 		?>
 		<script>
 		/* Custom jQuery Reveal Code */
