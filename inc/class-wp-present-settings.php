@@ -55,6 +55,10 @@ class WP_Present_Settings {
 	 * @return null
 	 */
 	public function settings_page(){
+
+		// Get active tab
+		$active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'general';
+
 		?>
 		<div id="wpbody">
 			<div id="wpbody-content" aria-label="Main content" tabindex="0">
@@ -97,15 +101,27 @@ class WP_Present_Settings {
 						</div>
 						<div id="post-body-content">
 							<h2 class="nav-tab-wrapper" style="padding: 0;">
-								<a href="#" class="nav-tab nav-tab-active">General</a>
-								<a href="#" class="nav-tab">Coming Soon</a>
-								<a href="#" class="nav-tab">About</a>
+								<a href="?post_type=slide&page=presentation-options&tab=general" class="nav-tab <?php echo $active_tab == 'general' ? 'nav-tab-active' : ''; ?>">General</a>
+
+								<a href="?post_type=slide&page=presentation-options&tab=about" class="nav-tab <?php echo $active_tab == 'about' ? 'nav-tab-active' : ''; ?>">About</a>
+
+								<a href="?post_type=slide&page=presentation-options&tab=coming-soon" class="nav-tab <?php echo $active_tab == 'coming-soon' ? 'nav-tab-active' : ''; ?>">Coming Soon</a>
+
 							</h2>
 							<form method="post" action="options.php">
+								<?php
 
-								<?php self::display_general_options(); ?>
+								if( $active_tab == 'coming-soon' ) {
+									self::display_coming_soon();
+								} elseif( $active_tab == 'about' ) {
+									self::display_about_page();
+								} else {
+									self::display_general_options();
+								} // end if/else
 
-								<?php submit_button(); ?>
+								submit_button();
+
+								?>
 							</form>
 						</div>
 					</div>
@@ -125,14 +141,25 @@ class WP_Present_Settings {
 				<p>1024x768</p>
 			<h3>Branding</h3>
 				<p><textarea>Branding HTML textarea goes here</textarea></p>
-			<h3>Coming soon</h3>
-				<?php
-				//Get plugin path
-				$plugin_path = dirname( dirname( __FILE__ ) );
-				$master_plan_file = fopen( $plugin_path . '/master.plan', 'r' );
-				while ( ! feof( $master_plan_file ) )
-					echo fgets( $master_plan_file ) . '<br />';
-				fclose( $master_plan_file );
+		<?php
+	}
+
+	function display_coming_soon(){
+		?>
+		<h3>Coming soon</h3>
+			<?php
+			//Get plugin path
+			$plugin_path = dirname( dirname( __FILE__ ) );
+			$master_plan_file = fopen( $plugin_path . '/master.plan', 'r' );
+			while ( ! feof( $master_plan_file ) )
+				echo fgets( $master_plan_file ) . '<br />';
+			fclose( $master_plan_file );
+	}
+
+	function display_about_page(){
+		?>
+		<h3>About</h3>
+		<?php
 	}
 
 } // Class
