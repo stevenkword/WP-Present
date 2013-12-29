@@ -617,6 +617,11 @@ var WPPresentAdmin;
 		 * Reset Modal
 		 */
 		resetModal: function() {
+
+			// Critical to make TinyMCE working in Firefox
+			// http://www.tinymce.com/develop/bugtracker_view.php?id=6013
+			tinymce.get('editor_slide').remove();
+
 			// Make existing content go away
 			$( '#slide-title' ).val( '' );
 			$( '#slide-slug' ).val( '' );
