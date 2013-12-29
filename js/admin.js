@@ -609,7 +609,6 @@ var WPPresentAdmin;
 		closeModal: function() {
 			var self = this;
 			self.resetModal();
-			tinymce.execCommand('mceRemoveControl',true,'editor_slide');
 			$( '#dialog' ).dialog( "close" );
 		},
 
@@ -623,6 +622,7 @@ var WPPresentAdmin;
 			if( typeof(tinymce) !== undefined ) {
 				tinymce.get('editor_slide').remove();
 			}
+			tinymce.execCommand('mceRemoveControl',true,'editor_slide');
 
 			// Make existing content go away
 			$( '#slide-title' ).val( '' );
