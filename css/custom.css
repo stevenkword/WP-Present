@@ -90,7 +90,7 @@ body.mceContentBody.reveal:before {
     content: ' ';
     display: block;
 	top: 50%;
-	position; absolute;
+	position: absolute;
     text-align: center;
     border: 0px solid red;
 }
