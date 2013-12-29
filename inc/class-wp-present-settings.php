@@ -61,6 +61,7 @@ class WP_Present_Settings {
 				<div class="wrap">
 					<?php //screen_icon(); ?>
 					<h2><?php _e( 'Presentation Options', WP_Present_Core::TEXT_DOMAIN );?></h2>
+					<?php settings_errors(); ?>
 					<div id="poststuff" class="metabox-holder has-right-sidebar">
 						<div class="inner-sidebar" id="side-info-column">
 							<div id="side-sortables" class="meta-box-sortables ui-sortable">
@@ -96,26 +97,16 @@ class WP_Present_Settings {
 						</div>
 						<div id="post-body-content">
 							<h2 class="nav-tab-wrapper" style="padding: 0;">
-								<a href="#" class="nav-tab">General</a>
+								<a href="#" class="nav-tab nav-tab-active">General</a>
 								<a href="#" class="nav-tab">Coming Soon</a>
 								<a href="#" class="nav-tab">About</a>
 							</h2>
-							<h2><?php echo WP_Present_Core::OPTION_TITLE; ?></h2>
-							<h3>Select a Theme</h3>
-								<p>Current Theme: <?php echo WP_Present_Core::DEFAULT_THEME; ?></p>
-							<h3>Resolution</h3>
-								<p>1024x768</p>
-							<h3>Branding</h3>
-								<p><textarea>Branding HTML textarea goes here</textarea></p>
-							<h3>Coming soon</h3>
-								<?php
-								//Get plugin path
-								$plugin_path = dirname( dirname( __FILE__ ) );
-								$master_plan_file = fopen( $plugin_path . '/master.plan', 'r' );
-								while ( ! feof( $master_plan_file ) )
-									echo fgets( $master_plan_file ) . '<br />';
-								fclose( $master_plan_file );
-								?>
+							<form method="post" action="options.php">
+
+								<?php self::display_general_options(); ?>
+
+								<?php submit_button(); ?>
+							</form>
 						</div>
 					</div>
 				</div><!--/.wrap-->
@@ -124,6 +115,24 @@ class WP_Present_Settings {
 			<div class="clear"></div>
 		</div>
 		<?php
+	}
+
+	function display_general_options(){
+		?>
+			<h3>Select a Theme</h3>
+				<p>Current Theme: <?php echo WP_Present_Core::DEFAULT_THEME; ?></p>
+			<h3>Resolution</h3>
+				<p>1024x768</p>
+			<h3>Branding</h3>
+				<p><textarea>Branding HTML textarea goes here</textarea></p>
+			<h3>Coming soon</h3>
+				<?php
+				//Get plugin path
+				$plugin_path = dirname( dirname( __FILE__ ) );
+				$master_plan_file = fopen( $plugin_path . '/master.plan', 'r' );
+				while ( ! feof( $master_plan_file ) )
+					echo fgets( $master_plan_file ) . '<br />';
+				fclose( $master_plan_file );
 	}
 
 } // Class
