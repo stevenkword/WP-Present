@@ -134,11 +134,17 @@ class WP_Present_Admin {
 
 		// Only add this variable on the edit taxonomy page
 		global $pagenow;
-		if( 'edit-tags.php' != $pagenow || ! isset( $_GET['taxonomy'] ) || WP_Present_Core::TAXONOMY_SLUG != $_GET['taxonomy'] || ! isset( $_GET['tag_ID'] ) )
+
+		if( 'edit-tags.php' != $pagenow || ! isset( $_GET['taxonomy'] ) || WP_Present_Core::TAXONOMY_SLUG != $_GET['taxonomy'] ) {
 			return;
+		}
 
 		// Admin Styles
 		wp_enqueue_style( 'wp-present-admin', $this->plugins_url . '/css/admin.css', '', self::REVISION );
+
+		if(  ! isset( $_GET['tag_ID'] ) ) {
+			return;
+		}
 
 		// Admin Scripts
 		wp_enqueue_script( 'jquery-ui-sortable' );
