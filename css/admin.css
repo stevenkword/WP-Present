@@ -1,4 +1,8 @@
 /* Hide the things on the taxonomy screen */
+#edittag{
+    border: 0px solid red;
+    display: block;
+}
 .form-field {
     display: none;
 }
@@ -7,11 +11,15 @@
     display: block;
 }
 
-#submit {
-    /*display: none;*/
+#edittag .submit {
+    display: none;
 }
-/* Ajax Spinner */
 
+.clearfix {
+    clear: both;
+}
+
+/* Ajax Spinner */
 .spinner {
     display: inline-block;
     float: none;
@@ -106,21 +114,10 @@
 
 #outer-container {
     width: auto;
-    min-height: 100px;
+    /*min-height: 300px;*/
     overflow: scroll;
     border: 1px dashed #ccc;
     background: #fff;
-    /*
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
-    */
-    position: absolute;
-    top: 200px;
-    bottom: 20px;
-    right: 20px;
-    left: 0px;
-    height: 90%;
-
 }
 
 #container {
@@ -128,7 +125,9 @@
  	/*width:auto;*/
     padding: 1em;
     background: inherit;
-    min-height: 400px;
+    height: 100%;
+    /*min-height: 400px;*/
+    border: 0px solid black;
 }
 
 #container .column > .widget-top {

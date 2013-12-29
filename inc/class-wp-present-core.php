@@ -616,20 +616,18 @@ class WP_Present_Core {
 		$associated_slides = $this->get_associated_slide_ids( $term, $taxonomy );
 		wp_nonce_field( self::NONCE_FIELD, self::NONCE_FIELD, false );
 		?>
-		<tr class="form-field hide-if-no-js">
-			<th scope="row" valign="top">
-				<p class="action-buttons">
-					<button id="add-button" class="button button-primary">New <?php echo self::POST_TYPE_SINGULAR; ?></button>
-					<button id="add-column" class="button">New Column</button>
-					<button id="remove-column" class="button">Remove Column</button>
-					<!--<button id="tidy-button" class="button">Tidy</button>-->
-					<button id="view-button" class="button">View <?php echo self::TAXONOMY_SINGULAR; ?></button>
-					<?php // TODO: Add Existing Slide Button ?>
-					<span class="spinner">Saving</span>
-				</p>
-			</th>
-			<td>
-				<div id="outer-container"  class="ui-widget-content">
+		<div class="action-buttons">
+			<p>
+				<button id="add-button" class="button button-primary">New <?php echo self::POST_TYPE_SINGULAR; ?></button>
+				<button id="add-column" class="button">New Column</button>
+				<button id="remove-column" class="button">Remove Column</button>
+				<!--<button id="tidy-button" class="button">Tidy</button>-->
+				<button id="view-button" class="button">View <?php echo self::TAXONOMY_SINGULAR; ?></button>
+				<?php // TODO: Add Existing Slide Button ?>
+				<span class="spinner">Saving</span>
+			</p>
+		</div>
+		<div id="outer-container"  class="ui-widget-content">
 					<!--<h3 class="ui-widget-header">Resizable</h3>-->
 					<div id="container">
 						<?php
@@ -700,10 +698,9 @@ class WP_Present_Core {
 							}
 						}
 						?>
+						<div class="clearfix"></div>
 					</div><!--/#container-->
-				</div><!--/#outer-container-->
-			</td>
-		</tr>
+		</div><!--/#outer-container-->
 		<div id="dialog" class="media-modal" title="Edit <?php echo self::POST_TYPE_SINGULAR; ?>" style="display: none;">
 			<div class="modal-inner-left">
 				<?php WP_Present_Modal_Customizer::instance()->render(); ?>
