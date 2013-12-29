@@ -6,7 +6,7 @@
  **/
 class WP_Present_Admin {
 
-	const REVISION = 20131204;
+	const REVISION = 20131229;
 
 	public $plugins_url = '';
 	public $nonce_fail_message = '';
