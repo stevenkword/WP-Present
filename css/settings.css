@@ -4,10 +4,11 @@
  */
 body.mp6 .wrap > h2:before {
     content: "\f181"; /* `slideshow` dashicon glyph */
-    font: normal 48px/1 'Dashicons';
+    font: normal 32px/1 'Dashicons';
     display: inline-block;
     -webkit-font-smoothing: antialiased;
     vertical-align: middle;
+    display: none;
 }
 
 .link-wppresent-forum::before,
