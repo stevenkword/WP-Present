@@ -280,8 +280,9 @@ class WP_Present_Core {
 	 * @return null
 	 */
 	public function action_wp_enqueue_scripts() {
-		if( ! is_tax( self::TAXONOMY_SLUG ) )
+		if( ! is_tax( self::TAXONOMY_SLUG ) && ! is_single( self::POST_TYPE_SLUG ) ) {
 			return;
+		}
 
 		// Deregister theme specific stylesheets
 		global $wp_styles;
@@ -318,7 +319,7 @@ class WP_Present_Core {
 	 * @uses get_queried_object, is_home, is_front_page, locate_template
 	 * @return array or false
 	 */
-	public function template_chooser() {
+	public function template_chooser_presentation() {
 		// Get queried object to check post type
 		$queried_object = get_queried_object();
 
@@ -328,10 +329,7 @@ class WP_Present_Core {
 		$theme_path = get_stylesheet_directory();
 
 
-
-//echo $theme_path . '/presentation.php';
-
-	if ( file_exists(  $theme_path . '/presentation.php' ) && $this->is() ) {
+		if ( file_exists(  $theme_path . '/presentation.php' ) && $this->is() ) {
 			$template = array(
 				'name' => 'wp-presents-theme',
 				'path' => $theme_path . '/presentation.php'
@@ -357,9 +355,17 @@ class WP_Present_Core {
 	 * @return string
 	 */
 	public function filter_template_include( $template ) {
-		if ( is_tax( self::TAXONOMY_SLUG ) && ( $taxonomy_template = $this->template_chooser() ) )
+		if ( is_tax( self::TAXONOMY_SLUG ) && ( $taxonomy_template = $this->template_chooser_presentation() ) ) {
 			$template = $taxonomy_template['path'];
-
+		} elseif( 1==1 ) {
+			//Get plugin path
+			$plugin_path = dirname( dirname( __FILE__ ) );
+			$slide_template = array(
+				'name' => 'wp-presents-slide',
+				'path' => $plugin_path . '/templates/slide.php'
+			);
+			$template = $slide_template['path'];
+		}
 		return $template;
 	}
 
