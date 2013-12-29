@@ -621,7 +621,7 @@ var WPPresentAdmin;
 			// Critical to make TinyMCE working in Firefox
 			// http://www.tinymce.com/develop/bugtracker_view.php?id=6013
 
-			if( typeof(tinymce.get('editor_slide') ) != undefined ) {
+			if( typeof(tinymce.get('editor_slide') ) !== undefined ) {
 				tinymce.get('editor_slide').remove();
 			}
 
