@@ -1,5 +1,12 @@
 /* Hide the things on the taxonomy screen */
 
+.ui-dialog-buttonpane {
+    position: fixed;
+    top: 32px;
+    left: 38px;
+    z-index: 99;
+}
+
 .form-field {
     display: none;
 }

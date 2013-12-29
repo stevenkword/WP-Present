@@ -620,7 +620,10 @@ var WPPresentAdmin;
 
 			// Critical to make TinyMCE working in Firefox
 			// http://www.tinymce.com/develop/bugtracker_view.php?id=6013
-			tinymce.get('editor_slide').remove();
+
+			if( typeof(tinymce.get('editor_slide') ) != undefined ) {
+				tinymce.get('editor_slide').remove();
+			}
 
 			// Make existing content go away
 			$( '#slide-title' ).val( '' );
