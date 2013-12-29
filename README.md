@@ -1,6 +1,7 @@
 WP-Present - beta
 =================
 * Contributors: stevenkword
+* Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6T4UQQXTXLKVW
 * Tags: present, presentation, slide, slides, reveal.js, wp-present, WordCamp, powerpoint, slidedeck
 * Requires at least: 3.6
 * Tested up to: 3.8

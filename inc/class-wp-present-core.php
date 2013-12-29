@@ -31,6 +31,7 @@ class WP_Present_Core {
 	const NONCE_FIELD        = 'wp-present-nonce';
 	const DEFAULT_THEME      = 'simple.css'; // moon, night, simple, serif, solarized
 	const MAX_NUM_SLIDES     = 250; // not currently used, proposed variable
+	const TEXT_DOMAIN        = 'wp-present';
 
 	public $post_types = array( 'slide' );
 	public $plugins_url = '';
