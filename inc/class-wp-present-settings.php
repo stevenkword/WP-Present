@@ -53,6 +53,21 @@ class WP_Present_Settings {
 	}
 
 	/**
+	 * Are we looking at the settings page?
+	 *
+	 * @since 0.9.6
+	 * @return bool
+	 */
+	function is_settings_page() {
+		global $pagenow;
+
+		if( is_admin() && 'edit.php' == $pagenow && isset( $_GET['page'] ) && 'presentation-options' == $_GET['page'] ) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
 	 * Enqueue necessary admin scripts
 	 *
 	 * @uses wp_enqueue_script
@@ -61,8 +76,7 @@ class WP_Present_Settings {
 	public function action_admin_enqueue_scripts() {
 
 		// Only add this variable on the settings page
-		global $pagenow;
-		if( 'edit.php' != $pagenow || ! isset( $_GET['page'] ) || 'presentation-options' != $_GET['page'] ) {
+		if( ! self::is_settings_page() ) {
 			return;
 		}
 
