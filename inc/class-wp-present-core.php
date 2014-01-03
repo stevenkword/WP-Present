@@ -328,6 +328,9 @@ class WP_Present_Core {
 		}
 
 		if( is_tax( self::TAXONOMY_SLUG ) ) {
+
+			wp_enqueue_style( 'dashicons' );
+
 			/* Browser reset styles */
 			//wp_enqueue_style( 'reset', $this->plugins_url . '/css/reset.css', '', self::REVISION );
 
@@ -431,7 +434,7 @@ class WP_Present_Core {
 		if( isset( $wp_query->query_vars['fullscreen'] ) ) {
 			show_admin_bar( false );
 		} else {
-			show_admin_bar( true );
+			//show_admin_bar( true );
 		}
 	}
 
