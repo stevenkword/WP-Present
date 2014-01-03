@@ -1,4 +1,5 @@
 <?php
+define('EP_WPPRESENT', 8388608); // 8388608 = 2^23
 /**
  ** WP Present Core
  **
@@ -78,6 +79,7 @@ class WP_Present_Core {
 		add_action( 'init', array( $this, 'action_init_register_taxonomy' ) );
 		add_action( 'init', array( $this, 'action_init_register_shortcode' ) );
 		add_action( 'init', array( $this, 'action_init_editor_styles' ) );
+		add_action( 'init', array( $this, 'action_init_add_endpoints' ) );
 
 		// Front End
 		add_action( 'wp', array( $this, 'action_wp_show_admin_bar' ), 99 );
@@ -210,7 +212,10 @@ class WP_Present_Core {
 			'show_ui'           => true,
 			'show_admin_column' => true,
 			'query_var'         => true,
-			'rewrite'           => array( 'slug' => self::TAXONOMY_SLUG )
+			'rewrite'           => array(
+				'slug'   => self::TAXONOMY_SLUG,
+				'ep_mask'=> EP_WPPRESENT
+			)
 		) );
 	}
 
@@ -274,41 +279,76 @@ class WP_Present_Core {
 	}
 
 	/**
+	 * Register Rewrite endpoints
+	 *
+	 * @uses add_rewrite_endpoint
+	 * @return null
+	 */
+	function action_init_add_endpoints() {
+		add_rewrite_endpoint( 'fullscreen', EP_WPPRESENT );
+	}
+
+
+	/**
 	 * Enqueue necessary scripts
 	 *
 	 * @uses wp_enqueue_script
 	 * @return null
 	 */
 	public function action_wp_enqueue_scripts() {
-		if( ! is_tax( self::TAXONOMY_SLUG ) && ! is_singular( self::POST_TYPE_SLUG ) ) {
-			return;
-		}
 
 		// Deregister theme specific stylesheets
-		global $wp_styles;
-		foreach( $wp_styles->registered as $handle => $object ) {
-			$stylesheet_relative_uri = str_replace( home_url(), '', get_stylesheet_directory_uri() );
-			if( ! empty( $stylesheet_relative_uri ) && strpos( $object->src, $stylesheet_relative_uri ) ) {
-				unset( $wp_styles->$handle );
-				wp_dequeue_style( $handle );
+
+		global $wp_query, $wp_styles;
+
+		$fullscreen = isset( $wp_query->query_vars['fullscreen'] );
+
+		if( ! is_tax( self::TAXONOMY_SLUG ) && ! is_singular( self::POST_TYPE_SLUG ) ) {
+			//return;
+		}
+
+		if( is_tax( self::TAXONOMY_SLUG ) && $fullscreen ) {
+			// Remove all theme stylesheets
+			foreach( $wp_styles->registered as $handle => $object ) {
+				$stylesheet_relative_uri = str_replace( home_url(), '', get_stylesheet_directory_uri() );
+				$template_relative_uri = str_replace( home_url(), '', get_template_directory_uri() );
+
+				if( ! empty( $stylesheet_relative_uri ) && strpos( $object->src, $stylesheet_relative_uri ) ) {
+					unset( $wp_styles->$handle );
+					wp_dequeue_style( $handle );
+				}
+
+				if( ! empty( $template_relative_uri ) && strpos( $object->src, $template_relative_uri ) ) {
+					if( 'reveal-custom' != $handle ) {
+						unset( $wp_styles->$handle );
+						wp_dequeue_style( $handle );
+					}
+				}
 			}
 		}
 
-		/* Browser reset styles */
-		//wp_enqueue_style( 'reset', $this->plugins_url . '/css/reset.css', '', self::REVISION );
+		if( is_tax( self::TAXONOMY_SLUG ) ) {
+			/* Browser reset styles */
+			//wp_enqueue_style( 'reset', $this->plugins_url . '/css/reset.css', '', self::REVISION );
 
-		/* Reveal Styles */
-		wp_enqueue_style( 'reveal', $this->plugins_url . '/js/reveal.js/css/reveal.css', '', self::REVISION );
-		wp_enqueue_style( 'reveal-theme', $this->plugins_url . '/js/reveal.js/css/theme/' . self::DEFAULT_THEME, array('reveal'), self::REVISION );
-		wp_enqueue_style( 'zenburn', $this->plugins_url . '/js/reveal.js/lib/css/zenburn.css', '', self::REVISION, false );
+			/* Reveal Styles */
+			wp_enqueue_style( 'reveal', $this->plugins_url . '/js/reveal.js/css/reveal.css', '', self::REVISION );
+			wp_enqueue_style( 'reveal-theme', $this->plugins_url . '/js/reveal.js/css/theme/' . self::DEFAULT_THEME, array('reveal'), self::REVISION );
+			wp_enqueue_style( 'zenburn', $this->plugins_url . '/js/reveal.js/lib/css/zenburn.css', '', self::REVISION, false );
 
-		/* Last run styles */
-		wp_enqueue_style( 'custom', $this->plugins_url . '/css/custom.css', array('reveal'), self::REVISION );
+			/* Last run styles */
+			wp_enqueue_style( 'custom', $this->plugins_url . '/css/custom.css', array('reveal'), self::REVISION );
 
-		/* Reveal Scripts */
-		wp_enqueue_script( 'reveal-head', $this->plugins_url . '/js/reveal.js/lib/js/head.min.js', array( 'jquery' ), self::REVISION, true );
-		wp_enqueue_script( 'reveal', $this->plugins_url . '/js/reveal.js/js/reveal.min.js', array( 'jquery' ), self::REVISION, true );
-		//wp_enqueue_script( 'reveal-config', $this->plugins_url . '/js/reveal-config.js', array( 'jquery' ), self::REVISION );
+			/* Reveal Scripts */
+			wp_enqueue_script( 'reveal-head', $this->plugins_url . '/js/reveal.js/lib/js/head.min.js', array( 'jquery' ), self::REVISION, true );
+			wp_enqueue_script( 'reveal', $this->plugins_url . '/js/reveal.js/js/reveal.min.js', array( 'jquery' ), self::REVISION, true );
+			//wp_enqueue_script( 'reveal-config', $this->plugins_url . '/js/reveal-config.js', array( 'jquery' ), self::REVISION );
+		}
+
+		// Overrides for the fullscreen page
+		if( is_tax( self::TAXONOMY_SLUG ) && $fullscreen ) {
+			wp_enqueue_style( 'reveal-custom', get_stylesheet_directory_uri() . '/reveal.css', 'reveal', self::REVISION );
+		}
 	}
 
 	/**
@@ -320,6 +360,9 @@ class WP_Present_Core {
 	 * @return array or false
 	 */
 	public function template_chooser_presentation() {
+
+		global $wp_query;
+
 		// Get queried object to check post type
 		$queried_object = get_queried_object();
 
@@ -329,7 +372,7 @@ class WP_Present_Core {
 		$theme_path = get_stylesheet_directory();
 
 
-		if ( file_exists(  $theme_path . '/presentation.php' ) && $this->is() ) {
+		if ( file_exists(  $theme_path . '/presentation.php' ) && ! isset( $wp_query->query_vars['fullscreen'] ) ) {
 			$template = array(
 				'name' => 'wp-presents-theme',
 				'path' => $theme_path . '/presentation.php'
@@ -355,9 +398,11 @@ class WP_Present_Core {
 	 * @return string
 	 */
 	public function filter_template_include( $template ) {
+		global $wp_query;
+
 		if ( is_tax( self::TAXONOMY_SLUG ) && ( $taxonomy_template = $this->template_chooser_presentation() ) ) {
 			$template = $taxonomy_template['path'];
-		} elseif( 1==1 ) {
+		} elseif( is_singular( array( self::POST_TYPE_SLUG ) ) ) {
 			//Get plugin path
 			$plugin_path = dirname( dirname( __FILE__ ) );
 			$slide_template = array(
@@ -376,11 +421,18 @@ class WP_Present_Core {
 	 * @return null
 	 */
 	function action_wp_show_admin_bar() {
+		global $wp_query;
+
 		if( ! is_tax( self::TAXONOMY_SLUG ) && ! is_singular( self::POST_TYPE_SLUG ) ) {
 			return false;
 		}
 
-		show_admin_bar( false );
+		// This should be false for fullscreen presentations
+		if( isset( $wp_query->query_vars['fullscreen'] ) ) {
+			show_admin_bar( false );
+		} else {
+			show_admin_bar( true );
+		}
 	}
 
 	/**

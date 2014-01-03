@@ -112,6 +112,7 @@ class WP_Present_Loader {
 	public function activate() {
 		WP_Present_Core::action_init_register_post_type();
 		WP_Present_Core::action_init_register_taxonomy();
+		WP_Present_Core::action_init_add_endpoints();
 		flush_rewrite_rules();
 	}
 

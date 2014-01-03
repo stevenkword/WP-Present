@@ -66,7 +66,7 @@
 									$style = "color: $text_color; ";
 									?>
 									<section id="<?php echo esc_attr( $post->post_name); ?>" data-transition="linear"  <?php if( isset( $data_background )  ) echo 'data-background="' . $data_background . '"';?>>
-										<div steven style="<?php echo $style; ?>">
+										<div style="<?php echo $style; ?>">
 											<?php the_content(); ?>
 											<p>
 												<small><?php wp_link_pages( array( 'before' => '<div class="page-links">' . __( 'Pages:', '_s' ), 'after' => '</div>' ) ); ?></small>

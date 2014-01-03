@@ -173,27 +173,12 @@ class WP_Present_Settings {
 	}
 
 	function display_about_page(){
-		?>
-		<h3>About</h3>
-			<ul>
-				<li>Contributors:&nbsp;<a href="http://profiles.wordpress.org/stevenkword">stevenkword</a></li>
-				<li>Tags:&nbsp;powerpoint, present, presentation, reveal.js, slide, SlideDeck, slides, WordCamp, wp-present</li>
-				<li>Requires at least:&nbsp;3.6</li>
-				<li>Tested up to:&nbsp;3.8</li>
-				<li>Stable tag: 0.9.5</li>
-				<li>License: GPLv2 or later</li>
-				<li>License URI:&nbsp;<a href="http://www.gnu.org/licenses/gpl-2.0.html">http://www.gnu.org/licenses/gpl-2.0.html</a></li>
-			</ul>
-
-
-		<h3>Coming soon</h3>
-			<?php
-			//Get plugin path
-			$plugin_path = dirname( dirname( __FILE__ ) );
-			$master_plan_file = fopen( $plugin_path . '/master.plan', 'r' );
-			while ( ! feof( $master_plan_file ) )
-				echo fgets( $master_plan_file ) . '<br />';
-			fclose( $master_plan_file );
+		//Get plugin path
+		$plugin_path = dirname( dirname( __FILE__ ) );
+		$master_plan_file = fopen( $plugin_path . '/readme.txt', 'r' );
+		while ( ! feof( $master_plan_file ) )
+			echo fgets( $master_plan_file ) . '<br />';
+		fclose( $master_plan_file );
 	}
 
 } // Class

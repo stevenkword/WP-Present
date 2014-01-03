@@ -55,6 +55,9 @@ body.reveal {
 body.admin-bar .reveal {
     top: -28px;
 }
+.taxonomy-presentation.admin-bar .reveal {
+    top: 0px;
+}
 
 body.mceContentBody.reveal {
 	/*
