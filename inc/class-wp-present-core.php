@@ -78,7 +78,6 @@ class WP_Present_Core {
 		add_action( 'init', array( $this, 'action_init_register_post_type' ) );
 		add_action( 'init', array( $this, 'action_init_register_taxonomy' ) );
 		add_action( 'init', array( $this, 'action_init_register_shortcode' ) );
-		add_action( 'init', array( $this, 'action_init_editor_styles' ) );
 		add_action( 'init', array( $this, 'action_init_add_endpoints' ) );
 
 		// Front End
@@ -108,6 +107,7 @@ class WP_Present_Core {
 		add_action( 'wp_ajax_update_presentation', array( $this, 'action_wp_ajax_update_presentation' ) );
 
 		// TinyMCE
+		add_action( 'init', array( $this, 'action_init_editor_styles' ) );
 		add_filter( 'tiny_mce_before_init', array( $this, 'filter_tiny_mce_before_init' ) );
 		add_filter( 'mce_external_plugins', array( $this, 'filter_mce_external_plugins' ) );
 
@@ -261,8 +261,8 @@ class WP_Present_Core {
 		$is_cpt = ( 'post.php' == $pagenow && isset( $_GET['post'] ) && self::POST_TYPE_SLUG == get_post_type( $_GET['post'] ) ) ? true : false;
 		$is_cpt_new = ( 'post-new.php' == $pagenow && isset( $_GET['post_type'] ) && self::POST_TYPE_SLUG == $_GET['post_type'] ) ? true : false;
 
-		if( ! $is_tax && ! $is_cpt && ! $is_cpt_new )
-			return;
+		//if( ! $is_tax && ! $is_cpt && ! $is_cpt_new )
+		//	return;
 
 		//If not page now tax or slide : return;
 		remove_editor_styles();
@@ -482,7 +482,7 @@ class WP_Present_Core {
 	 * @return null
 	 */
 	public function action_wp_footer() {
-		if( ! is_tax( self::TAXONOMY_SLUG ) && ! is_singular( self::POST_TYPE_SLUG ) ) {
+		if( ! $this->is_presentation() && ! is_singular( self::POST_TYPE_SLUG ) ) {
 			return;
 		}
 		?>
@@ -1128,6 +1128,13 @@ class WP_Present_Core {
 			'reveal-large'  => __( self::POST_TYPE_SINGULAR . ' Large' ),
 		) );
 		return $sizes;
+	}
+
+	/* Pluggable */
+
+	// Are we looking at a presentation?
+	public function is_presentation() {
+		return ( is_tax( self::TAXONOMY_SLUG ) && ! is_admin() );
 	}
 
 } // Class

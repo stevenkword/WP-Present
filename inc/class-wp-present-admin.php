@@ -155,7 +155,7 @@ class WP_Present_Admin {
 		wp_enqueue_script( 'jquery-ui-dialog' );
 		wp_enqueue_script( 'admin-widgets' );
 
-		wp_enqueue_script( 'wp-present-admin', $this->plugins_url . '/js/admin.js', array( 'jquery' ), self::REVISION, true );
+		wp_enqueue_script( 'wp-present-admin', $this->plugins_url . '/js/admin.js', array( 'jquery' ), /*self::REVISION*/filemtime( __FILE__ ), true );
 
 		//wp_enqueue_media();
 		wp_enqueue_style( 'media-views' );

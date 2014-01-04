@@ -145,3 +145,10 @@ class WP_Present_Loader {
 
 } // Class
 WP_Present_Loader::instance();
+
+/* Wrappers */
+if ( ! function_exists( 'wpp_is_presentation' ) ) {
+        function wpp_is_presentation() {
+                return WP_Present_Core::is_presentation();
+        }
+}
