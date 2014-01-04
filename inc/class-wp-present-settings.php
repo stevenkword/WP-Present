@@ -166,9 +166,11 @@ class WP_Present_Settings {
 			<h3>Select a Theme</h3>
 				<p>Current Theme: <?php echo WP_Present_Core::DEFAULT_THEME; ?></p>
 			<h3>Resolution</h3>
-				<p>1024x768</p>
+				<p>1024x640</p>
 			<h3>Branding</h3>
 				<p><textarea>Branding HTML textarea goes here</textarea></p>
+			<h3>Misc</h3>
+				<p>Filetime: <?php echo filemtime( __FILE__ ); ?>
 		<?php
 	}
 

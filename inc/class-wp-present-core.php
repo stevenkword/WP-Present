@@ -1,4 +1,5 @@
 <?php
+define('EP_WPPRESENT', 8388608); // 8388608 = 2^23
 /**
  ** WP Present Core
  **
@@ -32,7 +33,6 @@ class WP_Present_Core {
 	const DEFAULT_THEME      = 'simple.css'; // moon, night, simple, serif, solarized
 	const MAX_NUM_SLIDES     = 250; // not currently used, proposed variable
 	const TEXT_DOMAIN        = 'wp-present';
-	const EP_WPPRESENT       = 8388608; // 8388608 = 2^23
 
 	public $post_types = array( 'slide' );
 	public $plugins_url = '';
@@ -212,7 +212,7 @@ class WP_Present_Core {
 			'query_var'         => true,
 			'rewrite'           => array(
 				'slug'   => self::TAXONOMY_SLUG,
-				'ep_mask'=> self::EP_WPPRESENT
+				'ep_mask'=> EP_WPPRESENT
 			)
 		) );
 	}
