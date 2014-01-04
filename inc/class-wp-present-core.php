@@ -320,34 +320,47 @@ class WP_Present_Core {
 	 * @return null
 	 */
 	public function action_wp_enqueue_scripts() {
-		if( ! is_tax( self::TAXONOMY_SLUG ) )
-			return;
 
 		// Deregister theme specific stylesheets
-		global $wp_styles;
-		foreach( $wp_styles->registered as $handle => $object ) {
-			$stylesheet_relative_uri = str_replace( home_url(), '', get_stylesheet_directory_uri() );
-			if( ! empty( $stylesheet_relative_uri ) && strpos( $object->src, $stylesheet_relative_uri ) ) {
-				unset( $wp_styles->$handle );
-				wp_dequeue_style( $handle );
-			}
+
+		global $wp_query, $wp_styles;
+
+		$fullscreen = isset( $wp_query->query_vars['fullscreen'] );
+
+		if( ! is_tax( self::TAXONOMY_SLUG ) && ! is_singular( self::POST_TYPE_SLUG ) ) {
+			//return;
 		}
 
-		/* Browser reset styles */
-		//wp_enqueue_style( 'reset', $this->plugins_url . '/css/reset.css', '', self::REVISION );
+		if( is_tax( self::TAXONOMY_SLUG ) && ( $fullscreen || is_admin() ) ) {
+			// Remove all theme stylesheets
+			$this->dequeue_theme_styles();
+		}
 
-		/* Reveal Styles */
-		wp_enqueue_style( 'reveal', $this->plugins_url . '/js/reveal.js/css/reveal.css', '', self::REVISION );
-		wp_enqueue_style( 'reveal-theme', $this->plugins_url . '/js/reveal.js/css/theme/' . self::DEFAULT_THEME, array('reveal'), self::REVISION );
-		wp_enqueue_style( 'zenburn', $this->plugins_url . '/js/reveal.js/lib/css/zenburn.css', '', self::REVISION, false );
+		if( is_tax( self::TAXONOMY_SLUG ) ) {
 
-		/* Last run styles */
-		wp_enqueue_style( 'custom', $this->plugins_url . '/css/custom.css', array('reveal'), self::REVISION );
+			wp_enqueue_style( 'dashicons' );
 
-		/* Reveal Scripts */
-		wp_enqueue_script( 'reveal-head', $this->plugins_url . '/js/reveal.js/lib/js/head.min.js', array( 'jquery' ), self::REVISION, true );
-		wp_enqueue_script( 'reveal', $this->plugins_url . '/js/reveal.js/js/reveal.min.js', array( 'jquery' ), self::REVISION, true );
-		//wp_enqueue_script( 'reveal-config', $this->plugins_url . '/js/reveal-config.js', array( 'jquery' ), self::REVISION );
+			/* Browser reset styles */
+			//wp_enqueue_style( 'reset', $this->plugins_url . '/css/reset.css', '', self::REVISION );
+
+			/* Reveal Styles */
+			wp_enqueue_style( 'reveal', $this->plugins_url . '/js/reveal.js/css/reveal.css', '', self::REVISION );
+			wp_enqueue_style( 'reveal-theme', $this->plugins_url . '/js/reveal.js/css/theme/' . self::DEFAULT_THEME, array('reveal'), self::REVISION );
+			wp_enqueue_style( 'zenburn', $this->plugins_url . '/js/reveal.js/lib/css/zenburn.css', '', self::REVISION, false );
+
+			/* Last run styles */
+			wp_enqueue_style( 'custom', $this->plugins_url . '/css/custom.css', array('reveal'), self::REVISION );
+
+			/* Reveal Scripts */
+			wp_enqueue_script( 'reveal-head', $this->plugins_url . '/js/reveal.js/lib/js/head.min.js', array( 'jquery' ), self::REVISION, true );
+			wp_enqueue_script( 'reveal', $this->plugins_url . '/js/reveal.js/js/reveal.min.js', array( 'jquery' ), self::REVISION, true );
+			//wp_enqueue_script( 'reveal-config', $this->plugins_url . '/js/reveal-config.js', array( 'jquery' ), self::REVISION );
+		}
+
+		// Overrides for the fullscreen page
+		if( is_tax( self::TAXONOMY_SLUG ) && $fullscreen ) {
+			wp_enqueue_style( 'reveal-custom', get_stylesheet_directory_uri() . '/reveal.css', 'reveal', self::REVISION );
+		}
 	}
 
 	/**
