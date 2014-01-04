@@ -139,6 +139,9 @@ class WP_Present_Admin {
 			return;
 		}
 
+		// Hide screen options
+		add_filter( 'screen_options_show_screen', '__return_false' ); // a test
+
 		// Admin Styles
 		wp_enqueue_style( 'wp-present-admin', $this->plugins_url . '/css/admin.css', '', self::REVISION );
 

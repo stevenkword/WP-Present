@@ -1,5 +1,4 @@
 <?php
-define('EP_WPPRESENT', 8388608); // 8388608 = 2^23
 /**
  ** WP Present Core
  **
@@ -33,6 +32,7 @@ class WP_Present_Core {
 	const DEFAULT_THEME      = 'simple.css'; // moon, night, simple, serif, solarized
 	const MAX_NUM_SLIDES     = 250; // not currently used, proposed variable
 	const TEXT_DOMAIN        = 'wp-present';
+	const EP_WPPRESENT       = 8388608; // 8388608 = 2^23
 
 	public $post_types = array( 'slide' );
 	public $plugins_url = '';
@@ -90,9 +90,6 @@ class WP_Present_Core {
 		// Template
 		add_filter( 'template_include', array( $this, 'filter_template_include' ) );
 
-		// Hide screen options
-		add_filter('screen_options_show_screen', '__return_false'); // a test
-
 		// Taxonomy
 		add_action( self::TAXONOMY_SLUG . '_edit_form', array( $this, 'taxonomy_edit_form' ), 9, 2 );
 
@@ -123,6 +120,7 @@ class WP_Present_Core {
 
 		// Add specific CSS class by filter
 		add_filter('body_class', array( $this, 'filter_body_class' ) );
+
 	}
 
 	/**
@@ -214,7 +212,7 @@ class WP_Present_Core {
 			'query_var'         => true,
 			'rewrite'           => array(
 				'slug'   => self::TAXONOMY_SLUG,
-				'ep_mask'=> EP_WPPRESENT
+				'ep_mask'=> self::EP_WPPRESENT
 			)
 		) );
 	}
@@ -485,7 +483,7 @@ class WP_Present_Core {
 			// https://github.com/hakimel/reveal.js#configuration
 			Reveal.initialize({
 				width: 1024,
-				height: 768,
+				height: 640,
 				controls: true,
 				progress: true,
 				history: true,
