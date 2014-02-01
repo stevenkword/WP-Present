@@ -1135,7 +1135,8 @@ class WP_Present_Core {
 	 * @return null
 	 */
 	public function action_edited_taxonomy( $term_id, $tt_id ) {
-		error_log('woot');
+		error_log('term_id' . var_export( $term_id ) );
+		error_log('tt_id' . var_export( $tt_id ) );
 	}
 
 	/**
