@@ -21,6 +21,9 @@ class WP_Present_Core {
 	const TAXONOMY_NAME      = 'Presentations';
 	const TAXONOMY_SINGULAR  = 'Presentation';
 
+	/* Metakeys */
+	const METAKEY_PREFIX    = 'wp_present_';
+
 	/* Shortcode */
 	const SHORTCODE          = 'wppresent';
 
@@ -218,7 +221,7 @@ class WP_Present_Core {
 	 * @return null
 	 */
 	public function action_init_register_taxonomy() {
-		register_taxonomy( self::TAXONOMY_SLUG, $this->post_types, array(
+		register_taxonomy( self::TAXONOMY_SLUG, array_merge( $this->post_types, array( self::POST_TYPE_TAXONOMY ) ) , array(
 			'labels' => array(
 				'name'              => _x( self::TAXONOMY_NAME, 'taxonomy general name' ),
 				'singular_name'     => _x( self::TAXONOMY_SINGULAR, 'taxonomy singular name' ),
@@ -1129,7 +1132,7 @@ class WP_Present_Core {
 	}
 
 	/**
-	 * Register custom image sizes
+	 * Updated the related post to each presentation taxonomy
 	 *
 	 * @return null
 	 */
@@ -1137,6 +1140,11 @@ class WP_Present_Core {
 
 		// @TODO: See if this is actually ever defined here
 		if( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) ) {
+			return;
+		}
+
+		$term = get_term( $term_id, self::TAXONOMY_SLUG );
+		if( ! is_object( $term ) || is_wp_error( $term ) ) {
 			return;
 		}
 
@@ -1151,20 +1159,22 @@ class WP_Present_Core {
 		if( $tax_query->have_posts() ) {
 			while ( $tax_query->have_posts() ) {
 				$tax_query->the_post();
-				error_log('Post exists');
 				$post_id = get_the_ID();
 			}
 		} else {
 			// Insert the post into the database
 			$post_id = wp_insert_post( array(
-				'post_title'    => 'My post',
+				'post_title'    => $term->name . '-meta',
 				'post_status'   => 'publish',
 				'post_author'   => 1,
 				'post_type'     => self::POST_TYPE_TAXONOMY
 			) );
 		}
 		$terms = wp_set_object_terms( $post_id, $term_id, self::TAXONOMY_SLUG, false );
-		error_log( $post_id );
+		if( is_array( $terms ) && ! is_wp_error( $terms ) ) {
+			// Backup the term desicription
+			add_post_meta( $post_id, self::METAKEY_PREFIX . 'slide_order', $term->description, true );
+		}
 	}
 
 	/**
