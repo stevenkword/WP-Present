@@ -14,13 +14,12 @@ class WP_Present_Core {
 	const POST_TYPE_NAME     = 'Slides';
 	const POST_TYPE_SINGULAR = 'Slide';
 	const POST_TYPE_CAP_TYPE = 'post';
+	const POST_TYPE_TAXONOMY = 'presentations';
 
 	/* Taxonomy */
 	const TAXONOMY_SLUG      = 'presentation';
 	const TAXONOMY_NAME      = 'Presentations';
 	const TAXONOMY_SINGULAR  = 'Presentation';
-
-	const TAXONOMY_PRESENT   = 'presentations';
 
 	/* Shortcode */
 	const SHORTCODE          = 'wppresent';
@@ -52,14 +51,14 @@ class WP_Present_Core {
 
 	/**
 	 * Constructor
-     *
+	 *
 	 * @since 0.9.0
 	 */
 	private function __construct() { }
 
 	/**
 	 * Clone
-     *
+	 *
 	 * @since 0.9.0
 	 */
 	private function __clone() { }
@@ -188,7 +187,7 @@ class WP_Present_Core {
 
 		// Storage for the presentation taxonomy.
 		// @TODO: Taxonomy meta!
-		register_post_type( self::TAXONOMY_PRESENT, array(
+		register_post_type( self::POST_TYPE_TAXONOMY, array(
 			'labels' => array(
 				//@todo http://codex.wordpress.org/Function_Reference/register_post_type
 				'name'          => __( self::TAXONOMY_NAME ),
@@ -831,7 +830,7 @@ class WP_Present_Core {
 		* NOT currently working for category taxonomy *
 		*********************************************/
 
- 		/* Bail if we are not looking at this taxonomy's directory */
+		/* Bail if we are not looking at this taxonomy's directory */
 		if( 'edit-tags.php' != $pagenow || ( self::TAXONOMY_SLUG != $_GET['taxonomy'] && 'category' != $_GET['taxonomy'] ) || isset( $_GET['tag_ID'] ) )
 			return $terms;
 
@@ -931,8 +930,8 @@ class WP_Present_Core {
 	 *
 	 * @return null
 	 */
-    public function modal_editor( $post_id = '' ) {
-        wp_editor( $content = '', $editor_id = 'editor_' . self::POST_TYPE_SLUG, array(
+	public function modal_editor( $post_id = '' ) {
+		wp_editor( $content = '', $editor_id = 'editor_' . self::POST_TYPE_SLUG, array(
 			'wpautop' => false, // use wpautop?
 			'media_buttons' => true, // show insert/upload button(s)
 			'textarea_name' => $editor_id, // set the textarea name to something different, square brackets [] can be used here
@@ -943,12 +942,12 @@ class WP_Present_Core {
 			'editor_class' => '', // add extra class(es) to the editor textarea
 			'teeny' => false, // output the minimal editor config used in Press This
 			'dfw' => false, // replace the default fullscreen with DFW (needs specific DOM elements and css)
-            /*'tinymce' => array(
-            	'plugins' => 'inlinepopups, wordpress, wplink, wpdialogs',
-             ),*/
+			/*'tinymce' => array(
+				'plugins' => 'inlinepopups, wordpress, wplink, wpdialogs',
+			 ),*/
 			'quicktags' => true // load Quicktags, can be used to pass settings directly to Quicktags using an array()
 		) );
-    }
+	}
 
 	/**
 	 * Modify the TinyMCE editor
@@ -956,11 +955,11 @@ class WP_Present_Core {
 	 * @return array
 	 */
 	public function filter_tiny_mce_before_init( $args ) {
-   		$args['body_class'] = 'reveal';
-   		$args['height'] = '100%';
-   		$args['wordpress_adv_hidden'] = false;
-   		//$args['resize'] = "both";
-    	return $args;
+		$args['body_class'] = 'reveal';
+		$args['height'] = '100%';
+		$args['wordpress_adv_hidden'] = false;
+		//$args['resize'] = "both";
+		return $args;
 	}
 
 	/**
@@ -1135,8 +1134,37 @@ class WP_Present_Core {
 	 * @return null
 	 */
 	public function action_edited_taxonomy( $term_id, $tt_id ) {
-		error_log('term_id' . var_export( $term_id ) );
-		error_log('tt_id' . var_export( $tt_id ) );
+
+		// @TODO: See if this is actually ever defined here
+		if( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) ) {
+			return;
+		}
+
+		$tax_query = new WP_Query( array(
+			'post_type' => self::POST_TYPE_TAXONOMY,
+			'tax_query' => array( array(
+				'taxonomy' => self::TAXONOMY_SLUG,
+				'field' => 'id',
+				'terms' => $term_id ) )
+		) );
+
+		if( $tax_query->have_posts() ) {
+			while ( $tax_query->have_posts() ) {
+				$tax_query->the_post();
+				error_log('Post exists');
+				$post_id = get_the_ID();
+			}
+		} else {
+			// Insert the post into the database
+			$post_id = wp_insert_post( array(
+				'post_title'    => 'My post',
+				'post_status'   => 'publish',
+				'post_author'   => 1,
+				'post_type'     => self::POST_TYPE_TAXONOMY
+			) );
+		}
+		$terms = wp_set_object_terms( $post_id, $term_id, self::TAXONOMY_SLUG, false );
+		error_log( $post_id );
 	}
 
 	/**
