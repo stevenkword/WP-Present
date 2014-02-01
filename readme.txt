@@ -24,6 +24,7 @@ If you'd like to contribute to the plugin you can find it on GitHub: https://git
 == Screenshots ==
 1. The admin interface
 2. A slide in a presentation
+3. Presentation editor
 
 == Changelog ==
 = 0.9.5 =
