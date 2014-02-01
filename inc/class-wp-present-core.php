@@ -20,6 +20,8 @@ class WP_Present_Core {
 	const TAXONOMY_NAME      = 'Presentations';
 	const TAXONOMY_SINGULAR  = 'Presentation';
 
+	const TAXONOMY_PRESENT   = 'presentations';
+
 	/* Shortcode */
 	const SHORTCODE          = 'wppresent';
 
@@ -182,6 +184,31 @@ class WP_Present_Core {
 			'supports'        => array( 'title', 'editor', 'page-attributes', 'thumbnail' ),
 			'taxonomies'      => array( self::TAXONOMY_SLUG )
 		) );
+
+		// Storage for the presentation taxonomy.
+		// @TODO: Taxonomy meta!
+		register_post_type( self::TAXONOMY_PRESENT, array(
+			'labels' => array(
+				//@todo http://codex.wordpress.org/Function_Reference/register_post_type
+				'name'          => __( self::TAXONOMY_NAME ),
+				'singular_name' => __( self::TAXONOMY_SINGULAR ),
+				'add_new_item'  => __( 'Add New ' . self::TAXONOMY_SINGULAR ),
+				'edit_item'     => __( 'Edit ' . self::TAXONOMY_SINGULAR ),
+				'new_item'      => __( 'New ' . self::TAXONOMY_SINGULAR ),
+				'view_item'     => __( 'View ' . self::TAXONOMY_SINGULAR ),
+				'search_items'  => __( 'Search' . self::TAXONOMY_NAME ),
+			),
+			'public'          => true,
+			'capability_type' => self::POST_TYPE_CAP_TYPE,
+			'has_archive'     => true,
+			'show_ui'         => true,
+			'show_in_menu'    => true,
+			//'menu_position'   => 5,
+			'hierarchical'    => false, //@todo within the same category?
+			'supports'        => array( 'title' ),
+			'taxonomies'      => array( self::TAXONOMY_SLUG )
+		) );
+
 	}
 
 	/**
