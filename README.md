@@ -11,11 +11,11 @@ WP-Present - beta
 
 ## Description ##
 
-Create beautiful slide presentations with the the power of WordPress and the elegance of reveal.js
+Create interactive slide presentations, the WordPress way.  Combine the the power of WordPress with the elegance of reveal.js.
+
+Presentation layer powered reveal.js by Hakim El Hattab (http://hakim.se).
 
 Demo coming soon to http://wppresent.org. Currently works best with Chrome & Safari
-
-This plugin is partly based upon the reveal.js by Hakim El Hattab (http://hakim.se).
 
 If you'd like to contribute to the plugin you can find it on GitHub: https://github.com/stevenkword/WP-Present
 
