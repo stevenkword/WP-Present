@@ -93,6 +93,7 @@ class WP_Present_Core {
 
 		// Taxonomy
 		add_action( self::TAXONOMY_SLUG . '_edit_form', array( $this, 'taxonomy_edit_form' ), 9, 2 );
+		add_action( 'edited_' . self::TAXONOMY_SLUG, array( $this, 'action_edited_taxonomy' ), 10, 2 );
 
 		add_action( 'restrict_manage_posts', array( $this, 'action_restrict_manage_posts' ) );
 		add_action( 'parse_query', array( $this, 'action_parse_query' ) );
@@ -1126,6 +1127,15 @@ class WP_Present_Core {
 
 		wp_update_term( $presentation_id, self::TAXONOMY_SLUG, $updated_presentation );
 		die();
+	}
+
+	/**
+	 * Register custom image sizes
+	 *
+	 * @return null
+	 */
+	public function action_edited_taxonomy( $term_id, $tt_id ) {
+		error_log('woot');
 	}
 
 	/**
