@@ -13,11 +13,11 @@ WP-Present - beta
 
 Create beautiful slide presentations with the the power of WordPress and the elegance of reveal.js
 
-Demo coming soon to http://wppresent.org
+Demo coming soon to http://wppresent.org. Currently works best with Chrome & Safari
 
-Currently works best with Chrome & Safari
+This plugin is partly based upon the reveal.js by Hakim El Hattab (http://hakim.se).
 
-A big shout out to Hakim El Hattab of reveal.js, http://hakim.se
+If you'd like to contribute to the plugin you can find it on GitHub: https://github.com/stevenkword/WP-Present
 
 ## Installation ##
 1. Upload "/wp-present" to the "/wp-content/plugins/" directory.
