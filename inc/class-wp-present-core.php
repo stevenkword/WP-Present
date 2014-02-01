@@ -1164,7 +1164,7 @@ class WP_Present_Core {
 		} else {
 			// Insert the post into the database
 			$post_id = wp_insert_post( array(
-				'post_title'    => $term->name . '-meta',
+				'post_title'    => $term->name,/* . ' Meta',*/
 				'post_status'   => 'publish',
 				'post_author'   => 1,
 				'post_type'     => self::POST_TYPE_TAXONOMY
