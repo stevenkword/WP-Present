@@ -126,6 +126,10 @@ class WP_Present_Core {
 		// Add specific CSS class by filter
 		add_filter('body_class', array( $this, 'filter_body_class' ) );
 
+
+		// Mayhems
+		add_filter( 'get_edit_post_link', array( $this, 'filter_get_edit_post_link' ), 10, 3 );
+
 	}
 
 	/**
@@ -194,7 +198,7 @@ class WP_Present_Core {
 			'labels' => array(
 				//@todo http://codex.wordpress.org/Function_Reference/register_post_type
 				'name'          => __( self::TAXONOMY_NAME ),
-				'singular_name' => __( self::TAXONOMY_SINGULAR . 'asdf' ),
+				'singular_name' => __( self::TAXONOMY_SINGULAR ),
 				'add_new_item'  => __( 'Add New ' . self::TAXONOMY_SINGULAR ),
 				'edit_item'     => __( 'Edit ' . self::TAXONOMY_SINGULAR ),
 				'new_item'      => __( 'New ' . self::TAXONOMY_SINGULAR ),
@@ -208,7 +212,7 @@ class WP_Present_Core {
 			'show_in_menu'    => true,
 			//'menu_position'   => 5,
 			'hierarchical'    => false, //@todo within the same category?
-			'supports'        => array( 'title', 'comments' ),
+			'supports'        => array( 'comments' ),
 			'taxonomies'      => array( self::TAXONOMY_SLUG )
 		) );
 
@@ -237,8 +241,8 @@ class WP_Present_Core {
 				'view_item'         => __( 'View ' . self::TAXONOMY_SINGULAR )
 			),
 			'hierarchical'      => true,
-			'show_ui'           => true,
-			'show_admin_column' => true,
+			'show_ui'           => false,
+			'show_admin_column' => false,
 			'query_var'         => true,
 			'rewrite'           => array(
 				'slug'   => self::TAXONOMY_SLUG,
@@ -1165,7 +1169,7 @@ class WP_Present_Core {
 		} else {
 			// Insert the post into the database
 			$post_id = wp_insert_post( array(
-				'post_title'    => $term->name . ' Meta',
+				'post_title'    => $term->name,
 				'post_status'   => 'publish',
 				'post_author'   => 1,
 				'post_type'     => self::POST_TYPE_TAXONOMY,
@@ -1213,6 +1217,20 @@ class WP_Present_Core {
 	// Are we looking at a presentation?
 	public function is_presentation() {
 		return ( is_tax( self::TAXONOMY_SLUG ) || is_singular( self::POST_TYPE_TAXONOMY ) && ! is_admin() );
+	}
+
+	/* Mayhem */
+	public function filter_get_edit_post_link( $link, $post_id, $context ) {
+
+		// Return if POST_TYPE_TAXONOMY != post type.
+
+		$terms = get_the_terms( $post_id, WP_Present_Core::TAXONOMY_SLUG );
+		$terms = array_values( $terms );
+		$term = $terms[0];
+		//$term_link = get_term_link( $term, WP_Present_Core::TAXONOMY_SLUG ) . 'fullscreen/';
+		$term_link = get_edit_term_link( $term, WP_Present_Core::TAXONOMY_SLUG );
+
+		return $term_link;
 	}
 
 } // Class
