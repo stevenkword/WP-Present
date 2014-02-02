@@ -208,7 +208,7 @@ class WP_Present_Core {
 			'show_in_menu'    => true,
 			//'menu_position'   => 5,
 			'hierarchical'    => false, //@todo within the same category?
-			'supports'        => array( 'title' ),
+			'supports'        => array( 'title', 'comments' ),
 			'taxonomies'      => array( self::TAXONOMY_SLUG )
 		) );
 
