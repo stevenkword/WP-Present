@@ -9,7 +9,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
-Create interactive slide presentations, the WordPress way.  Combine the the power of WordPress with the elegance of reveal.js.
+Create interactive slide presentations with the power of WordPress with the elegance of reveal.js.
 
 Presentation layer powered reveal.js by Hakim El Hattab (http://hakim.se).
 
