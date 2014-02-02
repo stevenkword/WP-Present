@@ -1120,8 +1120,6 @@ class WP_Present_Core {
 			wp_die( $this->nonce_fail_message );
 		}
 
-oomph_error_log( 'save' );
-
 		$presentation_id  = $_REQUEST['id'];
 		$safe_description = sanitize_text_field( $_REQUEST['content'] );
 
@@ -1139,8 +1137,6 @@ oomph_error_log( 'save' );
 	 * @return null
 	 */
 	public function action_edited_taxonomy( $term_id, $tt_id ) {
-
-		oomph_error_log('[Term ID]',$term_id);
 
 		// @TODO: See if this is actually ever defined here
 		if( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) ) {
