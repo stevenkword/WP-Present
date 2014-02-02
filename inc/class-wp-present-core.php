@@ -95,8 +95,6 @@ class WP_Present_Core {
 
 		// Taxonomy
 		add_action( self::TAXONOMY_SLUG . '_edit_form', array( $this, 'taxonomy_edit_form' ), 9, 2 );
-		add_action( 'edited_' . self::TAXONOMY_SLUG, array( $this, 'action_edited_taxonomy' ), 10, 2 );
-
 		add_action( 'restrict_manage_posts', array( $this, 'action_restrict_manage_posts' ) );
 		add_action( 'parse_query', array( $this, 'action_parse_query' ) );
 
@@ -125,11 +123,6 @@ class WP_Present_Core {
 
 		// Add specific CSS class by filter
 		add_filter('body_class', array( $this, 'filter_body_class' ) );
-
-
-		// Mayhems
-		add_filter( 'get_edit_post_link', array( $this, 'filter_get_edit_post_link' ), 10, 3 );
-
 	}
 
 	/**
@@ -185,8 +178,7 @@ class WP_Present_Core {
 			'capability_type' => self::POST_TYPE_CAP_TYPE,
 			'has_archive'     => true,
 			'show_ui'         => true,
-			'show_in_menu'    => true,
-			//'menu_position'   => 5,
+			'show_in_menu'    => false,
 			'hierarchical'    => false, //@todo within the same category?
 			'supports'        => array( 'title', 'editor', 'page-attributes', 'thumbnail' ),
 			'taxonomies'      => array( self::TAXONOMY_SLUG )
@@ -240,9 +232,9 @@ class WP_Present_Core {
 				'menu_name'         => __( self::TAXONOMY_NAME ),
 				'view_item'         => __( 'View ' . self::TAXONOMY_SINGULAR )
 			),
-			'hierarchical'      => true,
-			'show_ui'           => false,
-			'show_admin_column' => false,
+			'hierarchical'      => false,
+			'show_ui'           => true,
+			'show_admin_column' => true,
 			'query_var'         => true,
 			'rewrite'           => array(
 				'slug'   => self::TAXONOMY_SLUG,
@@ -1136,54 +1128,6 @@ class WP_Present_Core {
 	}
 
 	/**
-	 * Updated the related post to each presentation taxonomy
-	 *
-	 * @return null
-	 */
-	public function action_edited_taxonomy( $term_id, $tt_id ) {
-
-		// @TODO: See if this is actually ever defined here
-		if( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) ) {
-			return;
-		}
-
-		$term = get_term( $term_id, self::TAXONOMY_SLUG );
-		if( ! is_object( $term ) || is_wp_error( $term ) ) {
-			return;
-		}
-
-		$tax_query = new WP_Query( array(
-			'post_type' => self::POST_TYPE_TAXONOMY,
-			'tax_query' => array( array(
-				'taxonomy' => self::TAXONOMY_SLUG,
-				'field' => 'id',
-				'terms' => $term_id
-			) )
-		) );
-
-		if( $tax_query->have_posts() ) {
-			while ( $tax_query->have_posts() ) {
-				$tax_query->the_post();
-				$post_id = get_the_ID();
-			}
-		} else {
-			// Insert the post into the database
-			$post_id = wp_insert_post( array(
-				'post_title'    => $term->name,
-				'post_status'   => 'publish',
-				'post_author'   => 1,
-				'post_type'     => self::POST_TYPE_TAXONOMY,
-			) );
-			die('death');
-		}
-		$terms = wp_set_object_terms( $post_id, $term_id, self::TAXONOMY_SLUG, false );
-		if( is_array( $terms ) && ! is_wp_error( $terms ) ) {
-			// Backup the term desicription
-			add_post_meta( $post_id, self::METAKEY_PREFIX . 'slide_order', $term->description, true );
-		}
-	}
-
-	/**
 	 * Register custom image sizes
 	 *
 	 * @return null
@@ -1218,20 +1162,5 @@ class WP_Present_Core {
 	public function is_presentation() {
 		return ( is_tax( self::TAXONOMY_SLUG ) || is_singular( self::POST_TYPE_TAXONOMY ) && ! is_admin() );
 	}
-
-	/* Mayhem */
-	public function filter_get_edit_post_link( $link, $post_id, $context ) {
-
-		// Return if POST_TYPE_TAXONOMY != post type.
-
-		$terms = get_the_terms( $post_id, WP_Present_Core::TAXONOMY_SLUG );
-		$terms = array_values( $terms );
-		$term = $terms[0];
-		//$term_link = get_term_link( $term, WP_Present_Core::TAXONOMY_SLUG ) . 'fullscreen/';
-		$term_link = get_edit_term_link( $term, WP_Present_Core::TAXONOMY_SLUG );
-
-		return $term_link;
-	}
-
 } // Class
 WP_Present_Core::instance();

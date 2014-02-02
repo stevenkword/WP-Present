@@ -84,6 +84,7 @@ class WP_Present_Loader {
 		require( plugin_dir_path( __FILE__ ) . 'inc/class-wp-present-core.php' );
 		require( plugin_dir_path( __FILE__ ) . 'inc/class-wp-present-admin.php' );
 		require( plugin_dir_path( __FILE__ ) . 'inc/class-wp-present-settings.php' );
+		require( plugin_dir_path( __FILE__ ) . 'inc/class-wp-present-taxonomy-meta.php' );
 
 		// Check the things
 		//if( isset( $_REQUEST['tag_ID'] ) && isset( $_GET['taxonomy'] ) && WP_Present_Core::instance()->taxonomy_slug == $_GET['taxonomy'] ) {

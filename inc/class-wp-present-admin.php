@@ -23,14 +23,14 @@ class WP_Present_Admin {
 
 	/**
 	 * Constructor
-     *
+	 *
 	 * @since 0.9.0
 	 */
 	private function __construct() { }
 
 	/**
 	 * Clone
-     *
+	 *
 	 * @since 0.9.0
 	 */
 	private function __clone() { }
@@ -66,14 +66,14 @@ class WP_Present_Admin {
 	 * @since 0.9.5
 	 */
 	function filter_admin_body_class( $classes ) {
-	    if ( version_compare( $GLOBALS['wp_version'], '3.8-alpha', '>' ) ) {
-	        $classes = explode( " ", $classes );
-	        if ( ! in_array( 'mp6', $classes ) ) {
-	            $classes[] = 'mp6';
-	        }
-	        $classes = implode( " ", $classes );
-	    }
-	    return $classes;
+		if ( version_compare( $GLOBALS['wp_version'], '3.8-alpha', '>' ) ) {
+			$classes = explode( " ", $classes );
+			if ( ! in_array( 'mp6', $classes ) ) {
+				$classes[] = 'mp6';
+			}
+			$classes = implode( " ", $classes );
+		}
+		return $classes;
 	}
 
 	/**
@@ -172,7 +172,7 @@ class WP_Present_Admin {
 	public function action_admin_head() {
 
 		// Presentation dashicon
-	    echo '<style type="text/css">.mp6 #adminmenu #menu-posts-slide div.wp-menu-image:before { content: "\f181" !important; }</style>';
+		echo '<style type="text/css">.mp6 #adminmenu #menu-posts-slide div.wp-menu-image:before { content: "\f181" !important; }</style>';
 
 		// Only add this variable on the edit taxonomy page
 		global $pagenow;
