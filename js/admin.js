@@ -18,7 +18,7 @@ var WPPresentAdmin;
 			$( "#container" ).sortable({
 				stop: function() {
 					self.updateTaxonomyDescription();
-					self.updatePresentation();
+					//self.updatePresentation();
 				}
 			});
 
@@ -26,7 +26,7 @@ var WPPresentAdmin;
 				connectWith: ".column-inner",
 				stop: function() {
 					self.updateTaxonomyDescription();
-					self.updatePresentation();
+					//self.updatePresentation();
 				}
 			});
 
@@ -49,7 +49,7 @@ var WPPresentAdmin;
 			// Save it after the autopop if this is our first time
 			if( '' === $('#description').val() ) {
 				self.updateTaxonomyDescription();
-				self.updatePresentation();
+				//self.updatePresentation();
 			}
 
 			$('.spinner').hide();
@@ -81,7 +81,7 @@ var WPPresentAdmin;
 					connectWith: ".column-inner",
 					stop: function() {
 						self.updateTaxonomyDescription();
-						self.updatePresentation();
+						//self.updatePresentation();
 					}
 				});
 			}
@@ -565,7 +565,7 @@ var WPPresentAdmin;
 				self.addColumn();
 				self.refreshUI();
 				self.updateTaxonomyDescription();
-				self.updatePresentation();
+				//self.updatePresentation();
 			});
 		},
 
@@ -577,7 +577,7 @@ var WPPresentAdmin;
 				self.removeColumn();
 				self.refreshUI();
 				self.updateTaxonomyDescription();
-				self.updatePresentation();
+				//self.updatePresentation();
 			});
 		},
 

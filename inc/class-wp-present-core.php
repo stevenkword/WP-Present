@@ -183,7 +183,7 @@ class WP_Present_Core {
 			'show_ui'         => true,
 			'show_in_menu'    => true,
 			//'menu_position'   => 5,
-			'hierarchical'    => true, //@todo within the same category?
+			'hierarchical'    => false, //@todo within the same category?
 			'supports'        => array( 'title', 'editor', 'page-attributes', 'thumbnail' ),
 			'taxonomies'      => array( self::TAXONOMY_SLUG )
 		) );
@@ -194,7 +194,7 @@ class WP_Present_Core {
 			'labels' => array(
 				//@todo http://codex.wordpress.org/Function_Reference/register_post_type
 				'name'          => __( self::TAXONOMY_NAME ),
-				'singular_name' => __( self::TAXONOMY_SINGULAR ),
+				'singular_name' => __( self::TAXONOMY_SINGULAR . 'asdf' ),
 				'add_new_item'  => __( 'Add New ' . self::TAXONOMY_SINGULAR ),
 				'edit_item'     => __( 'Edit ' . self::TAXONOMY_SINGULAR ),
 				'new_item'      => __( 'New ' . self::TAXONOMY_SINGULAR ),
@@ -1120,6 +1120,8 @@ class WP_Present_Core {
 			wp_die( $this->nonce_fail_message );
 		}
 
+oomph_error_log( 'save' );
+
 		$presentation_id  = $_REQUEST['id'];
 		$safe_description = sanitize_text_field( $_REQUEST['content'] );
 
@@ -1138,6 +1140,8 @@ class WP_Present_Core {
 	 */
 	public function action_edited_taxonomy( $term_id, $tt_id ) {
 
+		oomph_error_log('[Term ID]',$term_id);
+
 		// @TODO: See if this is actually ever defined here
 		if( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) ) {
 			return;
@@ -1153,7 +1157,8 @@ class WP_Present_Core {
 			'tax_query' => array( array(
 				'taxonomy' => self::TAXONOMY_SLUG,
 				'field' => 'id',
-				'terms' => $term_id ) )
+				'terms' => $term_id
+			) )
 		) );
 
 		if( $tax_query->have_posts() ) {
@@ -1164,11 +1169,12 @@ class WP_Present_Core {
 		} else {
 			// Insert the post into the database
 			$post_id = wp_insert_post( array(
-				'post_title'    => $term->name,/* . ' Meta',*/
+				'post_title'    => $term->name . ' Meta',
 				'post_status'   => 'publish',
 				'post_author'   => 1,
-				'post_type'     => self::POST_TYPE_TAXONOMY
+				'post_type'     => self::POST_TYPE_TAXONOMY,
 			) );
+			die('death');
 		}
 		$terms = wp_set_object_terms( $post_id, $term_id, self::TAXONOMY_SLUG, false );
 		if( is_array( $terms ) && ! is_wp_error( $terms ) ) {
@@ -1210,7 +1216,7 @@ class WP_Present_Core {
 
 	// Are we looking at a presentation?
 	public function is_presentation() {
-		return ( is_tax( self::TAXONOMY_SLUG ) && ! is_admin() );
+		return ( is_tax( self::TAXONOMY_SLUG ) || is_singular( self::POST_TYPE_TAXONOMY ) && ! is_admin() );
 	}
 
 } // Class
