@@ -199,7 +199,7 @@ class WP_Present_Core {
 			),
 			'public'          => true,
 			'capability_type' => self::POST_TYPE_CAP_TYPE,
-			'has_archive'     => true,
+			'has_archive'     => false,
 			'show_ui'         => true,
 			'show_in_menu'    => true,
 			//'menu_position'   => 5,
