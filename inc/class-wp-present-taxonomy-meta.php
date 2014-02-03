@@ -50,7 +50,7 @@ class WP_Present_Taxonomy_Meta {
 		add_action( 'edited_' . WP_Present_Core::TAXONOMY_SLUG, array( $this, 'action_edited_taxonomy' ), 10, 2 );
 
 		// Edit Link
-		add_filter( 'get_edit_post_link', array( $this, 'filter_get_edit_post_link' ), 10, 3 );
+		//add_filter( 'get_edit_post_link', array( $this, 'filter_get_edit_post_link' ), 10, 3 );
 
 	}
 

@@ -204,7 +204,7 @@ class WP_Present_Core {
 			'show_in_menu'    => true,
 			//'menu_position'   => 5,
 			'hierarchical'    => false, //@todo within the same category?
-			'supports'        => array( 'comments' ),
+			'supports'        => array( 'comments', 'tags', 'revisions' ),
 			'taxonomies'      => array( self::TAXONOMY_SLUG )
 		) );
 
@@ -362,9 +362,12 @@ class WP_Present_Core {
 			$this->dequeue_theme_styles();
 		}
 
-		if( is_tax( self::TAXONOMY_SLUG ) ) {
-
+		if( function_exists( 'is_buddypress' ) || is_buddypress() ) {
 			wp_enqueue_style( 'dashicons' );
+		}
+
+
+		if( is_tax( self::TAXONOMY_SLUG ) )  {
 
 			/* Browser reset styles */
 			//wp_enqueue_style( 'reset', $this->plugins_url . '/css/reset.css', '', self::REVISION );
