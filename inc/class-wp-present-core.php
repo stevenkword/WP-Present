@@ -362,7 +362,7 @@ class WP_Present_Core {
 			$this->dequeue_theme_styles();
 		}
 
-		if( function_exists( 'is_buddypress' ) || is_buddypress() ) {
+		if( function_exists( 'is_buddypress' ) && is_buddypress() ) {
 			wp_enqueue_style( 'dashicons' );
 		}
 
