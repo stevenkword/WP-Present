@@ -61,7 +61,6 @@ class WP_Present_Taxonomy_Meta {
 	 * @return null
 	 */
 	public function action_edited_taxonomy( $term_id, $tt_id ) {
-
 		// @TODO: See if this is actually ever defined here
 		if( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) ) {
 			return;
@@ -94,7 +93,6 @@ class WP_Present_Taxonomy_Meta {
 				'post_author'   => 1,
 				'post_type'     => WP_Present_Core::POST_TYPE_TAXONOMY,
 			) );
-			die('death');
 		}
 		$terms = wp_set_object_terms( $post_id, $term_id, WP_Present_Core::TAXONOMY_SLUG, false );
 		if( is_array( $terms ) && ! is_wp_error( $terms ) ) {
