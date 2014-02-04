@@ -309,29 +309,36 @@ class WP_Present_Core {
 	 * @return null
 	 */
 	function action_init_add_endpoints() {
+		add_rewrite_endpoint( 'embed', EP_WPPRESENT );
 		add_rewrite_endpoint( 'fullscreen', EP_WPPRESENT );
 	}
 
 	/**
-	 * Remove all styles loaded by the theme
+	 * Remove all styles loaded by the theme and plugins on fullscreen and embedded pages
 	 *
 	 * @uses wp_enqueue_script
 	 * @return null
 	 */
 	public function dequeue_theme_styles() {
+
+		// We want to keep these these on fullscreen and embed pages
+		$exclude = array( 'style', 'reveal-custom' );
+
 		global $wp_styles;
 			// Remove all theme stylesheets
 			foreach( $wp_styles->registered as $handle => $object ) {
+
 				$stylesheet_relative_uri = str_replace( home_url(), '', get_stylesheet_directory_uri() );
 				$template_relative_uri = str_replace( home_url(), '', get_template_directory_uri() );
 
 				if( ! empty( $stylesheet_relative_uri ) && strpos( $object->src, $stylesheet_relative_uri ) ) {
-					unset( $wp_styles->$handle );
-					wp_dequeue_style( $handle );
+					if( ! in_array( $handle, $exclude ) ) {
+						unset( $wp_styles->$handle );
+						wp_dequeue_style( $handle );
+					}
 				}
-
 				if( ! empty( $template_relative_uri ) && strpos( $object->src, $template_relative_uri ) ) {
-					if( 'reveal-custom' != $handle ) {
+					if( ! in_array( $handle, $exclude ) ) {
 						unset( $wp_styles->$handle );
 						wp_dequeue_style( $handle );
 					}
@@ -351,13 +358,14 @@ class WP_Present_Core {
 
 		global $wp_query, $wp_styles;
 
-		$fullscreen = isset( $wp_query->query_vars['fullscreen'] );
+		$embed      = isset( $wp_query->query_vars[ 'embed' ] );
+		$fullscreen = isset( $wp_query->query_vars[ 'fullscreen' ] );
 
 		if( ! is_tax( self::TAXONOMY_SLUG ) && ! is_singular( self::POST_TYPE_SLUG ) ) {
 			//return;
 		}
 
-		if( is_tax( self::TAXONOMY_SLUG ) && ( $fullscreen || is_admin() ) ) {
+		if( is_tax( self::TAXONOMY_SLUG ) && ( $fullscreen || $embed || is_admin() ) ) {
 			// Remove all theme stylesheets
 			$this->dequeue_theme_styles();
 		}
@@ -386,9 +394,9 @@ class WP_Present_Core {
 			//wp_enqueue_script( 'reveal-config', $this->plugins_url . '/js/reveal-config.js', array( 'jquery' ), self::REVISION );
 		}
 
-		// Overrides for the fullscreen page
-		if( is_tax( self::TAXONOMY_SLUG ) && $fullscreen ) {
-			wp_enqueue_style( 'reveal-custom', get_stylesheet_directory_uri() . '/reveal.css', 'reveal', self::REVISION );
+		// Overrides for the embed & fullscreen pages
+		if( is_tax( self::TAXONOMY_SLUG ) && ( $fullscreen || $embed ) ) {
+			wp_enqueue_style( 'reveal-custom', get_stylesheet_directory_uri() . '/css/reveal.css', 'reveal', self::REVISION );
 		}
 	}
 
@@ -412,14 +420,22 @@ class WP_Present_Core {
 
 		$theme_path = get_stylesheet_directory();
 
-
-		if ( file_exists(  $theme_path . '/presentation.php' ) && ! isset( $wp_query->query_vars['fullscreen'] ) ) {
+		if ( file_exists(  $theme_path . '/embed.php' ) && isset( $wp_query->query_vars['embed'] ) ) {
 			$template = array(
-				'name' => 'wp-presents-theme',
+				'name' => 'wp-presents-embed',
+				'path' => $theme_path . '/embed.php'
+			);
+		} elseif ( file_exists(  $plugin_path . '/templates/embed.php' ) && isset( $wp_query->query_vars['embed'] ) ) {
+			$template = array(
+				'name' => 'wp-presents-default',
+				'path' => $plugin_path . '/templates/embed.php'
+			);
+		} elseif ( file_exists(  $theme_path . '/presentation.php' ) && isset( $wp_query->query_vars['fullscreen'] ) ) {
+			$template = array(
+				'name' => 'wp-presents-fullscreen',
 				'path' => $theme_path . '/presentation.php'
 			);
-		}
-		elseif ( file_exists( $plugin_path . '/templates/presentation.php' ) && $this->is() ) {
+		} elseif ( file_exists(  $plugin_path . '/templates/presentation.php' ) ) {
 			$template = array(
 				'name' => 'wp-presents-default',
 				'path' => $plugin_path . '/templates/presentation.php'
@@ -469,7 +485,7 @@ class WP_Present_Core {
 		}
 
 		// This should be false for fullscreen presentations
-		if( isset( $wp_query->query_vars['fullscreen'] ) ) {
+		if( isset( $wp_query->query_vars['embed'] ) || isset( $wp_query->query_vars['fullscreen'] ) ) {
 			show_admin_bar( false );
 		} else {
 			//show_admin_bar( true );
