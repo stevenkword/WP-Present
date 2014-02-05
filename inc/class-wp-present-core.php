@@ -940,7 +940,8 @@ class WP_Present_Core {
 	 * @return null
 	 */
 	public function filter_get_edit_term_link( $location ) {
-		return add_query_arg( array( 'post_type' => self::POST_TYPE_SLUG ), $location );
+		//return add_query_arg( array( 'post_type' => self::POST_TYPE_SLUG ), $location );
+		return add_query_arg( array( 'post_type' => self::POST_TYPE_TAXONOMY ), $location );
 	}
 
 	/**
