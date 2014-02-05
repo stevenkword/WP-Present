@@ -322,7 +322,7 @@ class WP_Present_Core {
 	public function dequeue_theme_styles() {
 
 		// We want to keep these these on fullscreen and embed pages
-		$exclude = array( 'style', 'reveal-custom' );
+		$exclude = array( 'style', 'reveal-custom', 'dashicons' );
 
 		global $wp_styles;
 			// Remove all theme stylesheets
