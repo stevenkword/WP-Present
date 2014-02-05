@@ -264,11 +264,11 @@ class WP_Present_Core {
 		ob_start();
 		extract( shortcode_atts( array(
 			'src' => '#',
-			'w' => '100%',
-			/*'h' => '270',*/
+			'w'   => '100%',
+			'h'   => '480',
 		), $atts ) );
 		?>
-		<iframe class="presentation-iframe" src="<?php echo esc_attr( $src ); ?>" width="<?php echo esc_attr( $w ); ?>" height="<?php echo esc_attr( /*$h*/'' ); ?>" onload="this.contentWindow.focus()" >no iframes</iframe>
+		<iframe class="presentation-iframe" src="<?php echo esc_attr( $src ); ?>" width="<?php echo esc_attr( $w ); ?>" height="<?php echo esc_attr( $h ); ?>" onload="this.contentWindow.focus()" >no iframes</iframe>
 		<?php
 		return ob_get_clean();
 	}
