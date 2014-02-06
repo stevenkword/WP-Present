@@ -370,9 +370,9 @@ class WP_Present_Core {
 			$this->dequeue_theme_styles();
 		}
 
-		if( function_exists( 'is_buddypress' ) && is_buddypress() ) {
-			wp_enqueue_style( 'dashicons' );
-		}
+		//if( function_exists( 'is_buddypress' ) && is_buddypress() ) {
+		wp_enqueue_style( 'dashicons' ); // Just enqueue it always
+		//}
 
 
 		if( is_tax( self::TAXONOMY_SLUG ) )  {
