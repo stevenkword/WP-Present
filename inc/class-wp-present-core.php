@@ -219,7 +219,7 @@ class WP_Present_Core {
 	public function action_init_register_taxonomy() {
 		register_taxonomy( self::TAXONOMY_SLUG, array_merge( $this->post_types, array( self::POST_TYPE_TAXONOMY ) ) , array(
 			'labels' => array(
-				'name'              => _x( self::TAXONOMY_NAME, 'taxonomy general name' ),
+				'name'              => _x( self::TAXONOMY_NAME . ' Editor', 'taxonomy general name' ),
 				'singular_name'     => _x( self::TAXONOMY_SINGULAR, 'taxonomy singular name' ),
 				'search_items'      => __( 'Search ' . self::TAXONOMY_NAME ),
 				'all_items'         => __( 'All ' . self::TAXONOMY_NAME ),
@@ -229,7 +229,7 @@ class WP_Present_Core {
 				'update_item'       => __( 'Update ' . self::TAXONOMY_SINGULAR ),
 				'add_new_item'      => __( 'Add New ' . self::TAXONOMY_SINGULAR ),
 				'new_item_name'     => __( 'New ' . self::TAXONOMY_SINGULAR. ' Name' ),
-				'menu_name'         => __( self::TAXONOMY_NAME ),
+				'menu_name'         => __( self::TAXONOMY_NAME . ' Editor'),
 				'view_item'         => __( 'View ' . self::TAXONOMY_SINGULAR )
 			),
 			'hierarchical'      => true,
