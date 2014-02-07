@@ -202,10 +202,9 @@ class WP_Present_Core {
 			'has_archive'     => false,
 			'show_ui'         => true,
 			'show_in_menu'    => true,
-			//'menu_position'   => 5,
 			'hierarchical'    => false, //@todo within the same category?
-			'supports'        => array( 'title', 'comments', 'editor', 'tags', 'revisions' ),
-			'taxonomies'      => array( self::TAXONOMY_SLUG )
+			'supports'        => array( 'title', 'comments', 'editor', 'revisions' ),
+			'taxonomies'      => array( self::TAXONOMY_SLUG, 'post_tag' )
 		) );
 
 	}
@@ -264,8 +263,8 @@ class WP_Present_Core {
 		ob_start();
 		extract( shortcode_atts( array(
 			'src' => '#',
-			'w'   => '800', //800x600+50 for titlebar
-			'h'   => '650',
+			'w'   => '800', // 8:5 + 50px for titlebar
+			'h'   => '550',
 		), $atts ) );
 		?>
 		<iframe class="presentation-iframe" src="<?php echo esc_attr( $src ); ?>" width="<?php echo esc_attr( $w ); ?>" height="<?php echo esc_attr( $h ); ?>" onload="this.contentWindow.focus()" >no iframes</iframe>
