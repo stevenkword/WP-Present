@@ -286,8 +286,9 @@ class WP_Present_Core {
 		$is_cpt = ( 'post.php' == $pagenow && isset( $_GET['post'] ) && self::POST_TYPE_SLUG == get_post_type( $_GET['post'] ) ) ? true : false;
 		$is_cpt_new = ( 'post-new.php' == $pagenow && isset( $_GET['post_type'] ) && self::POST_TYPE_SLUG == $_GET['post_type'] ) ? true : false;
 
-		//if( ! $is_tax && ! $is_cpt && ! $is_cpt_new )
-		//	return;
+		if( ! $is_tax && ! $is_cpt && ! $is_cpt_new ) {
+			return;
+		}
 
 		//If not page now tax or slide : return;
 		remove_editor_styles();
