@@ -4,7 +4,7 @@
  **
  ** @since 0.9.6
  **/
-class WP_Present_Taxonomy_Meta {
+class WP_Present_Taxonomy_Bridge {
 
 	const REVISION = 20140201;
 
@@ -52,6 +52,8 @@ class WP_Present_Taxonomy_Meta {
 		// Edit Link
 		//add_filter( 'get_edit_post_link', array( $this, 'filter_get_edit_post_link' ), 10, 3 );
 
+		// Insert Post
+		add_action( 'save_post', array( $this, 'action_save_post' ) );
 	}
 
 	/**
@@ -110,7 +112,10 @@ class WP_Present_Taxonomy_Meta {
 	 * @return string term link
 	 */
 	public function filter_get_edit_post_link( $link, $post_id, $context ) {
-		$terms = get_the_terms( $post_id, WP_Present_Core::TAXONOMY_SLUG );
+			$terms = get_the_terms( $post_id, WP_Present_Core::TAXONOMY_SLUG );
+		if( ! is_wp_error( $terms ) && count( $terms ) < 1 ) {
+			die('no tax found');
+		}
 		$terms = array_values( $terms );
 		$term = $terms[0];
 		$term_link = get_edit_term_link( $term, WP_Present_Core::TAXONOMY_SLUG );
@@ -118,5 +123,41 @@ class WP_Present_Taxonomy_Meta {
 		return $term_link;
 	}
 
+	/**
+	 * Associate a taxonomy with new presentation post types
+	 *
+	 * @uses get_the_terms, wp_insert_term
+	 * @since 0.9.6
+	 * @return null
+	 */
+	function action_save_post( $post_id ) {
+		global $post;
+		$post = get_post( $post_id );
+
+		// Reasons to bail
+		if( $post->post_status != 'publish' ) {
+			return;
+		}
+		if( WP_Present_Core::POST_TYPE_TAXONOMY != $post->post_type || wp_is_post_revision( $post_id ) ) {
+			return;
+		}
+
+		$terms = get_the_terms( $post_id, WP_Present_Core::TAXONOMY_SLUG );
+		if( ! $terms || is_wp_error( $terms ) || (int) count( $terms ) < 1 ) {
+			//die('no tax found');
+			$term_id = wp_insert_term(
+				$post->post_title, // the term
+				WP_Present_Core::TAXONOMY_SLUG, // the taxonomy
+				array(
+					'description'=> '',
+					'slug' => $post->post_name,
+				)
+			);
+			$terms = wp_set_object_terms( $post_id, $term_id, WP_Present_Core::TAXONOMY_SLUG, false );
+		}
+		wp_reset_postdata();
+	}
+
+
 } // Class
-WP_Present_Taxonomy_Meta::instance();
+WP_Present_Taxonomy_Bridge::instance();
