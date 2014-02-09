@@ -724,6 +724,28 @@ class WP_Present_Core {
 		global $post;
 		$associated_slides = $this->get_associated_slide_ids( $term, $taxonomy );
 		wp_nonce_field( self::NONCE_FIELD, self::NONCE_FIELD, false );
+
+		$tax_query = new WP_Query( array(
+			'post_type' => WP_Present_Core::POST_TYPE_TAXONOMY,
+			'tax_query' => array( array(
+				'taxonomy' => $taxonomy,
+				'field' => 'id',
+				'terms' => $term->term_id
+			) )
+		) );
+
+		if( $tax_query->have_posts() ) {
+			while ( $tax_query->have_posts() ) {
+				$tax_query->the_post();
+				$post_id = get_the_ID();
+			}
+		}
+
+		// If we have a link between this post and the taxonomy, get a link to the post
+		if( $post_id ) {
+			$details_link = add_query_arg( 'post_type', 'presentations', get_edit_post_link( $post_id ) );
+		}
+
 		?>
 		<div class="action-buttons">
 			<p>
@@ -732,7 +754,9 @@ class WP_Present_Core {
 				<button id="remove-column" class="button">Remove Column</button>
 				<!--<button id="tidy-button" class="button">Tidy</button>-->
 				<button id="view-button" class="button">View <?php echo self::TAXONOMY_SINGULAR; ?></button>
-				<button id="details-button" class="button button-primary" style="float:right;"><?php echo self::TAXONOMY_SINGULAR; ?> Details</button>
+				<a href="<?php echo esc_url( $details_link );?>"><span id="detafils-button" class="button button-primary" style="float:right;">
+					<?php echo self::TAXONOMY_SINGULAR; ?> Details
+				</span></a>
 				<?php // TODO: Add Existing Slide Button ?>
 				<span class="spinner">Saving</span>
 			</p>

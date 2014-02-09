@@ -35,7 +35,7 @@ var WPPresentAdmin;
 			self.widgetButtonDelete();
 			self.widgetButtonAdd();
 			self.widgetButtonTidy();
-			self.widgetButtonDetails();
+			//self.widgetButtonDetails();
 			self.bindButtonAddColumn();
 			self.bindButtonRemoveColumn();
 			self.bindButtonViewPresentation();
