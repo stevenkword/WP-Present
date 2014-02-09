@@ -112,9 +112,9 @@ class WP_Present_Taxonomy_Bridge {
 	 * @return string term link
 	 */
 	public function filter_get_edit_post_link( $link, $post_id, $context ) {
-			$terms = get_the_terms( $post_id, WP_Present_Core::TAXONOMY_SLUG );
-		if( ! is_wp_error( $terms ) && count( $terms ) < 1 ) {
-			die('no tax found');
+		$terms = get_the_terms( $post_id, WP_Present_Core::TAXONOMY_SLUG );
+		if( ! $terms || is_wp_error( $terms ) || count( $terms ) < 1 ) {
+			return $link;
 		}
 		$terms = array_values( $terms );
 		$term = $terms[0];
