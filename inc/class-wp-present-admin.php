@@ -85,7 +85,6 @@ class WP_Present_Admin {
 		global $menu, $submenu;
 
 		// Taxonomy Menu
-		$taxonomy_url = 'edit-tags.php?taxonomy=' . WP_Present_Core::TAXONOMY_SLUG . '&post_type='.WP_Present_Core::POST_TYPE_TAXONOMY;
 		$post_type_url = 'edit.php?post_type=' . WP_Present_Core::POST_TYPE_TAXONOMY;
 
 
