@@ -178,7 +178,7 @@ class WP_Present_Core {
 			'capability_type' => self::POST_TYPE_CAP_TYPE,
 			'has_archive'     => true,
 			'show_ui'         => true,
-			'show_in_menu'    => true,
+			'show_in_menu'    => false,
 			'hierarchical'    => false, //@todo within the same category?
 			'supports'        => array( 'title', 'editor', 'page-attributes', 'thumbnail' ),
 			'taxonomies'      => array( self::TAXONOMY_SLUG )
@@ -232,8 +232,8 @@ class WP_Present_Core {
 				'view_item'         => __( 'View ' . self::TAXONOMY_SINGULAR )
 			),
 			'hierarchical'      => true,
-			'show_ui'           => true,
-			'show_admin_column' => true,
+			'show_ui'           => false,
+			'show_admin_column' => false,
 			'query_var'         => true,
 			'rewrite'           => array(
 				'slug'   => self::TAXONOMY_SLUG,

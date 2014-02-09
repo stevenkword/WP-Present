@@ -86,32 +86,11 @@ class WP_Present_Admin {
 
 		// Taxonomy Menu
 		$taxonomy_url = 'edit-tags.php?taxonomy=' . WP_Present_Core::TAXONOMY_SLUG . '&post_type='.WP_Present_Core::POST_TYPE_SLUG;
-		$post_type_url = 'edit.php?post_type=' . WP_Present_Core::POST_TYPE_SLUG;
+		$post_type_url = 'edit.php?post_type=' . WP_Present_Core::POST_TYPE_TAXONOMY;
 
 
 		// Add the options page
 		add_submenu_page( $post_type_url, WP_Present_Core::OPTION_TITLE, 'Options', WP_Present_Core::CAPABILITY, WP_Present_Core::OPTION_NAME, array( $this, 'options_page' ) );
-
-		// Rename the menu item
-		foreach( $menu as $menu_key => $menu_item ) {
-			if( WP_Present_Core::POST_TYPE_NAME == $menu_item[0] ) {
-				$menu[ $menu_key ][0] = WP_Present_Core::TAXONOMY_NAME;
-			}
-		}
-
-		// Move the taxonomy menu to the top
-		// TODO: It would be better to search for the keys based on url
-		foreach( $submenu as $submenu_key => $submenu_item ) {
-			if( isset( $submenu_item[15][0] ) && WP_Present_Core::TAXONOMY_NAME == $submenu_item[15][0] ) {
-				// This is a bit of hackery.  I should search for these keys
-				$submenu[$submenu_key][2] = $submenu[$submenu_key][15];
-				unset( $submenu[$submenu_key][15] );
-
-				// Not a fan of the add new bit
-				unset( $submenu[$submenu_key][10] );
-				ksort( $submenu[$post_type_url] );
-			}
-		}
 	}
 
 	/**
@@ -172,7 +151,7 @@ class WP_Present_Admin {
 	public function action_admin_head() {
 
 		// Presentation dashicon
-		echo '<style type="text/css">.mp6 #adminmenu #menu-posts-slide div.wp-menu-image:before { content: "\f181" !important; }</style>';
+		echo '<style type="text/css">.mp6 #adminmenu #menu-posts-' . WP_Present_Core::POST_TYPE_TAXONOMY . ' div.wp-menu-image:before { content: "\f181" !important; }</style>';
 
 		// Only add this variable on the edit taxonomy page
 		global $pagenow;
