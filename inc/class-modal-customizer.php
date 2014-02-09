@@ -9,17 +9,9 @@ class WP_Present_Modal_Customizer {
 	public static function instance() {
 		if( ! self::$instance ) {
 			self::$instance = new self;
-			self::$instance->setup();
 		}
 		return self::$instance;
 	}
-
-	/**
-	 * Constructor
-     *
-	 * @since 0.9.0
-	 */
-	private function __construct() { }
 
 	/**
 	 * Clone
@@ -29,12 +21,11 @@ class WP_Present_Modal_Customizer {
 	private function __clone() { }
 
 	/**
-	 * Add actions and filters
-	 *
-	 * @uses add_action, add_filter
-	 * @since 0.9.5
+	 * Constructor
+     *
+	 * @since 0.9.0
 	 */
-	function setup() {
+	private function __construct() {
 
 		// Only if the taxonomy is set (not a listing)
 		if( ! is_admin() || ! isset( $_REQUEST['tag_ID'] ) )

@@ -16,17 +16,9 @@ class WP_Present_Taxonomy_Bridge {
 	public static function instance() {
 		if( ! self::$instance ) {
 			self::$instance = new self;
-			self::$instance->setup();
 		}
 		return self::$instance;
 	}
-
-	/**
-	 * Constructor
-     *
-	 * @since 0.9.6
-	 */
-	private function __construct() { }
 
 	/**
 	 * Clone
@@ -36,12 +28,11 @@ class WP_Present_Taxonomy_Bridge {
 	private function __clone() { }
 
 	/**
-	 * Add actions and filters
-	 *
-	 * @uses add_action, add_filter
+	 * Constructor
+     *
 	 * @since 0.9.6
 	 */
-	function setup() {
+	private function __construct() {
 
 		// Setup
 		$this->plugins_url = plugins_url( '/wp-present' );

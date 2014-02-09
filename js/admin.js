@@ -35,6 +35,7 @@ var WPPresentAdmin;
 			self.widgetButtonDelete();
 			self.widgetButtonAdd();
 			self.widgetButtonTidy();
+			self.widgetButtonDetails();
 			self.bindButtonAddColumn();
 			self.bindButtonRemoveColumn();
 			self.bindButtonViewPresentation();
@@ -161,6 +162,16 @@ var WPPresentAdmin;
 				success: function() {
 					$('.spinner').hide();
 				}
+			});
+		},
+
+		/**
+		 * Bind Details button
+		 */
+		widgetButtonDetails: function () {
+			$('.action-buttons').on('click', '#details-button', function(e) {
+				//e.preventDefault();
+				//alert('Details');
 			});
 		},
 

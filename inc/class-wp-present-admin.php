@@ -16,17 +16,9 @@ class WP_Present_Admin {
 	public static function instance() {
 		if( ! self::$instance ) {
 			self::$instance = new self;
-			self::$instance->setup();
 		}
 		return self::$instance;
 	}
-
-	/**
-	 * Constructor
-	 *
-	 * @since 0.9.0
-	 */
-	private function __construct() { }
 
 	/**
 	 * Clone
@@ -36,12 +28,11 @@ class WP_Present_Admin {
 	private function __clone() { }
 
 	/**
-	 * Add actions and filters
+	 * Constructor
 	 *
-	 * @uses add_action, add_filter
-	 * @since 0.9.5
+	 * @since 0.9.0
 	 */
-	function setup() {
+	private function __construct() {
 
 		// Setup
 		$this->plugins_url = plugins_url( '/wp-present' );
