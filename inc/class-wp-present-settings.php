@@ -137,9 +137,9 @@ class WP_Present_Settings {
 						</div>
 						<div id="post-body-content">
 							<h2 class="nav-tab-wrapper" style="padding: 0;">
-								<a href="?post_type=slide&page=presentation-options&tab=general" class="nav-tab <?php echo $active_tab == 'general' ? 'nav-tab-active' : ''; ?>">General</a>
+								<a href="?post_type=<?php echo WP_Present_Core::POST_TYPE_TAXONOMY;?>&page=presentation-options&tab=general" class="nav-tab <?php echo $active_tab == 'general' ? 'nav-tab-active' : ''; ?>">General</a>
 
-								<a href="?post_type=slide&page=presentation-options&tab=about" class="nav-tab <?php echo $active_tab == 'about' ? 'nav-tab-active' : ''; ?>">About</a>
+								<a href="?post_type=<?php echo WP_Present_Core::POST_TYPE_TAXONOMY;?>&page=presentation-options&tab=about" class="nav-tab <?php echo $active_tab == 'about' ? 'nav-tab-active' : ''; ?>">About</a>
 							</h2>
 							<form method="post" action="options.php">
 								<?php
