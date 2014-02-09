@@ -90,10 +90,11 @@ class WP_Present_Taxonomy_Bridge {
 		} else {
 			// Insert the post into the database
 			$post_id = wp_insert_post( array(
-				'post_title'    => $term->name,
-				'post_status'   => 'publish',
-				'post_author'   => 1,
-				'post_type'     => WP_Present_Core::POST_TYPE_TAXONOMY,
+				'post_title'     => $term->name,
+				'post_status'    => 'publish',
+				'post_author'    => 1,
+				'post_type'      => WP_Present_Core::POST_TYPE_TAXONOMY,
+				'comment_status' => 'open'
 			) );
 		}
 		$terms = wp_set_object_terms( $post_id, $term_id, WP_Present_Core::TAXONOMY_SLUG, false );
