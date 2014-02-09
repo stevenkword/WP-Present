@@ -11,7 +11,7 @@ WP-Present - beta
 
 ## Description ##
 
-Create interactive slide presentations with the power of WordPress with the elegance of reveal.js.
+Create interactive slide presentations, the WordPress way.
 
 Presentation layer powered reveal.js by Hakim El Hattab (http://hakim.se).
 
