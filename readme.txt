@@ -1,9 +1,9 @@
 === WP Present - beta ===
 Contributors: stevenkword
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6T4UQQXTXLKVW
-Tags: present, presentation, slide, slides, reveal.js, wp-present, WordCamp, powerpoint, slidedeck
+Tags: keynote, present, presentation, presentations, powerpoint, reveal.js, slide, slides, slidedeck, slideshare, slideshow, speaker presentations, wp present, wp-present, WordCamp
 Requires at least: 3.6
-Tested up to: 3.8
+Tested up to: 3.8.1
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -27,35 +27,30 @@ If you'd like to contribute to the plugin you can find it on GitHub: https://git
 3. Presentation editor
 
 == Changelog ==
+= 0.9.7 =
+* ADD SLUGS TO IDS IN THE DESCRIPTION FIELD
+* When adding a new column, add it one column after the active column
+* Make the placeholders for the columns larger than the widget placeholders
+* Fix column backfilling when empty columns are present
+* Add ability to highlight slides to target slide removal and insertions
+* Resolve loading modal customize background on 2nd load after background image removal
+* Have a template for displaying slides that are not found in a presentation
+
+= 0.9.6 =
+* Supports the ability to overwrite plugin template with theme templates
+* JS script inclusion audit
+* Adds shortcode for embedding WP Present into posts
+* Updates donate buttons and links
+* Tabifies the settings page
+* More informative AJAX spinners
+* Adds Templates for individual slides
+* Enqueues Dashicons always
+* Adds taxonomy bridge for storing additional taxonomy information in custom post types
+* Updates admin menus
+* Fixes color saving on Publish in modal customizer
+
 = 0.9.5 =
 * Emergency patches to fix support in preparation for WordPress 3.8
 
 = 0.9.4 =
-* Resolves double triggering of hide/show state in slide organizer
-* Adds wp-present body class
-* Adds Loader, Core, and Admin classes and reorganizes project
-* Changes class public properties into constants
-* Updates PHPDoc and formatting
-* Seed 'WP Present Admin' class
-* Renames 'SCRIPTS_VERSION constant to REVISION
-* Fixes the loading of the master plan
-
-= 0.9.3 =
-* Updates to reveal.js v2.5.0
-* Modal redesign
-* MP6 Dashicon support
-* Removes reveal.js submodule dependency
-* Removes jQueryUI submodule dependency
-* Resolves column backfill bug when creating new presentations
-
-= 0.9.2 =
-* Changes delete slide to trash slide
-* Fixes bug when creating a new presentation
-* Fixes renumber problem on first load
-* Adds missing style rules from post-new.php
-
-= 0.9.1 =
-* Kindly removes my twitter handle from every slide
-
-= 0.9 =
-* Pre release
+* I did things
