@@ -134,9 +134,13 @@ class WP_Present_Taxonomy_Bridge {
 
 		// Reasons to bail
 		if( $post->post_status != 'publish' ) {
+			flush_rewrite_rules();
+			wp_reset_postdata();
 			return;
 		}
 		if( WP_Present_Core::POST_TYPE_TAXONOMY != $post->post_type || wp_is_post_revision( $post_id ) ) {
+			flush_rewrite_rules();
+			wp_reset_postdata();
 			return;
 		}
 

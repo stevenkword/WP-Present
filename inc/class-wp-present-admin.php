@@ -42,7 +42,7 @@ class WP_Present_Admin {
 		add_action( 'admin_menu', array( $this, 'action_admin_menu' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'action_admin_enqueue_scripts' ) );
 		add_action( 'admin_head', array( $this, 'action_admin_head' ), 20 );
-		add_action( 'save_post', array( $this, 'action_save_post' ) );
+		//add_action( 'save_post', array( $this, 'action_save_post' ) );
 		add_action( 'admin_footer', array( $this, 'action_admin_footer' ), 20 );
 
 		add_filter( 'admin_body_class', array( $this, 'filter_admin_body_class' ) );
@@ -191,6 +191,9 @@ class WP_Present_Admin {
 	 * @uses wp_verify_nonce, current_user_can, update_post_meta, delete_post_meta, wp_die
 	 * @action save_post
 	 * @return null
+	 *
+	 * CURRENTLY UNHOOKED
+	 *
 	 */
 	public function action_save_post( $post_id ) {
 		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
@@ -200,7 +203,7 @@ class WP_Present_Admin {
 		//if ( ! isset( $_POST[ WP_Present_Core::NONCE_FIELD ] ) || ! wp_verify_nonce( $_POST[ WP_Present_Core::NONCE_FIELD ], WP_Present_Core::NONCE_FIELD ) )
 			//return;
 
-		if ( 'page' == get_post_type( $post_id ) && ! current_user_can( 'edit_page', $post_id ) )
+		if ( in_array( array( 'page', 'post' ), get_post_type( $post_id ) ) && ! current_user_can( 'edit_page', $post_id ) )
 				return;
 		elseif ( ! current_user_can( 'edit_post', $post_id ) )
 				return;
