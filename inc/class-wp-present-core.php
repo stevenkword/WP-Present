@@ -1107,6 +1107,11 @@ class WP_Present_Core {
 
 		$presentation = get_term_by( 'id', $_REQUEST['presentation'], self::TAXONOMY_SLUG );
 
+		$safe_background_color = sanitize_text_field( $_REQUEST['background-color'] );
+		$safe_text_color       = sanitize_text_field( $_REQUEST['text-color'] );
+		$safe_link_color       = sanitize_text_field( $_REQUEST['link-color'] );
+
+
 		$new_post = array(
 			'post_title'   => ( $safe_title ) ? $safe_title : strip_tags( $safe_content ),
 			'post_content' => $safe_content,
@@ -1117,8 +1122,21 @@ class WP_Present_Core {
 		$post_id = wp_insert_post( $new_post );
 		wp_set_object_terms( $post_id , $presentation->name, self::TAXONOMY_SLUG );
 
+		update_post_meta( $post_id, 'background-color', $safe_background_color );
+		update_post_meta( $post_id, 'text-color', $safe_text_color );
+		update_post_meta( $post_id, 'link-color', $safe_link_color );
+
 		$post = get_post( $post_id );
+		setup_postdata( $post );
+
+		// Thumbnail
+		if( ! isset( $thumbnail_id ) || empty( $thumbnail_id ) )
+			delete_post_thumbnail( $post );
+		else
+			set_post_thumbnail( $post, $thumbnail_id );
+
 		$this->admin_render_slide( $post );
+		wp_reset_postdata();
 		die();
 	}
 
