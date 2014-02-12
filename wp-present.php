@@ -80,6 +80,7 @@ class WP_Present_Loader {
 		// Check the things
 		//if( isset( $_REQUEST['tag_ID'] ) && isset( $_GET['taxonomy'] ) && WP_Present_Core::instance()->taxonomy_slug == $_GET['taxonomy'] ) {
 
+		// @TODO: Use new screen method
 		if( is_admin() && ! strpos( $_SERVER['REQUEST_URI'], 'customize.php' ) ) {
 			require( plugin_dir_path( __FILE__ ) . 'inc/class-modal-customizer.php' );
 		}
