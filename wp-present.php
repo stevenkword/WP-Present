@@ -4,7 +4,7 @@ Plugin Name: WP Present
 Plugin URI: http://wppresent.org/
 Description: Create interactive slide presentations, the WordPress way
 Author: Steven Word
-Version: 0.9.6
+Version: 0.9.7
 Author URI: http://stevenword.com/
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
