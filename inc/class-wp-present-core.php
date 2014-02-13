@@ -258,7 +258,7 @@ class WP_Present_Core {
 			'h'   => '360',
 		), $atts ) );
 		?>
-		<iframe src="<?php echo esc_attr( $src ); ?>" width="<?php echo esc_attr( $w ); ?>" height="<?php echo esc_attr( $h ); ?>" onload="this.contentWindow.focus()" >no iframes</iframe>
+		<iframe src="<?php echo esc_attr( $src ); ?>" width="<?php echo esc_attr( $w ); ?>" height="<?php echo esc_attr( $h ); ?>" onload="this.contentWindow.focus()" ></iframe>
 		<?php
 		return ob_get_clean();
 	}
