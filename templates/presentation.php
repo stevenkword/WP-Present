@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 	<head>
@@ -13,6 +14,10 @@
 			// @todo Unhook theme customizer styles
 		?>
 		<?php wp_head(); ?>
+		<script>
+			// Don't allow this page to be iframed
+			if (window !== top) top.location = window.location;
+		</script>
 	</head>
 	<body <?php body_class(); ?>>
 		<?php if ( have_posts() ) : ?>
