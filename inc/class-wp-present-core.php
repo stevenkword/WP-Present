@@ -377,19 +377,20 @@ class WP_Present_Core {
 			wp_enqueue_style( 'reveal-theme', $this->plugins_url . '/js/reveal.js/css/theme/' . self::DEFAULT_THEME, array('reveal'), self::REVISION );
 			wp_enqueue_style( 'zenburn', $this->plugins_url . '/js/reveal.js/lib/css/zenburn.css', '', self::REVISION, false );
 
-			/* Last run styles */
-			wp_enqueue_style( 'custom', $this->plugins_url . '/css/custom.css', array('reveal'), self::REVISION );
-
 			/* Reveal Scripts */
 			wp_enqueue_script( 'reveal-head', $this->plugins_url . '/js/reveal.js/lib/js/head.min.js', array( 'jquery' ), self::REVISION, true );
 			wp_enqueue_script( 'reveal', $this->plugins_url . '/js/reveal.js/js/reveal.min.js', array( 'jquery' ), self::REVISION, true );
 			//wp_enqueue_script( 'reveal-config', $this->plugins_url . '/js/reveal-config.js', array( 'jquery' ), self::REVISION );
 		}
 
+		/* Last run styles */
+		wp_enqueue_style( 'custom', $this->plugins_url . '/css/custom.css', array('reveal'), self::REVISION );
+
 		// Overrides for the embed & fullscreen pages
 		if( is_tax( self::TAXONOMY_SLUG ) && ( $fullscreen || $embed ) ) {
 			wp_enqueue_style( 'reveal-custom', get_stylesheet_directory_uri() . '/css/reveal.css', 'reveal', self::REVISION );
 		}
+
 	}
 
 	/**
