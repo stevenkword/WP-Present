@@ -32,6 +32,14 @@ body.reveal {
 	box-shadow: none;
 }
 
+.pause-overlay .wrap {
+    padding: 1rem;
+}
+.pause-overlay .wrap ul,
+.pause-overlay .wrap ul > li {
+    color: white;
+}
+
 /* =Misc
 -------------------------------------------------------------- */
 .alignleft {
