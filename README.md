@@ -11,11 +11,11 @@ WP-Present - beta
 
 ## Description ##
 
+**Create an Account or checkout the new DEMO:** [http://wppresent.com](http://wppresent.com)
+
 Create interactive slide presentations, the WordPress way.
 
 Presentation layer powered by reveal.js from Hakim El Hattab (http://hakim.se).
-
-**Create an Account or checkout the new DEMO:** [http://wppresent.com](http://wppresent.com)
 
 Currently works best with Chrome & Safari
 
