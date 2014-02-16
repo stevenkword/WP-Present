@@ -208,6 +208,11 @@ class WP_Present_Core {
 	 * @return null
 	 */
 	public function action_init_register_taxonomy() {
+
+
+		var_dump( current_user_can( 'manage_categories' ) );
+
+
 		register_taxonomy( self::TAXONOMY_SLUG, array_merge( $this->post_types, array( self::POST_TYPE_TAXONOMY ) ) , array(
 			'labels' => array(
 				'name'              => _x( self::TAXONOMY_NAME . ' Editor', 'taxonomy general name' ),
@@ -233,7 +238,7 @@ class WP_Present_Core {
 			),
 			'capabilities' => array(
 				'manage_terms' => 'manage_categories',
-				'edit_terms' => 'manage_categories',
+				'edit_terms'   => 'manage_categories',
 				'delete_terms' => 'manage_categories',
 				'assign_terms' => 'edit_posts'
 			)
