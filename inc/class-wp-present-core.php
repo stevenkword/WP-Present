@@ -10,11 +10,11 @@ class WP_Present_Core {
 	const REVISION = 20131204;
 
 	/* Post Type */
-	const POST_TYPE_SLUG       = 'slide';
-	const POST_TYPE_NAME       = 'Slides';
-	const POST_TYPE_SINGULAR   = 'Slide';
-	const POST_TYPE_CAPABILITY = 'edit_others_posts';
-	const POST_TYPE_TAXONOMY   = 'presentations';
+	const POST_TYPE_SLUG     = 'slide';
+	const POST_TYPE_NAME     = 'Slides';
+	const POST_TYPE_SINGULAR = 'Slide';
+	const POST_TYPE_CAP_TYPE = 'post';
+	const POST_TYPE_TAXONOMY = 'presentations';
 
 	/* Taxonomy */
 	const TAXONOMY_SLUG      = 'presentation';
@@ -22,7 +22,7 @@ class WP_Present_Core {
 	const TAXONOMY_SINGULAR  = 'Presentation';
 
 	/* Metakeys */
-	const METAKEY_PREFIX     = 'wp_present_';
+	const METAKEY_PREFIX    = 'wp_present_';
 
 	/* Shortcode */
 	const SHORTCODE          = 'wppresent';
@@ -166,7 +166,7 @@ class WP_Present_Core {
 				'search_items'  => __( 'Search' . self::POST_TYPE_NAME ),
 			),
 			'public'          => true,
-			'capability_type' => self::POST_TYPE_CAPABILITY,
+			'capability_type' => self::POST_TYPE_CAP_TYPE,
 			'has_archive'     => true,
 			'show_ui'         => true,
 			'show_in_menu'    => false,
@@ -190,7 +190,7 @@ class WP_Present_Core {
 				'search_items'  => __( 'Search' . self::TAXONOMY_NAME ),
 			),
 			'public'          => true,
-			'capability_type' => self::POST_TYPE_CAPABILITY,
+			'capability_type' => self::POST_TYPE_CAP_TYPE,
 			'has_archive'     => false,
 			'show_ui'         => true,
 			'show_in_menu'    => true,
@@ -1024,7 +1024,7 @@ class WP_Present_Core {
 	public function action_wp_ajax_get_slide() {
 		// Nonce check
 		if ( ! wp_verify_nonce( $_REQUEST['nonce'], self::NONCE_FIELD ) ) {
-			wp_die( nonce_trace( $this->nonce_fail_message, __FUNCTION__ ) );
+			wp_die( $this->nonce_fail_message );
 		}
 
 		$post_id = $_REQUEST['id'];
@@ -1047,7 +1047,7 @@ class WP_Present_Core {
 	public function action_wp_ajax_update_slide() {
 		// Nonce check
 		if ( ! wp_verify_nonce( $_REQUEST['nonce'], self::NONCE_FIELD ) ) {
-			wp_die( nonce_trace( $this->nonce_fail_message, __FUNCTION__ ) );
+			wp_die( $this->nonce_fail_message );
 		}
 
 		global $post, $wpdb;
@@ -1100,7 +1100,7 @@ class WP_Present_Core {
 	public function action_wp_ajax_new_slide() {
 		// Nonce check
 		if ( ! wp_verify_nonce( $_REQUEST['nonce'], self::NONCE_FIELD ) ) {
-			wp_die( nonce_trace( $this->nonce_fail_message, __FUNCTION__ ) );
+			wp_die( $this->nonce_fail_message );
 		}
 
 		global $post;
@@ -1150,7 +1150,7 @@ class WP_Present_Core {
 	public function action_wp_ajax_delete_slide() {
 		// Nonce check
 		if ( ! wp_verify_nonce( $_REQUEST['nonce'], self::NONCE_FIELD ) ) {
-			wp_die( nonce_trace( $this->nonce_fail_message, __FUNCTION__ ) );
+			wp_die( $this->nonce_fail_message );
 		}
 
 		global $post;
@@ -1169,7 +1169,7 @@ class WP_Present_Core {
 	public function action_wp_ajax_update_presentation() {
 		// Nonce check
 		if ( ! wp_verify_nonce( $_REQUEST['nonce'], self::NONCE_FIELD ) ) {
-			wp_die( nonce_trace( $this->nonce_fail_message, __FUNCTION__ ) );
+			wp_die( $this->nonce_fail_message );
 		}
 
 		$presentation_id  = $_REQUEST['id'];
