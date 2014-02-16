@@ -237,10 +237,10 @@ class WP_Present_Core {
 				'ep_mask'=> EP_WPPRESENT
 			),
 			'capabilities' => array(
-				'manage_terms' => 'manage_categories',
-				'edit_terms'   => 'manage_categories',
-				'delete_terms' => 'manage_categories',
-				'assign_terms' => 'edit_posts'
+				'manage_terms' => 'editor',
+				'edit_terms'   => 'editor',
+				'delete_terms' => 'editor',
+				'assign_terms' => 'editor'
 			)
 		) );
 	}
