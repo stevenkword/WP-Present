@@ -191,12 +191,6 @@ class WP_Present_Core {
 			),
 			'public'           => true,
 			'capability_type'  => self::POST_TYPE_CAP_TYPE,
-			'capabilities'     => array(
-				'manage_terms' => 'manage_categories',
-				'edit_terms'   => 'manage_categories',
-				'delete_terms' => 'manage_categories',
-				'assign_terms' => 'edit_posts'
-			),
 			'has_archive'     => false,
 			'show_ui'         => true,
 			'show_in_menu'    => true,
@@ -236,12 +230,6 @@ class WP_Present_Core {
 			'rewrite'           => array(
 				'slug'   => self::TAXONOMY_SLUG,
 				'ep_mask'=> EP_WPPRESENT
-			),
-			'capabilities' => array(
-				'manage_terms' => 'manage_categories',
-				'edit_terms'   => 'manage_categories',
-				'delete_terms' => 'manage_categories',
-				'assign_terms' => 'edit_posts'
 			)
 		) );
 	}
