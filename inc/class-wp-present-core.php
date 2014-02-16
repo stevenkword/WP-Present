@@ -22,7 +22,7 @@ class WP_Present_Core {
 	const TAXONOMY_SINGULAR  = 'Presentation';
 
 	/* Metakeys */
-	const METAKEY_PREFIX    = 'wp_present_';
+	const METAKEY_PREFIX     = 'wp_present_';
 
 	/* Shortcode */
 	const SHORTCODE          = 'wppresent';
@@ -230,6 +230,12 @@ class WP_Present_Core {
 			'rewrite'           => array(
 				'slug'   => self::TAXONOMY_SLUG,
 				'ep_mask'=> EP_WPPRESENT
+			),
+			'capabilities' => array(
+				'manage_terms' => 'manage_categories',
+				'edit_terms' => 'manage_categories',
+				'delete_terms' => 'manage_categories',
+				'assign_terms' => 'edit_posts'
 			)
 		) );
 	}
