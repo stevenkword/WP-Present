@@ -13,7 +13,7 @@ class WP_Present_Core {
 	const POST_TYPE_SLUG     = 'slide';
 	const POST_TYPE_NAME     = 'Slides';
 	const POST_TYPE_SINGULAR = 'Slide';
-	const POST_TYPE_CAP_TYPE = 'edit_posts';
+	const POST_TYPE_CAP_TYPE = 'post';
 	const POST_TYPE_TAXONOMY = 'presentations';
 
 	/* Taxonomy */
