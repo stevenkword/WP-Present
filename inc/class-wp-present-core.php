@@ -10,11 +10,11 @@ class WP_Present_Core {
 	const REVISION = 20131204;
 
 	/* Post Type */
-	const POST_TYPE_SLUG     = 'slide';
-	const POST_TYPE_NAME     = 'Slides';
-	const POST_TYPE_SINGULAR = 'Slide';
-	const POST_TYPE_CAP_TYPE = 'post';
-	const POST_TYPE_TAXONOMY = 'presentations';
+	const POST_TYPE_SLUG       = 'slide';
+	const POST_TYPE_NAME       = 'Slides';
+	const POST_TYPE_SINGULAR   = 'Slide';
+	const POST_TYPE_CAPABILITY = 'edit_others_posts';
+	const POST_TYPE_TAXONOMY   = 'presentations';
 
 	/* Taxonomy */
 	const TAXONOMY_SLUG      = 'presentation';
@@ -22,7 +22,7 @@ class WP_Present_Core {
 	const TAXONOMY_SINGULAR  = 'Presentation';
 
 	/* Metakeys */
-	const METAKEY_PREFIX    = 'wp_present_';
+	const METAKEY_PREFIX     = 'wp_present_';
 
 	/* Shortcode */
 	const SHORTCODE          = 'wppresent';
@@ -166,7 +166,7 @@ class WP_Present_Core {
 				'search_items'  => __( 'Search' . self::POST_TYPE_NAME ),
 			),
 			'public'          => true,
-			'capability_type' => self::POST_TYPE_CAP_TYPE,
+			'capability_type' => self::POST_TYPE_CAPABILITY,
 			'has_archive'     => true,
 			'show_ui'         => true,
 			'show_in_menu'    => false,
@@ -190,7 +190,7 @@ class WP_Present_Core {
 				'search_items'  => __( 'Search' . self::TAXONOMY_NAME ),
 			),
 			'public'          => true,
-			'capability_type' => self::POST_TYPE_CAP_TYPE,
+			'capability_type' => self::POST_TYPE_CAPABILITY,
 			'has_archive'     => false,
 			'show_ui'         => true,
 			'show_in_menu'    => true,
