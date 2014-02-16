@@ -36,7 +36,7 @@ class WP_Present_Taxonomy_Bridge {
 
 		// Setup
 		$this->plugins_url = plugins_url( '/wp-present' );
-		$this->nonce_fail_message = __( 'Cheatin&#8217; huh?' );
+		$this->nonce_fail_message = __( 'Tax Bridge Cheatin&#8217; huh?' );
 
 		add_action( 'edited_' . WP_Present_Core::TAXONOMY_SLUG, array( $this, 'action_edited_taxonomy' ), 10, 2 );
 

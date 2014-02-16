@@ -36,7 +36,7 @@ class WP_Present_Settings {
 
 		// Setup
 		$this->plugins_url = plugins_url( '/wp-present' );
-		$this->nonce_fail_message = __( 'Cheatin&#8217; huh?' );
+		$this->nonce_fail_message = __( 'Settings Cheatin&#8217; huh?' );
 
 		// Admin
 		add_action( 'admin_enqueue_scripts', array( $this, 'action_admin_enqueue_scripts' ) );
