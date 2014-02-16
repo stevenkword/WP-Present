@@ -32,7 +32,7 @@ class WP_Present_Core {
 	const OPTION_TITLE       = 'Presentation Options';
 
 	/* Misc */
-	const CAPABILITY         = 'edit_others_posts';
+	const CAPABILITY         = 'edit_posts';
 	const NONCE_FIELD        = 'wp-present-nonce';
 	const DEFAULT_THEME      = 'simple.css'; // moon, night, simple, serif, solarized
 	const MAX_NUM_SLIDES     = 250; // not currently used, proposed variable
