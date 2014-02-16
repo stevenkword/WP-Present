@@ -36,7 +36,7 @@ class WP_Present_Admin {
 
 		// Setup
 		$this->plugins_url = plugins_url( '/wp-present' );
-		$this->nonce_fail_message = __( 'What? Cheatin&#8217; huh?' );
+		$this->nonce_fail_message = __( 'Cheatin&#8217; huh?' );
 
 		// Admin
 		add_action( 'admin_menu', array( $this, 'action_admin_menu' ) );

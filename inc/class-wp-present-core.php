@@ -67,7 +67,7 @@ class WP_Present_Core {
 
 		// Setup
 		$this->plugins_url = plugins_url( '/wp-present' );
-		$this->nonce_fail_message = __( 'Core Cheatin&#8217; huh?' );
+		$this->nonce_fail_message = __( 'Cheatin&#8217; huh?' );
 
 		// Initialize
 		add_action( 'init', array( $this, 'action_init_register_post_type' ) );
@@ -208,11 +208,6 @@ class WP_Present_Core {
 	 * @return null
 	 */
 	public function action_init_register_taxonomy() {
-
-
-		var_dump( current_user_can( 'manage_categories' ) );
-
-
 		register_taxonomy( self::TAXONOMY_SLUG, array_merge( $this->post_types, array( self::POST_TYPE_TAXONOMY ) ) , array(
 			'labels' => array(
 				'name'              => _x( self::TAXONOMY_NAME . ' Editor', 'taxonomy general name' ),
@@ -229,18 +224,18 @@ class WP_Present_Core {
 				'view_item'         => __( 'View ' . self::TAXONOMY_SINGULAR )
 			),
 			'hierarchical'      => true,
-			'show_ui'           => true,
-			'show_admin_column' => true,
+			'show_ui'           => false,
+			'show_admin_column' => false,
 			'query_var'         => true,
 			'rewrite'           => array(
 				'slug'   => self::TAXONOMY_SLUG,
 				'ep_mask'=> EP_WPPRESENT
 			),
 			'capabilities' => array(
-				'manage_terms' => 'editor',
-				'edit_terms'   => 'editor',
-				'delete_terms' => 'editor',
-				'assign_terms' => 'editor'
+				'manage_terms' => 'manage_categories',
+				'edit_terms'   => 'manage_categories',
+				'delete_terms' => 'manage_categories',
+				'assign_terms' => 'edit_posts'
 			)
 		) );
 	}
