@@ -1024,7 +1024,7 @@ class WP_Present_Core {
 	public function action_wp_ajax_get_slide() {
 		// Nonce check
 		if ( ! wp_verify_nonce( $_REQUEST['nonce'], self::NONCE_FIELD ) ) {
-			wp_die( $this->nonce_fail_message );
+			wp_die( nonce_trace( $this->nonce_fail_message, __FUNCTION__ ) );
 		}
 
 		$post_id = $_REQUEST['id'];
@@ -1047,7 +1047,7 @@ class WP_Present_Core {
 	public function action_wp_ajax_update_slide() {
 		// Nonce check
 		if ( ! wp_verify_nonce( $_REQUEST['nonce'], self::NONCE_FIELD ) ) {
-			wp_die( $this->nonce_fail_message );
+			wp_die( nonce_trace( $this->nonce_fail_message, __FUNCTION__ ) );
 		}
 
 		global $post, $wpdb;
@@ -1100,7 +1100,7 @@ class WP_Present_Core {
 	public function action_wp_ajax_new_slide() {
 		// Nonce check
 		if ( ! wp_verify_nonce( $_REQUEST['nonce'], self::NONCE_FIELD ) ) {
-			wp_die( $this->nonce_fail_message );
+			wp_die( nonce_trace( $this->nonce_fail_message, __FUNCTION__ ) );
 		}
 
 		global $post;
@@ -1150,7 +1150,7 @@ class WP_Present_Core {
 	public function action_wp_ajax_delete_slide() {
 		// Nonce check
 		if ( ! wp_verify_nonce( $_REQUEST['nonce'], self::NONCE_FIELD ) ) {
-			wp_die( $this->nonce_fail_message );
+			wp_die( nonce_trace( $this->nonce_fail_message, __FUNCTION__ ) );
 		}
 
 		global $post;
@@ -1169,7 +1169,7 @@ class WP_Present_Core {
 	public function action_wp_ajax_update_presentation() {
 		// Nonce check
 		if ( ! wp_verify_nonce( $_REQUEST['nonce'], self::NONCE_FIELD ) ) {
-			wp_die( $this->nonce_fail_message );
+			wp_die( nonce_trace( $this->nonce_fail_message, __FUNCTION__ ) );
 		}
 
 		$presentation_id  = $_REQUEST['id'];
