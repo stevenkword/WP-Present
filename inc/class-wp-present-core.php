@@ -1178,8 +1178,6 @@ class WP_Present_Core {
 	 * @return array
 	 */
 	public function action_wp_ajax_update_presentation() {
-
-die('nonced');
 		// Nonce check
 		if ( ! wp_verify_nonce( $_REQUEST['nonce'], self::NONCE_FIELD ) ) {
 			wp_die( $this->nonce_fail_message );
