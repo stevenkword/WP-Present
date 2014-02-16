@@ -189,8 +189,14 @@ class WP_Present_Core {
 				'view_item'     => __( 'View ' . self::TAXONOMY_SINGULAR ),
 				'search_items'  => __( 'Search' . self::TAXONOMY_NAME ),
 			),
-			'public'          => true,
-			'capability_type' => self::POST_TYPE_CAP_TYPE,
+			'public'           => true,
+			'capability_type'  => self::POST_TYPE_CAP_TYPE,
+			'capabilities'     => array(
+				'manage_terms' => 'manage_categories',
+				'edit_terms'   => 'manage_categories',
+				'delete_terms' => 'manage_categories',
+				'assign_terms' => 'edit_posts'
+			),
 			'has_archive'     => false,
 			'show_ui'         => true,
 			'show_in_menu'    => true,
