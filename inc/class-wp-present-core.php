@@ -91,7 +91,7 @@ class WP_Present_Core {
 
 		//Update the post links for slides
 		add_filter( 'post_type_link', array( $this, 'append_query_string' ), 10, 2 );
-		add_filter( 'get_edit_term_link', array( $this, 'filter_get_edit_term_link' ) );
+		//add_filter( 'get_edit_term_link', array( $this, 'filter_get_edit_term_link' ) );
 
 		// AJAX
 		add_action( 'wp_ajax_get_slide', array( $this, 'action_wp_ajax_get_slide' ) );

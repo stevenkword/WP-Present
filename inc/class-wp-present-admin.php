@@ -217,6 +217,8 @@ class WP_Present_Admin {
 	 * @return null
 	 */
 	public function action_admin_footer() {
+
+die('asdf');
 		// Only run on the edit taxonomy page
 		global $pagenow;
 		if( 'edit-tags.php' != $pagenow || ! isset( $_GET['taxonomy'] ) || WP_Present_Core::TAXONOMY_SLUG != $_GET['taxonomy'] )
