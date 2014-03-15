@@ -730,6 +730,7 @@ class WP_Present_Core {
 	 * @return 	null
 	 */
 	public function taxonomy_edit_form( $term, $taxonomy ) {
+		die('asdf');
 		global $post;
 		$associated_slides = $this->get_associated_slide_ids( $term, $taxonomy );
 		wp_nonce_field( self::NONCE_FIELD, self::NONCE_FIELD, false );
