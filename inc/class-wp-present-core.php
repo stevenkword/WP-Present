@@ -65,10 +65,6 @@ class WP_Present_Core {
 	 */
 	private function __construct() {
 
-if ( current_user_can('moderate_comments') ) {
- echo 'The current user can moderate comments';
-}
-
 		// Setup
 		$this->plugins_url = plugins_url( '/wp-present' );
 		$this->nonce_fail_message = __( 'Cheatin&#8217; huh? fuck' );
@@ -158,6 +154,12 @@ if ( current_user_can('moderate_comments') ) {
 	 * @return null
 	 */
 	public function action_init_register_post_type() {
+
+if ( current_user_can('moderate_comments') ) {
+ echo 'The current user can moderate comments';
+}
+
+
 		register_post_type( self::POST_TYPE_SLUG, array(
 			'labels' => array(
 				//@todo http://codex.wordpress.org/Function_Reference/register_post_type
