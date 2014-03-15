@@ -67,7 +67,7 @@ class WP_Present_Core {
 
 		// Setup
 		$this->plugins_url = plugins_url( '/wp-present' );
-		$this->nonce_fail_message = __( 'Cheatin&#8217; huh?' );
+		$this->nonce_fail_message = __( 'Cheatin&#8217; huh? core' );
 
 		// Initialize
 		add_action( 'init', array( $this, 'action_init_register_post_type' ) );
@@ -167,6 +167,7 @@ class WP_Present_Core {
 			),
 			'public'          => true,
 			'capability_type' => self::POST_TYPE_CAP_TYPE,
+			'map_meta_cap'    => true,
 			'has_archive'     => true,
 			'show_ui'         => true,
 			'show_in_menu'    => false,
@@ -191,6 +192,7 @@ class WP_Present_Core {
 			),
 			'public'           => true,
 			'capability_type'  => self::POST_TYPE_CAP_TYPE,
+			'map_meta_cap'    => true,
 			'has_archive'     => false,
 			'show_ui'         => true,
 			'show_in_menu'    => true,
@@ -198,7 +200,6 @@ class WP_Present_Core {
 			'supports'        => array( 'title', 'comments', 'editor', 'revisions' ),
 			'taxonomies'      => array( self::TAXONOMY_SLUG/*, 'post_tag'*/ )
 		) );
-
 	}
 
 	/**
@@ -230,7 +231,13 @@ class WP_Present_Core {
 			'rewrite'           => array(
 				'slug'   => self::TAXONOMY_SLUG,
 				'ep_mask'=> EP_WPPRESENT
-			)
+			),
+			'capabilities' => array(
+				'manage_terms' => 'manage_categories',
+				'edit_terms'   => 'manage_categories',
+				'delete_terms' => 'manage_categories',
+				'assign_terms' => 'edit_posts'
+			),
 		) );
 	}
 
