@@ -63,6 +63,8 @@ class WP_Present_Loader {
 	 */
 	private function __construct() {
 
+		return;
+
 		// Version Check
 		if( $version = get_option( self::OPTION_VERSION, false ) ) {
 			$this->version = $version;
@@ -140,7 +142,7 @@ class WP_Present_Loader {
 	}
 
 } // Class
-//WP_Present_Loader::instance();
+WP_Present_Loader::instance();
 
 /* Wrappers */
 if ( ! function_exists( 'wpp_is_presentation' ) ) {
