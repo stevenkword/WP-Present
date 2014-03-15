@@ -86,7 +86,7 @@ class WP_Present_Modal_Customizer {
 
 	public function action_plugins_loaded() {
 
-		//require( ABSPATH . WPINC . '/class-wp-customize-manager.php' );
+		require( ABSPATH . WPINC . '/class-wp-customize-manager.php' );
 
 		// Init Customize class
 		$GLOBALS['wp_customize'] = new WP_Customize_Manager;
