@@ -72,10 +72,10 @@ class WP_Present_Loader {
 		}
 
 		// Load the assets
-		//require( plugin_dir_path( __FILE__ ) . 'inc/class-wp-present-core.php' );
-		//require( plugin_dir_path( __FILE__ ) . 'inc/class-wp-present-admin.php' );
-		//require( plugin_dir_path( __FILE__ ) . 'inc/class-wp-present-settings.php' );
-		//require( plugin_dir_path( __FILE__ ) . 'inc/class-wp-present-taxonomy-bridge.php' );
+		require( plugin_dir_path( __FILE__ ) . 'inc/class-wp-present-core.php' );
+		require( plugin_dir_path( __FILE__ ) . 'inc/class-wp-present-admin.php' );
+		require( plugin_dir_path( __FILE__ ) . 'inc/class-wp-present-settings.php' );
+		require( plugin_dir_path( __FILE__ ) . 'inc/class-wp-present-taxonomy-bridge.php' );
 		//require( plugin_dir_path( __FILE__ ) . 'inc/class-wp-present-video-player.php' );
 
 		// Check the things
@@ -140,7 +140,7 @@ class WP_Present_Loader {
 	}
 
 } // Class
-WP_Present_Loader::instance();
+//WP_Present_Loader::instance();
 
 /* Wrappers */
 if ( ! function_exists( 'wpp_is_presentation' ) ) {
