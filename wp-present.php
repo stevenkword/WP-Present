@@ -71,10 +71,9 @@ class WP_Present_Loader {
 			add_option( self::OPTION_VERSION, $this->version );
 		}
 
-return;
-
 		// Load the assets
 		require( plugin_dir_path( __FILE__ ) . 'inc/class-wp-present-core.php' );
+return;
 		require( plugin_dir_path( __FILE__ ) . 'inc/class-wp-present-admin.php' );
 		require( plugin_dir_path( __FILE__ ) . 'inc/class-wp-present-settings.php' );
 		require( plugin_dir_path( __FILE__ ) . 'inc/class-wp-present-taxonomy-bridge.php' );
