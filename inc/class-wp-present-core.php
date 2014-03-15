@@ -155,11 +155,6 @@ class WP_Present_Core {
 	 */
 	public function action_init_register_post_type() {
 
-if ( current_user_can('moderate_comments') ) {
- echo 'The current user can moderate comments';
-}
-
-
 		register_post_type( self::POST_TYPE_SLUG, array(
 			'labels' => array(
 				//@todo http://codex.wordpress.org/Function_Reference/register_post_type
