@@ -31,9 +31,7 @@ class WP_Present_Modal_Customizer {
 		if( ! is_admin() || ! isset( $_REQUEST['tag_ID'] ) )
 			return;
 
-return;
-
-		add_action( 'plugins_loaded', array( $this, 'action_plugins_loaded' ) );
+		//add_action( 'plugins_loaded', array( $this, 'action_plugins_loaded' ) );
 
 		// Let's roll.
 		add_action( 'wp_loaded', array( $this, 'action_wp_loaded' ) );
