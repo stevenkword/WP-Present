@@ -65,6 +65,10 @@ class WP_Present_Core {
 	 */
 	private function __construct() {
 
+if ( current_user_can('moderate_comments') ) {
+ echo 'The current user can moderate comments';
+}
+
 		// Setup
 		$this->plugins_url = plugins_url( '/wp-present' );
 		$this->nonce_fail_message = __( 'Cheatin&#8217; huh? fuck' );
