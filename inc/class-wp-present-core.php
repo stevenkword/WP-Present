@@ -236,7 +236,7 @@ class WP_Present_Core {
 				'manage_terms' => 'manage_categories',
 				'edit_terms'   => 'manage_categories',
 				'delete_terms' => 'manage_categories',
-				'assign_terms' => 'administrator', 'editor', 'author', 'contributor'
+				'assign_terms' => 'edit_posts'
 			),
 		) );
 	}
