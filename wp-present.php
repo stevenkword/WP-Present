@@ -84,7 +84,7 @@ class WP_Present_Loader {
 
 		// @TODO: Use new screen method
 		if( is_admin() && ! strpos( $_SERVER['REQUEST_URI'], 'customize.php' ) ) {
-			//require( plugin_dir_path( __FILE__ ) . 'inc/class-modal-customizer.php' );
+			require( plugin_dir_path( __FILE__ ) . 'inc/class-modal-customizer.php' );
 		}
 
 		// On Activation

@@ -33,6 +33,8 @@ class WP_Present_Modal_Customizer {
 
 		add_action( 'plugins_loaded', array( $this, 'action_plugins_loaded' ) );
 
+return;
+
 		// Let's roll.
 		add_action( 'wp_loaded', array( $this, 'action_wp_loaded' ) );
 
