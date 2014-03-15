@@ -76,7 +76,7 @@ class WP_Present_Loader {
 		require( plugin_dir_path( __FILE__ ) . 'inc/class-wp-present-admin.php' );
 		require( plugin_dir_path( __FILE__ ) . 'inc/class-wp-present-settings.php' );
 		require( plugin_dir_path( __FILE__ ) . 'inc/class-wp-present-taxonomy-bridge.php' );
-return;
+
 		//require( plugin_dir_path( __FILE__ ) . 'inc/class-wp-present-video-player.php' );
 
 		// Check the things
@@ -86,6 +86,8 @@ return;
 		if( is_admin() && ! strpos( $_SERVER['REQUEST_URI'], 'customize.php' ) ) {
 			require( plugin_dir_path( __FILE__ ) . 'inc/class-modal-customizer.php' );
 		}
+
+return;
 
 		// On Activation
 		register_activation_hook( __FILE__, array( $this, 'activate' ) );
