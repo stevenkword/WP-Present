@@ -75,8 +75,8 @@ class WP_Present_Loader {
 		require( plugin_dir_path( __FILE__ ) . 'inc/class-wp-present-core.php' );
 		require( plugin_dir_path( __FILE__ ) . 'inc/class-wp-present-admin.php' );
 		require( plugin_dir_path( __FILE__ ) . 'inc/class-wp-present-settings.php' );
-return;
 		require( plugin_dir_path( __FILE__ ) . 'inc/class-wp-present-taxonomy-bridge.php' );
+return;
 		//require( plugin_dir_path( __FILE__ ) . 'inc/class-wp-present-video-player.php' );
 
 		// Check the things
