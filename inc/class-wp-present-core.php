@@ -226,7 +226,7 @@ class WP_Present_Core {
 				'view_item'         => __( 'View ' . self::TAXONOMY_SINGULAR )
 			),
 			'hierarchical'      => true,
-			'show_ui'           => true,
+			'show_ui'           => false,
 			'show_admin_column' => false,
 			'query_var'         => true,
 			'rewrite'           => array(
