@@ -67,7 +67,7 @@ class WP_Present_Core {
 
 		// Setup
 		$this->plugins_url = plugins_url( '/wp-present' );
-		$this->nonce_fail_message = __( 'Cheatin&#8217; huh? core' );
+		$this->nonce_fail_message = __( 'Cheatin&#8217; huh?' );
 
 		// Initialize
 		add_action( 'init', array( $this, 'action_init_register_post_type' ) );
