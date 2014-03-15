@@ -63,8 +63,6 @@ class WP_Present_Loader {
 	 */
 	private function __construct() {
 
-		return;
-
 		// Version Check
 		if( $version = get_option( self::OPTION_VERSION, false ) ) {
 			$this->version = $version;
@@ -72,6 +70,8 @@ class WP_Present_Loader {
 			$this->version = WP_PRESENT_VERSION;
 			add_option( self::OPTION_VERSION, $this->version );
 		}
+
+return;
 
 		// Load the assets
 		require( plugin_dir_path( __FILE__ ) . 'inc/class-wp-present-core.php' );
