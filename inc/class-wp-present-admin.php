@@ -155,7 +155,7 @@ class WP_Present_Admin {
 		if( 'edit-tags.php' != $pagenow || ! isset( $_GET['taxonomy'] ) || WP_Present_Core::TAXONOMY_SLUG != $_GET['taxonomy'] || ! isset( $_GET['tag_ID'] ) )
 			return;
 
-		$num_slides = ( isset( $_GET['tag_ID'] ) ) ? count( WP_Present_Core::get_associated_slide_ids( $_GET['tag_ID'], $_GET['taxonomy'] ) ) : '';
+		$num_slides = ( isset( $_GET['tag_ID'] ) ) ? count( WP_Present_Core::instance()->get_associated_slide_ids( $_GET['tag_ID'], $_GET['taxonomy'] ) ) : '';
 
 		$slides_query = new WP_Query( array(
 			'post_type'     => WP_Present_Core::POST_TYPE_SLUG, //post type, I used 'product'

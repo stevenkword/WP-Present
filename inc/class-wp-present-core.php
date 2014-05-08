@@ -578,7 +578,7 @@ class WP_Present_Core {
 	 * @return array
 	 */
 	public function get_associated_slide_ids( $term, $taxonomy ) {
-		$term_description =  self::get_term_description( $term, $taxonomy );
+		$term_description = WP_Present_Core::instance()->get_term_description( $term, $taxonomy );
 
 		if( ! is_array( $term_description ) )
 			return false;
