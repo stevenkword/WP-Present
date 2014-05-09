@@ -276,7 +276,6 @@ var WPPresentAdmin;
 				$('#dialog').show();
 
 				// Load the contents of the existing post
-				var nonce = $('#wp-present-nonce').val();
 				var params = { 'id':widgetID, 'nonce':nonce };
 				$.ajax({
 					url: ajaxurl + '?action=get_slide',
@@ -321,7 +320,6 @@ var WPPresentAdmin;
 				var $editorIframe = $('#editor_slide_ifr').contents();
 				$editorIframe.find('body').addClass('reveal');
 				$editorIframe.css('height','500px');
-
 
 
 				$('.modal-buttons').on('click', '#publish-button', function(e) {
@@ -570,12 +568,7 @@ var WPPresentAdmin;
 		 * Close Modal
 		 */
 		closeModal: function() {
-
-$('#dialog').hide();
-return;
-			var self = this;
-			$( '#dialog' ).dialog( "close" );
-			self.resetModal();
+			$('#dialog').hide();
 			tinymce.execCommand('mceRemoveControl',true,'editor_slide');
 		},
 
@@ -592,6 +585,11 @@ return;
 			//	console.log(ed);
 			}
 			//tinymce.execCommand('mceRemoveControl',true,'editor_slide');
+
+			if( typeof(tinymce) !== undefined ) {
+			// Clear the editor
+				tinymce.get('editor_slide').setContent('');
+			}
 
 			// Make existing content go away
 			$( '#slide-title' ).val( '' );
