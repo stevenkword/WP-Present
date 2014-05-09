@@ -256,16 +256,18 @@ var WPPresentAdmin;
 			var self = this;
 			var $editorIframe = $('#editor_slide_ifr').contents();
 
+			var $button        = $(this);
+			var $parentWidget  = $button.parents('.widget');
+			var $widgetPreview = $parentWidget.find('.widget-preview');
+			var $widgetTitle   = $parentWidget.find( '.widget-title h4' );
+
+			// Send the contents from the widget to the editor
+			var widgetID = $parentWidget.find('.slide-id').val();
+			var nonce = $('#wp-present-nonce').val();
+
+
 			$('#container').on('click', '.widget-control-edit', function(e) {
 				e.preventDefault();
-				var $button        = $(this);
-				var $parentWidget  = $button.parents('.widget');
-				var $widgetPreview = $parentWidget.find('.widget-preview');
-				var $widgetTitle   = $parentWidget.find( '.widget-title h4' );
-
-				// Send the contents from the widget to the editor
-				var widgetID = $parentWidget.find('.slide-id').val();
-				var nonce = $('#wp-present-nonce').val();
 
 				$('#editor_slide-tmce').click(); //Necessary on subsequent loads of the editor
 
@@ -312,15 +314,17 @@ var WPPresentAdmin;
 
 						// This has to be the most hacky thing in this entire project
 						self.resizeModal();
-					}
-				});
 
 				// Hack for getting the reveal class added to tinymce editor body
 				// @todo: look at wp_editor in wp/inc/class-wp-editor.php
 				var $editorIframe = $('#editor_slide_ifr').contents();
 				$editorIframe.find('body').addClass('reveal');
-				$editorIframe.css('height','500px');
+				//$editorIframe.css('height','500px');
 
+
+					}
+				});
+			});
 
 				$('.modal-buttons').on('click', '#publish-button', function(e) {
 					e.preventDefault();
@@ -339,6 +343,12 @@ var WPPresentAdmin;
 					var colorBackground = $('#customize-control-wp_present_background_color .color-picker-hex').val();
 					var colorText = $('#customize-control-wp_present_text_color .color-picker-hex').val();
 					var colorLink = $('#customize-control-wp_present_link_color .color-picker-hex').val();
+
+				// Send the contents from the widget to the editor
+				var $parentWidget  = $button.parents('.widget');
+				var widgetID = $parentWidget.find('.slide-id').val();
+				var nonce = $('#wp-present-nonce').val();
+
 
 					var params = {
 						'id'               : widgetID,
@@ -377,7 +387,6 @@ var WPPresentAdmin;
 					$('#dialog').hide();
 				});
 
-			});
 		},
 
 		// Bind Delete button
@@ -428,9 +437,15 @@ var WPPresentAdmin;
 				// Clear the form out before we show it
 				self.resetModal();
 
-	$('#dialog').show();
-	$('.modal-buttons').on('click', '#publish-button', function(e) {
+				$('#dialog').show();
+			});
+
+			$('.modal-buttons').on('click', '#publish-button', function(e) {
 		e.preventDefault();
+
+				var $activeColumn = $('.widget-title.active').parent('.widget-top').parent('.column').children('.column-inner');
+				var nonce = $('#wp-present-nonce').val();
+
 		var editorContents = tinymce.get('editor_slide').getContent();
 		var postTitle      = $( '#slide-title' ).val();
 		var backgroundImage = $('#customize-control-wp_present_background_image img');
@@ -467,14 +482,13 @@ var WPPresentAdmin;
 			}
 		});
 		self.closeModal();
-	});
+			});
 
-	$('.modal-buttons').on('click', '#cancel-button', function(e) {
+			$('.modal-buttons').on('click', '#cancel-button', function(e) {
 		e.preventDefault();
 		$('#dialog').hide();
-	});
-
 			});
+
 		},
 
 		// Adds a column to the presentation
