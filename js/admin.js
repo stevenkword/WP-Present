@@ -340,6 +340,16 @@ var WPPresentAdmin;
 						},
 					},
 					create: function() {
+						var instance = tinymce.get( 'editor_slide' );
+
+						if(instance) {
+							// Force tinyMCE to refresh its references to the visual editor
+							// DOM
+							delete instance.contentWindow;
+							delete instance.contentDocument;
+							delete instance.contentBody;
+						}
+
 						tinymce.execCommand('mceRemoveControl',true,'editor_slide');
 						tinymce.execCommand('mceAddControl',true,'editor_slide');
 
