@@ -28,7 +28,7 @@ If you'd like to contribute to the plugin you can find it on GitHub: https://git
 2. Activate the plugin through the "Plugins" menu in WordPress.
 
 ## Developer Notes ##
-* Stable branch, master, is version 0.9.6 and is only compatible up to WordPress 3.8 due to a problem introduced in WordPress 3.9 with the TinyMCE 4.0 Update.
+* Stable branch, master, is version 0.9.6 and is only compatible up to WordPress 3.8 due to a problem introduced in WordPress 3.9 with the TinyMCE 4.0 Update. See [Issue #8](https://github.com/stevenkword/WP-Present/issues/8)
 * Development against WordPress 3.9+ should be done against the development branch
 
 ## Changelog ##
