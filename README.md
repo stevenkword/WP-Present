@@ -13,6 +13,8 @@ WP-Present - beta
 
 **Create an Account or checkout the new DEMO:** [http://wppresent.com](http://wppresent.com)
 
+Want to help out? [https://github.com/stevenkword/WP-Present#developer-notes](Developer Instructions)
+
 Create interactive slide presentations, the WordPress way.
 
 Presentation layer powered by reveal.js from Hakim El Hattab (http://hakim.se).
