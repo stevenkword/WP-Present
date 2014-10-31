@@ -13,7 +13,7 @@ WP-Present - beta
 
 **Create an Account or checkout the new DEMO:** [http://wppresent.com](http://wppresent.com)
 
-Want to help out? [https://github.com/stevenkword/WP-Present#developer-notes](Developer Instructions)
+Want to help out? Check out the [Developer Notes](https://github.com/stevenkword/WP-Present#developer-notes)
 
 Create interactive slide presentations, the WordPress way.
 
