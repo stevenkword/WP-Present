@@ -443,8 +443,8 @@ var WPPresentAdmin;
 			$('.modal-buttons').on('click', '#publish-button', function(e) {
 		e.preventDefault();
 
-				var $activeColumn = $('.widget-title.active').parent('.widget-top').parent('.column').children('.column-inner');
-				var nonce = $('#wp-present-nonce').val();
+		var $activeColumn = $('.widget-title.active').parent('.widget-top').parent('.column').children('.column-inner');
+		var nonce = $('#wp-present-nonce').val();
 
 		var editorContents = tinymce.get('editor_slide').getContent();
 		var postTitle      = $( '#slide-title' ).val();
