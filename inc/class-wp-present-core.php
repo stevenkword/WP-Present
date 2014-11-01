@@ -1120,8 +1120,6 @@ class WP_Present_Core {
 		$safe_content = wp_kses_post( $_REQUEST['content'] );
 		$safe_title   = sanitize_text_field( $_REQUEST['title'] );
 
-		$presentation = get_term_by( 'id', $_REQUEST['presentation'], self::TAXONOMY_SLUG );
-
 		$safe_background_color = sanitize_text_field( $_REQUEST['background-color'] );
 		$safe_text_color       = sanitize_text_field( $_REQUEST['text-color'] );
 		$safe_link_color       = sanitize_text_field( $_REQUEST['link-color'] );
@@ -1135,7 +1133,12 @@ class WP_Present_Core {
 		);
 
 		$post_id = wp_insert_post( $new_post );
-		wp_set_object_terms( $post_id , $presentation->name, self::TAXONOMY_SLUG );
+		/*
+		 * This gets handled in `save_post` so we don't need to do it here.
+		 * Thank you, taxonomy bridge!
+		 */
+		//wp_set_object_terms( $post_id , $presentation->name, self::TAXONOMY_SLUG );
+		$presentation = get_term_by( 'id', $_REQUEST['presentation'], self::TAXONOMY_SLUG );
 
 		update_post_meta( $post_id, 'background-color', $safe_background_color );
 		update_post_meta( $post_id, 'text-color', $safe_text_color );
