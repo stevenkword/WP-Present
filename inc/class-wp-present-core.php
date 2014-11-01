@@ -1137,8 +1137,8 @@ class WP_Present_Core {
 		 * This gets handled in `save_post` so we don't need to do it here.
 		 * Thank you, taxonomy bridge!
 		 */
-		//wp_set_object_terms( $post_id , $presentation->name, self::TAXONOMY_SLUG );
 		//$presentation = get_term_by( 'id', $_REQUEST['presentation'], self::TAXONOMY_SLUG );
+		//wp_set_object_terms( $post_id , $presentation->name, self::TAXONOMY_SLUG );
 
 		update_post_meta( $post_id, 'background-color', $safe_background_color );
 		update_post_meta( $post_id, 'text-color', $safe_text_color );
