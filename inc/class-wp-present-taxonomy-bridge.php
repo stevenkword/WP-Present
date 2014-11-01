@@ -118,7 +118,7 @@ class WP_Present_Taxonomy_Bridge {
 		$term = $terms[0];
 		$term_link = get_edit_term_link( $term, WP_Present_Core::TAXONOMY_SLUG );
 
-		return $term_link;
+		return add_query_arg( 'post_type', WP_Present_Core::POST_TYPE_TAXONOMY, $term_link );
 	}
 
 	/**
