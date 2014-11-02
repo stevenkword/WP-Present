@@ -254,32 +254,24 @@ var WPPresentAdmin;
 		 */
 		widgetButtonEdit: function () {
 			var self = this;
-			var $editorIframe = $('#editor_slide_ifr').contents();
-
-			var $button        = $(this);
-			var $parentWidget  = $button.parents('.widget');
-			var $widgetPreview = $parentWidget.find('.widget-preview');
-			var $widgetTitle   = $parentWidget.find( '.widget-title h4' );
-
-			// Send the contents from the widget to the editor
-			var widgetID = $parentWidget.find('.slide-id').val();
-			var nonce = $('#wp-present-nonce').val();
-
-
-/**
- * HARDCODE ALERT!
- */
-widgetID = 1677;
-
 
 			$('#container').on('click', '.widget-control-edit', function(e) {
 				e.preventDefault();
+
+				var $editorIframe = $('#editor_slide_ifr').contents();
+				var $button        = $(this);
+				var $parentWidget  = $button.parents('.widget');
+				var $widgetPreview = $parentWidget.find('.widget-preview');
+				var $widgetTitle   = $parentWidget.find( '.widget-title h4' );
+
+				// Send the contents from the widget to the editor
+				var widgetID = $parentWidget.find('.slide-id').val();
+				var nonce = $('#wp-present-nonce').val();
 
 				$('#editor_slide-tmce').click(); //Necessary on subsequent loads of the editor
 
 				// Clear the form out before we show it
 				self.resetModal();
-
 
 				$('#dialog').show();
 
@@ -323,77 +315,77 @@ widgetID = 1677;
 						// This has to be the most hacky thing in this entire project
 						self.resizeModal();
 
-				// Hack for getting the reveal class added to tinymce editor body
-				// @todo: look at wp_editor in wp/inc/class-wp-editor.php
-				var $editorIframe = $('#editor_slide_ifr').contents();
-				$editorIframe.find('body').addClass('reveal');
-				//$editorIframe.css('height','500px');
+						// Hack for getting the reveal class added to tinymce editor body
+						// @todo: look at wp_editor in wp/inc/class-wp-editor.php
+						var $editorIframe = $('#editor_slide_ifr').contents();
+						$editorIframe.find('body').addClass('reveal');
+						//$editorIframe.css('height','500px');
 
+
+						$('.modal-buttons').on('click', '#update-button', function(e) {
+							e.preventDefault();
+
+							var editorContents = tinymce.get('editor_slide').getContent();
+							var postTitle = $( '#slide-title' ).val();
+
+							var backgroundImage = $('#customize-control-wp_present_background_image img');
+							var backgroundImageURL = '';
+
+							if( 'none' != backgroundImage.css( 'display' ) ) {
+								backgroundImageURL = backgroundImage.attr('src');
+							} else {
+								backgroundImageURL = '';
+							}
+
+							var colorBackground = $('#customize-control-wp_present_background_color .color-picker-hex').val();
+							var colorText = $('#customize-control-wp_present_text_color .color-picker-hex').val();
+							var colorLink = $('#customize-control-wp_present_link_color .color-picker-hex').val();
+
+							// Send the contents from the widget to the editor
+							var $parentWidget  = $button.parents('.widget');
+							var widgetID = $parentWidget.find('.slide-id').val();
+							var nonce = $('#wp-present-nonce').val();
+
+							var params = {
+								'id'               : widgetID,
+								'content'          : editorContents,
+								'title'            : postTitle,
+								'background-image' : backgroundImageURL,
+								'background-color' : colorBackground,
+								'text-color'       : colorText,
+								'link-color'       : colorLink,
+								'nonce'            : nonce
+							};
+							// Send the contents of the existing post
+							$.ajax({
+								url: ajaxurl + '?action=update_slide',
+								type: 'POST',
+								data: jQuery.param(params),
+								beforeSend: function() {
+									$('.spinner').show();
+								},
+								complete: function() {
+									//$('.spinner').hide();
+								},
+								success: function(result) {
+									$('.spinner').hide();
+									// Return the excerpt from the editor
+									$widgetPreview.html( result );
+									$widgetTitle.text( postTitle );
+
+								}
+							});
+							self.closeModal();
+						});
+
+						$('.modal-buttons').on('click', '#cancel-button', function(e) {
+							e.preventDefault();
+							$('#dialog').hide();
+						});
 
 					}
 				});
 			});
-
-				$('.modal-buttons').on('click', '#publish-button', function(e) {
-					e.preventDefault();
-					var editorContents = tinymce.get('editor_slide').getContent();
-					var postTitle = $( '#slide-title' ).val();
-
-					var backgroundImage = $('#customize-control-wp_present_background_image img');
-					var backgroundImageURL = '';
-
-					if( 'none' != backgroundImage.css( 'display' ) ) {
-						backgroundImageURL = backgroundImage.attr('src');
-					} else {
-						backgroundImageURL = '';
-					}
-
-					var colorBackground = $('#customize-control-wp_present_background_color .color-picker-hex').val();
-					var colorText = $('#customize-control-wp_present_text_color .color-picker-hex').val();
-					var colorLink = $('#customize-control-wp_present_link_color .color-picker-hex').val();
-
-				// Send the contents from the widget to the editor
-				var $parentWidget  = $button.parents('.widget');
-				var widgetID = $parentWidget.find('.slide-id').val();
-				var nonce = $('#wp-present-nonce').val();
-
-
-					var params = {
-						'id'               : widgetID,
-						'content'          : editorContents,
-						'title'            : postTitle,
-						'background-image' : backgroundImageURL,
-						'background-color' : colorBackground,
-						'text-color'       : colorText,
-						'link-color'       : colorLink,
-						'nonce'            : nonce
-					};
-					// Send the contents of the existing post
-					$.ajax({
-						url: ajaxurl + '?action=update_slide',
-						type: 'POST',
-						data: jQuery.param(params),
-						beforeSend: function() {
-							$('.spinner').show();
-						},
-						complete: function() {
-							//$('.spinner').hide();
-						},
-						success: function(result) {
-							$('.spinner').hide();
-							// Return the excerpt from the editor
-							$widgetPreview.html( result );
-							$widgetTitle.text( postTitle );
-
-						}
-					});
-					self.closeModal();
-				});
-
-				$('.modal-buttons').on('click', '#cancel-button', function(e) {
-					e.preventDefault();
-					$('#dialog').hide();
-				});
 
 		},
 
@@ -619,8 +611,8 @@ widgetID = 1677;
 			$('.theme-name').html( '' );
 
 			// Reset customizer background image
-//			$('#customize-control-wp_present_background_image .dropdown-content img').hide();
-//			$('#customize-control-wp_present_background_image .dropdown-status').show();
+			//$('#customize-control-wp_present_background_image .dropdown-content img').hide();
+			//$('#customize-control-wp_present_background_image .dropdown-status').show();
 
 			// Colors
 			$('#customize-control-wp_present_background_color .color-picker-hex').val( '' ).change();

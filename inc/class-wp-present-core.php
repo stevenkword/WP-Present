@@ -849,6 +849,7 @@ class WP_Present_Core {
 			<div class="modal-inner-left">
 				<div class="ui-dialog-buttonpane modal-buttons">
 					<button id="publish-button" class="button button-primary">Publish</button>
+					<button id="update-button" class="button button-primary">Update</button>
 					<button id="cancel-button" class="button">Cancel</button>
 				</div>
 
