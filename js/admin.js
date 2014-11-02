@@ -628,9 +628,16 @@ var WPPresentAdmin;
 			//$('#customize-control-wp_present_background_image .dropdown-status').show();
 
 			// Colors
-			$('#customize-control-wp_present_background_color .color-picker-hex').val( '' ).change();
-			$('#customize-control-wp_present_text_color .color-picker-hex').val( '' ).change();
-			$('#customize-control-wp_present_link_color .color-picker-hex').val( '' ).change();
+			$('#customize-control-wp_present_background_color .color-picker-hex').val( '#fff' ).change();
+			$('#customize-control-wp_present_text_color .color-picker-hex').val( '#000' ).change();
+			$('#customize-control-wp_present_link_color .color-picker-hex').val( '#0000EE' ).change();
+
+			// Colors
+			/*
+			$('#customize-control-wp_present_background_color .color-picker-hex').iris( 'color', '#' );
+			$('#customize-control-wp_present_text_color .color-picker-hex').iris( 'color', '#' );
+			$('#customize-control-wp_present_link_color .color-picker-hex').iris( 'color', '#' );
+			*/
 
 			$('.dropdown-content img').attr('src','').change();
 		},
