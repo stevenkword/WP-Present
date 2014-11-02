@@ -34,7 +34,7 @@ class WP_Present_Core {
 	/* Misc */
 	const CAPABILITY         = 'edit_others_posts';
 	const NONCE_FIELD        = 'wp-present-nonce';
-	const DEFAULT_THEME      = 'simple.css'; // moon, night, simple, serif, solarized
+	const DEFAULT_THEME      = 'moon.css'; // moon, night, simple, serif, solarized
 	const MAX_NUM_SLIDES     = 250; // not currently used, proposed variable
 	const TEXT_DOMAIN        = 'wp-present';
 
@@ -770,6 +770,12 @@ class WP_Present_Core {
 				</span></a>
 				<?php // TODO: Add Existing Slide Button ?>
 				<span class="spinner">Saving</span>
+
+				<button class="button js--open-media-modal">Open a modal</button>
+				<script type="text/template" id="tmpl-modal-content">
+					<h1>Hi, I&#39;m a Modal!</h1>
+					<?php //$this->modal_editor(); ?>
+				</script>
 			</p>
 		</div>
 		<div id="outer-container"  class="ui-widget-content">

@@ -37,7 +37,7 @@ class WP_Present_Modal_Customizer {
 		add_action( 'wp_loaded', array( $this, 'action_wp_loaded' ) );
 
 		// Remove and define new Theme Customizer sections, settings, and controls
-	    add_action( 'customize_register', array( $this, 'action_customize_register' ), 99 );
+		add_action( 'customize_register', array( $this, 'action_customize_register' ), 99 );
 
 		add_action( 'admin_init', array( $this, 'action_admin_init' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'action_admin_enqueue_scripts' ) );
@@ -66,6 +66,7 @@ class WP_Present_Modal_Customizer {
 	 * @since 0.9.0
 	 */
 	public function customize_preview_init() {
+
 		global $wp_customize;
 
 		$wp_customize->prepare_controls();
@@ -155,7 +156,6 @@ class WP_Present_Modal_Customizer {
 		</div>
 
 		<div id="customize-preview" class="wp-full-overlay-main"></div>
-
 
 		<div id="customize-footer-actions" class="wp-full-overlay-footer">
 			<a href="#" class="collapse-sidebar button-secondary" title="<?php esc_attr_e('Collapse Sidebar'); ?>">
