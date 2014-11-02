@@ -265,6 +265,8 @@ var WPPresentAdmin;
 			var widgetID = $parentWidget.find('.slide-id').val();
 			var nonce = $('#wp-present-nonce').val();
 
+widgetID = 1677;
+
 
 			$('#container').on('click', '.widget-control-edit', function(e) {
 				e.preventDefault();
@@ -279,6 +281,7 @@ var WPPresentAdmin;
 
 				// Load the contents of the existing post
 				var params = { 'id':widgetID, 'nonce':nonce };
+
 				$.ajax({
 					url: ajaxurl + '?action=get_slide',
 					data: jQuery.param(params),
@@ -290,7 +293,10 @@ var WPPresentAdmin;
 					},
 					success: function( contentEditor ) {
 
+						// If this throws an error, check for PHP notices in the ajax response
 						var slide = jQuery.parseJSON( contentEditor );
+
+
 						tinymce.get( 'editor_slide' ).setContent( slide.post_content );
 
 						$( '#slide-title' ).val( slide.post_title );
