@@ -265,6 +265,10 @@ var WPPresentAdmin;
 			var widgetID = $parentWidget.find('.slide-id').val();
 			var nonce = $('#wp-present-nonce').val();
 
+
+/**
+ * HARDCODE ALERT!
+ */
 widgetID = 1677;
 
 
@@ -295,8 +299,6 @@ widgetID = 1677;
 
 						// If this throws an error, check for PHP notices in the ajax response
 						var slide = jQuery.parseJSON( contentEditor );
-
-
 						tinymce.get( 'editor_slide' ).setContent( slide.post_content );
 
 						$( '#slide-title' ).val( slide.post_title );
