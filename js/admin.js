@@ -268,7 +268,7 @@ var WPPresentAdmin;
 				var widgetID = $parentWidget.find('.slide-id').val();
 				var nonce = $('#wp-present-nonce').val();
 
-				$('#editor_slide-tmce').click(); //Necessary on subsequent loads of the editor
+				$('#editor_slide-tmce').click(); // Necessary to grab focus on subsequent loads of the editor
 
 				// Clear the form out before we show it
 				self.resetModal();
@@ -345,11 +345,6 @@ var WPPresentAdmin;
 					var colorText = $('#customize-control-wp_present_text_color .color-picker-hex').val();
 					var colorLink = $('#customize-control-wp_present_link_color .color-picker-hex').val();
 
-					// Send the contents from the widget to the editor
-					//var $parentWidget  = $button.parents('.widget');
-					//var widgetID = $parentWidget.find('.slide-id').val();
-					//var nonce = $('#wp-present-nonce').val();
-
 					var params = {
 						'id'               : widgetID,
 						'content'          : editorContents,
@@ -360,10 +355,6 @@ var WPPresentAdmin;
 						'link-color'       : colorLink,
 						'nonce'            : nonce
 					};
-
-					console.log( 'widget preview', $widgetPreview );
-					console.log( 'params', params );
-
 
 					// Send the contents of the existing post
 					$.ajax({
@@ -381,23 +372,24 @@ var WPPresentAdmin;
 							// Return the excerpt from the editor
 							$widgetPreview.html( result );
 							$widgetTitle.text( postTitle );
-
 						}
 					});
 					self.closeModal();
+					// Unbind or this will stick
+					$('.modal-buttons').off('click', '#update-button' );
 				});
 
 				$('.modal-buttons').on('click', '#cancel-button', function(e) {
 					e.preventDefault();
 					$('#dialog').hide();
+					// Unbind or this will stick
+					$('.modal-buttons').off('click', '#cancel-button' );
 				});
 
 				/*
 				 * Display the editor
 				 */
 				$('#dialog').show();
-
-
 
 			});
 
@@ -455,52 +447,54 @@ var WPPresentAdmin;
 			});
 
 			$('.modal-buttons').on('click', '#publish-button', function(e) {
-		e.preventDefault();
+				e.preventDefault();
 
-		var $activeColumn = $('.widget-title.active').parent('.widget-top').parent('.column').children('.column-inner');
-		var nonce = $('#wp-present-nonce').val();
+				var $activeColumn = $('.widget-title.active').parent('.widget-top').parent('.column').children('.column-inner');
+				var nonce = $('#wp-present-nonce').val();
 
-		var editorContents = tinymce.get('editor_slide').getContent();
-		var postTitle      = $( '#slide-title' ).val();
-		var backgroundImage = $('#customize-control-wp_present_background_image img');
-		var backgroundImageURL = '';
-		var colorBackground = $('#customize-control-wp_present_background_color .color-picker-hex').val();
-		var colorText = $('#customize-control-wp_present_text_color .color-picker-hex').val();
-		var colorLink = $('#customize-control-wp_present_link_color .color-picker-hex').val();
+				var editorContents = tinymce.get('editor_slide').getContent();
+				var postTitle      = $( '#slide-title' ).val();
+				var backgroundImage = $('#customize-control-wp_present_background_image img');
+				var backgroundImageURL = '';
+				var colorBackground = $('#customize-control-wp_present_background_color .color-picker-hex').val();
+				var colorText = $('#customize-control-wp_present_text_color .color-picker-hex').val();
+				var colorLink = $('#customize-control-wp_present_link_color .color-picker-hex').val();
 
-		if( 'none' != backgroundImage.css( 'display' ) ) {
-			backgroundImageURL = backgroundImage.attr('src');
-		} else {
-			backgroundImageURL = '';
-		}
+				if( 'none' != backgroundImage.css( 'display' ) ) {
+					backgroundImageURL = backgroundImage.attr('src');
+				} else {
+					backgroundImageURL = '';
+				}
 
-		var params = {
-			'content'          : editorContents,
-			'title'            : postTitle,
-			'background-image' : backgroundImageURL,
-			'background-color' : colorBackground,
-			'text-color'       : colorText,
-			'link-color'       : colorLink,
-			'nonce'            : nonce
-		};
+				var params = {
+					'content'          : editorContents,
+					'title'            : postTitle,
+					'background-image' : backgroundImageURL,
+					'background-color' : colorBackground,
+					'text-color'       : colorText,
+					'link-color'       : colorLink,
+					'nonce'            : nonce
+				};
 
-		$.ajax({
-			url: ajaxurl + '?action=new_slide',
-			type: 'POST',
-			data: jQuery.param(params),
-			success: function(result) {
-				$activeColumn.append(result);
-				WPPNumSlides[0]++;
-				self.refreshUI();
-				self.updateTaxonomyDescription();
-			}
-		});
-		self.closeModal();
+				$.ajax({
+					url: ajaxurl + '?action=new_slide',
+					type: 'POST',
+					data: jQuery.param(params),
+					success: function(result) {
+						$activeColumn.append(result);
+						WPPNumSlides[0]++;
+						self.refreshUI();
+						self.updateTaxonomyDescription();
+					}
+				});
+				self.closeModal();
+				$('.modal-buttons').off('click', '#publish-button' );
 			});
 
 			$('.modal-buttons').on('click', '#cancel-button', function(e) {
-		e.preventDefault();
-		$('#dialog').hide();
+				e.preventDefault();
+				$('#dialog').hide();
+				$('.modal-buttons').off('click', '#cancel-button' );
 			});
 
 		},
