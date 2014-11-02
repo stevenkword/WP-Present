@@ -450,6 +450,8 @@ var WPPresentAdmin;
 				$('#publish-button').show();
 
 				$('#dialog').show();
+
+				self.resizeModal();
 			});
 
 			$('.modal-buttons').on('click', '#publish-button', function(e) {
@@ -654,10 +656,14 @@ var WPPresentAdmin;
 
 			$editorIframe.height( resize );
 
+
+			return;
+
 			/**
 			 *  This has to be the most hacky thing in this entire project
 			 *  but it sure is cool!
 			 */
+			/*
 			var $editor = $editorIframe.contents().find('body.mceContentBody.reveal');
 			var zoom = 0.6;
 			var editorHeightFull = 0;
@@ -680,6 +686,7 @@ var WPPresentAdmin;
 			// Act on said hackiness
 			$editor.css( 'padding-top', availableSpace );
 			$editor.css( 'display', 'block' );
+			*/
 		}
 	};
 
