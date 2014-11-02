@@ -628,6 +628,7 @@ var WPPresentAdmin;
 			//$('#customize-control-wp_present_background_image .dropdown-status').show();
 
 			// Colors
+			// This is a temporary fix that will not play nicely with default themes.  Note it!
 			$('#customize-control-wp_present_background_color .color-picker-hex').val( '#fff' ).change();
 			$('#customize-control-wp_present_text_color .color-picker-hex').val( '#000' ).change();
 			$('#customize-control-wp_present_link_color .color-picker-hex').val( '#0000EE' ).change();

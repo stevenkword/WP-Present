@@ -6,7 +6,7 @@
  **/
 class WP_Present_Taxonomy_Bridge {
 
-	const REVISION = 20140201;
+	const REVISION = 20141102;
 
 	public $plugins_url = '';
 	public $nonce_fail_message = '';
