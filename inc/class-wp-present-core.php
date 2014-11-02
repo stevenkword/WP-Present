@@ -22,7 +22,7 @@ class WP_Present_Core {
 	const TAXONOMY_SINGULAR  = 'Presentation';
 
 	/* Metakeys */
-	const METAKEY_PREFIX    = 'wp_present_';
+	const METAKEY_PREFIX     = 'wp_present_';
 
 	/* Shortcode */
 	const SHORTCODE          = 'wppresent';
@@ -91,7 +91,7 @@ class WP_Present_Core {
 
 		//Update the post links for slides
 		add_filter( 'post_type_link', array( $this, 'append_query_string' ), 10, 2 );
-		add_filter( 'get_edit_term_link', array( $this, 'filter_get_edit_term_link' ) );
+		//add_filter( 'get_edit_term_link', array( $this, 'filter_get_edit_term_link' ) );
 
 		// AJAX
 		add_action( 'wp_ajax_get_slide', array( $this, 'action_wp_ajax_get_slide' ) );
@@ -154,6 +154,7 @@ class WP_Present_Core {
 	 * @return null
 	 */
 	public function action_init_register_post_type() {
+
 		register_post_type( self::POST_TYPE_SLUG, array(
 			'labels' => array(
 				//@todo http://codex.wordpress.org/Function_Reference/register_post_type
@@ -167,6 +168,7 @@ class WP_Present_Core {
 			),
 			'public'          => true,
 			'capability_type' => self::POST_TYPE_CAP_TYPE,
+			'map_meta_cap'    => true,
 			'has_archive'     => true,
 			'show_ui'         => true,
 			'show_in_menu'    => false,
@@ -182,14 +184,16 @@ class WP_Present_Core {
 				//@todo http://codex.wordpress.org/Function_Reference/register_post_type
 				'name'          => __( self::TAXONOMY_NAME ),
 				'singular_name' => __( self::TAXONOMY_SINGULAR ),
-				'add_new_item'  => __( 'Add New ' . self::TAXONOMY_SINGULAR ),
-				'edit_item'     => __( 'Edit ' . self::TAXONOMY_SINGULAR ),
+				//'add_new_item'  => __( 'Add New ' . self::TAXONOMY_SINGULAR . ' Details. Tell us about your presentation.'),
+				'add_new_item'  => __( 'Describe your '. self::TAXONOMY_SINGULAR . '. ' . 'Don\'t worry. You can always update it later.'),
+				'edit_item'     => __( self::TAXONOMY_SINGULAR . ' Details'),
 				'new_item'      => __( 'New ' . self::TAXONOMY_SINGULAR ),
 				'view_item'     => __( 'View ' . self::TAXONOMY_SINGULAR ),
 				'search_items'  => __( 'Search' . self::TAXONOMY_NAME ),
 			),
-			'public'          => true,
-			'capability_type' => self::POST_TYPE_CAP_TYPE,
+			'public'           => true,
+			'capability_type'  => self::POST_TYPE_CAP_TYPE,
+			'map_meta_cap'    => true,
 			'has_archive'     => false,
 			'show_ui'         => true,
 			'show_in_menu'    => true,
@@ -197,7 +201,6 @@ class WP_Present_Core {
 			'supports'        => array( 'title', 'comments', 'editor', 'revisions' ),
 			'taxonomies'      => array( self::TAXONOMY_SLUG/*, 'post_tag'*/ )
 		) );
-
 	}
 
 	/**
@@ -215,7 +218,7 @@ class WP_Present_Core {
 				'all_items'         => __( 'All ' . self::TAXONOMY_NAME ),
 				'parent_item'       => __( 'Parent ' . self::TAXONOMY_SINGULAR ),
 				'parent_item_colon' => __( 'Parent ' . self::TAXONOMY_SINGULAR . ':' ),
-				'edit_item'         => __( 'Edit ' . self::TAXONOMY_SINGULAR ),
+				'edit_item'         => __( self::TAXONOMY_SINGULAR . ' Editor' ),
 				'update_item'       => __( 'Update ' . self::TAXONOMY_SINGULAR ),
 				'add_new_item'      => __( 'Add New ' . self::TAXONOMY_SINGULAR ),
 				'new_item_name'     => __( 'New ' . self::TAXONOMY_SINGULAR. ' Name' ),
@@ -229,7 +232,13 @@ class WP_Present_Core {
 			'rewrite'           => array(
 				'slug'   => self::TAXONOMY_SLUG,
 				'ep_mask'=> EP_WPPRESENT
-			)
+			),
+			'capabilities' => array(
+				'manage_terms' => 'manage_categories',
+				'edit_terms'   => 'manage_categories',
+				'delete_terms' => 'manage_categories',
+				'assign_terms' => 'edit_posts'
+			),
 		) );
 	}
 
@@ -258,7 +267,7 @@ class WP_Present_Core {
 			'h'   => '360',
 		), $atts ) );
 		?>
-		<iframe class="presentation-iframe" src="<?php echo esc_attr( $src ); ?>" width="<?php echo esc_attr( $w ); ?>" height="<?php echo esc_attr( $h ); ?>" style="max-height: <?php esc_attr( $h);  ?>" onload="this.contentWindow.focus()" >no iframes</iframe>
+		<iframe src="<?php echo esc_attr( $src ); ?>" width="<?php echo esc_attr( $w ); ?>" height="<?php echo esc_attr( $h ); ?>" onload="this.contentWindow.focus()" ></iframe>
 		<?php
 		return ob_get_clean();
 	}
@@ -287,7 +296,8 @@ class WP_Present_Core {
 		add_editor_style( plugins_url( '/wp-present/js/reveal.js/css/reveal.css' ) );
 		add_editor_style( plugins_url( '/wp-present/js/reveal.js/css/theme/' . self::DEFAULT_THEME ) );
 		add_editor_style( plugins_url( '/wp-present/js/reveal.js/lib/css/zenburn.css' ) );
-		add_editor_style( plugins_url( '/wp-present/css/custom.css?v=' . self::REVISION ) );
+
+		add_editor_style( plugins_url( '/wp-present/css/tinymce.css?v=' . self::REVISION ) );
 
 		//TODO: Make this work to support backgrounds
 		//add_editor_style( plugins_url( '/wp-present/css/tinymce.css.php?v=' . self::REVISION . '&post=' . $_REQUEST['post'] ) );
@@ -376,19 +386,20 @@ class WP_Present_Core {
 			wp_enqueue_style( 'reveal-theme', $this->plugins_url . '/js/reveal.js/css/theme/' . self::DEFAULT_THEME, array('reveal'), self::REVISION );
 			wp_enqueue_style( 'zenburn', $this->plugins_url . '/js/reveal.js/lib/css/zenburn.css', '', self::REVISION, false );
 
-			/* Last run styles */
-			wp_enqueue_style( 'custom', $this->plugins_url . '/css/custom.css', array('reveal'), self::REVISION );
-
 			/* Reveal Scripts */
 			wp_enqueue_script( 'reveal-head', $this->plugins_url . '/js/reveal.js/lib/js/head.min.js', array( 'jquery' ), self::REVISION, true );
 			wp_enqueue_script( 'reveal', $this->plugins_url . '/js/reveal.js/js/reveal.min.js', array( 'jquery' ), self::REVISION, true );
 			//wp_enqueue_script( 'reveal-config', $this->plugins_url . '/js/reveal-config.js', array( 'jquery' ), self::REVISION );
 		}
 
+		/* Last run styles */
+		wp_enqueue_style( 'custom', $this->plugins_url . '/css/custom.css', array('reveal'), self::REVISION );
+
 		// Overrides for the embed & fullscreen pages
 		if( is_tax( self::TAXONOMY_SLUG ) && ( $fullscreen || $embed ) ) {
 			wp_enqueue_style( 'reveal-custom', get_stylesheet_directory_uri() . '/css/reveal.css', 'reveal', self::REVISION );
 		}
+
 	}
 
 	/**
@@ -568,7 +579,7 @@ class WP_Present_Core {
 	 * @return array
 	 */
 	public function get_associated_slide_ids( $term, $taxonomy ) {
-		$term_description =  self::get_term_description( $term, $taxonomy );
+		$term_description = WP_Present_Core::instance()->get_term_description( $term, $taxonomy );
 
 		if( ! is_array( $term_description ) )
 			return false;
@@ -835,8 +846,14 @@ class WP_Present_Core {
 						<div class="clearfix"></div>
 					</div><!--/#container-->
 		</div><!--/#outer-container-->
-		<div id="dialog" class="media-modal" title="Edit <?php echo self::POST_TYPE_SINGULAR; ?>" style="display: none;">
+		<div id="dialog" class="media-modal" title="Edit <?php echo self::POST_TYPE_SINGULAR; ?>" style="background: red; display: none;">
 			<div class="modal-inner-left">
+				<div class="ui-dialog-buttonpane modal-buttons">
+					<button id="publish-button" class="button button-primary">Publish</button>
+					<button id="update-button" class="button button-primary">Update</button>
+					<button id="cancel-button" class="button">Cancel</button>
+				</div>
+
 				<?php WP_Present_Modal_Customizer::instance()->render(); ?>
 			</div>
 			<div class="modal-inner-right">
@@ -1105,8 +1122,6 @@ class WP_Present_Core {
 		$safe_content = wp_kses_post( $_REQUEST['content'] );
 		$safe_title   = sanitize_text_field( $_REQUEST['title'] );
 
-		$presentation = get_term_by( 'id', $_REQUEST['presentation'], self::TAXONOMY_SLUG );
-
 		$safe_background_color = sanitize_text_field( $_REQUEST['background-color'] );
 		$safe_text_color       = sanitize_text_field( $_REQUEST['text-color'] );
 		$safe_link_color       = sanitize_text_field( $_REQUEST['link-color'] );
@@ -1120,7 +1135,12 @@ class WP_Present_Core {
 		);
 
 		$post_id = wp_insert_post( $new_post );
-		wp_set_object_terms( $post_id , $presentation->name, self::TAXONOMY_SLUG );
+		/*
+		 * This gets handled in `save_post` so we don't need to do it here.
+		 * Thank you, taxonomy bridge!
+		 */
+		//$presentation = get_term_by( 'id', $_REQUEST['presentation'], self::TAXONOMY_SLUG );
+		//wp_set_object_terms( $post_id , $presentation->name, self::TAXONOMY_SLUG );
 
 		update_post_meta( $post_id, 'background-color', $safe_background_color );
 		update_post_meta( $post_id, 'text-color', $safe_text_color );

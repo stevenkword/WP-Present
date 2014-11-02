@@ -1,0 +1,2 @@
+html { display: table; }
+body { display: table-cell !important; vertical-align: middle; text-align: center; height: 100%;}

@@ -4,7 +4,7 @@ Plugin Name: WP Present
 Plugin URI: http://wppresent.org/
 Description: Create interactive slide presentations, the WordPress way
 Author: Steven Word
-Version: 0.9.6
+Version: 0.9.7
 Author URI: http://stevenword.com/
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -76,6 +76,7 @@ class WP_Present_Loader {
 		require( plugin_dir_path( __FILE__ ) . 'inc/class-wp-present-admin.php' );
 		require( plugin_dir_path( __FILE__ ) . 'inc/class-wp-present-settings.php' );
 		require( plugin_dir_path( __FILE__ ) . 'inc/class-wp-present-taxonomy-bridge.php' );
+		//require( plugin_dir_path( __FILE__ ) . 'inc/class-wp-present-video-player.php' );
 
 		// Check the things
 		//if( isset( $_REQUEST['tag_ID'] ) && isset( $_GET['taxonomy'] ) && WP_Present_Core::instance()->taxonomy_slug == $_GET['taxonomy'] ) {
@@ -129,7 +130,9 @@ class WP_Present_Loader {
 		// Check if the version has changed and if so perform the necessary actions
 		if ( ! isset( $this->version ) || $this->version <  WP_PRESENT_VERSION ) {
 
-			// Perform updates if necessary
+			/*
+			// Perform updates here if necessary
+			*/
 
 			// Update the version information in the database
 			update_option( self::OPTION_VERSION, WP_PRESENT_VERSION );
@@ -141,7 +144,11 @@ WP_Present_Loader::instance();
 
 /* Wrappers */
 if ( ! function_exists( 'wpp_is_presentation' ) ) {
-        function wpp_is_presentation() {
-                return WP_Present_Core::is_presentation();
-        }
+	function wpp_is_presentation() {
+		return WP_Present_Core::is_presentation();
+	}
+}
+
+function nonce_trace( $msg ) {
+
 }

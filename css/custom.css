@@ -32,6 +32,22 @@ body.reveal {
 	box-shadow: none;
 }
 
+.pause-overlay textarea {
+    width: 700px;
+    height: 300px;
+    font-size: 1.5rem;
+}
+
+.pause-overlay .wrap {
+    color:  white;
+    padding: 1rem;
+}
+.reveal .pause-overlay,
+.pause-overlay .wrap ul,
+.pause-overlay .wrap ul > li {
+    color: white;
+}
+
 /* =Misc
 -------------------------------------------------------------- */
 .alignleft {

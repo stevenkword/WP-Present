@@ -110,6 +110,12 @@ class WP_Present_Modal_Customizer {
 		wp_enqueue_script( 'customize-controls' );
 		wp_enqueue_script( 'accordion' );
 		wp_enqueue_script( 'wp-present-customize-controls', WP_Present_Core::instance()->plugins_url . '/js/customize-controls.js', array( 'jquery' ), WP_Present_Core::REVISION, true );
+
+		// We don't want the widget customer things as of 3.9
+		$is_removed = remove_action( 'customize_controls_enqueue_scripts', array( $GLOBALS['wp_customize']->widgets, 'enqueue_scripts' ) );
+		$is_removed = remove_action( 'customize_controls_print_footer_scripts', array( $GLOBALS['wp_customize']->widgets, 'print_footer_scripts' ) );
+		$is_removed = remove_action( 'customize_controls_print_footer_scripts', array( $GLOBALS['wp_customize']->widgets, 'output_widget_control_templates' ) );
+
 		do_action( 'customize_controls_enqueue_scripts' );
 	}
 
