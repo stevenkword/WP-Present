@@ -494,13 +494,11 @@ var WPPresentAdmin;
 					}
 				});
 				self.closeModal();
-				$('.modal-buttons').off('click', '#publish-button' );
 			});
 
 			$('.modal-buttons').on('click', '#cancel-button', function(e) {
 				e.preventDefault();
 				$('#dialog').hide();
-				$('.modal-buttons').off('click', '#cancel-button' );
 			});
 
 		},
