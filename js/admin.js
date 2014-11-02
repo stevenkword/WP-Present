@@ -386,6 +386,9 @@ var WPPresentAdmin;
 					$('.modal-buttons').off('click', '#cancel-button' );
 				});
 
+				$('#update-button').show();
+				$('#publish-button').hide();
+
 				/*
 				 * Display the editor
 				 */
@@ -442,6 +445,9 @@ var WPPresentAdmin;
 
 				// Clear the form out before we show it
 				self.resetModal();
+
+				$('#update-button').hide();
+				$('#publish-button').show();
 
 				$('#dialog').show();
 			});
