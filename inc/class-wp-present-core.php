@@ -296,7 +296,8 @@ class WP_Present_Core {
 		add_editor_style( plugins_url( '/wp-present/js/reveal.js/css/reveal.css' ) );
 		add_editor_style( plugins_url( '/wp-present/js/reveal.js/css/theme/' . self::DEFAULT_THEME ) );
 		add_editor_style( plugins_url( '/wp-present/js/reveal.js/lib/css/zenburn.css' ) );
-		add_editor_style( plugins_url( '/wp-present/css/custom.css?v=' . self::REVISION ) );
+
+		add_editor_style( plugins_url( '/wp-present/css/tinymce.css?v=' . self::REVISION ) );
 
 		//TODO: Make this work to support backgrounds
 		//add_editor_style( plugins_url( '/wp-present/css/tinymce.css.php?v=' . self::REVISION . '&post=' . $_REQUEST['post'] ) );
