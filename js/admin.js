@@ -382,8 +382,7 @@ var WPPresentAdmin;
 				$('.modal-buttons').on('click', '#cancel-button', function(e) {
 					e.preventDefault();
 					$('#dialog').hide();
-					// Unbind or this will stick
-					$('.modal-buttons').off('click', '#cancel-button' );
+					self.resetModal();
 				});
 
 				$('#update-button').show();
