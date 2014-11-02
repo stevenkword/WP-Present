@@ -846,7 +846,7 @@ class WP_Present_Core {
 						<div class="clearfix"></div>
 					</div><!--/#container-->
 		</div><!--/#outer-container-->
-		<div id="dialog" class="media-modal" title="Edit <?php echo self::POST_TYPE_SINGULAR; ?>" style="background: red; display: none;">
+		<div id="dialog" class="media-modal" title="Edit <?php echo self::POST_TYPE_SINGULAR; ?>" style="background: #eee; border: 1px solid #bbb; display: none; z-index: 9999;">
 			<div class="modal-inner-left">
 				<div class="ui-dialog-buttonpane modal-buttons">
 					<button id="publish-button" class="button button-primary">Publish</button>
@@ -857,7 +857,6 @@ class WP_Present_Core {
 				<?php WP_Present_Modal_Customizer::instance()->render(); ?>
 			</div>
 			<div class="modal-inner-right">
-
 				<?php $this->modal_editor(); ?>
 			</div>
 		</div>
