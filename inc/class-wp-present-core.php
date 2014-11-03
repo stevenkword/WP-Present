@@ -771,86 +771,83 @@ class WP_Present_Core {
 				<?php // TODO: Add Existing Slide Button ?>
 				<span class="spinner">Saving</span>
 
-				<button class="button js--open-media-modal">Open a modal</button>
-				<script type="text/template" id="tmpl-modal-content">
-					<h1>Hi, I&#39;m a Modal!</h1>
-					<?php //$this->modal_editor(); ?>
-				</script>
+				<!-- Modal Editor View -->
+				<?php require( plugin_dir_path( dirname( __FILE__ ) ) . 'views/view-modal-editor.php' ); ?>
 			</p>
 		</div>
 		<div id="outer-container"  class="ui-widget-content">
-					<!--<h3 class="ui-widget-header">Resizable</h3>-->
-					<div id="container">
-						<?php
-						//THE NEW WAY
-						$this->admin_render_columns( $term, $taxonomy );
+			<!--<h3 class="ui-widget-header">Resizable</h3>-->
+			<div id="container">
+				<?php
+				//THE NEW WAY
+				$this->admin_render_columns( $term, $taxonomy );
 
-						// Calculate the number of columns we need
-						$columns = array();
-						$term_description =  $this->get_term_description( $term, $taxonomy );
+				// Calculate the number of columns we need
+				$columns = array();
+				$term_description =  $this->get_term_description( $term, $taxonomy );
 
-					if( ! empty( $term_description ) && 0 < (int) count( $term_description ) ) {
-						foreach( $term_description as $c => $column ) {
-							if( ! empty( $term_description[ $c ] ) )
-								$columns[] = $c;
-						}
-					}
+			if( ! empty( $term_description ) && 0 < (int) count( $term_description ) ) {
+				foreach( $term_description as $c => $column ) {
+					if( ! empty( $term_description[ $c ] ) )
+						$columns[] = $c;
+				}
+			}
 
-						// The Slides Query
-						$slides_query = new WP_Query( array(
-							'post_type' => $this->post_types,
-							'post_status' => 'publish',
-							'orderby' => 'date',
-							'order' => 'ASC',
-							'cache_results' => true,
-							'tax_query' => array( array(
-								'taxonomy' => self::TAXONOMY_SLUG,
-								'field' => 'id',
-								'terms' => $term->term_id
-							) ),
-							'posts_per_page' => -1, //consider making this something like 250 or 500 just to set a limit of some sort
-							'post__not_in' => $associated_slides
-						) );
+				// The Slides Query
+				$slides_query = new WP_Query( array(
+					'post_type' => $this->post_types,
+					'post_status' => 'publish',
+					'orderby' => 'date',
+					'order' => 'ASC',
+					'cache_results' => true,
+					'tax_query' => array( array(
+						'taxonomy' => self::TAXONOMY_SLUG,
+						'field' => 'id',
+						'terms' => $term->term_id
+					) ),
+					'posts_per_page' => -1, //consider making this something like 250 or 500 just to set a limit of some sort
+					'post__not_in' => $associated_slides
+				) );
 
-						// The Loop
-						if ( $slides_query->have_posts() ) {
-							$col = count( $columns ) + 1; //Start with the number of existing cols
-							while ( $slides_query->have_posts() ) {
-								$slides_query->the_post();
-								?>
-								<div class="column backfill" id="col-<?php echo $col; ?>">
-									<div class="widget-top">
-										<div class="widget-title">
-											<h4 class="hndle"><?php echo $col; ?><span class="in-widget-title"></span></h4>
-										</div>
-									</div>
-									<div class="column-inner">
-										<?php $this->admin_render_slide( $post ); ?>
-									</div>
-								</div>
-								<?php
-								$col++;
-							}
-							unset( $col );
-						} elseif( isset( $associated_slides ) || 0 == count( $associated_slides ) ) { // If there are 0 slides
-							//echo '<p>Sorry, No ' . self::POST_TYPE_NAME . ' found!</p>';
-
-							// If taxonomy is empty
-							if( empty( $term_description ) ) {
-								?>
-								<div class="column backfill" id="col-1">
-									<div class="widget-top">
-										<div class="widget-title">
-											<h4 class="hndle"><?php echo '1'; ?><span class="in-widget-title"></span></h4>
-										</div>
-									</div>
-								</div>
-								<?php
-							}
-						}
+				// The Loop
+				if ( $slides_query->have_posts() ) {
+					$col = count( $columns ) + 1; //Start with the number of existing cols
+					while ( $slides_query->have_posts() ) {
+						$slides_query->the_post();
 						?>
-						<div class="clearfix"></div>
-					</div><!--/#container-->
+						<div class="column backfill" id="col-<?php echo $col; ?>">
+							<div class="widget-top">
+								<div class="widget-title">
+									<h4 class="hndle"><?php echo $col; ?><span class="in-widget-title"></span></h4>
+								</div>
+							</div>
+							<div class="column-inner">
+								<?php $this->admin_render_slide( $post ); ?>
+							</div>
+						</div>
+						<?php
+						$col++;
+					}
+					unset( $col );
+				} elseif( isset( $associated_slides ) || 0 == count( $associated_slides ) ) { // If there are 0 slides
+					//echo '<p>Sorry, No ' . self::POST_TYPE_NAME . ' found!</p>';
+
+					// If taxonomy is empty
+					if( empty( $term_description ) ) {
+						?>
+						<div class="column backfill" id="col-1">
+							<div class="widget-top">
+								<div class="widget-title">
+									<h4 class="hndle"><?php echo '1'; ?><span class="in-widget-title"></span></h4>
+								</div>
+							</div>
+						</div>
+						<?php
+					}
+				}
+				?>
+				<div class="clearfix"></div>
+			</div><!--/#container-->
 		</div><!--/#outer-container-->
 		<div id="dialog" class="media-modal" title="Edit <?php echo self::POST_TYPE_SINGULAR; ?>" style="background: #eee; border: 1px solid #bbb; display: none; z-index: 9999;">
 			<div class="modal-inner-left">
