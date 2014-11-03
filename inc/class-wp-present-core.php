@@ -7,7 +7,7 @@ define('EP_WPPRESENT', 8388608); // 8388608 = 2^23
  **/
 class WP_Present_Core {
 
-	const REVISION = 20141102;
+	const REVISION = 20141103;
 
 	/* Post Type */
 	const POST_TYPE_SLUG     = 'slide';
@@ -999,9 +999,11 @@ class WP_Present_Core {
 			'editor_class' => '', // add extra class(es) to the editor textarea
 			'teeny' => false, // output the minimal editor config used in Press This
 			'dfw' => false, // replace the default fullscreen with DFW (needs specific DOM elements and css)
-			/*'tinymce' => array(
-				'plugins' => 'inlinepopups, wordpress, wplink, wpdialogs',
-			 ),*/
+			/*
+			'tinymce' => array(
+				'plugins' => 'tabfocus,paste,media,fullscreen,wordpress,wpeditimage,wpgallery,wplink,wpdialogs,wpfullscreen',
+			 ),
+			*/
 			'quicktags' => true // load Quicktags, can be used to pass settings directly to Quicktags using an array()
 		) );
 	}
