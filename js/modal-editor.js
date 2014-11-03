@@ -21,6 +21,9 @@
 			// Out of the box, the modal is closed, so we need to open() it.
 			modal.open();
 
+			/*
+			 * Open Actions
+			 */
 
 			// Add a callback to TinyMCE
 			var preInit = tinyMCEPreInit.mceInit['wpp-modal-editor'];
@@ -60,7 +63,12 @@
 
 function callbackTinyMCEloaded(){
 	tinyMCE.activeEditor.setContent('lorem ipsum foo bar');
-	console.log(tinyMCE); // no instance of 'editor-id'
-	console.log(tinyMCEPreInit.mceInit); // 'editor-id' not listed
-	console.log(tinyMCE.activeEditor); // null
+
+	// Debug
+	var debug = 1;
+	if( debug === 1 ){
+		console.log(tinyMCE);
+		console.log(tinyMCEPreInit.mceInit);
+		console.log(tinyMCE.activeEditor);
+	}
 }
