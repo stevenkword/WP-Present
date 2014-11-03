@@ -55,13 +55,15 @@
 				event.preventDefault();
 			});
 
-			// Bind the escape key
+			// Bind the escape key -- interferes with media modal add attachments
+			/*
 			$(document).keyup(function(e){
 				if(e.keyCode === 27) {
 					modal.close();
 					tinyMCE.activeEditor.destroy();
 				}
 			});
+			*/
 
 		}); // .js--open-media-modal
 
