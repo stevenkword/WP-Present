@@ -22,18 +22,44 @@
 			modal.open();
 
 
-			// Add a callback
-			var preInit = tinyMCEPreInit.mceInit['modal-editor'];
-			preInit.init_instance_callback = 'loadTinyMCE';
+			// Add a callback to TinyMCE
+			var preInit = tinyMCEPreInit.mceInit['wpp-modal-editor'];
+			preInit.init_instance_callback = 'callbackTinyMCEloaded';
 
 			// Initialize the editor
 			tinyMCE.init(preInit);
-		});
+
+			// When the user clicks cancel, close the modal
+			$('.modal-buttons #cancel-button').click( function(event) {
+				event.preventDefault();
+				modal.close();
+				tinyMCE.activeEditor.destroy();
+			});
+
+			// Bind the publish button
+			$('.modal-buttons #publish-button').click( function(event) {
+				event.preventDefault();
+			});
+
+		}); // .js--open-media-modal
+
+		function resizeModal() {
+			var self = this;
+			// Reside the TinyMCE Editor ( could be improved upon )
+			var $editorIframe = $( '#wpp-modal-editor_ifr' );
+
+			/* This constant value needs to be replaced */
+			var resize = $('.modal-inner-right' ).height() - 125;
+
+			$editorIframe.height( resize );
+		}
+
 	});
+
 })(jQuery);
 
-function loadTinyMCE(){
-	tinyMCE.activeEditor.setContent('test');
+function callbackTinyMCEloaded(){
+	tinyMCE.activeEditor.setContent('lorem ipsum foo bar');
 	console.log(tinyMCE); // no instance of 'editor-id'
 	console.log(tinyMCEPreInit.mceInit); // 'editor-id' not listed
 	console.log(tinyMCE.activeEditor); // null

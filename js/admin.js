@@ -377,10 +377,12 @@ var WPPresentAdmin;
 					$('.modal-buttons').off('click', '#update-button' );
 				});
 
+				/*
 				$('.modal-buttons').on('click', '#cancel-button', function(e) {
 					e.preventDefault();
 					self.closeModal();
 				});
+				*/
 
 				$('#update-button').show();
 				$('#publish-button').hide();

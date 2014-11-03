@@ -849,20 +849,6 @@ class WP_Present_Core {
 				<div class="clearfix"></div>
 			</div><!--/#container-->
 		</div><!--/#outer-container-->
-		<div id="dialog" class="media-modal" title="Edit <?php echo self::POST_TYPE_SINGULAR; ?>" style="background: #eee; border: 1px solid #bbb; display: none; z-index: 9999;">
-			<div class="modal-inner-left">
-				<div class="ui-dialog-buttonpane modal-buttons">
-					<button id="publish-button" class="button button-primary">Publish</button>
-					<button id="update-button" class="button button-primary">Update</button>
-					<button id="cancel-button" class="button">Cancel</button>
-				</div>
-
-				<?php WP_Present_Modal_Customizer::instance()->render(); ?>
-			</div>
-			<div class="modal-inner-right">
-				<?php //$this->modal_editor(); ?>
-			</div>
-		</div>
 		<?php
 		// Cleanup
 		wp_reset_postdata();
@@ -985,7 +971,7 @@ class WP_Present_Core {
 	 * @return null
 	 */
 	public function modal_editor( $post_id = '' ) {
-		wp_editor( $content = '', $editor_id = 'editor_' . self::POST_TYPE_SLUG, array(
+		wp_editor( $content = '', $editor_id = 'wpp-modal-editor', array(
 			'wpautop' => false, // use wpautop?
 			'media_buttons' => true, // show insert/upload button(s)
 			'textarea_name' => $editor_id, // set the textarea name to something different, square brackets [] can be used here
