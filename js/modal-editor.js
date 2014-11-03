@@ -67,22 +67,15 @@
 
 		}); // .js--open-media-modal
 
-		function resizeModal() {
-			var self = this;
-			// Reside the TinyMCE Editor ( could be improved upon )
-			var $editorIframe = $( '#wpp-modal-editor_ifr' );
-
-			/* This constant value needs to be replaced */
-			var resize = $('.modal-inner-right' ).height() - 125;
-
-			$editorIframe.height( resize );
-		}
-
 	});
 
 })(jQuery);
 
 function callbackTinyMCEloaded(){
+
+	// Resize the editor to fit nicely inside the modal frame
+	resizeModal();
+
 	// Load existing content or set to null here
 	tinyMCE.activeEditor.setContent('lorem ipsum foo bar');
 
@@ -93,4 +86,18 @@ function callbackTinyMCEloaded(){
 		console.log(tinyMCEPreInit.mceInit);
 		console.log(tinyMCE.activeEditor);
 	}
+}
+
+function resizeModal() {
+	var self = this;
+
+	// I would really lie to get the value for the iFrame from tinyMCE.activeEditor.getSomething()
+
+	// Reside the TinyMCE Editor ( could be improved upon )
+	var $editorIframe = jQuery( '#wpp-modal-editor_ifr' );
+
+	/* This constant value needs to be replaced */
+	var resize = jQuery('.modal-inner-right' ).height() - 125;
+
+	$editorIframe.height( resize );
 }
