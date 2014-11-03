@@ -18,7 +18,6 @@ var WPPresentAdmin;
 			$( "#container" ).sortable({
 				stop: function() {
 					self.updateTaxonomyDescription();
-					//self.updatePresentation();
 				}
 			});
 
@@ -26,7 +25,6 @@ var WPPresentAdmin;
 				connectWith: ".column-inner",
 				stop: function() {
 					self.updateTaxonomyDescription();
-					//self.updatePresentation();
 				}
 			});
 
@@ -50,7 +48,6 @@ var WPPresentAdmin;
 			// Save it after the autopop if this is our first time
 			if( '' === $('#description').val() ) {
 				self.updateTaxonomyDescription();
-				//self.updatePresentation();
 			}
 
 			$('.spinner').hide();
@@ -82,7 +79,6 @@ var WPPresentAdmin;
 					connectWith: ".column-inner",
 					stop: function() {
 						self.updateTaxonomyDescription();
-						//self.updatePresentation();
 					}
 				});
 			}
@@ -136,7 +132,7 @@ var WPPresentAdmin;
 			var encoded = JSON.stringify( columns );
 			$('#description').val(encoded);
 
-			// This was a convient time to do this UI clean-up
+			// This is a convient time to do some UI clean-up
 			self.renumberColumns();
 
 			// Send this change off to ajax land
@@ -265,13 +261,8 @@ var WPPresentAdmin;
 				var $widgetTitle   = $parentWidget.find( '.widget-title h4' );
 
 				// Send the contents from the widget to the editor
-				var widgetID = $parentWidget.find('.slide-id').val();
-				var nonce = $('#wp-present-nonce').val();
-
-				$('#editor_slide-tmce').click(); // Necessary to grab focus on subsequent loads of the editor
-
-				// Clear the form out before we show it
-				self.resetModal();
+				var widgetID       = $parentWidget.find('.slide-id').val();
+				var nonce          = $('#wp-present-nonce').val();
 
 				/*
 				 * Load the contents of the existing post
@@ -318,13 +309,17 @@ var WPPresentAdmin;
 						// @todo: look at wp_editor in wp/inc/class-wp-editor.php
 						var $editorIframe = $('#editor_slide_ifr').contents();
 						$editorIframe.find('body').addClass('reveal');
-						//$editorIframe.css('height','500px');
-
 					}
 				});
 
+				// Clear the form out before we show it
+				self.resetModal();
+
+				// Necessary to grab focus on subsequent loads of the editor - working?
+				$('#editor_slide-tmce').click();
+
 				/*
-				 * Bind the buttons
+				 * Bind the modal buttons
 				 */
 				$('.modal-buttons').on('click', '#update-button', function(e) {
 					e.preventDefault();
@@ -434,6 +429,8 @@ var WPPresentAdmin;
 		// Bind Add button
 		widgetButtonAdd: function () {
 			var self = this;
+
+			// Open modal trigger
 			$('.action-buttons').on('click', '#add-button', function(e) {
 				e.preventDefault();
 				var $activeColumn = $('.widget-title.active').parent('.widget-top').parent('.column').children('.column-inner');
@@ -450,19 +447,19 @@ var WPPresentAdmin;
 				self.openModal();
 			});
 
+			// Bind the modal buttons
 			$('.modal-buttons').on('click', '#publish-button', function(e) {
 				e.preventDefault();
 
-				var $activeColumn = $('.widget-title.active').parent('.widget-top').parent('.column').children('.column-inner');
-				var nonce = $('#wp-present-nonce').val();
-
-				var editorContents = tinymce.get('editor_slide').getContent();
-				var postTitle      = $( '#slide-title' ).val();
-				var backgroundImage = $('#customize-control-wp_present_background_image img');
+				var $activeColumn      = $('.widget-title.active').parent('.widget-top').parent('.column').children('.column-inner');
+				var nonce              = $('#wp-present-nonce').val();
+				var editorContents     = tinymce.get('editor_slide').getContent();
+				var postTitle          = $( '#slide-title' ).val();
+				var backgroundImage    = $('#customize-control-wp_present_background_image img');
 				var backgroundImageURL = '';
-				var colorBackground = $('#customize-control-wp_present_background_color .color-picker-hex').val();
-				var colorText = $('#customize-control-wp_present_text_color .color-picker-hex').val();
-				var colorLink = $('#customize-control-wp_present_link_color .color-picker-hex').val();
+				var colorBackground    = $('#customize-control-wp_present_background_color .color-picker-hex').val();
+				var colorText          = $('#customize-control-wp_present_text_color .color-picker-hex').val();
+				var colorLink          = $('#customize-control-wp_present_link_color .color-picker-hex').val();
 
 				if( 'none' != backgroundImage.css( 'display' ) ) {
 					backgroundImageURL = backgroundImage.attr('src');
@@ -529,8 +526,8 @@ var WPPresentAdmin;
 				return;
 
 			var self = this;
-			var currentContainerWidth= $('#container').width();
-			var columnWidth = 210;
+			var currentContainerWidth = $('#container').width();
+			var columnWidth           = 210;
 
 			$('.widget-title.active').parent('.widget-top').parent('.column').remove();
 
