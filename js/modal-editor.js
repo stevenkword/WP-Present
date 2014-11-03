@@ -1,4 +1,10 @@
 (function($) {
+
+
+	function alertMe(){
+		alert('me');
+	}
+
 	$(document).ready( function() {
 		// Create a modal view.
 		var modal = new wp.media.view.Modal({
@@ -42,6 +48,19 @@
 			// Bind the publish button
 			$('.modal-buttons #publish-button').click( function(event) {
 				event.preventDefault();
+			});
+
+			// Bind the publish button
+			$('.modal-buttons #update-button').click( function(event) {
+				event.preventDefault();
+			});
+
+			// Bind the escape key
+			$(document).keyup(function(e){
+				if(e.keyCode === 27) {
+					modal.close();
+					tinyMCE.activeEditor.destroy();
+				}
 			});
 
 		}); // .js--open-media-modal
