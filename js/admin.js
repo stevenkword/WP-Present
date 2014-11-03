@@ -381,8 +381,7 @@ var WPPresentAdmin;
 
 				$('.modal-buttons').on('click', '#cancel-button', function(e) {
 					e.preventDefault();
-					$('#dialog').hide();
-					self.resetModal();
+					self.closeModal();
 				});
 
 				$('#update-button').show();
@@ -391,7 +390,7 @@ var WPPresentAdmin;
 				/*
 				 * Display the editor
 				 */
-				$('#dialog').show();
+				self.openModal();
 
 			});
 
@@ -448,9 +447,7 @@ var WPPresentAdmin;
 				$('#update-button').hide();
 				$('#publish-button').show();
 
-				$('#dialog').show();
-
-				self.resizeModal();
+				self.openModal();
 			});
 
 			$('.modal-buttons').on('click', '#publish-button', function(e) {
@@ -499,7 +496,7 @@ var WPPresentAdmin;
 
 			$('.modal-buttons').on('click', '#cancel-button', function(e) {
 				e.preventDefault();
-				$('#dialog').hide();
+				self.closeModal();
 			});
 
 		},
@@ -594,24 +591,26 @@ var WPPresentAdmin;
 		/**
 		 * Close Modal
 		 */
+		openModal: function() {
+			var self = this;
+			$('#dialog').show();
+
+			// Resize is depenent on CSS and must be called after the dialog is visible
+			self.resizeModal();
+		},
+
+		/**
+		 * Close Modal
+		 */
 		closeModal: function() {
-			$('#dialog').hide();
 			tinymce.execCommand('mceRemoveControl',true,'editor_slide');
+			$('#dialog').hide();
 		},
 
 		/**
 		 * Reset Modal
 		 */
 		resetModal: function() {
-
-			// Critical to make TinyMCE working in Firefox
-			// http://www.tinymce.com/develop/bugtracker_view.php?id=6013
-			if( typeof(tinymce) !== undefined ) {
-			//	tinymce.get('editor_slide').remove();
-			//	var ed = new tinymce.Editor('editor_slide');
-			//	console.log(ed);
-			}
-			//tinymce.execCommand('mceRemoveControl',true,'editor_slide');
 
 			if( typeof(tinymce) !== undefined ) {
 			// Clear the editor
@@ -659,41 +658,10 @@ var WPPresentAdmin;
 			// Reside the TinyMCE Editor
 			var $editorIframe = $( '#editor_slide_ifr' );
 
+			/* This constant value needs to be replaced */
 			var resize = $('.modal-inner-right' ).height() - 125;
 
 			$editorIframe.height( resize );
-
-
-			return;
-
-			/**
-			 *  This has to be the most hacky thing in this entire project
-			 *  but it sure is cool!
-			 */
-			/*
-			var $editor = $editorIframe.contents().find('body.mceContentBody.reveal');
-			var zoom = 0.6;
-			var editorHeightFull = 0;
-
-			$editor.css( 'display', 'block' );
-
-			if( WPPresentAdmin.maxModalEditorHeight < 1 ) {
-				WPPresentAdmin.maxModalEditorHeight = Math.round( $editor.height() );
-			}
-			editorHeightFull = Math.round( WPPresentAdmin.maxModalEditorHeight );
-
-			$editor.css( 'display', 'table' );
-			var editorHeightTable = Math.round( $editor.height() );
-
-			var availableSpace = 0;
-			if( editorHeightFull > editorHeightTable ) {
-				availableSpace = Math.round( ( editorHeightFull - editorHeightTable ) / 2 );
-			}
-
-			// Act on said hackiness
-			$editor.css( 'padding-top', availableSpace );
-			$editor.css( 'display', 'block' );
-			*/
 		}
 	};
 
