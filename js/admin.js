@@ -609,7 +609,7 @@ var WPPresentAdmin;
 		 */
 		closeModal: function() {
 			// Maybe is necessary?
-			//tinymce.execCommand('mceRemoveControl',true,'editor_slide');
+			tinymce.execCommand('mceRemoveControl',true,'editor_slide');
 			$('#dialog').hide();
 		},
 

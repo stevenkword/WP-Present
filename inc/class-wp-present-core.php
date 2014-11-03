@@ -7,7 +7,7 @@ define('EP_WPPRESENT', 8388608); // 8388608 = 2^23
  **/
 class WP_Present_Core {
 
-	const REVISION = 20141102;
+	const REVISION = 20141103;
 
 	/* Post Type */
 	const POST_TYPE_SLUG     = 'slide';
