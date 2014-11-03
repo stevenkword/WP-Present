@@ -62,6 +62,7 @@
 })(jQuery);
 
 function callbackTinyMCEloaded(){
+	// Load existing content or set to null here
 	tinyMCE.activeEditor.setContent('lorem ipsum foo bar');
 
 	// Debug
