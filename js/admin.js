@@ -437,6 +437,7 @@ var WPPresentAdmin;
 			// Open modal trigger
 			$('.action-buttons').on('click', '#add-button', function(e) {
 				e.preventDefault();
+
 				var $activeColumn = $('.widget-title.active').parent('.widget-top').parent('.column').children('.column-inner');
 				var nonce = $('#wp-present-nonce').val();
 
@@ -619,7 +620,7 @@ var WPPresentAdmin;
 		resetModal: function() {
 
 			// Clear the editor
-			if( typeof(tinyMCE) !== undefined ) {
+			if( typeof(tinymce) !== undefined ) {
 				tinyMCE.activeEditor.setContent(''); // tinymce.get('editor_slide');
 			}
 
@@ -637,13 +638,6 @@ var WPPresentAdmin;
 			$('#customize-control-wp_present_background_color .color-picker-hex').val( '#fff' ).change();
 			$('#customize-control-wp_present_text_color .color-picker-hex').val( '#000' ).change();
 			$('#customize-control-wp_present_link_color .color-picker-hex').val( '#0000EE' ).change();
-
-			// Colors
-			/*
-			$('#customize-control-wp_present_background_color .color-picker-hex').iris( 'color', '#' );
-			$('#customize-control-wp_present_text_color .color-picker-hex').iris( 'color', '#' );
-			$('#customize-control-wp_present_link_color .color-picker-hex').iris( 'color', '#' );
-			*/
 
 			$('.dropdown-content img').attr('src','').change();
 		},
