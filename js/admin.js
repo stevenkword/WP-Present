@@ -46,7 +46,6 @@ var WPPresentAdmin;
 			$( "#container" ).sortable({
 				stop: function() {
 					self.updateTaxonomyDescription();
-					//self.updatePresentation();
 				}
 			});
 
@@ -54,7 +53,6 @@ var WPPresentAdmin;
 				connectWith: ".column-inner",
 				stop: function() {
 					self.updateTaxonomyDescription();
-					//self.updatePresentation();
 				}
 			});
 
@@ -78,7 +76,6 @@ var WPPresentAdmin;
 			// Save it after the autopop if this is our first time
 			if( '' === $('#description').val() ) {
 				self.updateTaxonomyDescription();
-				//self.updatePresentation();
 			}
 
 			$('.spinner').hide();
@@ -110,7 +107,6 @@ var WPPresentAdmin;
 					connectWith: ".column-inner",
 					stop: function() {
 						self.updateTaxonomyDescription();
-						//self.updatePresentation();
 					}
 				});
 			}
@@ -164,7 +160,7 @@ var WPPresentAdmin;
 			var encoded = JSON.stringify( columns );
 			$('#description').val(encoded);
 
-			// This was a convient time to do this UI clean-up
+			// This is a convient time to do some UI clean-up
 			self.renumberColumns();
 
 			// Send this change off to ajax land
@@ -293,13 +289,8 @@ var WPPresentAdmin;
 				var $widgetTitle   = $parentWidget.find( '.widget-title h4' );
 
 				// Send the contents from the widget to the editor
-				var widgetID = $parentWidget.find('.slide-id').val();
-				var nonce = $('#wp-present-nonce').val();
-
-				$('#editor_slide-tmce').click(); // Necessary to grab focus on subsequent loads of the editor
-
-				// Clear the form out before we show it
-				self.resetModal();
+				var widgetID       = $parentWidget.find('.slide-id').val();
+				var nonce          = $('#wp-present-nonce').val();
 
 				/*
 				 * Load the contents of the existing post
@@ -318,7 +309,7 @@ var WPPresentAdmin;
 
 						// If this throws an error, check for PHP notices in the ajax response
 						var slide = jQuery.parseJSON( contentEditor );
-						tinymce.get( 'editor_slide' ).setContent( slide.post_content );
+						tinyMCE.activeEditor.setContent( slide.post_content ); //tinymce.get( 'editor_slide' ).setContent( slide.post_content );
 
 						$( '#slide-title' ).val( slide.post_title );
 						$( '#slide-slug' ).val( slide.post_name );
@@ -346,21 +337,28 @@ var WPPresentAdmin;
 						// @todo: look at wp_editor in wp/inc/class-wp-editor.php
 						var $editorIframe = $('#editor_slide_ifr').contents();
 						$editorIframe.find('body').addClass('reveal');
-						//$editorIframe.css('height','500px');
-
 					}
 				});
 
+				// Clear the form out before we show it
+				self.resetModal();
+
+				// Necessary to grab focus on subsequent loads of the editor - working? -- nope :(
+				//var $editorIframe = $('#editor_slide_ifr').contents();
+				//$editorIframe.find('body').find('p:first').click().focus();
+				//
+				//
+				tinymce.get( 'editor_slide' ).focus();
+
 				/*
-				 * Bind the buttons
+				 * Bind the modal buttons
 				 */
 				$('.modal-buttons').on('click', '#update-button', function(e) {
 					e.preventDefault();
 
-					var editorContents = tinymce.get('editor_slide').getContent();
-					var postTitle = $( '#slide-title' ).val();
-
-					var backgroundImage = $('#customize-control-wp_present_background_image img');
+					var editorContents     = tinyMCE.activeEditor.getContent(); // tinymce.get('editor_slide').getContent();
+					var postTitle          = $( '#slide-title' ).val();
+					var backgroundImage    = $('#customize-control-wp_present_background_image img');
 					var backgroundImageURL = '';
 
 					if( 'none' != backgroundImage.css( 'display' ) ) {
@@ -370,8 +368,8 @@ var WPPresentAdmin;
 					}
 
 					var colorBackground = $('#customize-control-wp_present_background_color .color-picker-hex').val();
-					var colorText = $('#customize-control-wp_present_text_color .color-picker-hex').val();
-					var colorLink = $('#customize-control-wp_present_link_color .color-picker-hex').val();
+					var colorText       = $('#customize-control-wp_present_text_color .color-picker-hex').val();
+					var colorLink       = $('#customize-control-wp_present_link_color .color-picker-hex').val();
 
 					var params = {
 						'id'               : widgetID,
@@ -409,10 +407,7 @@ var WPPresentAdmin;
 
 				$('.modal-buttons').on('click', '#cancel-button', function(e) {
 					e.preventDefault();
-					$('#dialog').hide();
-					// Unbind or this will stick
-					$('.modal-buttons').off('click', '#cancel-button' );
-					self.resetModal();
+					self.closeModal();
 				});
 
 				$('#update-button').show();
@@ -421,7 +416,7 @@ var WPPresentAdmin;
 				/*
 				 * Display the editor
 				 */
-				$('#dialog').show();
+				self.openModal();
 
 			});
 
@@ -443,6 +438,7 @@ var WPPresentAdmin;
 				var nonce         = $('#wp-present-nonce').val();
 				var params        = { 'id':widgetID, 'nonce':nonce };
 
+				// AJAX request to delete slides
 				$.ajax({
 					url: ajaxurl + '?action=delete_slide',
 					type: 'POST',
@@ -465,12 +461,15 @@ var WPPresentAdmin;
 		// Bind Add button
 		widgetButtonAdd: function () {
 			var self = this;
+
+			// Open modal trigger
 			$('.action-buttons').on('click', '#add-button', function(e) {
 				e.preventDefault();
 				var $activeColumn = $('.widget-title.active').parent('.widget-top').parent('.column').children('.column-inner');
 				var nonce = $('#wp-present-nonce').val();
 
-				$('#editor_slide-tmce').click(); //Necessary on subsequent loads of the editor
+				// Not working
+				//$('#editor_slide-tmce').click(); // Necessary on subsequent loads of the editor
 
 				// Clear the form out before we show it
 				self.resetModal();
@@ -478,31 +477,31 @@ var WPPresentAdmin;
 				$('#update-button').hide();
 				$('#publish-button').show();
 
-				$('#dialog').show();
-
-				self.resizeModal();
+				self.openModal();
 			});
 
+			// Bind the modal buttons
 			$('.modal-buttons').on('click', '#publish-button', function(e) {
 				e.preventDefault();
 
-				var $activeColumn = $('.widget-title.active').parent('.widget-top').parent('.column').children('.column-inner');
-				var nonce = $('#wp-present-nonce').val();
-
-				var editorContents = tinymce.get('editor_slide').getContent();
-				var postTitle      = $( '#slide-title' ).val();
-				var backgroundImage = $('#customize-control-wp_present_background_image img');
+				var $activeColumn      = $('.widget-title.active').parent('.widget-top').parent('.column').children('.column-inner');
+				var nonce              = $('#wp-present-nonce').val();
+				var editorContents     = tinyMCE.activeEditor.getContent(); // tinymce.get('editor_slide').getContent();
+				var postTitle          = $( '#slide-title' ).val();
+				var backgroundImage    = $('#customize-control-wp_present_background_image img');
 				var backgroundImageURL = '';
-				var colorBackground = $('#customize-control-wp_present_background_color .color-picker-hex').val();
-				var colorText = $('#customize-control-wp_present_text_color .color-picker-hex').val();
-				var colorLink = $('#customize-control-wp_present_link_color .color-picker-hex').val();
+				var colorBackground    = $('#customize-control-wp_present_background_color .color-picker-hex').val();
+				var colorText          = $('#customize-control-wp_present_text_color .color-picker-hex').val();
+				var colorLink          = $('#customize-control-wp_present_link_color .color-picker-hex').val();
 
+				// Sanitize the background Image URL
 				if( 'none' != backgroundImage.css( 'display' ) ) {
 					backgroundImageURL = backgroundImage.attr('src');
 				} else {
 					backgroundImageURL = '';
 				}
 
+				// Setup parameters for the AJAX request
 				var params = {
 					'content'          : editorContents,
 					'title'            : postTitle,
@@ -513,6 +512,7 @@ var WPPresentAdmin;
 					'nonce'            : nonce
 				};
 
+				// Send an AJAX request to add a new slide
 				$.ajax({
 					url: ajaxurl + '?action=new_slide',
 					type: 'POST',
@@ -529,8 +529,7 @@ var WPPresentAdmin;
 
 			$('.modal-buttons').on('click', '#cancel-button', function(e) {
 				e.preventDefault();
-				$('#dialog').hide();
-				self.resetModal();
+				self.closeModal();
 			});
 
 		},
@@ -563,8 +562,8 @@ var WPPresentAdmin;
 				return;
 
 			var self = this;
-			var currentContainerWidth= $('#container').width();
-			var columnWidth = 210;
+			var currentContainerWidth = $('#container').width();
+			var columnWidth           = 210;
 
 			$('.widget-title.active').parent('.widget-top').parent('.column').remove();
 
@@ -625,9 +624,21 @@ var WPPresentAdmin;
 		/**
 		 * Close Modal
 		 */
+		openModal: function() {
+			var self = this;
+			$('#dialog').show();
+
+			// Resize is depenent on CSS and must be called after the dialog is visible
+			self.resizeModal();
+		},
+
+		/**
+		 * Close Modal
+		 */
 		closeModal: function() {
+			// Maybe is necessary?
+			//tinymce.execCommand('mceRemoveControl',true,'editor_slide');
 			$('#dialog').hide();
-			tinymce.execCommand('mceRemoveControl',true,'editor_slide');
 		},
 
 		/**
@@ -635,18 +646,9 @@ var WPPresentAdmin;
 		 */
 		resetModal: function() {
 
-			// Critical to make TinyMCE working in Firefox
-			// http://www.tinymce.com/develop/bugtracker_view.php?id=6013
-			if( typeof(tinymce) !== undefined ) {
-			//	tinymce.get('editor_slide').remove();
-			//	var ed = new tinymce.Editor('editor_slide');
-			//	console.log(ed);
-			}
-			//tinymce.execCommand('mceRemoveControl',true,'editor_slide');
-
-			if( typeof(tinymce) !== undefined ) {
 			// Clear the editor
-				tinymce.get('editor_slide').setContent('');
+			if( typeof(tinyMCE) !== undefined ) {
+				tinyMCE.activeEditor.setContent(''); // tinymce.get('editor_slide');
 			}
 
 			// Make existing content go away
@@ -659,9 +661,17 @@ var WPPresentAdmin;
 			//$('#customize-control-wp_present_background_image .dropdown-status').show();
 
 			// Colors
-			$('#customize-control-wp_present_background_color .color-picker-hex').val( '' ).change();
-			$('#customize-control-wp_present_text_color .color-picker-hex').val( '' ).change();
-			$('#customize-control-wp_present_link_color .color-picker-hex').val( '' ).change();
+			// This is a temporary fix that will not play nicely with default themes.  Note it!
+			$('#customize-control-wp_present_background_color .color-picker-hex').val( '#fff' ).change();
+			$('#customize-control-wp_present_text_color .color-picker-hex').val( '#000' ).change();
+			$('#customize-control-wp_present_link_color .color-picker-hex').val( '#0000EE' ).change();
+
+			// Colors
+			/*
+			$('#customize-control-wp_present_background_color .color-picker-hex').iris( 'color', '#' );
+			$('#customize-control-wp_present_text_color .color-picker-hex').iris( 'color', '#' );
+			$('#customize-control-wp_present_link_color .color-picker-hex').iris( 'color', '#' );
+			*/
 
 			$('.dropdown-content img').attr('src','').change();
 		},
@@ -679,44 +689,13 @@ var WPPresentAdmin;
 
 		resizeModal: function() {
 			var self = this;
-			// Reside the TinyMCE Editor
+			// Reside the TinyMCE Editor ( could be improved upon )
 			var $editorIframe = $( '#editor_slide_ifr' );
 
+			/* This constant value needs to be replaced */
 			var resize = $('.modal-inner-right' ).height() - 125;
 
 			$editorIframe.height( resize );
-
-
-			return;
-
-			/**
-			 *  This has to be the most hacky thing in this entire project
-			 *  but it sure is cool!
-			 */
-			/*
-			var $editor = $editorIframe.contents().find('body.mceContentBody.reveal');
-			var zoom = 0.6;
-			var editorHeightFull = 0;
-
-			$editor.css( 'display', 'block' );
-
-			if( WPPresentAdmin.maxModalEditorHeight < 1 ) {
-				WPPresentAdmin.maxModalEditorHeight = Math.round( $editor.height() );
-			}
-			editorHeightFull = Math.round( WPPresentAdmin.maxModalEditorHeight );
-
-			$editor.css( 'display', 'table' );
-			var editorHeightTable = Math.round( $editor.height() );
-
-			var availableSpace = 0;
-			if( editorHeightFull > editorHeightTable ) {
-				availableSpace = Math.round( ( editorHeightFull - editorHeightTable ) / 2 );
-			}
-
-			// Act on said hackiness
-			$editor.css( 'padding-top', availableSpace );
-			$editor.css( 'display', 'block' );
-			*/
 		}
 	};
 
