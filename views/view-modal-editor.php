@@ -1,8 +1,8 @@
 <button class="js--open-media-modal button">Open a modal</button>
 <script type="text/template" id="tmpl-modal-content">
-	<h1>Hi, I&#39;m a Modal!</h1>
+
 	<?php
-		wp_editor( $content = '', $editor_id = 'modal_editor', array(
+		wp_editor( $content = '', $editor_id = 'modal-editor', array(
 			'wpautop' => false, // use wpautop?
 			'media_buttons' => true, // show insert/upload button(s)
 			'textarea_name' => $editor_id, // set the textarea name to something different, square brackets [] can be used here

@@ -860,7 +860,7 @@ class WP_Present_Core {
 				<?php WP_Present_Modal_Customizer::instance()->render(); ?>
 			</div>
 			<div class="modal-inner-right">
-				<?php $this->modal_editor(); ?>
+				<?php //$this->modal_editor(); ?>
 			</div>
 		</div>
 		<?php

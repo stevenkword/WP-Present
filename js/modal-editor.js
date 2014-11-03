@@ -20,6 +20,21 @@
 			modal.content( new ModalContentView() );
 			// Out of the box, the modal is closed, so we need to open() it.
 			modal.open();
+
+
+			// Add a callback
+			var preInit = tinyMCEPreInit.mceInit['modal-editor'];
+			preInit.init_instance_callback = 'loadTinyMCE';
+
+			// Initialize the editor
+			tinyMCE.init(preInit);
 		});
 	});
 })(jQuery);
+
+function loadTinyMCE(){
+	tinyMCE.activeEditor.setContent('test');
+	console.log(tinyMCE); // no instance of 'editor-id'
+	console.log(tinyMCEPreInit.mceInit); // 'editor-id' not listed
+	console.log(tinyMCE.activeEditor); // null
+}
