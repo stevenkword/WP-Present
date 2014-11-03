@@ -1,4 +1,4 @@
-<button class="js--open-media-modal button">Open a modal</button>
+<button id="add-button" class="js--open-media-modal button button-primary">New Slide</button>
 <script type="text/template" id="tmpl-modal-content">
 			<div class="modal-inner-left">
 				<div class="ui-dialog-buttonpane modal-buttons">

@@ -760,7 +760,10 @@ class WP_Present_Core {
 		?>
 		<div class="action-buttons">
 			<p>
-				<button id="add-button" class="button button-primary">New <?php echo self::POST_TYPE_SINGULAR; ?></button>
+				<!--<button id="add-button" class="button button-primary">New <?php echo self::POST_TYPE_SINGULAR; ?></button>-->
+				<!-- Modal Editor View -->
+				<?php require( plugin_dir_path( dirname( __FILE__ ) ) . 'views/view-modal-editor.php' ); ?>
+
 				<button id="add-column" class="button">New Column</button>
 				<button id="remove-column" class="button">Remove Column</button>
 				<!--<button id="tidy-button" class="button">Tidy</button>-->
@@ -770,9 +773,6 @@ class WP_Present_Core {
 				</span></a>
 				<?php // TODO: Add Existing Slide Button ?>
 				<span class="spinner">Saving</span>
-
-				<!-- Modal Editor View -->
-				<?php require( plugin_dir_path( dirname( __FILE__ ) ) . 'views/view-modal-editor.php' ); ?>
 			</p>
 		</div>
 		<div id="outer-container"  class="ui-widget-content">
@@ -971,7 +971,11 @@ class WP_Present_Core {
 	 * @return null
 	 */
 	public function modal_editor( $post_id = '' ) {
+		wp_editor( $content = '', $editor_id = 'wpp-modal-editor' );
+		return;
+
 		wp_editor( $content = '', $editor_id = 'wpp-modal-editor', array(
+			/*
 			'wpautop' => false, // use wpautop?
 			'media_buttons' => true, // show insert/upload button(s)
 			'textarea_name' => $editor_id, // set the textarea name to something different, square brackets [] can be used here

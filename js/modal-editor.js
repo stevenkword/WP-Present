@@ -124,7 +124,7 @@
 		}); // .js--open-media-modal
 
 		// When the user clicks a button, open a modal.
-		$('.widget-control-edit').click( function( event ) {
+		$('#container').on('click', '.widget-control-edit', function(event) {
 			event.preventDefault();
 
 			// Assign the ModalContentView to the modal as the `content` subview.
@@ -148,6 +148,8 @@
 			 */
 			$('#update-button').show();
 			$('#publish-button').hide();
+
+			var api = wp.customize;
 
 			/*
 			 * Load the existing content

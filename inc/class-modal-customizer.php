@@ -40,7 +40,7 @@ class WP_Present_Modal_Customizer {
 		add_action( 'customize_register', array( $this, 'action_customize_register' ), 99 );
 
 		add_action( 'admin_init', array( $this, 'action_admin_init' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'action_admin_enqueue_scripts' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'action_admin_enqueue_scripts' ), 99999 );
 		add_action( 'admin_head', array( $this, 'action_admin_head' ), 20 );
 		add_action( 'admin_footer', array( $this, 'action_admin_footer' ), 20 );
 
