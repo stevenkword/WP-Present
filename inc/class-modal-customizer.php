@@ -107,12 +107,8 @@ class WP_Present_Modal_Customizer {
 	}
 
 	public function action_admin_enqueue_scripts() {
+		//http://local.wordpress.dev/wp-admin/js/customize-controls.js?ver=4.0
 		wp_enqueue_style( 'customize-controls' );
-
-// Get script
-//http://local.wordpress.dev/wp-admin/js/customize-controls.js?ver=4.0
-
-		wp_enqueue_script( 'customize-controls' );
 		wp_enqueue_script( 'accordion' );
 		wp_enqueue_script( 'wp-present-customize-controls', WP_Present_Core::instance()->plugins_url . '/js/customize-controls.js',
 			array( 'jquery' ), WP_Present_Core::REVISION, true );
