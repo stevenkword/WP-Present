@@ -18,6 +18,9 @@
 			template: wp.template( 'modal-content' )
 		});
 
+			// Resize the modal editor when the window resizes
+			$(window).on('resize', function(){ resizeModal(); });
+
 		// When the user clicks a button, open a modal.
 		$('.js--open-media-modal').click( function( event ) {
 			event.preventDefault();
@@ -27,6 +30,10 @@
 			modal.content( new ModalContentView() );
 			// Out of the box, the modal is closed, so we need to open() it.
 			modal.open();
+
+			/*
+			 * Open Actions
+			 */
 
 			// Add a callback to TinyMCE
 			var preInit = tinyMCEPreInit.mceInit['wpp-modal-editor'];
@@ -38,9 +45,6 @@
 			// Clear the form out before we show it
 			//WPPresentAdmin.prototype.resetModal();
 
-			/*
-			 * Open Actions
-			 */
 			$('#update-button').hide();
 			$('#publish-button').show();
 
@@ -133,6 +137,10 @@
 			// Out of the box, the modal is closed, so we need to open() it.
 			modal.open();
 
+			/*
+			 * Open Actions
+			 */
+
 			// Add a callback to TinyMCE
 			var preInit = tinyMCEPreInit.mceInit['wpp-modal-editor'];
 			preInit.init_instance_callback = 'callbackTinyMCEloaded';
@@ -142,14 +150,10 @@
 
 			// Clear the form out before we show it
 			//WPPresentAdmin.prototype.resetModal();
-
-			/*
-			 * Open Actions
-			 */
 			$('#update-button').show();
 			$('#publish-button').hide();
 
-			var api = wp.customize;
+			//var api = wp.customize;
 
 			/*
 			 * Load the existing content
