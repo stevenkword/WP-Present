@@ -288,33 +288,33 @@
 
 function callbackTinyMCEloaded(){
 
-		// Quicktags Init -- Borrowed from Core
-		var init, edId, qtId;
-		if ( typeof quicktags !== 'undefined' ) {
-			for ( qtId in tinyMCEPreInit.qtInit ) {
-				try {
-					quicktags( tinyMCEPreInit.qtInit[qtId] );
+	// Quicktags Init -- Borrowed from Core
+	var init, edId, qtId;
+	if ( typeof quicktags !== 'undefined' ) {
+		for ( qtId in tinyMCEPreInit.qtInit ) {
+			try {
+				quicktags( tinyMCEPreInit.qtInit[qtId] );
 
-					if ( ! window.wpActiveEditor ) {
-						window.wpActiveEditor = qtId;
-					}
-				} catch(e){};
+				if ( ! window.wpActiveEditor ) {
+					window.wpActiveEditor = qtId;
+				}
+			} catch(e){};
+		}
+	}
+	// Selects the visual editor tab
+	if ( typeof jQuery !== 'undefined' ) {
+		jQuery('.wp-editor-wrap').on( 'click.wp-editor', function() {
+			if ( this.id ) {
+				window.wpActiveEditor = this.id.slice( 3, -5 );
+			}
+		});
+	} else {
+		for ( qtId in tinyMCEPreInit.qtInit ) {
+			document.getElementById( 'wp-' + qtId + '-wrap' ).onclick = function() {
+				window.wpActiveEditor = this.id.slice( 3, -5 );
 			}
 		}
-		// Selects the visual editor tab
-		if ( typeof jQuery !== 'undefined' ) {
-			jQuery('.wp-editor-wrap').on( 'click.wp-editor', function() {
-				if ( this.id ) {
-					window.wpActiveEditor = this.id.slice( 3, -5 );
-				}
-			});
-		} else {
-			for ( qtId in tinyMCEPreInit.qtInit ) {
-				document.getElementById( 'wp-' + qtId + '-wrap' ).onclick = function() {
-					window.wpActiveEditor = this.id.slice( 3, -5 );
-				}
-			}
-		}
+	}
 
 	// Resize the editor to fit nicely inside the modal frame
 	resizeModalEditor();
@@ -323,7 +323,7 @@ function callbackTinyMCEloaded(){
 	tinyMCE.activeEditor.setContent('');
 
 	// Debug
-	var debug = 1;
+	var debug = 0;
 	if( debug === 1 ){
 		console.log(tinyMCE);
 		console.log(tinyMCEPreInit.mceInit);
