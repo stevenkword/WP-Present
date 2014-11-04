@@ -761,6 +761,7 @@ class WP_Present_Core {
 		<div class="action-buttons">
 			<p>
 				<!--<button id="add-button" class="button button-primary">New <?php echo self::POST_TYPE_SINGULAR; ?></button>-->
+
 				<!-- Modal Editor View -->
 				<?php require( plugin_dir_path( dirname( __FILE__ ) ) . 'views/view-modal-editor.php' ); ?>
 
@@ -971,7 +972,7 @@ class WP_Present_Core {
 	 * @return null
 	 */
 	public function modal_editor( $post_id = '' ) {
-		wp_editor( $content = '', $editor_id = 'wpp-modal-editor' );
+		wp_editor( $content = '', $editor_id = 'wpp-modal-editor', array( 'quicktags' => true ) );
 		return;
 
 		wp_editor( $content = '', $editor_id = 'wpp-modal-editor', array(

@@ -1,10 +1,5 @@
 (function($) {
 
-
-	function alertMe(){
-		alert('me');
-	}
-
 	$(document).ready( function() {
 		// Create a modal view.
 		var modal = new wp.media.view.Modal({
@@ -19,7 +14,7 @@
 		});
 
 			// Resize the modal editor when the window resizes
-			$(window).on('resize', function(){ resizeModal(); });
+			$(window).on('resize', function(){ resizeModalEditor(); });
 
 		// When the user clicks a button, open a modal.
 		$('.js--open-media-modal').click( function( event ) {
@@ -39,8 +34,41 @@
 			var preInit = tinyMCEPreInit.mceInit['wpp-modal-editor'];
 			preInit.init_instance_callback = 'callbackTinyMCEloaded';
 
+			// Quick tags pre init
+			var qtInit  = tinyMCEPreInit.qtInit[ 'wpp-modal-editor' ];
+			//quicktags( tinyMCEPreInit.qtInit[ 'wpp-modal-editor' ] );
+
 			// Initialize the editor
 			tinyMCE.init(preInit);
+
+			// Quicktags Init -- Borrowed from Core
+			var init, edId, qtId;
+			if ( typeof quicktags !== 'undefined' ) {
+				for ( qtId in tinyMCEPreInit.qtInit ) {
+					try {
+						quicktags( tinyMCEPreInit.qtInit[qtId] );
+
+						if ( ! window.wpActiveEditor ) {
+							window.wpActiveEditor = qtId;
+						}
+					} catch(e){};
+				}
+			}
+			// Selects the visual editor tab
+			if ( typeof jQuery !== 'undefined' ) {
+				jQuery('.wp-editor-wrap').on( 'click.wp-editor', function() {
+					if ( this.id ) {
+						window.wpActiveEditor = this.id.slice( 3, -5 );
+					}
+				});
+			} else {
+				for ( qtId in tinyMCEPreInit.qtInit ) {
+					document.getElementById( 'wp-' + qtId + '-wrap' ).onclick = function() {
+						window.wpActiveEditor = this.id.slice( 3, -5 );
+					}
+				}
+			}
+
 
 			// Clear the form out before we show it
 			//WPPresentAdmin.prototype.resetModal();
@@ -148,6 +176,34 @@
 			// Initialize the editor
 			tinyMCE.init(preInit);
 
+			// Quicktags Init -- Borrowed from Core
+			var init, edId, qtId;
+			if ( typeof quicktags !== 'undefined' ) {
+				for ( qtId in tinyMCEPreInit.qtInit ) {
+					try {
+						quicktags( tinyMCEPreInit.qtInit[qtId] );
+
+						if ( ! window.wpActiveEditor ) {
+							window.wpActiveEditor = qtId;
+						}
+					} catch(e){};
+				}
+			}
+			// Selects the visual editor tab
+			if ( typeof jQuery !== 'undefined' ) {
+				jQuery('.wp-editor-wrap').on( 'click.wp-editor', function() {
+					if ( this.id ) {
+						window.wpActiveEditor = this.id.slice( 3, -5 );
+					}
+				});
+			} else {
+				for ( qtId in tinyMCEPreInit.qtInit ) {
+					document.getElementById( 'wp-' + qtId + '-wrap' ).onclick = function() {
+						window.wpActiveEditor = this.id.slice( 3, -5 );
+					}
+				}
+			}
+
 			// Clear the form out before we show it
 			//WPPresentAdmin.prototype.resetModal();
 			$('#update-button').show();
@@ -206,7 +262,7 @@
 					$('#customize-control-wp_present_link_color .color-picker-hex').iris( 'color', slide.link_color );
 
 					// This has to be the most hacky thing in this entire project
-					self.resizeModal();
+					self.resizeModalEditor();
 
 					// Hack for getting the reveal class added to tinymce editor body
 					// @todo: look at wp_editor in wp/inc/class-wp-editor.php
@@ -286,10 +342,10 @@
 function callbackTinyMCEloaded(){
 
 	// Resize the editor to fit nicely inside the modal frame
-	resizeModal();
+	resizeModalEditor();
 
 	// Load existing content or set to null here
-	tinyMCE.activeEditor.setContent('lorem ipsum foo bar');
+	tinyMCE.activeEditor.setContent('');
 
 	// Debug
 	var debug = 1;
@@ -300,7 +356,7 @@ function callbackTinyMCEloaded(){
 	}
 }
 
-function resizeModal() {
+function resizeModalEditor() {
 	var self = this;
 
 	// I would really lie to get the value for the iFrame from tinyMCE.activeEditor.getSomething()
