@@ -1,5 +1,6 @@
 /* Hide the things on the taxonomy screen */
 
+/* TinyMCE hack for the format dropmenu */
 .mce-panel.mce-menu{ z-index: 999999 !important;}
 
 .ui-dialog-buttonpane {
