@@ -204,6 +204,12 @@
 				}
 			}
 
+
+			// Customizer Init
+			var api = wp.customize;
+			console.log( 'api', api );
+
+
 			// Clear the form out before we show it
 			//WPPresentAdmin.prototype.resetModal();
 			$('#update-button').show();

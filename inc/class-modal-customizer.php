@@ -109,6 +109,7 @@ class WP_Present_Modal_Customizer {
 	public function action_admin_enqueue_scripts() {
 		wp_enqueue_style( 'customize-controls' );
 
+// Get script
 //http://local.wordpress.dev/wp-admin/js/customize-controls.js?ver=4.0
 
 		wp_enqueue_script( 'customize-controls' );
