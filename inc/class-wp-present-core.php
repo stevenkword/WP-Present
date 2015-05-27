@@ -34,7 +34,7 @@ class WP_Present_Core {
 	/* Misc */
 	const CAPABILITY         = 'edit_others_posts';
 	const NONCE_FIELD        = 'wp-present-nonce';
-	const DEFAULT_THEME      = 'moon.css'; // moon, night, simple, serif, solarized
+	const DEFAULT_THEME      = 'simple.css'; // moon, night, simple, serif, solarized
 	const MAX_NUM_SLIDES     = 250; // not currently used, proposed variable
 	const TEXT_DOMAIN        = 'wp-present';
 
@@ -267,7 +267,7 @@ class WP_Present_Core {
 			'h'   => '360',
 		), $atts ) );
 		?>
-		<iframe src="<?php echo esc_attr( $src ); ?>" width="<?php echo esc_attr( $w ); ?>" height="<?php echo esc_attr( $h ); ?>" onload="this.contentWindow.focus()" ></iframe>
+		<iframe src="<?php echo esc_attr( $src ); ?>" width="<?php echo esc_attr( $w ); ?>" height="<?php echo esc_attr( $h ); ?>" onload="this.contentWindow.focus()" style="border:none;"></iframe>
 		<?php
 		return ob_get_clean();
 	}
