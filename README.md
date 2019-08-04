@@ -56,4 +56,4 @@ If you'd like to contribute to the plugin you can find it on GitHub: https://git
 
 ## Upgrade Notice ##
 = 0.9 =
-* Pre release
+* Pre release 
